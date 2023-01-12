@@ -1,25 +1,29 @@
 package me.proton.jobforandroid.compositionofnumbers.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import me.proton.jobforandroid.compositionofnumbers.R
+import androidx.fragment.app.Fragment
+import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentChooseLevelBinding
 
 
 class ChooseLevelFragment : Fragment() {
 
+    private var _binding: FragmentChooseLevelBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_choose_level, container, false)
+    ): View {
+        _binding = FragmentChooseLevelBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    companion object {
 
-        @JvmStatic
-        fun newInstance() = ChooseLevelFragment()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

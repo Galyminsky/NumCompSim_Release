@@ -1,26 +1,29 @@
 package me.proton.jobforandroid.compositionofnumbers.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import me.proton.jobforandroid.compositionofnumbers.R
+import androidx.fragment.app.Fragment
+import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentGameFinishedBinding
 
 
 class GameFinishedFragment : Fragment() {
 
+    private var _binding: FragmentGameFinishedBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
-        return inflater.inflate(R.layout.fragment_game_finished, container, false)
+    ): View {
+        _binding = FragmentGameFinishedBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    companion object {
 
-        @JvmStatic
-        fun newInstance() = GameFinishedFragment()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
