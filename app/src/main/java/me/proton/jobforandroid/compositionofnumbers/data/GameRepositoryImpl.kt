@@ -65,5 +65,4 @@ object GameRepositoryImpl: GameRepository  {
     private const val MIN_SUM_VALUE = 2
     private const val MIN_ANSWER_VALUE = 1
 
-
 }
