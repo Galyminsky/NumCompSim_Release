@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentManager
 import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentGameFinishedBinding
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult
 
-
 class GameFinishedFragment : Fragment() {
 
     private lateinit var gameResult: GameResult
@@ -49,13 +48,11 @@ class GameFinishedFragment : Fragment() {
         }
     }
 
-
     private fun parseArgs() {
         requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let {
             gameResult = it
         }
     }
-
 
     private fun retryGame() {
         requireActivity().supportFragmentManager.popBackStack(
