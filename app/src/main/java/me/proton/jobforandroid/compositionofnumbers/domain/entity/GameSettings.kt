@@ -1,5 +1,9 @@
 package me.proton.jobforandroid.compositionofnumbers.domain.entity
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class GameSettings(
 
     val maxSumValue: Int,
@@ -7,4 +11,5 @@ data class GameSettings(
     val minPercentOfRightAnswers: Int,
     val gameTimeInSeconds: Int,
 
-    )
+    ) : Parcelable
+
