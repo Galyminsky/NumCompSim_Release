@@ -32,10 +32,17 @@
             app:destination="@id/gameFinishedFragment"
             app:popUpTo="@id/gameFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="level"
+            app:argType="me.proton.jobforandroid.compositionofnumbers.domain.entity.Level" />
     </fragment>
     <fragment
         android:id="@+id/gameFinishedFragment"
         android:name="me.proton.jobforandroid.compositionofnumbers.presentation.GameFinishedFragment"
         android:label="fragment_game_finished"
-        tools:layout="@layout/fragment_game_finished" />
+        tools:layout="@layout/fragment_game_finished" >
+        <argument
+            android:name="gameResult"
+            app:argType="me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult" />
+    </fragment>
 </navigation>
