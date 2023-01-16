@@ -11,10 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentGameBinding
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult
-import me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
 
 class GameFragment : Fragment() {
 

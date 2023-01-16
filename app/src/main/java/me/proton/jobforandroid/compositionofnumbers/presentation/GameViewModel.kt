@@ -1,9 +1,7 @@
 package me.proton.jobforandroid.compositionofnumbers.presentation
 
 import android.app.Application
-import android.content.Context
 import android.os.CountDownTimer
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +13,7 @@ import me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
 import me.proton.jobforandroid.compositionofnumbers.domain.usecases.GenerateQuestionUseCase
 import me.proton.jobforandroid.compositionofnumbers.domain.usecases.GetGameSettingsUseCase
+
 class GameViewModel(
     private val application: Application,
     private val level: Level
