@@ -10,10 +10,8 @@ import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentWelcomeBinding
 
 class WelcomeFragment : Fragment() {
-
     private var _binding: FragmentWelcomeBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +41,4 @@ class WelcomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }
