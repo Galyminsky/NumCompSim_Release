@@ -44,5 +44,4 @@ class WelcomeFragment : Fragment() {
         _binding = null
     }
 
-
 }

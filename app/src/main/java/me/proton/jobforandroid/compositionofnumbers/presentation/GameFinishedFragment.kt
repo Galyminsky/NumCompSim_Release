@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentGameFinishedBinding
 
 class GameFinishedFragment : Fragment() {
@@ -24,15 +23,12 @@ class GameFinishedFragment : Fragment() {
     ): View {
         _binding = FragmentGameFinishedBinding.inflate(layoutInflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupClickListener()
-        bindViews()
-
+        binding.gameResult = args.gameResult
     }
 
     private fun setupClickListener() {
@@ -41,48 +37,9 @@ class GameFinishedFragment : Fragment() {
         }
     }
 
-    private fun bindViews() {
-        with(binding) {
-            emojiResult.setImageResource(getSmileResId())
-            tvRequiredAnswers.text = String.format(
-                getString(R.string.required_score),
-                args.gameResult.gameSettings.minCountOfRightAnswers
-            )
-            tvScoreAnswers.text = String.format(
-                getString(R.string.score_answers),
-                args.gameResult.countOfRightAnswers
-            )
-            tvRequiredPercentage.text = String.format(
-                getString(R.string.required_percentage),
-                args.gameResult.gameSettings.minPercentOfRightAnswers
-            )
-            tvScorePercentage.text = String.format(
-                getString(R.string.score_percentage),
-                getPercentOfRightAnswers()
-            )
-        }
-    }
-
-    private fun getSmileResId(): Int {
-        return if (args.gameResult.winner) {
-            R.drawable.ic_smile
-        } else {
-            R.drawable.ic_sad
-        }
-    }
-
-    private fun getPercentOfRightAnswers() = with(args.gameResult) {
-        if (countOfQuestions == 0) {
-            0
-        } else {
-            ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
-        }
-    }
-
     private fun retryGame() {
       findNavController().popBackStack()
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

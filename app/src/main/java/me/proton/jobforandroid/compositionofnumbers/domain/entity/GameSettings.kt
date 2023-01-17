@@ -12,4 +12,3 @@ data class GameSettings(
     val gameTimeInSeconds: Int,
 
     ) : Parcelable
-
