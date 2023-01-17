@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "609404540906",
+    "project_id": "numcompsim-73477",
+    "storage_bucket": "numcompsim-73477.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609404540906:android:f7c1273360aebcab4b4493",
+        "android_client_info": {
+          "package_name": "me.proton.jobforandroid.compositionofnumbers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609404540906-thv2sjbr4mf05ljd77l4gnrfc35cnk5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa7m1kkIZcMIi5Z_hyxjQLHiearffdGs4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609404540906-thv2sjbr4mf05ljd77l4gnrfc35cnk5g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

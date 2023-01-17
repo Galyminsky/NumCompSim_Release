@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Composition of Numbers</string>
+    <string name="app_name">NumCompSim</string>
 
     <string name="question_mark">\?</string>
     <string name="welcome_title">"Состав Числа - Тренажер"</string>
