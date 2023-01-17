@@ -10,7 +10,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:context=".presentation.ChooseLevelFragment">
 
@@ -24,6 +24,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/imgCub"
                 app:srcCompat="@drawable/cuub_1" />
 
             <TextView
@@ -102,6 +103,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_level_hard"
                 app:layout_constraintVertical_bias="0.748"
+                android:contentDescription="@string/imgGirl"
                 app:srcCompat="@drawable/girl_2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
