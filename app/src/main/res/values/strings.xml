@@ -2,11 +2,11 @@
     <string name="app_name">Composition of Numbers</string>
 
     <string name="question_mark">\?</string>
-    <string name="welcome_title">"Числовая Азбука для малышей"</string>
+    <string name="welcome_title">"Состав Числа - Тренажер"</string>
     <string name="game_rules">
         <b>Правила игры:</b> Перед тобой будут <b>3 картинки</b>, две ниже и одна вверху.
         В двух из них будут числа. Нужно сделать так,
-        чтобы сумма чисел из двух нижних картинок
+        чтобы <b>сумма чисел</b> из двух нижних картинок
         была такой же как число на верхней картинке.\n\n
         <b>Например</b>, если на верхней картинке число <b>7</b>,
         а на одной из нижних картинок <b>вопросительный знак</b>,
@@ -15,7 +15,7 @@
         потому что <b>3 + 4 = 7</b>.\n\n
         <b>Твоя задача - найти правильное число, чтобы сумма была верной!</b>"
     </string>
-    <string name="button_understand">OK</string>
+    <string name="button_understand">Я ГОТОВ!</string>
     <string name="welcome_logo">Welcome logo</string>
     <string name="choose_level_title">Выбери свой уровень сложности!</string>
     <string name="easy_level">Легкий (0-10)</string>
