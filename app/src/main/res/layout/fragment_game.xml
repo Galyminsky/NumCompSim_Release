@@ -2,7 +2,6 @@
 <layout>
 
     <data>
-
         <variable
             name="viewModel"
             type="me.proton.jobforandroid.compositionofnumbers.presentation.GameViewModel" />

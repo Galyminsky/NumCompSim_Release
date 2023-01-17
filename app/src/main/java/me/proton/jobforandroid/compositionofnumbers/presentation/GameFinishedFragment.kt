@@ -10,12 +10,9 @@ import androidx.navigation.fragment.navArgs
 import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentGameFinishedBinding
 
 class GameFinishedFragment : Fragment() {
-
     private val args by navArgs<GameFinishedFragmentArgs>()
-
     private var _binding: FragmentGameFinishedBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

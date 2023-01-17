@@ -12,9 +12,7 @@ import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentGameBind
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult
 
 class GameFragment : Fragment() {
-
     private val args by navArgs<GameFragmentArgs>()
-
     private val viewModelFactory by lazy {
         GameViewModelFactory(args.level, requireActivity().application)
     }
@@ -22,11 +20,9 @@ class GameFragment : Fragment() {
         ViewModelProvider(
             this, viewModelFactory)[GameViewModel::class.java]
     }
-
     private var _binding: FragmentGameBinding? = null
     private val binding: FragmentGameBinding
         get() = _binding ?: throw RuntimeException("FragmentGameBinding == null")
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,3 +56,4 @@ class GameFragment : Fragment() {
         )
     }
 }
+

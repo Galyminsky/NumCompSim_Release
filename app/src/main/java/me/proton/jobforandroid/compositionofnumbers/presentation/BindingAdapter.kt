@@ -45,7 +45,6 @@ fun bindScorePercentage(textView: TextView, gameResult: GameResult) {
         getPercentOfRightAnswers(gameResult)
     )
 }
-
 private fun getPercentOfRightAnswers(gameResult: GameResult) = with(gameResult) {
     if (countOfQuestions == 0) {
         0
@@ -53,12 +52,10 @@ private fun getPercentOfRightAnswers(gameResult: GameResult) = with(gameResult) 
         ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
     }
 }
-
 @BindingAdapter("resultEmoji")
 fun bindResultEmoji(imageView: ImageView, winner: Boolean) {
     imageView.setImageResource(getSmileResId(winner))
 }
-
 private fun getSmileResId(winner: Boolean): Int {
     return if (winner) {
         R.drawable.ic_smile
@@ -66,19 +63,15 @@ private fun getSmileResId(winner: Boolean): Int {
         R.drawable.ic_sad
     }
 }
-
 @BindingAdapter("enoughCount")
 fun bindEnoughCount(textView: TextView, enough: Boolean) {
     textView.setTextColor(getColorByState(textView.context, enough))
 }
-
 @BindingAdapter("enoughPercent")
 fun bindEnoughPercent(progressBar: ProgressBar, enough: Boolean) {
     val color = getColorByState(progressBar.context, enough)
     progressBar.progressTintList = ColorStateList.valueOf(color)
 }
-
-
 private fun getColorByState(context: Context, goodState: Boolean): Int {
     val colorResId = if (goodState) {
         android.R.color.holo_green_light
@@ -87,12 +80,10 @@ private fun getColorByState(context: Context, goodState: Boolean): Int {
     }
     return ContextCompat.getColor(context, colorResId)
 }
-
 @BindingAdapter("numberAsText")
 fun bindNumberAsText(textView: TextView, number: Int) {
     textView.text = number.toString()
 }
-
 @BindingAdapter("onOptionClickListener")
 fun bindOnOptionClickListener(textView: TextView, clickListener: OnOptionClickListener) {
     textView.setOnClickListener {
