@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NumCompSim</string>
+
+    <string name="question_mark">\?</string>
+    <string name="welcome_title">"Composition Numbers - Trainer"</string>
+    <string name="game_rules">
+       <b>The rules of the game:</b> Before you will be <b>3</b> pictures, two below and one above.
+        In two of them there will be numbers. You need to make sure that the <b>sum of the
+        numbers</b> from the two bottom pictures is the same as
+        the number on the top picture.\n\n <b>For example</b>, if the number <b>7</b> is on the top picture,
+        and a question mark is on one of the bottom pictures and the number <b>4</b> is on the other,
+        we must understand that the number <b>3</b> should be in the place of
+        the question mark, because <b>3 + 4 = 7</b>.\n\n
+        <b>Your task is to find the correct number so that the sum is correct!</b>"
+    </string>
+    <string name="button_understand">I\'M READY!</string>
+    <string name="welcome_logo">Welcome logo</string>
+    <string name="choose_level_title">Choose your level of difficulty!</string>
+    <string name="easy_level">Easy (0-10)</string>
+    <string name="normal_level">Normal (0-20)</string>
+    <string name="hard_level">Hard (0-30)</string>
+    <string name="test_level">Test</string>
+    <string name="game_over">Game Over</string>
+    <string name="score_answers">Your score: %s</string>
+    <string name="score_percentage">Percentage of correct answers: %s</string>
+    <string name="retry">Try again</string>
+    <string name="right_answers">Correct answers are %s out of %s needed</string>
+    <string name="required_percentage">The required percentage of correct answers: %s</string>
+    <string name="required_score">The required number of correct answers: %s</string>
+    <string name="progress_answers">Correct answers %s (minimum %s)</string>
+</resources>
