@@ -1,21 +1,26 @@
 <resources>
-    <string name="app_name">Composition of Numbers</string>
+    <string name="app_name">NumCompSim</string>
 
     <string name="question_mark">\?</string>
-    <string name="welcome_title">Состав числа</string>
+    <string name="welcome_title">"Состав Числа - Тренажер"</string>
     <string name="game_rules">
-        Правила игры: перед вами будет три фигуры, две снизу и одна сверху, в двух из них будут
-        числа. Необходимо, чтобы сумма чисел из двух нижних фигур была равна числу в верхней фигуре,
-        для этого нужно вставить недостающее число.\n\nПример: в верхнем круге число 7, в одном
-        из нижних знак вопроса, а в другом число 4. Значит на месте вопросительного знака должно
-        быть число 3, потому что 3 + 4 = 7
+        <b>Правила игры:</b> Перед тобой будут <b>3 картинки</b>, две ниже и одна вверху.
+        В двух из них будут числа. Нужно сделать так,
+        чтобы <b>сумма чисел</b> из двух нижних картинок
+        была такой же как число на верхней картинке.\n\n
+        <b>Например</b>, если на верхней картинке число <b>7</b>,
+        а на одной из нижних картинок <b>вопросительный знак</b>,
+        а на другой - число <b>4</b>, то мы должны понимать,
+        что на месте вопросительного знака должно быть число <b>3</b>,
+        потому что <b>3 + 4 = 7</b>.\n\n
+        <b>Твоя задача - найти правильное число, чтобы сумма была верной!</b>"
     </string>
-    <string name="button_understand">Понятно</string>
+    <string name="button_understand">Я ГОТОВ!</string>
     <string name="welcome_logo">Welcome logo</string>
-    <string name="choose_level_title">Выберите уровень:</string>
-    <string name="easy_level">Легкий</string>
-    <string name="normal_level">Средний</string>
-    <string name="hard_level">Тяжелый</string>
+    <string name="choose_level_title">Выбери свой уровень сложности!</string>
+    <string name="easy_level">Легкий (0-10)</string>
+    <string name="normal_level">Средний (0-20)</string>
+    <string name="hard_level">Тяжелый (0-30)</string>
     <string name="test_level">Тестовый</string>
     <string name="game_over">Game Over</string>
     <string name="score_answers">Ваш счет: %s</string>

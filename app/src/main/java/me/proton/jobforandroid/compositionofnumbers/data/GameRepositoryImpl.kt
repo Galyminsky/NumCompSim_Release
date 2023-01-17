@@ -48,7 +48,7 @@ object GameRepositoryImpl: GameRepository  {
                     20,
                     20,
                     80,
-                    40
+                    45
                 )
             }
             Level.HARD -> {
@@ -56,7 +56,7 @@ object GameRepositoryImpl: GameRepository  {
                     30,
                     30,
                     90,
-                    40
+                    60
                 )
             }
         }
