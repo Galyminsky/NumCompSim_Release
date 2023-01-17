@@ -47,6 +47,7 @@
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/choose_button"
                 android:text="@string/test_level"
+                app:cornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="@+id/tv_title"
                 app:layout_constraintStart_toStartOf="@+id/tv_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title" />
@@ -58,6 +59,7 @@
                 android:layout_marginTop="15dp"
                 android:backgroundTint="@android:color/holo_green_light"
                 android:text="@string/easy_level"
+                app:cornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="@+id/button_level_test"
                 app:layout_constraintStart_toStartOf="@+id/button_level_test"
                 app:layout_constraintTop_toBottomOf="@+id/button_level_test" />
@@ -69,6 +71,7 @@
                 android:layout_marginTop="15dp"
                 android:backgroundTint="@android:color/holo_orange_light"
                 android:text="@string/normal_level"
+                app:cornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="@+id/button_level_test"
                 app:layout_constraintStart_toStartOf="@+id/button_level_test"
                 app:layout_constraintTop_toBottomOf="@+id/button_level_easy" />
@@ -80,6 +83,7 @@
                 android:layout_marginTop="15dp"
                 android:backgroundTint="@android:color/holo_red_light"
                 android:text="@string/hard_level"
+                app:cornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="@+id/button_level_test"
                 app:layout_constraintStart_toStartOf="@+id/button_level_test"
                 app:layout_constraintTop_toBottomOf="@+id/button_level_normal" />
