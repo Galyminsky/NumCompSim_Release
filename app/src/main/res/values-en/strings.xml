@@ -18,9 +18,9 @@
     <string name="button_understand">I\'M READY!</string>
     <string name="welcome_logo">Welcome logo</string>
     <string name="choose_level_title">Choose your level of difficulty!</string>
-    <string name="easy_level">Easy (0-10)</string>
-    <string name="normal_level">Normal (0-20)</string>
-    <string name="hard_level">Hard (0-30)</string>
+    <string name="easy_level">Easy (0–10)</string>
+    <string name="normal_level">Normal (0–20)</string>
+    <string name="hard_level">Hard (0–30)</string>
     <string name="test_level">Test</string>
     <string name="game_over">Game Over</string>
     <string name="score_answers">Your score: %s</string>
@@ -30,4 +30,9 @@
     <string name="required_percentage">The required percentage of correct answers: %s</string>
     <string name="required_score">The required number of correct answers: %s</string>
     <string name="progress_answers">Correct answers %s (minimum %s)</string>
+    <string name="imgCub">imgCub</string>
+    <string name="imgGirl">imgGirl</string>
+    <string name="imgBack">imgBack</string>
+    <string name="equal">=</string>
+    <string name="plus">+</string>
 </resources>

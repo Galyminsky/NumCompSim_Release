@@ -18,9 +18,9 @@
     <string name="button_understand">Я ГОТОВ!</string>
     <string name="welcome_logo">Welcome logo</string>
     <string name="choose_level_title">Выбери свой уровень сложности!</string>
-    <string name="easy_level">Легкий (0-10)</string>
-    <string name="normal_level">Средний (0-20)</string>
-    <string name="hard_level">Тяжелый (0-30)</string>
+    <string name="easy_level">Легкий (0–10)</string>
+    <string name="normal_level">Средний (0–20)</string>
+    <string name="hard_level">Тяжелый (0–30)</string>
     <string name="test_level">Тестовый</string>
     <string name="game_over">Game Over</string>
     <string name="score_answers">Ваш счет: %s</string>
@@ -30,5 +30,10 @@
     <string name="required_percentage">Необходимый процент правильных ответов: %s</string>
     <string name="required_score">Необходимое количество правильных ответов: %s</string>
     <string name="progress_answers">Правильных ответов %s (минимум %s)</string>
+    <string name="imgCub" translatable="false">imgCub</string>
+    <string name="imgGirl" translatable="false">imgGirl</string>
+    <string name="imgBack" translatable="false">imgBack</string>
+    <string name="equal">=</string>
+    <string name="plus">+</string>
 
 </resources>
