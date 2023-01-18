@@ -53,10 +53,10 @@ object GameRepositoryImpl: GameRepository  {
             }
             Level.HARD -> {
                 GameSettings (
-                    30,
+                    50,
                     30,
                     90,
-                    60
+                    90
                 )
             }
         }
