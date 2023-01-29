@@ -15,6 +15,18 @@
             tools:context=".presentation.ChooseLevelFragment">
 
             <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:alpha="0.5"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/frame_7" />
+
+            <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
@@ -91,19 +103,19 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="230dp"
-                android:layout_height="150dp"
+                android:layout_width="250dp"
+                android:layout_height="160dp"
                 android:layout_marginStart="72dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="72dp"
                 android:layout_marginBottom="5dp"
+                android:contentDescription="@string/imgGirl"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.473"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_level_hard"
                 app:layout_constraintVertical_bias="0.748"
-                android:contentDescription="@string/imgGirl"
                 app:srcCompat="@drawable/girl_2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

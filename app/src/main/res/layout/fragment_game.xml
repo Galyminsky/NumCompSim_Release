@@ -17,8 +17,31 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".presentation.GameFragment">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:alpha="0.5"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/frame_7" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_timer"
+                app:layout_constraintEnd_toStartOf="@+id/tv_timer"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_timer"
+                app:srcCompat="@drawable/timer_6" />
 
             <TextView
                 android:id="@+id/tv_timer"
@@ -27,9 +50,10 @@
                 android:layout_margin="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@{viewModel.formattedTime}"
-                android:textColor="@color/holo_green_light"
+                android:textColor="@color/black"
                 android:textSize="50sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.56"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="00:00" />
@@ -183,26 +207,26 @@
                 app:layout_constraintBottom_toTopOf="@+id/progress_bar"
                 app:layout_constraintEnd_toEndOf="@+id/tv_sum"
                 app:layout_constraintStart_toStartOf="@+id/tv_sum"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/imageView6"
                 app:layout_constraintVertical_chainStyle="spread"
                 tools:text="@string/progress_answers" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:max="100"
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:max="100"
 
-            android:progress="@{viewModel.percentOfRightAnswers}"
-            android:secondaryProgress="@{viewModel.minPercent}"
-            android:secondaryProgressTint="@android:color/background_dark"
-            app:enoughPercent="@{viewModel.enoughPercent}"
-            app:layout_constraintBottom_toTopOf="@+id/tv_option_2"
-            app:layout_constraintEnd_toEndOf="@+id/tv_question"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tv_left_number" />
+                android:progress="@{viewModel.percentOfRightAnswers}"
+                android:secondaryProgress="@{viewModel.minPercent}"
+                android:secondaryProgressTint="@android:color/background_dark"
+                app:enoughPercent="@{viewModel.enoughPercent}"
+                app:layout_constraintBottom_toTopOf="@+id/tv_option_2"
+                app:layout_constraintEnd_toEndOf="@+id/tv_question"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tv_left_number" />
 
             <TextView
                 android:id="@+id/tv_equal"
@@ -234,15 +258,14 @@
                 app:layout_constraintVertical_bias="0.586" />
 
             <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="150dp"
+                android:id="@+id/imageView6"
+                android:layout_width="200dp"
                 android:layout_height="150dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="@+id/tv_question"
-                app:layout_constraintStart_toStartOf="@+id/tv_left_number"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_left_number"
-                app:srcCompat="@drawable/questions"
-                android:contentDescription="@string/imgBack" />
+                app:srcCompat="@drawable/girl_qes" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
