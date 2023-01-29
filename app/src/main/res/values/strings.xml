@@ -2,6 +2,7 @@
     <string name="app_name">NumCompSim</string>
 
     <string name="question_mark">\?</string>
+    <string translatable="false"  name="game_services_project_id">609404540906</string>
     <string name="welcome_title">"Состав Числа - Тренажер"</string>
     <string name="game_rules">
         <b>Правила игры:</b> Перед тобой будут <b>3 картинки</b>, две ниже и одна вверху.
