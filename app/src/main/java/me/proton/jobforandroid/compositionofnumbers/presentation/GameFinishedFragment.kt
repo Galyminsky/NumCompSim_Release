@@ -17,6 +17,8 @@ class GameFinishedFragment : Fragment() {
     private var successBinding: NcsV2ResultSuccessBinding? = null
     private var failureBinding: NcsV2ResultFailureBinding? = null
     private var retryNavigationStarted = false
+    private var sounds: UiSoundPool? = null
+    private var resultSoundTriggered = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +36,19 @@ class GameFinishedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val result = args.gameResult
+        sounds = UiSoundPool(
+            requireContext(), R.raw.key_press,
+            if (result.winner) R.raw.game_win else R.raw.game_lose
+        )
+        resultSoundTriggered = resultSoundTriggered ||
+            (savedInstanceState?.getBoolean(RESULT_SOUND_TRIGGERED) == true)
+        if (!resultSoundTriggered) {
+            resultSoundTriggered = true
+            sounds?.play(if (result.winner) R.raw.game_win else R.raw.game_lose)
+        }
         successBinding?.apply {
+            ncsV2ResultPlayAgainButton.installButtonPressAnimation()
+            ncsV2ResultChooseLevelButton.installButtonPressAnimation()
             gameResult = result
             levelLabel = getString(levelNameResId(selectedLevel()))
             correctAnswerText = result.countOfRightAnswers.toString()
@@ -46,6 +60,8 @@ class GameFinishedFragment : Fragment() {
             ncsV2ResultChooseLevelButton.setOnClickListener { returnToLevel() }
         }
         failureBinding?.apply {
+            ncsV2ResultFailureRetryButton.installButtonPressAnimation()
+            ncsV2ResultFailureChooseLevelButton.installButtonPressAnimation()
             val requiredCount = result.gameSettings.minCountOfRightAnswers
             val requiredAccuracy = result.gameSettings.minPercentOfRightAnswers
             val accuracy = calculatePercentOfRightAnswers(
@@ -100,6 +116,7 @@ class GameFinishedFragment : Fragment() {
         val navController = findNavController()
         if (navController.currentDestination?.id != R.id.gameFinishedFragment) return
         val level = selectedLevel()
+        sounds?.play(R.raw.key_press)
         retryNavigationStarted = true
         if (navController.popBackStack(R.id.chooseLevelFragment2, false)) {
             navController.navigate(
@@ -114,11 +131,27 @@ class GameFinishedFragment : Fragment() {
         if (retryNavigationStarted) return
         val navController = findNavController()
         if (navController.currentDestination?.id != R.id.gameFinishedFragment) return
+        sounds?.play(R.raw.key_press)
         retryNavigationStarted = true
         navController.popBackStack()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean(RESULT_SOUND_TRIGGERED, resultSoundTriggered)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onDestroyView() {
+        successBinding?.apply {
+            ncsV2ResultPlayAgainButton.cancelButtonPressAnimation()
+            ncsV2ResultChooseLevelButton.cancelButtonPressAnimation()
+        }
+        failureBinding?.apply {
+            ncsV2ResultFailureRetryButton.cancelButtonPressAnimation()
+            ncsV2ResultFailureChooseLevelButton.cancelButtonPressAnimation()
+        }
+        sounds?.release()
+        sounds = null
         super.onDestroyView()
         successBinding = null
         failureBinding = null
@@ -126,5 +159,6 @@ class GameFinishedFragment : Fragment() {
 
     companion object {
         private const val SELECTED_LEVEL_KEY = "ncs_v2_selected_level"
+        private const val RESULT_SOUND_TRIGGERED = "ncs_v2_result_sound_triggered"
     }
 }

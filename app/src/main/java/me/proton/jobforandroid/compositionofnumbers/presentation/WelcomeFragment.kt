@@ -14,6 +14,7 @@ import me.proton.jobforandroid.compositionofnumbers.databinding.NcsV2AdditionInt
 class WelcomeFragment : Fragment() {
     private var _binding: NcsV2AdditionIntroBinding? = null
     private val binding get() = _binding!!
+    private var sounds: UiSoundPool? = null
     private lateinit var analytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +34,8 @@ class WelcomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sounds = UiSoundPool(requireContext(), R.raw.key_press)
+        binding.ncsV2ReadyButton.installButtonPressAnimation()
         binding.ncsV2ReadyButton.setOnClickListener {
             launchChooseLevelFragment()
         }
@@ -41,6 +44,7 @@ class WelcomeFragment : Fragment() {
     private fun launchChooseLevelFragment() {
        val navController = findNavController()
        if (navController.currentDestination?.id != R.id.welcomeFragment) return
+       sounds?.play(R.raw.key_press)
        navController.navigate(R.id.action_welcomeFragment_to_chooseLevelFragment2)
     }
 
@@ -50,6 +54,9 @@ class WelcomeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        binding.ncsV2ReadyButton.cancelButtonPressAnimation()
+        sounds?.release()
+        sounds = null
         super.onDestroyView()
         _binding = null
     }

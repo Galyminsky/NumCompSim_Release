@@ -12,6 +12,7 @@ import me.proton.jobforandroid.compositionofnumbers.databinding.NcsV2WelcomeBind
 class NcsV2WelcomeFragment : Fragment() {
     private var _binding: NcsV2WelcomeBinding? = null
     private val binding get() = _binding!!
+    private var sounds: UiSoundPool? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,15 +25,21 @@ class NcsV2WelcomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sounds = UiSoundPool(requireContext(), R.raw.key_press)
+        binding.ncsV2ChooseLessonButton.installButtonPressAnimation()
         binding.ncsV2ChooseLessonButton.setOnClickListener {
             val navController = findNavController()
             if (navController.currentDestination?.id == R.id.ncsV2WelcomeFragment) {
+                sounds?.play(R.raw.key_press)
                 navController.navigate(R.id.action_ncsV2WelcomeFragment_to_ncsV2LessonSelectionFragment)
             }
         }
     }
 
     override fun onDestroyView() {
+        binding.ncsV2ChooseLessonButton.cancelButtonPressAnimation()
+        sounds?.release()
+        sounds = null
         super.onDestroyView()
         _binding = null
     }

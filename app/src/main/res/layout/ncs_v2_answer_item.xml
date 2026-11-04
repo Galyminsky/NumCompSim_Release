@@ -17,7 +17,7 @@
         android:id="@+id/ncs_v2_answer_root"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ncs_v2_answer_height"
-        android:background="@{!enabled ? @drawable/ncs_v2_answer_card : incorrect ? @drawable/ncs_v2_answer_incorrect : correct ? @drawable/ncs_v2_answer_selected : @drawable/ncs_v2_answer_card}"
+        android:background="@{correct ? @drawable/ncs_v2_answer_correct : incorrect ? @drawable/ncs_v2_answer_wrong : @drawable/ncs_v2_answer_card}"
         android:enabled="@{enabled}"
         android:pressed="@{pressed}">
 
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@{!enabled ? @color/ncs_v2_muted : incorrect ? @color/ncs_v2_ink : (correct || pressed) ? @color/ncs_v2_surface : @color/ncs_v2_ink}"
+                android:textColor="@{correct || incorrect ? @color/ncs_v2_surface : @color/ncs_v2_ink}"
                 app:numberAsText="@{answerValue}"
                 tools:text="3" />
 
@@ -44,10 +44,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@{!enabled ? @string/ncs_v2_unavailable : incorrect ? @string/ncs_v2_wrong_badge : correct ? @string/ncs_v2_correct_badge : @string/ncs_v2_pressed}"
-                android:textColor="@{!enabled ? @color/ncs_v2_muted : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_surface}"
+                android:text="@{incorrect ? @string/ncs_v2_wrong_badge : correct ? @string/ncs_v2_correct_badge : @string/ncs_v2_pressed}"
+                android:textColor="@color/ncs_v2_surface"
                 android:textSize="@dimen/ncs_v2_text_12"
-                android:visibility="@{!enabled || incorrect || correct || pressed ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{incorrect || correct ? View.VISIBLE : View.GONE}" />
         </LinearLayout>
     </FrameLayout>
 </layout>

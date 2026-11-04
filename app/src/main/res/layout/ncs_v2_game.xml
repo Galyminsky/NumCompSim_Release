@@ -135,7 +135,7 @@
                         android:layout_weight="1"
                         app:answerValue="@{displayedQuestion.options[0]}"
                         app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 0}"
-                        app:enabled="@{true}"
+                        app:enabled="@{!feedbackVisible}"
                         app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 0}"
                         app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 0}" />
 
@@ -148,7 +148,7 @@
                         android:layout_weight="1"
                         app:answerValue="@{displayedQuestion.options[1]}"
                         app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 1}"
-                        app:enabled="@{true}"
+                        app:enabled="@{!feedbackVisible}"
                         app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 1}"
                         app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 1}" />
 
@@ -160,7 +160,7 @@
                         android:layout_weight="1"
                         app:answerValue="@{displayedQuestion.options[2]}"
                         app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 2}"
-                        app:enabled="@{true}"
+                        app:enabled="@{!feedbackVisible}"
                         app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 2}"
                         app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 2}" />
                 </LinearLayout>
@@ -180,7 +180,7 @@
                         android:layout_weight="1"
                         app:answerValue="@{displayedQuestion.options[3]}"
                         app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 3}"
-                        app:enabled="@{true}"
+                        app:enabled="@{!feedbackVisible}"
                         app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 3}"
                         app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 3}" />
 
@@ -193,7 +193,7 @@
                         android:layout_weight="1"
                         app:answerValue="@{displayedQuestion.options[4]}"
                         app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 4}"
-                        app:enabled="@{true}"
+                        app:enabled="@{!feedbackVisible}"
                         app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 4}"
                         app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 4}" />
 
@@ -205,7 +205,7 @@
                         android:layout_weight="1"
                         app:answerValue="@{displayedQuestion.options[5]}"
                         app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 5}"
-                        app:enabled="@{true}"
+                        app:enabled="@{!feedbackVisible}"
                         app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 5}"
                         app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 5}" />
                 </LinearLayout>

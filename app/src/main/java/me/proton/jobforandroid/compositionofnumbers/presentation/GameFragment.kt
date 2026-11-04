@@ -27,12 +27,16 @@ class GameFragment : Fragment() {
     private val binding: NcsV2GameBinding
         get() = _binding ?: throw RuntimeException("NcsV2GameBinding == null")
     private var showingFeedback = false
+    private var sounds: UiSoundPool? = null
     private var queuedQuestion: Question? = null
     private val showNextQuestion = Runnable {
+        if (viewModel.gameResult.value != null ||
+            findNavController().currentDestination?.id != R.id.gameFragment) return@Runnable
         _binding?.let { gameBinding ->
             queuedQuestion?.let { gameBinding.displayedQuestion = it }
             gameBinding.feedbackVisible = false
             gameBinding.selectedOptionIndex = -1
+            answerViews().forEach { it.scaleX = 1f; it.scaleY = 1f }
         }
         queuedQuestion = null
         showingFeedback = false
@@ -48,6 +52,8 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sounds = UiSoundPool(requireContext(), R.raw.key_press, R.raw.answer_correct, R.raw.answer_wrong)
+        binding.ncsV2GameBackButton.installButtonPressAnimation()
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         binding.levelContext = getString(
@@ -63,6 +69,7 @@ class GameFragment : Fragment() {
         binding.ncsV2GameBackButton.setOnClickListener {
             val navController = findNavController()
             if (navController.currentDestination?.id == R.id.gameFragment) {
+                sounds?.play(R.raw.key_press)
                 navController.popBackStack()
             }
         }
@@ -85,11 +92,29 @@ class GameFragment : Fragment() {
         binding.ncsV2GameAnswer6.root.setOnClickListener { chooseAnswer(5) }
     }
 
+    private fun answerViews(): List<View> = listOf(
+        binding.ncsV2GameAnswer1.root, binding.ncsV2GameAnswer2.root,
+        binding.ncsV2GameAnswer3.root, binding.ncsV2GameAnswer4.root,
+        binding.ncsV2GameAnswer5.root, binding.ncsV2GameAnswer6.root
+    )
+
     private fun chooseAnswer(optionIndex: Int) {
-        if (showingFeedback || findNavController().currentDestination?.id != R.id.gameFragment) return
+        if (showingFeedback || viewModel.gameResult.value != null ||
+            findNavController().currentDestination?.id != R.id.gameFragment) return
         val question = binding.displayedQuestion ?: return
         val answer = question.options.getOrNull(optionIndex) ?: return
+        sounds?.play(if (answer == question.rightAnswer) R.raw.answer_correct else R.raw.answer_wrong)
         showingFeedback = true
+        answerViews()[optionIndex].animate()
+            .scaleX(0.96f).scaleY(0.96f)
+            .setDuration(ANIMATION_HALF_MS)
+            .withEndAction {
+                if (_binding != null) {
+                    val selected = answerViews()[optionIndex]
+                    selected.animate().scaleX(1f).scaleY(1f)
+                        .setDuration(ANIMATION_HALF_MS).start()
+                }
+            }.start()
         binding.selectedOptionIndex = optionIndex
         binding.feedbackCorrect = answer == question.rightAnswer
         binding.feedbackVisible = true
@@ -106,11 +131,21 @@ class GameFragment : Fragment() {
             }
         }
         viewModel.gameResult.observe(viewLifecycleOwner) {
+            binding.root.removeCallbacks(showNextQuestion)
+            answerViews().forEach { answer -> answer.animate().cancel() }
             launchGameFinishedFragment(it)
         }
     }
 
     override fun onDestroyView() {
+        binding.ncsV2GameBackButton.cancelButtonPressAnimation()
+        answerViews().forEach { answer ->
+            answer.animate().cancel()
+            answer.scaleX = 1f
+            answer.scaleY = 1f
+        }
+        sounds?.release()
+        sounds = null
         binding.root.removeCallbacks(showNextQuestion)
         queuedQuestion = null
         showingFeedback = false
@@ -126,7 +161,8 @@ class GameFragment : Fragment() {
     }
 
     companion object {
-        private const val FEEDBACK_DISPLAY_MS = 600L
+        private const val FEEDBACK_DISPLAY_MS = 500L
+        private const val ANIMATION_HALF_MS = 60L
     }
 }
 
