@@ -63,6 +63,8 @@ class ChooseLevelFragment : Fragment() {
     private fun launchGameFragment(level: Level) {
         val navController = findNavController()
         if (navController.currentDestination?.id != R.id.chooseLevelFragment2) return
+        requireNotNull(navController.currentBackStackEntry)
+            .savedStateHandle.set(SELECTED_LEVEL_KEY, level)
         navController.navigate(
             ChooseLevelFragmentDirections.actionChooseLevelFragment2ToGameFragment(level))
     }

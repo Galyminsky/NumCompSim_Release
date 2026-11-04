@@ -15,7 +15,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ncs_v2_level_height"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/ncs_v2_level_height"
         android:background="@drawable/ncs_v2_level_card"
         android:enabled="@{enabled}"
         android:gravity="center_vertical"

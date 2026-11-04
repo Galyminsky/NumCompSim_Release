@@ -38,7 +38,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/ncs_v2_feedback_height"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/ncs_v2_feedback_height"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="@dimen/ncs_v2_space_18"
@@ -65,14 +66,16 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/ncs_v2_feedback_height"
                     android:layout_marginStart="@dimen/ncs_v2_space_12"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/ncs_v2_metric_value_row_height"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/ncs_v2_metric_value_row_height"
                         android:baselineAligned="true"
                         android:gravity="bottom"
                         android:orientation="horizontal">
@@ -102,7 +105,8 @@
                         android:id="@+id/ncs_v2_metric_target"
                         style="@style/TextAppearance.NcsV2"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/ncs_v2_metric_status_height"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/ncs_v2_metric_status_height"
                         android:layout_marginTop="@dimen/ncs_v2_metric_text_gap"
                         android:text="@{targetStatusText}"
                         android:textColor="@{achieved ? @color/ncs_v2_success : @color/ncs_v2_warm_ink}"

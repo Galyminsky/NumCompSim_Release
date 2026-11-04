@@ -88,22 +88,25 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="wrap_content"
+            android:minHeight="210dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="218dp"
+                android:layout_width="0dp"
                 android:layout_height="194dp"
+                android:layout_weight="218"
                 android:contentDescription="@null"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:src="@drawable/brain" />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="108dp"
+                android:layout_height="wrap_content"
+                android:minHeight="108dp"
                 android:layout_marginStart="@dimen/ncs_v2_space_8"
-                android:layout_weight="1"
+                android:layout_weight="128"
                 android:background="@drawable/ncs_v2_welcome_speech"
                 android:gravity="center_vertical"
                 android:orientation="vertical"

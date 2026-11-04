@@ -106,7 +106,7 @@
                     android:id="@+id/ncs_v2_addition_item"
                     layout="@layout/ncs_v2_lesson_item"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/ncs_v2_lesson_available_height"
+                    android:layout_height="wrap_content"
                     app:available="@{true}"
                     app:symbol="@{@string/ncs_v2_math_plus}"
                     app:title="@{@string/ncs_v2_addition}" />
@@ -115,7 +115,7 @@
                     android:id="@+id/ncs_v2_subtraction_item"
                     layout="@layout/ncs_v2_lesson_item"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/ncs_v2_lesson_coming_soon_height"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
                     app:available="@{false}"
                     app:symbol="@{@string/ncs_v2_math_minus}"
@@ -125,7 +125,7 @@
                     android:id="@+id/ncs_v2_multiplication_item"
                     layout="@layout/ncs_v2_lesson_item"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/ncs_v2_lesson_coming_soon_height"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
                     app:available="@{false}"
                     app:symbol="@{@string/ncs_v2_math_multiply}"
@@ -135,17 +135,21 @@
                     android:id="@+id/ncs_v2_division_item"
                     layout="@layout/ncs_v2_lesson_item"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/ncs_v2_lesson_coming_soon_height"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
                     app:available="@{false}"
                     app:symbol="@{@string/ncs_v2_math_divide}"
                     app:title="@{@string/ncs_v2_division}" />
             </LinearLayout>
 
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:gravity="bottom"
                 android:orientation="vertical">
 

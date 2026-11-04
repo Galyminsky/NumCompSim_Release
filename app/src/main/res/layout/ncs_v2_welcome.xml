@@ -4,17 +4,23 @@
 
     <data />
 
-<LinearLayout
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ncs_v2_notebook_background"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
+    android:fillViewport="true"
+    android:overScrollMode="never"
     android:paddingStart="@dimen/ncs_v2_space_24"
     android:paddingTop="@dimen/ncs_v2_space_8"
     android:paddingEnd="@dimen/ncs_v2_space_24"
     android:paddingBottom="@dimen/ncs_v2_space_24"
     tools:context=".presentation.NcsV2WelcomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -164,5 +170,6 @@
                 android:textColor="@color/ncs_v2_surface" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
 </layout>

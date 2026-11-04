@@ -3,8 +3,11 @@ package me.proton.jobforandroid.compositionofnumbers
 import me.proton.jobforandroid.compositionofnumbers.data.GameRepositoryImpl
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.GameSettings
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
+import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
+import me.proton.jobforandroid.compositionofnumbers.domain.repository.GameRepository
 import me.proton.jobforandroid.compositionofnumbers.domain.usecases.GenerateQuestionUseCase
 import me.proton.jobforandroid.compositionofnumbers.domain.usecases.GetGameSettingsUseCase
+import me.proton.jobforandroid.compositionofnumbers.presentation.calculatePercentOfRightAnswers
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
@@ -13,6 +16,46 @@ import org.junit.Test
 class GameRepositoryTest {
     private val getSettings = GetGameSettingsUseCase(GameRepositoryImpl)
     private val generateQuestion = GenerateQuestionUseCase(GameRepositoryImpl)
+
+    @Test
+    fun questionComputesCorrectAnswerAtRangeBoundaries() {
+        assertEquals(0, Question(0, 0, listOf(0, 1, 2, 3, 4, 5)).rightAnswer)
+        assertEquals(10, Question(10, 0, listOf(10, 0, 1, 2, 3, 4)).rightAnswer)
+        assertEquals(0, Question(10, 10, listOf(0, 1, 2, 3, 4, 5)).rightAnswer)
+    }
+
+    @Test
+    fun generateUseCasePassesEachLevelMaximumAndRequestsSixOptions() {
+        val calls = mutableListOf<Pair<Int, Int>>()
+        val repository = object : GameRepository {
+            override fun getGameSettings(level: Level): GameSettings = GameRepositoryImpl.getGameSettings(level)
+            override fun generateQuestion(maxSumValue: Int, countOfOptions: Int): Question {
+                calls += maxSumValue to countOfOptions
+                return Question(0, 0, listOf(0, 1, 2, 3, 4, 5))
+            }
+        }
+        val useCase = GenerateQuestionUseCase(repository)
+        for (level in Level.entries) {
+            assertEquals(6, useCase(getSettings(level).maxSumValue).options.size)
+        }
+        assertEquals(listOf(10 to 6, 10 to 6, 20 to 6, 30 to 6), calls)
+    }
+
+    @Test
+    fun accuracyTruncationRespectsEachLevelThresholdBoundary() {
+        val cases = listOf(
+            Triple(Level.TEST, 3 to 6, 2 to 6),
+            Triple(Level.EASY, 7 to 10, 6 to 10),
+            Triple(Level.NORMAL, 8 to 10, 7 to 10),
+            Triple(Level.HARD, 9 to 10, 8 to 10)
+        )
+        for ((level, atThreshold, belowThreshold) in cases) {
+            val target = getSettings(level).minPercentOfRightAnswers
+            assertEquals(target, calculatePercentOfRightAnswers(atThreshold.first, atThreshold.second))
+            assertTrue(calculatePercentOfRightAnswers(belowThreshold.first, belowThreshold.second) < target)
+        }
+        assertEquals(66, calculatePercentOfRightAnswers(2, 3))
+    }
 
     @Test
     fun settingsMatchEveryLevel() {

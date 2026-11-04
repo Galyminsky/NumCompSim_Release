@@ -12,27 +12,22 @@
         <variable name="accuracyAchieved" type="boolean" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ncs_v2_notebook_background"
         android:fitsSystemWindows="true"
-        android:orientation="vertical">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:fillViewport="true"
-            android:overScrollMode="never"
-            android:paddingStart="@dimen/ncs_v2_space_24"
-            android:paddingTop="@dimen/ncs_v2_space_8"
-            android:paddingEnd="@dimen/ncs_v2_space_24">
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingStart="@dimen/ncs_v2_space_24"
+            android:paddingTop="@dimen/ncs_v2_space_8"
+            android:paddingEnd="@dimen/ncs_v2_space_24"
+            android:paddingBottom="@dimen/ncs_v2_space_24">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -116,7 +111,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="181dp"
+                android:layout_height="wrap_content"
+                android:minHeight="181dp"
                 android:background="@drawable/ncs_v2_panel"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/ncs_v2_space_18"
@@ -126,7 +122,7 @@
                     android:id="@+id/ncs_v2_result_correct_metric"
                     layout="@layout/ncs_v2_metric_item"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/ncs_v2_feedback_height"
+                    android:layout_height="wrap_content"
                     android:theme="@style/NcsV2MetricPreviewFailureCorrect"
                     app:achieved="@{countAchieved}"
                     app:label="@{@string/ncs_v2_correct_answers_label}"
@@ -146,7 +142,7 @@
                     android:id="@+id/ncs_v2_result_accuracy_metric"
                     layout="@layout/ncs_v2_metric_item"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/ncs_v2_feedback_height"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ncs_v2_space_16"
                     android:theme="@style/NcsV2MetricPreviewFailureAccuracy"
                     app:achieved="@{accuracyAchieved}"
@@ -174,15 +170,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="40" />
 
-        </LinearLayout>
-        </ScrollView>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            android:layout_marginStart="@dimen/ncs_v2_space_24"
-            android:layout_marginEnd="@dimen/ncs_v2_space_24"
-            android:layout_marginBottom="@dimen/ncs_v2_space_24"
             android:orientation="vertical">
 
                 <LinearLayout
@@ -223,5 +213,6 @@
                     android:textColor="@color/ncs_v2_primary"
                     android:textSize="@dimen/ncs_v2_text_20" />
         </LinearLayout>
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </layout>
