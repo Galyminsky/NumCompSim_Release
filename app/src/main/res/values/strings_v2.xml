@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ncs_v2_brand">NumCompSim</string>
+    <string name="ncs_v2_brand_subtitle">Тренажёр состава числа</string>
+    <string name="ncs_v2_back">Назад</string>
+    <string name="ncs_v2_arrow_back">←</string>
+    <string name="ncs_v2_arrow_forward">→</string>
+    <string name="ncs_v2_math_plus">+</string>
+    <string name="ncs_v2_math_minus">−</string>
+    <string name="ncs_v2_math_multiply">×</string>
+    <string name="ncs_v2_math_divide">÷</string>
+    <string name="ncs_v2_math_equals">=</string>
+    <string name="ncs_v2_math_question_mark">?</string>
+    <string name="ncs_v2_checkmark">✓</string>
+    <string name="ncs_v2_exclamation">!</string>
+    <string name="ncs_v2_level_marker_test">≈</string>
+    <string name="ncs_v2_level_marker_easy">•</string>
+    <string name="ncs_v2_level_marker_medium">••</string>
+    <string name="ncs_v2_level_marker_hard">•••</string>
+
+    <string name="ncs_v2_welcome_math_title">Математика —\nдавай дружить!</string>
+    <string name="ncs_v2_welcome_math_description">Играй с числами и узнавай новое вместе с NumCompSim.</string>
+    <string name="ncs_v2_you_can_do_it">У тебя всё получится!</string>
+    <string name="ncs_v2_small_discovery">Начнём с маленького открытия?</string>
+    <string name="ncs_v2_choose_lesson">Выбрать занятие</string>
+    <string name="ncs_v2_choose_lesson_title">Что будем\nтренировать?</string>
+    <string name="ncs_v2_addition_intro">Сегодня начнём со сложения.</string>
+    <string name="ncs_v2_addition">Сложение</string>
+    <string name="ncs_v2_can_play">Можно играть</string>
+    <string name="ncs_v2_find_number_part">Найди часть числа</string>
+    <string name="ncs_v2_subtraction">Вычитание</string>
+    <string name="ncs_v2_multiplication">Умножение</string>
+    <string name="ncs_v2_division">Деление</string>
+    <string name="ncs_v2_coming_soon">Скоро</string>
+    <string name="ncs_v2_other_lessons_soon">Другие занятия ещё готовятся.\nА сложение уже можно попробовать!</string>
+    <string name="ncs_v2_start_addition">Начать сложение</string>
+
+    <string name="ncs_v2_welcome_numbers_title">Подружись\nс числами!</string>
+    <string name="ncs_v2_find_missing_number">Найди число, которого не хватает.</string>
+    <string name="ncs_v2_together">Давай\nвместе!</string>
+    <string name="ncs_v2_how_it_works">ВОТ КАК ЭТО РАБОТАЕТ</string>
+    <string name="ncs_v2_addends_explanation">Два слагаемых вместе дают сумму.\nВместо ? выбери верное число.</string>
+    <string name="ncs_v2_addends_first_line">Два слагаемых вместе дают сумму.</string>
+    <string name="ncs_v2_addends_instead">Вместо</string>
+    <string name="ncs_v2_addends_choose_correct">выбери верное число.</string>
+    <string name="ncs_v2_choose_level_first">Сначала выберем уровень</string>
+    <string name="ncs_v2_ready">Я готов!</string>
+    <string name="ncs_v2_choose_level_title">Выбери\nсвой уровень</string>
+    <string name="ncs_v2_where_start">С чего начнём?</string>
+    <string name="ncs_v2_test_level">Тестовый</string>
+    <string name="ncs_v2_easy_level">Лёгкий</string>
+    <string name="ncs_v2_medium_level">Средний</string>
+    <string name="ncs_v2_hard_level">Тяжёлый</string>
+    <string name="ncs_v2_game_level_context">%1$s · %2$s</string>
+    <string name="ncs_v2_game_time_preview">01:27</string>
+    <string name="ncs_v2_level_range">%1$d–%2$d</string>
+    <string name="ncs_v2_level_and_range">%1$s · %2$s</string>
+    <string name="ncs_v2_level_can_reselect">Уровень можно\nвыбрать заново.</string>
+    <string name="ncs_v2_start_game">Начать игру</string>
+
+    <string name="ncs_v2_missing_number_question">Какого числа\nне хватает?</string>
+    <string name="ncs_v2_tap_correct_number">Нажми на верное число</string>
+    <string name="ncs_v2_correct_badge">✓ Верно</string>
+    <string name="ncs_v2_wrong_badge">× Ошибка</string>
+    <string name="ncs_v2_answer_correct">Верно! %1$d + %2$d = %3$d</string>
+    <string name="ncs_v2_answer_wrong">Ошибка. %1$d + %2$d = %3$d</string>
+    <string name="ncs_v2_correct_answers_singular">%1$d верный ответ</string>
+    <string name="ncs_v2_correct_answers_plural">%1$d верных ответов</string>
+    <string name="ncs_v2_required_minimum">Нужно минимум %1$d</string>
+    <string name="ncs_v2_minimum_reached">✓ Минимум достигнут</string>
+    <string name="ncs_v2_time_left">Осталось</string>
+    <string name="ncs_v2_time_low">! Мало времени</string>
+    <string name="ncs_v2_great_start">Отличное начало!</string>
+
+    <string name="ncs_v2_game_result">Результат игры</string>
+    <string name="ncs_v2_result_success_title">У тебя получилось!</string>
+    <string name="ncs_v2_result_success_count">7</string>
+    <string name="ncs_v2_result_success_count_target">Нужно 3 · цель достигнута</string>
+    <string name="ncs_v2_result_success_accuracy_value">58%</string>
+    <string name="ncs_v2_result_success_accuracy_target">Нужно 50% · цель достигнута</string>
+    <string name="ncs_v2_result_success_description">Обе цели достигнуты.\nТы здорово справился с числами!</string>
+    <string name="ncs_v2_result_failure_title">Пока не получилось</string>
+    <string name="ncs_v2_result_failure_description_static">Ошибок нет — это здорово!\nНо нужен не 1, а 3 верных ответа.</string>
+    <string name="ncs_v2_result_failure_count">1</string>
+    <string name="ncs_v2_result_failure_count_target">Нужно 3 · не хватает ещё 2</string>
+    <string name="ncs_v2_result_failure_accuracy_value">100%</string>
+    <string name="ncs_v2_result_failure_description">Ошибок нет — это здорово!\nНо нужен не %1$d, а %2$d верных ответа.</string>
+    <string name="ncs_v2_correct_answers_label">Верные ответы</string>
+    <string name="ncs_v2_required_reached">Нужно %1$d · цель достигнута</string>
+    <string name="ncs_v2_required_missing">Нужно %1$d · не хватает ещё %2$d</string>
+    <string name="ncs_v2_accuracy">Точность</string>
+    <string name="ncs_v2_percentage">%1$d%%</string>
+    <string name="ncs_v2_accuracy_required_reached">Нужно %1$d%% · цель достигнута</string>
+    <string name="ncs_v2_accuracy_required_missing">Нужно %1$d%% · не хватает ещё %2$d%%</string>
+    <string name="ncs_v2_try_again">Попробовать снова</string>
+    <string name="ncs_v2_play_again">Играть ещё</string>
+    <string name="ncs_v2_choose_level">Выбрать уровень</string>
+
+    <string name="ncs_v2_unavailable">Недоступно</string>
+    <string name="ncs_v2_pressed">Нажато</string>
+</resources>

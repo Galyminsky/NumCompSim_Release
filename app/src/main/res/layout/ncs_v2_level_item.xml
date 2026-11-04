@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable name="title" type="String" />
+        <variable name="marker" type="String" />
+        <variable name="description" type="String" />
+        <variable name="showDescription" type="boolean" />
+        <variable name="selected" type="boolean" />
+        <variable name="enabled" type="boolean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/ncs_v2_level_height"
+        android:background="@drawable/ncs_v2_level_card"
+        android:enabled="@{enabled}"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/ncs_v2_space_18"
+        android:paddingEnd="@dimen/ncs_v2_space_18"
+        android:selected="@{selected}">
+
+        <TextView
+            android:layout_width="@dimen/ncs_v2_space_32"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/ncs_v2_space_16"
+            android:fontFamily="@font/ncs_v2_nunito_black"
+            android:text="@{marker}"
+            android:textColor="@{enabled ? @color/ncs_v2_primary : @color/ncs_v2_muted}"
+            android:textSize="@dimen/ncs_v2_text_18"
+            tools:text="@string/ncs_v2_level_marker_hard" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.NcsV2.CardTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{title}"
+                android:textColor="@{enabled ? @color/ncs_v2_ink : @color/ncs_v2_muted}"
+                tools:text="@string/ncs_v2_hard_level" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ncs_v2_nunito_bold"
+                android:text="@{enabled ? description : @string/ncs_v2_unavailable}"
+                android:textColor="@color/ncs_v2_muted"
+                android:textSize="@dimen/ncs_v2_text_15"
+                android:visibility="@{showDescription ? View.VISIBLE : View.GONE}" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="@dimen/ncs_v2_level_indicator_size"
+            android:layout_height="@dimen/ncs_v2_level_indicator_size"
+            android:background="@drawable/ncs_v2_level_indicator"
+            android:enabled="@{enabled}"
+            android:selected="@{selected}">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/ncs_v2_inter_regular"
+                android:gravity="center"
+                android:text="@{enabled ? @string/ncs_v2_checkmark : @string/ncs_v2_math_minus}"
+                android:textColor="@{enabled ? @color/ncs_v2_surface : @color/ncs_v2_muted}"
+                android:textSize="@dimen/ncs_v2_text_19"
+                android:visibility="@{selected || !enabled ? View.VISIBLE : View.INVISIBLE}" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>

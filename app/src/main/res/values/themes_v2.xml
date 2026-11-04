@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.CompositionOfNumbers.V2" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/ncs_v2_primary</item>
+        <item name="colorPrimaryVariant">@color/ncs_v2_primary_pressed</item>
+        <item name="colorOnPrimary">@color/ncs_v2_surface</item>
+        <item name="colorSecondary">@color/ncs_v2_primary</item>
+        <item name="colorOnSecondary">@color/ncs_v2_surface</item>
+        <item name="colorSurface">@color/ncs_v2_surface</item>
+        <item name="colorOnSurface">@color/ncs_v2_ink</item>
+        <item name="colorOnBackground">@color/ncs_v2_ink</item>
+        <item name="android:colorBackground">@color/ncs_v2_paper</item>
+        <item name="android:windowBackground">@color/ncs_v2_paper</item>
+        <item name="android:textColorPrimary">@color/ncs_v2_ink</item>
+        <item name="android:textColorSecondary">@color/ncs_v2_muted</item>
+        <item name="android:statusBarColor">@color/ncs_v2_paper</item>
+        <item name="android:navigationBarColor">@color/ncs_v2_paper</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:fontFamily">@font/ncs_v2_nunito_bold</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.NcsV2.Body</item>
+        <item name="textAppearanceButton">@style/TextAppearance.NcsV2.Action</item>
+    </style>
+</resources>

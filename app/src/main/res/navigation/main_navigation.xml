@@ -3,7 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/welcomeFragment">
+    app:startDestination="@id/ncsV2WelcomeFragment">
+
+    <fragment
+        android:id="@+id/ncsV2WelcomeFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.NcsV2WelcomeFragment"
+        android:label="Общее приветствие"
+        tools:layout="@layout/ncs_v2_welcome">
+        <action
+            android:id="@+id/action_ncsV2WelcomeFragment_to_ncsV2LessonSelectionFragment"
+            app:destination="@id/ncsV2LessonSelectionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ncsV2LessonSelectionFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.NcsV2LessonSelectionFragment"
+        android:label="Выбор занятия"
+        tools:layout="@layout/ncs_v2_lesson_selection">
+        <action
+            android:id="@+id/action_ncsV2LessonSelectionFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/welcomeFragment"

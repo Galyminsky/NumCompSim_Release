@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable name="answerValue" type="int" />
+        <variable name="enabled" type="boolean" />
+        <variable name="pressed" type="boolean" />
+        <variable name="correct" type="boolean" />
+        <variable name="incorrect" type="boolean" />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/ncs_v2_answer_root"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ncs_v2_answer_height"
+        android:background="@{correct ? @drawable/ncs_v2_answer_correct : incorrect ? @drawable/ncs_v2_answer_wrong : @drawable/ncs_v2_answer_card}"
+        android:enabled="@{enabled}"
+        android:pressed="@{pressed}">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ncs_v2_answer_value"
+                style="@style/TextAppearance.NcsV2.Answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@{correct || incorrect ? @color/ncs_v2_surface : @color/ncs_v2_ink}"
+                app:numberAsText="@{answerValue}"
+                tools:text="3" />
+
+            <TextView
+                android:id="@+id/ncs_v2_answer_status"
+                style="@style/TextAppearance.NcsV2.ExtraBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{incorrect ? @string/ncs_v2_wrong_badge : correct ? @string/ncs_v2_correct_badge : @string/ncs_v2_pressed}"
+                android:textColor="@color/ncs_v2_surface"
+                android:textSize="@dimen/ncs_v2_text_12"
+                android:visibility="@{incorrect || correct ? View.VISIBLE : View.GONE}" />
+        </LinearLayout>
+    </FrameLayout>
+</layout>

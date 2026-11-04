@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable name="correctAnswers" type="int" />
+        <variable name="requiredAnswers" type="int" />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/ncs_v2_progress_root"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ncs_v2_progress_height">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ncs_v2_progress_count"
+                style="@style/TextAppearance.NcsV2.Black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{correctAnswers == 1 ? @string/ncs_v2_correct_answers_singular(correctAnswers) : @string/ncs_v2_correct_answers_plural(correctAnswers)}"
+                android:textColor="@color/ncs_v2_ink"
+                android:textSize="@dimen/ncs_v2_text_20"
+                tools:text="1 верный ответ" />
+
+            <TextView
+                android:id="@+id/ncs_v2_progress_status"
+                style="@style/TextAppearance.NcsV2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ncs_v2_progress_label_gap"
+                android:text="@{requiredAnswers > 0 &amp;&amp; correctAnswers >= requiredAnswers ? @string/ncs_v2_minimum_reached : @string/ncs_v2_required_minimum(requiredAnswers)}"
+                android:textColor="@{requiredAnswers > 0 &amp;&amp; correctAnswers >= requiredAnswers ? @color/ncs_v2_success : @color/ncs_v2_muted}"
+                android:textSize="@dimen/ncs_v2_text_15"
+                tools:text="Нужно минимум 30" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/ncs_v2_progress_track"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ncs_v2_progress_track_height"
+            android:layout_gravity="bottom">
+
+            <ProgressBar
+                android:id="@+id/ncs_v2_progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:indeterminate="false"
+                android:max="@{requiredAnswers}"
+                android:progress="@{correctAnswers}"
+                android:progressDrawable="@drawable/ncs_v2_progress_bar" />
+
+            <View
+                android:id="@+id/ncs_v2_progress_minimum_fill"
+                android:layout_width="@dimen/ncs_v2_space_12"
+                android:layout_height="match_parent"
+                android:background="@drawable/ncs_v2_progress_fill"
+                android:visibility="@{correctAnswers > 0 &amp;&amp; correctAnswers &lt; requiredAnswers ? View.VISIBLE : View.GONE}" />
+        </FrameLayout>
+    </FrameLayout>
+</layout>

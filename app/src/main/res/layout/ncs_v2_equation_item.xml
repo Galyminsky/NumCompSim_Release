@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="sum" type="int" />
+        <variable name="known" type="int" />
+        <variable name="missingText" type="String" />
+        <variable name="solved" type="boolean" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ncs_v2_equation_root"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ncs_v2_equation_height"
+        android:background="@drawable/ncs_v2_panel"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ncs_v2_equation_sum"
+            style="@style/TextAppearance.NcsV2.Equation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:numberAsText="@{sum}"
+            tools:text="8" />
+
+        <TextView
+            android:id="@+id/ncs_v2_equation_equals"
+            style="@style/TextAppearance.NcsV2.ExtraBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ncs_v2_equation_gap"
+            android:text="@string/ncs_v2_math_equals"
+            android:textColor="@color/ncs_v2_muted"
+            android:textSize="@dimen/ncs_v2_text_30" />
+
+        <TextView
+            android:id="@+id/ncs_v2_equation_known"
+            style="@style/TextAppearance.NcsV2.Equation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ncs_v2_equation_gap"
+            android:gravity="center"
+            app:numberAsText="@{known}"
+            tools:text="5" />
+
+        <TextView
+            android:id="@+id/ncs_v2_equation_plus"
+            style="@style/TextAppearance.NcsV2.ExtraBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ncs_v2_equation_gap"
+            android:text="@string/ncs_v2_math_plus"
+            android:textColor="@color/ncs_v2_muted"
+            android:textSize="@dimen/ncs_v2_text_30" />
+
+        <TextView
+            android:id="@+id/ncs_v2_equation_missing"
+            style="@style/TextAppearance.NcsV2.Equation"
+            android:layout_width="@dimen/ncs_v2_equation_slot_width"
+            android:layout_height="@dimen/ncs_v2_equation_slot_height"
+            android:layout_marginStart="@dimen/ncs_v2_equation_gap"
+            android:background="@drawable/ncs_v2_equation_slot"
+            android:gravity="center"
+            android:text="@{solved ? missingText : @string/ncs_v2_math_question_mark}"
+            android:textColor="@color/ncs_v2_primary"
+            tools:text="@string/ncs_v2_math_question_mark" />
+    </LinearLayout>
+</layout>

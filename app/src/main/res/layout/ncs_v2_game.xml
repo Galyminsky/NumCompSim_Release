@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel" type="me.proton.jobforandroid.compositionofnumbers.presentation.GameViewModel" />
+        <variable name="displayedQuestion" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question" />
+        <variable name="selectedOptionIndex" type="int" />
+        <variable name="feedbackVisible" type="boolean" />
+        <variable name="feedbackCorrect" type="boolean" />
+        <variable name="levelContext" type="String" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ncs_v2_notebook_background"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/ncs_v2_space_24"
+            android:paddingTop="@dimen/ncs_v2_space_8"
+            android:paddingEnd="@dimen/ncs_v2_space_24"
+            android:paddingBottom="@dimen/ncs_v2_space_24">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ncs_v2_back_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ncs_v2_game_back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:defaultFocusHighlightEnabled="false"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextAppearance.NcsV2.BackArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_arrow_back"
+                        android:textColor="@color/ncs_v2_primary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ncs_v2_space_8"
+                        android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_back"
+                        android:textColor="@color/ncs_v2_primary"
+                        android:textSize="@dimen/ncs_v2_text_17" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                    android:gravity="end"
+                    android:includeFontPadding="false"
+                    android:text="@{levelContext}"
+                    android:textColor="@color/ncs_v2_muted"
+                    android:textSize="@dimen/ncs_v2_text_14" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="30" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/ncs_v2_space_24">
+
+                <TextView
+                    style="@style/TextAppearance.NcsV2.Question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:lineHeight="34dp"
+                    android:text="@string/ncs_v2_missing_number_question" />
+
+                <include
+                    android:id="@+id/ncs_v2_game_equation"
+                    layout="@layout/ncs_v2_equation_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_equation_height"
+                    android:layout_marginTop="@dimen/ncs_v2_space_18"
+                    app:known="@{displayedQuestion.visibleNumber}"
+                    app:missingText="@{@string/ncs_v2_math_question_mark}"
+                    app:solved="@{false}"
+                    app:sum="@{displayedQuestion.sum}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                    android:includeFontPadding="false"
+                    android:text="@string/ncs_v2_tap_correct_number"
+                    android:textColor="@color/ncs_v2_muted"
+                    android:textSize="@dimen/ncs_v2_text_16" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_answer_height"
+                    android:layout_marginTop="@dimen/ncs_v2_space_12"
+                    android:orientation="horizontal">
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_1"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        android:layout_marginEnd="@dimen/ncs_v2_space_12"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[0]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 0}"
+                        app:enabled="@{!feedbackVisible}"
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 0}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 0}" />
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_2"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        android:layout_marginEnd="@dimen/ncs_v2_space_12"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[1]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 1}"
+                        app:enabled="@{!feedbackVisible}"
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 1}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 1}" />
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_3"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[2]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 2}"
+                        app:enabled="@{!feedbackVisible}"
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 2}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 2}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_answer_height"
+                    android:layout_marginTop="@dimen/ncs_v2_space_12"
+                    android:orientation="horizontal">
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_4"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        android:layout_marginEnd="@dimen/ncs_v2_space_12"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[3]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 3}"
+                        app:enabled="@{!feedbackVisible}"
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 3}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 3}" />
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_5"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        android:layout_marginEnd="@dimen/ncs_v2_space_12"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[4]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 4}"
+                        app:enabled="@{!feedbackVisible}"
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 4}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 4}" />
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_6"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[5]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 5}"
+                        app:enabled="@{!feedbackVisible}"
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 5}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 5}" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/ncs_v2_game_feedback"
+                    layout="@layout/ncs_v2_feedback_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_feedback_height"
+                    app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect}"
+                    app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect}"
+                    app:known="@{displayedQuestion.visibleNumber}"
+                    app:missing="@{displayedQuestion.rightAnswer}"
+                    app:sum="@{displayedQuestion.sum}" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="37" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="197dp"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="87dp">
+
+                    <include
+                        android:id="@+id/ncs_v2_game_progress"
+                        layout="@layout/ncs_v2_progress_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="87dp"
+                        app:correctAnswers="@{viewModel.correctAnswers}"
+                        app:requiredAnswers="@{viewModel.requiredAnswers}" />
+
+                    <include
+                        android:id="@+id/ncs_v2_game_timer"
+                        layout="@layout/ncs_v2_timer_item"
+                        android:layout_width="@dimen/ncs_v2_timer_width"
+                        android:layout_height="@dimen/ncs_v2_timer_height"
+                        android:layout_gravity="top|end"
+                        app:formattedTime="@{viewModel.formattedTime}"
+                        app:urgent="@{viewModel.timeUrgent}" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="92dp"
+                    android:layout_marginTop="@dimen/ncs_v2_space_18"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="62dp"
+                        android:layout_height="82dp"
+                        android:contentDescription="@null"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/girl_qes" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ncs_v2_space_16"
+                        android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_great_start"
+                        android:textColor="@color/ncs_v2_muted"
+                        android:textSize="@dimen/ncs_v2_text_16" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</layout>

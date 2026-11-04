@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="formattedTime" type="String" />
+        <variable name="urgent" type="boolean" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ncs_v2_timer_root"
+        android:layout_width="@dimen/ncs_v2_timer_width"
+        android:layout_height="@dimen/ncs_v2_timer_height"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ncs_v2_timer_label"
+            style="@style/TextAppearance.NcsV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{urgent ? @string/ncs_v2_time_low : @string/ncs_v2_time_left}"
+            android:textColor="@{urgent ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+            android:textSize="@dimen/ncs_v2_text_13" />
+
+        <TextView
+            android:id="@+id/ncs_v2_timer_value"
+            style="@style/TextAppearance.NcsV2.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{formattedTime}"
+            android:textColor="@{urgent ? @color/ncs_v2_warm_ink : @color/ncs_v2_ink}"
+            android:textSize="@dimen/ncs_v2_text_30"
+            tools:text="01:27" />
+    </LinearLayout>
+</layout>

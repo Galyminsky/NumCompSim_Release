@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="ncs_v2_metric_preview_label" format="string" />
+    <attr name="ncs_v2_metric_preview_value" format="string" />
+    <attr name="ncs_v2_metric_preview_target" format="string" />
+    <attr name="ncs_v2_metric_preview_indicator" format="reference" />
+    <attr name="ncs_v2_metric_preview_symbol" format="string" />
+    <attr name="ncs_v2_metric_preview_status_color" format="color" />
+
+    <style name="NcsV2MetricPreviewCorrect">
+        <item name="ncs_v2_metric_preview_label">@string/ncs_v2_correct_answers_label</item>
+        <item name="ncs_v2_metric_preview_value">@string/ncs_v2_result_success_count</item>
+        <item name="ncs_v2_metric_preview_target">@string/ncs_v2_result_success_count_target</item>
+        <item name="ncs_v2_metric_preview_indicator">@drawable/ncs_v2_indicator_success</item>
+        <item name="ncs_v2_metric_preview_symbol">@string/ncs_v2_checkmark</item>
+        <item name="ncs_v2_metric_preview_status_color">@color/ncs_v2_success</item>
+    </style>
+
+    <style name="NcsV2MetricPreviewAccuracy">
+        <item name="ncs_v2_metric_preview_label">@string/ncs_v2_accuracy</item>
+        <item name="ncs_v2_metric_preview_value">@string/ncs_v2_result_success_accuracy_value</item>
+        <item name="ncs_v2_metric_preview_target">@string/ncs_v2_result_success_accuracy_target</item>
+        <item name="ncs_v2_metric_preview_indicator">@drawable/ncs_v2_indicator_success</item>
+        <item name="ncs_v2_metric_preview_symbol">@string/ncs_v2_checkmark</item>
+        <item name="ncs_v2_metric_preview_status_color">@color/ncs_v2_success</item>
+    </style>
+
+    <style name="NcsV2MetricPreviewFailureCorrect" parent="NcsV2MetricPreviewCorrect">
+        <item name="ncs_v2_metric_preview_value">@string/ncs_v2_result_failure_count</item>
+        <item name="ncs_v2_metric_preview_target">@string/ncs_v2_result_failure_count_target</item>
+        <item name="ncs_v2_metric_preview_indicator">@drawable/ncs_v2_indicator_attention</item>
+        <item name="ncs_v2_metric_preview_symbol">@string/ncs_v2_exclamation</item>
+        <item name="ncs_v2_metric_preview_status_color">@color/ncs_v2_warm_ink</item>
+    </style>
+
+    <style name="NcsV2MetricPreviewFailureAccuracy" parent="NcsV2MetricPreviewAccuracy">
+        <item name="ncs_v2_metric_preview_value">@string/ncs_v2_result_failure_accuracy_value</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/ncs_v2_nunito_bold</item>
+        <item name="android:textColor">@color/ncs_v2_ink</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.Black" parent="TextAppearance.NcsV2">
+        <item name="android:fontFamily">@font/ncs_v2_nunito_black</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.ExtraBold" parent="TextAppearance.NcsV2">
+        <item name="android:fontFamily">@font/ncs_v2_nunito_extrabold</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.Hero" parent="TextAppearance.NcsV2.Black">
+        <item name="android:textSize">@dimen/ncs_v2_text_36</item>
+        <item name="android:lineSpacingMultiplier">1.08</item>
+        <item name="android:letterSpacing">-0.022222222</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.ResultTitle" parent="TextAppearance.NcsV2.Black">
+        <item name="android:textSize">@dimen/ncs_v2_text_36</item>
+        <item name="android:lineSpacingMultiplier">1.10</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.ScreenTitle" parent="TextAppearance.NcsV2.Black">
+        <item name="android:textSize">@dimen/ncs_v2_text_32</item>
+        <item name="android:lineSpacingMultiplier">1.08</item>
+        <item name="android:letterSpacing">-0.01875</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.Question" parent="TextAppearance.NcsV2.Black">
+        <item name="android:textSize">@dimen/ncs_v2_text_30</item>
+        <item name="android:lineSpacingMultiplier">1.15</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.Body" parent="TextAppearance.NcsV2">
+        <item name="android:textSize">@dimen/ncs_v2_text_17</item>
+        <item name="android:lineSpacingMultiplier">1.30</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.Intro" parent="TextAppearance.NcsV2">
+        <item name="android:fontFamily">@font/ncs_v2_nunito_semibold</item>
+        <item name="android:textSize">@dimen/ncs_v2_text_18</item>
+        <item name="android:lineSpacingMultiplier">1.35</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.CardTitle" parent="TextAppearance.NcsV2.Black">
+        <item name="android:textSize">@dimen/ncs_v2_text_22</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.Action" parent="TextAppearance.NcsV2.ExtraBold">
+        <item name="android:textSize">@dimen/ncs_v2_text_20</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.Equation" parent="TextAppearance.NcsV2.Black">
+        <item name="android:textSize">@dimen/ncs_v2_text_49</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.Answer" parent="TextAppearance.NcsV2.Black">
+        <item name="android:textSize">@dimen/ncs_v2_text_34</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.Metric" parent="TextAppearance.NcsV2.Black">
+        <item name="android:textSize">@dimen/ncs_v2_text_26</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.Badge" parent="TextAppearance.NcsV2.ExtraBold">
+        <item name="android:textSize">@dimen/ncs_v2_text_13</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.ForwardArrow" parent="TextAppearance.NcsV2">
+        <item name="android:fontFamily">@font/ncs_v2_inter_bold</item>
+        <item name="android:textSize">@dimen/ncs_v2_text_24</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.BackArrow" parent="TextAppearance.NcsV2">
+        <item name="android:fontFamily">@font/ncs_v2_inter_regular</item>
+        <item name="android:textSize">@dimen/ncs_v2_text_26</item>
+    </style>
+
+    <style name="TextAppearance.NcsV2.FeedbackSymbol" parent="TextAppearance.NcsV2">
+        <item name="android:fontFamily">@font/ncs_v2_inter_extrabold</item>
+        <item name="android:textSize">@dimen/ncs_v2_text_20</item>
+    </style>
+
+    <style name="NcsV2.View.TouchTarget" parent="@android:style/Widget">
+        <item name="android:minWidth">@dimen/ncs_v2_touch_target_min</item>
+        <item name="android:minHeight">@dimen/ncs_v2_touch_target_min</item>
+    </style>
+
+    <style name="NcsV2.View.Action" parent="NcsV2.View.TouchTarget">
+        <item name="android:minHeight">@dimen/ncs_v2_button_height</item>
+    </style>
+</resources>
