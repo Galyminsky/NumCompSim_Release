@@ -43,6 +43,7 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/ncs_v2_nunito_black"
                     android:gravity="center"
+                    android:includeFontPadding="false"
                     android:text="@{symbol}"
                     android:textColor="@{available ? @color/ncs_v2_surface : @color/ncs_v2_muted}"
                     android:textSize="@dimen/ncs_v2_text_42"
@@ -53,12 +54,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
                     style="@style/TextAppearance.NcsV2.CardTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:minHeight="30dp"
                     android:text="@{title}"
                     android:textColor="@{available ? @color/ncs_v2_ink : @color/ncs_v2_muted}"
                     tools:text="@string/ncs_v2_addition" />
@@ -70,6 +75,7 @@
                     android:layout_marginTop="@dimen/ncs_v2_space_4"
                     android:background="@{available ? @drawable/ncs_v2_indicator_neutral : @drawable/ncs_v2_indicator_attention}"
                     android:gravity="center"
+                    android:includeFontPadding="false"
                     android:paddingStart="@dimen/ncs_v2_space_12"
                     android:paddingEnd="@dimen/ncs_v2_space_12"
                     android:text="@{available ? @string/ncs_v2_can_play : @string/ncs_v2_coming_soon}"
@@ -80,6 +86,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ncs_v2_space_4"
                     android:fontFamily="@font/ncs_v2_nunito_bold"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:minHeight="19dp"
                     android:text="@string/ncs_v2_find_number_part"
                     android:textColor="@color/ncs_v2_muted"
                     android:textSize="@dimen/ncs_v2_text_14"

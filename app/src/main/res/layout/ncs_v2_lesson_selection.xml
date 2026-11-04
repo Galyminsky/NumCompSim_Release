@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ncs_v2_notebook_background"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/ncs_v2_space_24">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ncs_v2_back_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ncs_v2_back_button"
+                    android:layout_width="@dimen/ncs_v2_back_width"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:defaultFocusHighlightEnabled="false"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp">
+
+                    <TextView
+                        style="@style/TextAppearance.NcsV2.BackArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_arrow_back"
+                        android:textColor="@color/ncs_v2_primary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ncs_v2_space_8"
+                        android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_back"
+                        android:textColor="@color/ncs_v2_primary"
+                        android:textSize="@dimen/ncs_v2_text_17" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                    android:gravity="end"
+                    android:includeFontPadding="false"
+                    android:text="@string/ncs_v2_brand"
+                    android:textColor="@color/ncs_v2_muted"
+                    android:textSize="@dimen/ncs_v2_text_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/ncs_v2_space_24"
+                android:paddingBottom="@dimen/ncs_v2_space_24">
+
+                <TextView
+                    style="@style/TextAppearance.NcsV2.ScreenTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:lineHeight="35dp"
+                    android:text="@string/ncs_v2_choose_lesson_title" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ncs_v2_space_8"
+                    android:fontFamily="@font/ncs_v2_nunito_semibold"
+                    android:includeFontPadding="false"
+                    android:lineHeight="21dp"
+                    android:text="@string/ncs_v2_addition_intro"
+                    android:textColor="@color/ncs_v2_muted"
+                    android:textSize="@dimen/ncs_v2_text_16" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/ncs_v2_addition_item"
+                    layout="@layout/ncs_v2_lesson_item"
+                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_height="@dimen/ncs_v2_lesson_available_height"
+                    app:available="@{true}"
+                    app:symbol="@{@string/ncs_v2_math_plus}"
+                    app:title="@{@string/ncs_v2_addition}" />
+
+                <include
+                    android:id="@+id/ncs_v2_subtraction_item"
+                    layout="@layout/ncs_v2_lesson_item"
+                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_height="@dimen/ncs_v2_lesson_coming_soon_height"
+                    android:layout_marginTop="@dimen/ncs_v2_space_12"
+                    app:available="@{false}"
+                    app:symbol="@{@string/ncs_v2_math_minus}"
+                    app:title="@{@string/ncs_v2_subtraction}" />
+
+                <include
+                    android:id="@+id/ncs_v2_multiplication_item"
+                    layout="@layout/ncs_v2_lesson_item"
+                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_height="@dimen/ncs_v2_lesson_coming_soon_height"
+                    android:layout_marginTop="@dimen/ncs_v2_space_12"
+                    app:available="@{false}"
+                    app:symbol="@{@string/ncs_v2_math_multiply}"
+                    app:title="@{@string/ncs_v2_multiplication}" />
+
+                <include
+                    android:id="@+id/ncs_v2_division_item"
+                    layout="@layout/ncs_v2_lesson_item"
+                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_height="@dimen/ncs_v2_lesson_coming_soon_height"
+                    android:layout_marginTop="@dimen/ncs_v2_space_12"
+                    app:available="@{false}"
+                    app:symbol="@{@string/ncs_v2_math_divide}"
+                    app:title="@{@string/ncs_v2_division}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ncs_v2_nunito_bold"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:lineHeight="19dp"
+                    android:text="@string/ncs_v2_other_lessons_soon"
+                    android:textColor="@color/ncs_v2_muted"
+                    android:textSize="@dimen/ncs_v2_text_15" />
+
+                <LinearLayout
+                    android:id="@+id/ncs_v2_start_addition_button"
+                    style="@style/NcsV2.View.Action"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_button_height"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/ncs_v2_primary_button"
+                    android:clickable="true"
+                    android:defaultFocusHighlightEnabled="false"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextAppearance.NcsV2.Action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_start_addition"
+                        android:textColor="@color/ncs_v2_surface" />
+
+                    <TextView
+                        style="@style/TextAppearance.NcsV2.ForwardArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_arrow_forward"
+                        android:textColor="@color/ncs_v2_surface" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</layout>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ncs_v2_notebook_background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:padding="@dimen/ncs_v2_space_24"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="62dp"
+            android:layout_height="58dp"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            android:src="@drawable/owl_1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ncs_v2_space_12"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ncs_v2_nunito_black"
+                android:includeFontPadding="false"
+                android:text="@string/ncs_v2_brand"
+                android:textColor="@color/ncs_v2_ink"
+                android:textSize="@dimen/ncs_v2_text_25" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ncs_v2_nunito_bold"
+                android:includeFontPadding="false"
+                android:text="@string/ncs_v2_brand_subtitle"
+                android:textColor="@color/ncs_v2_muted"
+                android:textSize="@dimen/ncs_v2_text_13" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Space android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextAppearance.NcsV2.Hero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/ncs_v2_welcome_math_title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ncs_v2_space_12"
+            android:fontFamily="@font/ncs_v2_nunito_semibold"
+            android:includeFontPadding="false"
+            android:lineSpacingMultiplier="1.3"
+            android:text="@string/ncs_v2_welcome_math_description"
+            android:textColor="@color/ncs_v2_muted"
+            android:textSize="@dimen/ncs_v2_text_18" />
+    </LinearLayout>
+
+    <Space android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="286dp"
+            android:layout_height="254dp">
+
+            <ImageView
+                android:layout_width="218dp"
+                android:layout_height="194dp"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/brain" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/ncs_v2_space_16"
+            android:background="@drawable/ncs_v2_welcome_speech"
+            android:fontFamily="@font/ncs_v2_nunito_black"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/ncs_v2_you_can_do_it"
+            android:textColor="@color/ncs_v2_ink"
+            android:textSize="@dimen/ncs_v2_text_19" />
+    </LinearLayout>
+
+    <Space android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ncs_v2_nunito_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/ncs_v2_small_discovery"
+            android:textColor="@color/ncs_v2_muted"
+            android:textSize="@dimen/ncs_v2_text_15" />
+
+        <LinearLayout
+            android:id="@+id/ncs_v2_choose_lesson_button"
+            style="@style/NcsV2.View.Action"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ncs_v2_button_height"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/ncs_v2_primary_button"
+            android:clickable="true"
+            android:defaultFocusHighlightEnabled="false"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextAppearance.NcsV2.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/ncs_v2_choose_lesson"
+                android:textColor="@color/ncs_v2_surface" />
+
+            <TextView
+                style="@style/TextAppearance.NcsV2.ForwardArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:includeFontPadding="false"
+                android:text="@string/ncs_v2_arrow_forward"
+                android:textColor="@color/ncs_v2_surface" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
