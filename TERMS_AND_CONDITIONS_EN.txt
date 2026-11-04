@@ -1,0 +1,33 @@
+NUMCOMPSIM TERMS & CONDITIONS
+Effective date: November 5, 2026
+
+1. Introduction
+NumCompSim is a free educational Android application for practicing mathematical skills, developed by Yuriy Galyaminsky. The application is intended for children aged 6–12. These Terms & Conditions govern its use. Parents and legal guardians are encouraged to review these terms together with children using the app.
+
+2. Purpose and Availability
+NumCompSim provides math practice through game-like exercises. It does not replace school instruction or professional teaching and does not guarantee a particular learning outcome.
+The application is free to use. The current version does not offer paid subscriptions or in-app purchases. Core mathematical exercises work without an internet connection. Some integrated Google services may require network access.
+
+3. Permitted Use
+Users may install and use the application for personal, non-commercial purposes. Users must not use it for unlawful purposes or interfere with the operation of the application or its integrated services. Rights in the software, name, and other protected materials belong to their respective owners. These terms do not grant permission to distribute modified copies of the application or use its branding without authorization. These restrictions do not override rights granted under applicable law or the licenses of third-party components.
+
+4. Third-Party Services and Data
+The application integrates Google Analytics for Firebase and Google Play Games Services. These services may process technical information and application usage data under their own terms and policies. Registration or sign-in to Google Play Games is not required to complete mathematical exercises.
+For details on data processing, refer to the NumCompSim Privacy Policy. Google Privacy Policy: https://policies.google.com/privacy. Firebase privacy information: https://firebase.google.com/support/privacy.
+
+5. Children and Parents
+NumCompSim is designed for children aged 6–12. The application does not require a child to provide their name, phone number, address, or email address to complete math exercises. Parents and legal guardians may contact the developer about the application and data handling.
+
+6. Updates and Changes
+The developer may fix defects, update the visual design, add exercises, and release new versions. Availability of updates depends on the device, Android version, and app store availability. If these terms change materially, a revised version will be published with an updated effective date.
+
+7. Availability and Liability
+The developer aims to keep NumCompSim functioning properly, but some features may be temporarily unavailable due to technical problems, device limitations, or third-party services. The app is provided as available without a promise of uninterrupted or error-free operation. Nothing in these terms limits mandatory consumer rights or liability that cannot be excluded under applicable law.
+
+8. Stopping Use
+Users may stop using NumCompSim at any time by uninstalling it. Uninstalling the app does not necessarily cause information previously processed by third-party services to be deleted immediately; see the Privacy Policy for details.
+
+9. Contact
+Developer: Yuriy Galyaminsky
+Application: NumCompSim
+Email: galyaminsky@gmail.com

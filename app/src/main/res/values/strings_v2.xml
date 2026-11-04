@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ncs_v2_privacy_policy_title">Политика конфиденциальности</string>
+    <string name="ncs_v2_terms_title">Условия использования</string>
+    <string name="ncs_v2_document_close">Закрыть</string>
+    <string name="ncs_v2_documents_description">Политика конфиденциальности и условия использования</string>
     <string name="ncs_v2_brand">NumCompSim</string>
     <string name="ncs_v2_brand_subtitle">Тренажёр состава числа</string>
     <string name="ncs_v2_back">Назад</string>

@@ -22,11 +22,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:minHeight="58dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
         <ImageView
             android:layout_width="62dp"
@@ -59,7 +65,24 @@
                 android:textColor="@color/ncs_v2_muted"
                 android:textSize="@dimen/ncs_v2_text_13" />
         </LinearLayout>
-    </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/ncs_v2_documents_button"
+            style="@style/NcsV2.View.TouchTarget"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="@drawable/ncs_v2_secondary_button"
+            android:clickable="true"
+            android:contentDescription="@string/ncs_v2_documents_description"
+            android:focusable="true"
+            android:fontFamily="@font/ncs_v2_nunito_black"
+            android:gravity="center"
+            android:text="@string/ncs_v2_math_question_mark"
+            android:textColor="@color/ncs_v2_primary"
+            android:textSize="@dimen/ncs_v2_text_24" />
+    </FrameLayout>
 
     <Space android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />
 
