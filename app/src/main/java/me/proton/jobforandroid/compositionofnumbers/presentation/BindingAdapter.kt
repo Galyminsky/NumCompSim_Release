@@ -14,6 +14,7 @@ import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
 @BindingAdapter("requiredAnswers")
 fun bindRequiredAnswers(textView: TextView, count: Int) {
     textView.text = String.format(
+        textView.resources.configuration.locales[0],
         textView.context.getString(R.string.required_score),
         count
     )
@@ -22,6 +23,7 @@ fun bindRequiredAnswers(textView: TextView, count: Int) {
 @BindingAdapter("scoreAnswers")
 fun bindScoreAnswers(textView: TextView, count: Int) {
     textView.text = String.format(
+        textView.resources.configuration.locales[0],
         textView.context.getString(R.string.score_answers),
         count
     )
@@ -30,6 +32,7 @@ fun bindScoreAnswers(textView: TextView, count: Int) {
 @BindingAdapter("requiredPercentage")
 fun bindRequiredPercentage(textView: TextView, count: Int) {
     textView.text = String.format(
+        textView.resources.configuration.locales[0],
         textView.context.getString(R.string.required_percentage),
         count
     )
@@ -38,6 +41,7 @@ fun bindRequiredPercentage(textView: TextView, count: Int) {
 @BindingAdapter("scorePercentage")
 fun bindScorePercentage(textView: TextView, gameResult: GameResult) {
     textView.text = String.format(
+        textView.resources.configuration.locales[0],
         textView.context.getString(R.string.score_percentage),
         calculatePercentOfRightAnswers(gameResult.countOfRightAnswers, gameResult.countOfQuestions)
     )

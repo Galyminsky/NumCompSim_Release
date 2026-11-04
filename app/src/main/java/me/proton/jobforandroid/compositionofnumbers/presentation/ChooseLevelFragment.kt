@@ -52,8 +52,9 @@ class ChooseLevelFragment : Fragment() {
         sounds = UiSoundPool(requireContext(), R.raw.key_press)
         binding.ncsV2BackButton.installButtonPressAnimation { !selectionInProgress && !navigationStarted }
         binding.ncsV2StartGameButton.installButtonPressAnimation()
-        selectedLevel = findNavController().currentBackStackEntry
-            ?.savedStateHandle?.get<Level>(SELECTED_LEVEL_KEY) ?: Level.TEST
+        val savedLevel: Level? = findNavController().currentBackStackEntry
+            ?.savedStateHandle?.get(SELECTED_LEVEL_KEY)
+        selectedLevel = savedLevel ?: Level.TEST
 
         with(binding) {
             selectedLevel = this@ChooseLevelFragment.selectedLevel

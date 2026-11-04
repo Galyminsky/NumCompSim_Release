@@ -85,6 +85,7 @@ class GameViewModel(
         _percentOfRightAnswers.value = percent
         _correctAnswers.value = countOfRightAnswers
         _progressAnswers.value = String.format(
+            application.resources.configuration.locales[0],
             application.resources.getString(R.string.progress_answers),
             countOfRightAnswers,
             gameSettings.minCountOfRightAnswers
@@ -130,7 +131,7 @@ class GameViewModel(
         val seconds = millisUntilFinished / MILLIS_IN_SECONDS
         val minutes = seconds / SECONDS_IN_MINUTES
         val leftSeconds = seconds - (minutes * SECONDS_IN_MINUTES)
-        return String.format("%02d:%02d", minutes, leftSeconds)
+        return String.format(application.resources.configuration.locales[0], "%02d:%02d", minutes, leftSeconds)
     }
 
     private fun finishGame() {
@@ -144,7 +145,6 @@ class GameViewModel(
     }
 
     override fun onCleared() {
-        super.onCleared()
         timer?.cancel()
     }
 
