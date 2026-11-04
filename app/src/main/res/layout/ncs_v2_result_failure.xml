@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ncs_v2_notebook_background"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            android:paddingStart="@dimen/ncs_v2_space_24"
+            android:paddingTop="@dimen/ncs_v2_space_24"
+            android:paddingEnd="@dimen/ncs_v2_space_24">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/ncs_v2_nunito_black"
+                    android:includeFontPadding="false"
+                    android:text="@string/ncs_v2_game_result"
+                    android:textColor="@color/ncs_v2_ink"
+                    android:textSize="@dimen/ncs_v2_text_17" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/ncs_v2_badge_height"
+                    android:background="@drawable/ncs_v2_indicator_neutral"
+                    android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="@dimen/ncs_v2_space_12"
+                    android:paddingEnd="@dimen/ncs_v2_space_12"
+                    android:text="@string/ncs_v2_test_level"
+                    android:textColor="@color/ncs_v2_primary"
+                    android:textSize="@dimen/ncs_v2_text_13" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="22dp">
+
+                <ImageView
+                    android:layout_width="154dp"
+                    android:layout_height="146dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_sad" />
+
+                <TextView
+                    style="@style/TextAppearance.NcsV2.ResultTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ncs_v2_space_8"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:lineHeight="40dp"
+                    android:minHeight="80dp"
+                    android:text="@string/ncs_v2_result_failure_title" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ncs_v2_space_8"
+                    android:fontFamily="@font/ncs_v2_nunito_bold"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:lineHeight="22dp"
+                    android:minHeight="44dp"
+                    android:text="@string/ncs_v2_result_failure_description_static"
+                    android:textColor="@color/ncs_v2_muted"
+                    android:textSize="@dimen/ncs_v2_text_17" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="181dp"
+                android:background="@drawable/ncs_v2_panel"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/ncs_v2_space_18"
+                android:paddingBottom="@dimen/ncs_v2_space_18">
+
+                <include
+                    android:id="@+id/ncs_v2_result_correct_metric"
+                    layout="@layout/ncs_v2_metric_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_feedback_height"
+                    android:theme="@style/NcsV2MetricPreviewFailureCorrect"
+                    app:achieved="@{false}"
+                    app:label="@{@string/ncs_v2_correct_answers_label}"
+                    app:standalone="@{false}"
+                    app:targetStatusText="@{@string/ncs_v2_required_missing(3, 2)}"
+                    app:valueText="@{@string/ncs_v2_result_failure_count}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_stroke_thin"
+                    android:layout_marginStart="@dimen/ncs_v2_space_18"
+                    android:layout_marginTop="@dimen/ncs_v2_space_16"
+                    android:layout_marginEnd="@dimen/ncs_v2_space_18"
+                    android:background="@color/ncs_v2_border" />
+
+                <include
+                    android:id="@+id/ncs_v2_result_accuracy_metric"
+                    layout="@layout/ncs_v2_metric_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_feedback_height"
+                    android:layout_marginTop="@dimen/ncs_v2_space_16"
+                    android:theme="@style/NcsV2MetricPreviewFailureAccuracy"
+                    app:achieved="@{true}"
+                    app:label="@{@string/ncs_v2_accuracy}"
+                    app:standalone="@{false}"
+                    app:targetStatusText="@{@string/ncs_v2_accuracy_required_reached(50)}"
+                    app:valueText="@{@string/ncs_v2_percentage(100)}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="155dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="220dp"
+                    android:layout_height="148dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/kids" />
+            </LinearLayout>
+
+        </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_marginStart="@dimen/ncs_v2_space_24"
+            android:layout_marginEnd="@dimen/ncs_v2_space_24"
+            android:layout_marginBottom="@dimen/ncs_v2_space_24"
+            android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ncs_v2_result_failure_retry_button"
+                    style="@style/NcsV2.View.Action"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_button_height"
+                    android:background="@drawable/ncs_v2_primary_button"
+                    android:clickable="true"
+                    android:defaultFocusHighlightEnabled="false"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextAppearance.NcsV2.Action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_try_again"
+                        android:textColor="@color/ncs_v2_surface" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/ncs_v2_result_failure_choose_level_button"
+                    style="@style/NcsV2.View.Action"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_button_height"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/ncs_v2_secondary_button"
+                    android:clickable="true"
+                    android:defaultFocusHighlightEnabled="false"
+                    android:focusable="true"
+                    android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/ncs_v2_choose_level"
+                    android:textColor="@color/ncs_v2_primary"
+                    android:textSize="@dimen/ncs_v2_text_20" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

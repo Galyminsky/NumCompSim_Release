@@ -206,16 +206,58 @@
                     android:textSize="@dimen/ncs_v2_text_44" />
             </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/ncs_v2_space_12"
-                android:fontFamily="@font/ncs_v2_nunito_semibold"
-                android:includeFontPadding="false"
-                android:lineHeight="22dp"
-                android:text="@string/ncs_v2_addends_explanation"
-                android:textColor="@color/ncs_v2_ink"
-                android:textSize="@dimen/ncs_v2_text_17" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:fontFamily="@font/ncs_v2_nunito_semibold"
+                    android:includeFontPadding="false"
+                    android:lineHeight="22dp"
+                    android:text="@string/ncs_v2_addends_first_line"
+                    android:textColor="@color/ncs_v2_ink"
+                    android:textSize="@dimen/ncs_v2_text_17" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:baselineAligned="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="22dp"
+                        android:fontFamily="@font/ncs_v2_nunito_semibold"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_addends_instead"
+                        android:textColor="@color/ncs_v2_ink"
+                        android:textSize="@dimen/ncs_v2_text_17" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/ncs_v2_nunito_black"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_math_question_mark"
+                        android:textColor="@color/ncs_v2_primary"
+                        android:textSize="@dimen/ncs_v2_text_17" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="22dp"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/ncs_v2_nunito_semibold"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_addends_choose_correct"
+                        android:textColor="@color/ncs_v2_ink"
+                        android:textSize="@dimen/ncs_v2_text_17" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <Space android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />

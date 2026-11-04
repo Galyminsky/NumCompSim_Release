@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/ncs_v2_panel"
-            android:visibility="@{standalone ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{standalone ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +33,8 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ncs_v2_space_18"
-                android:visibility="@{standalone ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{standalone ? View.VISIBLE : View.GONE}"
+                tools:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,7 +48,8 @@
                     android:id="@+id/ncs_v2_metric_status"
                     android:layout_width="@dimen/ncs_v2_space_32"
                     android:layout_height="@dimen/ncs_v2_space_32"
-                    android:background="@{achieved ? @drawable/ncs_v2_indicator_success : @drawable/ncs_v2_indicator_attention}">
+                    android:background="@{achieved ? @drawable/ncs_v2_indicator_success : @drawable/ncs_v2_indicator_attention}"
+                    tools:background="?attr/ncs_v2_metric_preview_indicator">
 
                     <TextView
                         android:id="@+id/ncs_v2_metric_symbol"
@@ -55,7 +58,9 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="@{achieved ? @string/ncs_v2_checkmark : @string/ncs_v2_exclamation}"
-                        android:textColor="@{achieved ? @color/ncs_v2_success : @color/ncs_v2_warm_ink}" />
+                        android:textColor="@{achieved ? @color/ncs_v2_success : @color/ncs_v2_warm_ink}"
+                        tools:text="?attr/ncs_v2_metric_preview_symbol"
+                        tools:textColor="?attr/ncs_v2_metric_preview_status_color" />
                 </FrameLayout>
 
                 <LinearLayout
@@ -81,7 +86,7 @@
                             android:text="@{label}"
                             android:textColor="@color/ncs_v2_ink"
                             android:textSize="@dimen/ncs_v2_text_16"
-                            tools:text="@string/ncs_v2_correct_answers_label" />
+                            tools:text="?attr/ncs_v2_metric_preview_label" />
 
                         <TextView
                             android:id="@+id/ncs_v2_metric_value"
@@ -90,7 +95,7 @@
                             android:layout_height="wrap_content"
                             android:text="@{valueText}"
                             android:textColor="@color/ncs_v2_ink"
-                            tools:text="7" />
+                            tools:text="?attr/ncs_v2_metric_preview_value" />
                     </LinearLayout>
 
                     <TextView
@@ -102,14 +107,16 @@
                         android:text="@{targetStatusText}"
                         android:textColor="@{achieved ? @color/ncs_v2_success : @color/ncs_v2_warm_ink}"
                         android:textSize="@dimen/ncs_v2_text_14"
-                        tools:text="Нужно 3 · цель достигнута" />
+                        tools:text="?attr/ncs_v2_metric_preview_target"
+                        tools:textColor="?attr/ncs_v2_metric_preview_status_color" />
                 </LinearLayout>
             </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ncs_v2_space_18"
-                android:visibility="@{standalone ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{standalone ? View.VISIBLE : View.GONE}"
+                tools:visibility="gone" />
         </LinearLayout>
     </FrameLayout>
 </layout>

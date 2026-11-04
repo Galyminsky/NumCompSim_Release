@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ncs_v2_notebook_background"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/ncs_v2_space_24">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ncs_v2_back_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ncs_v2_game_back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:defaultFocusHighlightEnabled="false"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextAppearance.NcsV2.BackArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_arrow_back"
+                        android:textColor="@color/ncs_v2_primary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ncs_v2_space_8"
+                        android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_back"
+                        android:textColor="@color/ncs_v2_primary"
+                        android:textSize="@dimen/ncs_v2_text_17" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                    android:gravity="end"
+                    android:includeFontPadding="false"
+                    android:text="@string/ncs_v2_game_level_context"
+                    android:textColor="@color/ncs_v2_muted"
+                    android:textSize="@dimen/ncs_v2_text_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="30dp"
+                android:paddingBottom="@dimen/ncs_v2_space_24">
+
+                <TextView
+                    style="@style/TextAppearance.NcsV2.Question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:lineHeight="34dp"
+                    android:text="@string/ncs_v2_missing_number_question" />
+
+                <include
+                    android:id="@+id/ncs_v2_game_equation"
+                    layout="@layout/ncs_v2_equation_item"
+                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_height="@dimen/ncs_v2_equation_height"
+                    android:layout_marginTop="@dimen/ncs_v2_space_18"
+                    app:known="@{5}"
+                    app:missingText="@{@string/ncs_v2_math_question_mark}"
+                    app:solved="@{false}"
+                    app:sum="@{8}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                    android:includeFontPadding="false"
+                    android:text="@string/ncs_v2_tap_correct_number"
+                    android:textColor="@color/ncs_v2_muted"
+                    android:textSize="@dimen/ncs_v2_text_16" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_answer_height"
+                    android:layout_marginTop="@dimen/ncs_v2_space_12"
+                    android:orientation="horizontal">
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_1"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        android:layout_marginEnd="@dimen/ncs_v2_space_12"
+                        app:answerValue="@{22}"
+                        app:correct="@{false}"
+                        app:enabled="@{true}"
+                        app:incorrect="@{false}"
+                        app:pressed="@{false}" />
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_2"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        android:layout_marginEnd="@dimen/ncs_v2_space_12"
+                        app:answerValue="@{10}"
+                        app:correct="@{false}"
+                        app:enabled="@{true}"
+                        app:incorrect="@{false}"
+                        app:pressed="@{false}" />
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_3"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        app:answerValue="@{19}"
+                        app:correct="@{false}"
+                        app:enabled="@{true}"
+                        app:incorrect="@{false}"
+                        app:pressed="@{false}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ncs_v2_answer_height"
+                    android:layout_marginTop="@dimen/ncs_v2_space_12"
+                    android:orientation="horizontal">
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_4"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        android:layout_marginEnd="@dimen/ncs_v2_space_12"
+                        app:answerValue="@{3}"
+                        app:correct="@{true}"
+                        app:enabled="@{true}"
+                        app:incorrect="@{false}"
+                        app:pressed="@{false}" />
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_5"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        android:layout_marginEnd="@dimen/ncs_v2_space_12"
+                        app:answerValue="@{29}"
+                        app:correct="@{false}"
+                        app:enabled="@{true}"
+                        app:incorrect="@{false}"
+                        app:pressed="@{false}" />
+
+                    <include
+                        android:id="@+id/ncs_v2_game_answer_6"
+                        layout="@layout/ncs_v2_answer_item"
+                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_height="@dimen/ncs_v2_answer_height"
+                        app:answerValue="@{11}"
+                        app:correct="@{false}"
+                        app:enabled="@{true}"
+                        app:incorrect="@{false}"
+                        app:pressed="@{false}" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/ncs_v2_game_feedback"
+                    layout="@layout/ncs_v2_feedback_item"
+                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_height="@dimen/ncs_v2_feedback_height"
+                    app:correct="@{true}"
+                    app:incorrect="@{false}"
+                    app:known="@{5}"
+                    app:missing="@{3}"
+                    app:sum="@{8}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:minHeight="234dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="87dp">
+
+                    <include
+                        android:id="@+id/ncs_v2_game_progress"
+                        layout="@layout/ncs_v2_progress_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="87dp"
+                        app:correctAnswers="@{1}"
+                        app:requiredAnswers="@{30}" />
+
+                    <include
+                        android:id="@+id/ncs_v2_game_timer"
+                        layout="@layout/ncs_v2_timer_item"
+                        android:layout_width="@dimen/ncs_v2_timer_width"
+                        android:layout_height="@dimen/ncs_v2_timer_height"
+                        android:layout_gravity="top|end"
+                        app:formattedTime="@{@string/ncs_v2_game_time_preview}"
+                        app:urgent="@{false}" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="92dp"
+                    android:layout_marginTop="@dimen/ncs_v2_space_18"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="62dp"
+                        android:layout_height="82dp"
+                        android:contentDescription="@null"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/girl_qes" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ncs_v2_space_16"
+                        android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_great_start"
+                        android:textColor="@color/ncs_v2_muted"
+                        android:textSize="@dimen/ncs_v2_text_16" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</layout>
