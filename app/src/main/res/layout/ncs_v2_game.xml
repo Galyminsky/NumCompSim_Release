@@ -2,7 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data />
+    <data>
+        <variable name="viewModel" type="me.proton.jobforandroid.compositionofnumbers.presentation.GameViewModel" />
+        <variable name="displayedQuestion" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question" />
+        <variable name="selectedOptionIndex" type="int" />
+        <variable name="feedbackVisible" type="boolean" />
+        <variable name="feedbackCorrect" type="boolean" />
+        <variable name="levelContext" type="String" />
+    </data>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,7 +23,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/ncs_v2_space_24">
+            android:paddingStart="@dimen/ncs_v2_space_24"
+            android:paddingTop="@dimen/ncs_v2_space_8"
+            android:paddingEnd="@dimen/ncs_v2_space_24"
+            android:paddingBottom="@dimen/ncs_v2_space_24">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,16 +70,20 @@
                     android:fontFamily="@font/ncs_v2_nunito_extrabold"
                     android:gravity="end"
                     android:includeFontPadding="false"
-                    android:text="@string/ncs_v2_game_level_context"
+                    android:text="@{levelContext}"
                     android:textColor="@color/ncs_v2_muted"
                     android:textSize="@dimen/ncs_v2_text_14" />
             </LinearLayout>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="30" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="30dp"
                 android:paddingBottom="@dimen/ncs_v2_space_24">
 
                 <TextView
@@ -83,13 +97,13 @@
                 <include
                     android:id="@+id/ncs_v2_game_equation"
                     layout="@layout/ncs_v2_equation_item"
-                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_equation_height"
                     android:layout_marginTop="@dimen/ncs_v2_space_18"
-                    app:known="@{5}"
+                    app:known="@{displayedQuestion.visibleNumber}"
                     app:missingText="@{@string/ncs_v2_math_question_mark}"
                     app:solved="@{false}"
-                    app:sum="@{8}" />
+                    app:sum="@{displayedQuestion.sum}" />
             </LinearLayout>
 
             <LinearLayout
@@ -115,37 +129,40 @@
                     <include
                         android:id="@+id/ncs_v2_game_answer_1"
                         layout="@layout/ncs_v2_answer_item"
-                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/ncs_v2_answer_height"
                         android:layout_marginEnd="@dimen/ncs_v2_space_12"
-                        app:answerValue="@{22}"
-                        app:correct="@{false}"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[0]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 0}"
                         app:enabled="@{true}"
-                        app:incorrect="@{false}"
-                        app:pressed="@{false}" />
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 0}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 0}" />
 
                     <include
                         android:id="@+id/ncs_v2_game_answer_2"
                         layout="@layout/ncs_v2_answer_item"
-                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/ncs_v2_answer_height"
                         android:layout_marginEnd="@dimen/ncs_v2_space_12"
-                        app:answerValue="@{10}"
-                        app:correct="@{false}"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[1]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 1}"
                         app:enabled="@{true}"
-                        app:incorrect="@{false}"
-                        app:pressed="@{false}" />
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 1}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 1}" />
 
                     <include
                         android:id="@+id/ncs_v2_game_answer_3"
                         layout="@layout/ncs_v2_answer_item"
-                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/ncs_v2_answer_height"
-                        app:answerValue="@{19}"
-                        app:correct="@{false}"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[2]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 2}"
                         app:enabled="@{true}"
-                        app:incorrect="@{false}"
-                        app:pressed="@{false}" />
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 2}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 2}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -157,37 +174,40 @@
                     <include
                         android:id="@+id/ncs_v2_game_answer_4"
                         layout="@layout/ncs_v2_answer_item"
-                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/ncs_v2_answer_height"
                         android:layout_marginEnd="@dimen/ncs_v2_space_12"
-                        app:answerValue="@{3}"
-                        app:correct="@{true}"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[3]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 3}"
                         app:enabled="@{true}"
-                        app:incorrect="@{false}"
-                        app:pressed="@{false}" />
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 3}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 3}" />
 
                     <include
                         android:id="@+id/ncs_v2_game_answer_5"
                         layout="@layout/ncs_v2_answer_item"
-                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/ncs_v2_answer_height"
                         android:layout_marginEnd="@dimen/ncs_v2_space_12"
-                        app:answerValue="@{29}"
-                        app:correct="@{false}"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[4]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 4}"
                         app:enabled="@{true}"
-                        app:incorrect="@{false}"
-                        app:pressed="@{false}" />
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 4}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 4}" />
 
                     <include
                         android:id="@+id/ncs_v2_game_answer_6"
                         layout="@layout/ncs_v2_answer_item"
-                        android:layout_width="@dimen/ncs_v2_answer_width"
+                        android:layout_width="0dp"
                         android:layout_height="@dimen/ncs_v2_answer_height"
-                        app:answerValue="@{11}"
-                        app:correct="@{false}"
+                        android:layout_weight="1"
+                        app:answerValue="@{displayedQuestion.options[5]}"
+                        app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect &amp;&amp; selectedOptionIndex == 5}"
                         app:enabled="@{true}"
-                        app:incorrect="@{false}"
-                        app:pressed="@{false}" />
+                        app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect &amp;&amp; selectedOptionIndex == 5}"
+                        app:pressed="@{feedbackVisible &amp;&amp; selectedOptionIndex == 5}" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -200,21 +220,24 @@
                 <include
                     android:id="@+id/ncs_v2_game_feedback"
                     layout="@layout/ncs_v2_feedback_item"
-                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_feedback_height"
-                    app:correct="@{true}"
-                    app:incorrect="@{false}"
-                    app:known="@{5}"
-                    app:missing="@{3}"
-                    app:sum="@{8}" />
+                    app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect}"
+                    app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect}"
+                    app:known="@{displayedQuestion.visibleNumber}"
+                    app:missing="@{displayedQuestion.rightAnswer}"
+                    app:sum="@{displayedQuestion.sum}" />
             </LinearLayout>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="37" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="197dp"
                 android:gravity="bottom"
-                android:minHeight="234dp"
                 android:orientation="vertical">
 
                 <FrameLayout
@@ -226,8 +249,8 @@
                         layout="@layout/ncs_v2_progress_item"
                         android:layout_width="match_parent"
                         android:layout_height="87dp"
-                        app:correctAnswers="@{1}"
-                        app:requiredAnswers="@{30}" />
+                        app:correctAnswers="@{viewModel.correctAnswers}"
+                        app:requiredAnswers="@{viewModel.requiredAnswers}" />
 
                     <include
                         android:id="@+id/ncs_v2_game_timer"
@@ -235,8 +258,8 @@
                         android:layout_width="@dimen/ncs_v2_timer_width"
                         android:layout_height="@dimen/ncs_v2_timer_height"
                         android:layout_gravity="top|end"
-                        app:formattedTime="@{@string/ncs_v2_game_time_preview}"
-                        app:urgent="@{false}" />
+                        app:formattedTime="@{viewModel.formattedTime}"
+                        app:urgent="@{viewModel.timeUrgent}" />
                 </FrameLayout>
 
                 <LinearLayout

@@ -2,7 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data />
+    <data>
+        <variable name="gameResult" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult" />
+        <variable name="levelLabel" type="String" />
+        <variable name="correctAnswerText" type="String" />
+        <variable name="accuracyText" type="String" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,9 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:fillViewport="true"
             android:overScrollMode="never"
             android:paddingStart="@dimen/ncs_v2_space_24"
-            android:paddingTop="@dimen/ncs_v2_space_24"
+            android:paddingTop="@dimen/ncs_v2_space_8"
             android:paddingEnd="@dimen/ncs_v2_space_24">
 
         <LinearLayout
@@ -50,39 +56,45 @@
                     android:includeFontPadding="false"
                     android:paddingStart="@dimen/ncs_v2_space_12"
                     android:paddingEnd="@dimen/ncs_v2_space_12"
-                    android:text="@string/ncs_v2_test_level"
+                    android:text="@{levelLabel}"
                     android:textColor="@color/ncs_v2_primary"
                     android:textSize="@dimen/ncs_v2_text_13" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="22dp">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="20" />
 
                 <ImageView
                     android:layout_width="154dp"
                     android:layout_height="146dp"
+                    android:layout_gravity="center_horizontal"
                     android:contentDescription="@null"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_smile" />
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="16" />
 
                 <TextView
                     style="@style/TextAppearance.NcsV2.ResultTitle"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="@dimen/ncs_v2_space_8"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@string/ncs_v2_result_success_title" />
 
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="16" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
-                    android:layout_marginTop="@dimen/ncs_v2_space_8"
                     android:fontFamily="@font/ncs_v2_nunito_semibold"
                     android:gravity="center"
                     android:includeFontPadding="false"
@@ -90,7 +102,11 @@
                     android:text="@string/ncs_v2_result_success_description"
                     android:textColor="@color/ncs_v2_muted"
                     android:textSize="@dimen/ncs_v2_text_17" />
-            </LinearLayout>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="44" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -106,11 +122,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_feedback_height"
                     android:theme="@style/NcsV2MetricPreviewCorrect"
-                    app:achieved="@{true}"
+                    app:achieved="@{gameResult.winner}"
                     app:label="@{@string/ncs_v2_correct_answers_label}"
                     app:standalone="@{false}"
-                    app:targetStatusText="@{@string/ncs_v2_required_reached(3)}"
-                    app:valueText="@{@string/ncs_v2_result_success_count}" />
+                    app:targetStatusText="@{@string/ncs_v2_required_reached(gameResult.gameSettings.minCountOfRightAnswers)}"
+                    app:valueText="@{correctAnswerText}" />
 
                 <View
                     android:layout_width="match_parent"
@@ -127,26 +143,30 @@
                     android:layout_height="@dimen/ncs_v2_feedback_height"
                     android:layout_marginTop="@dimen/ncs_v2_space_16"
                     android:theme="@style/NcsV2MetricPreviewAccuracy"
-                    app:achieved="@{true}"
+                    app:achieved="@{gameResult.winner}"
                     app:label="@{@string/ncs_v2_accuracy}"
                     app:standalone="@{false}"
-                    app:targetStatusText="@{@string/ncs_v2_accuracy_required_reached(50)}"
-                    app:valueText="@{@string/ncs_v2_percentage(58)}" />
+                    app:targetStatusText="@{@string/ncs_v2_accuracy_required_reached(gameResult.gameSettings.minPercentOfRightAnswers)}"
+                    app:valueText="@{accuracyText}" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="195dp"
-                android:gravity="center"
-                android:orientation="vertical">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="47" />
 
                 <ImageView
                     android:layout_width="220dp"
                     android:layout_height="148dp"
+                    android:layout_gravity="center_horizontal"
                     android:contentDescription="@null"
                     android:scaleType="fitXY"
                     android:src="@drawable/kids" />
-            </LinearLayout>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="47" />
 
         </LinearLayout>
         </ScrollView>

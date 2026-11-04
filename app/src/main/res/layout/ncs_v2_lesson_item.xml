@@ -11,7 +11,7 @@
     </data>
 
     <FrameLayout
-        android:layout_width="@dimen/ncs_v2_content_width"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/ncs_v2_lesson_coming_soon_height"
         android:background="@drawable/ncs_v2_lesson_card"

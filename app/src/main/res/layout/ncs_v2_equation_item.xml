@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:id="@+id/ncs_v2_equation_root"
-        android:layout_width="@dimen/ncs_v2_content_width"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/ncs_v2_equation_height"
         android:background="@drawable/ncs_v2_panel"
         android:gravity="center"

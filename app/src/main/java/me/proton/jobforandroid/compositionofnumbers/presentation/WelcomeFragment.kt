@@ -9,10 +9,10 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.games.PlayGamesSdk
 import com.google.firebase.analytics.FirebaseAnalytics
 import me.proton.jobforandroid.compositionofnumbers.R
-import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentWelcomeBinding
+import me.proton.jobforandroid.compositionofnumbers.databinding.NcsV2AdditionIntroBinding
 
 class WelcomeFragment : Fragment() {
-    private var _binding: FragmentWelcomeBinding? = null
+    private var _binding: NcsV2AdditionIntroBinding? = null
     private val binding get() = _binding!!
     private lateinit var analytics: FirebaseAnalytics
 
@@ -27,13 +27,13 @@ class WelcomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentWelcomeBinding.inflate(layoutInflater, container, false)
+        _binding = NcsV2AdditionIntroBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.buttonUnderstand.setOnClickListener {
+        binding.ncsV2ReadyButton.setOnClickListener {
             launchChooseLevelFragment()
         }
     }

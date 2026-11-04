@@ -16,7 +16,7 @@ import me.proton.jobforandroid.compositionofnumbers.domain.usecases.GetGameSetti
 
 class GameViewModel(
     private val application: Application,
-    private val level: Level
+    val level: Level
 ) : ViewModel() {
 
     private lateinit var gameSettings: GameSettings
@@ -36,6 +36,16 @@ class GameViewModel(
     private val _progressAnswers = MutableLiveData<String>()
     val progressAnswers: LiveData<String>
         get() = _progressAnswers
+    private val _correctAnswers = MutableLiveData<Int>()
+    val correctAnswers: LiveData<Int>
+        get() = _correctAnswers
+    val requiredAnswers: Int
+        get() = gameSettings.minCountOfRightAnswers
+    val maxSumValue: Int
+        get() = gameSettings.maxSumValue
+    private val _timeUrgent = MutableLiveData<Boolean>(false)
+    val timeUrgent: LiveData<Boolean>
+        get() = _timeUrgent
     private val _enoughCount = MutableLiveData<Boolean>()
     val enoughCount: LiveData<Boolean>
         get() = _enoughCount
@@ -73,6 +83,7 @@ class GameViewModel(
     private fun updateProgress() {
         val percent = calculatePercentOfRightAnswers(countOfRightAnswers, countOfQuestions)
         _percentOfRightAnswers.value = percent
+        _correctAnswers.value = countOfRightAnswers
         _progressAnswers.value = String.format(
             application.resources.getString(R.string.progress_answers),
             countOfRightAnswers,
@@ -102,6 +113,7 @@ class GameViewModel(
         ) {
             override fun onTick(millisUntilFinished: Long) {
                 _formattedTime.value = formatTime(millisUntilFinished)
+                _timeUrgent.value = millisUntilFinished <= 10 * MILLIS_IN_SECONDS
             }
             override fun onFinish() {
                 finishGame()

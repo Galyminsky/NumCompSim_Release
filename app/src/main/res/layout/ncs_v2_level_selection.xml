@@ -2,7 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data />
+    <data>
+        <import type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Level" />
+
+        <variable name="selectedLevel" type="Level" />
+        <variable name="easyRange" type="String" />
+        <variable name="normalRange" type="String" />
+        <variable name="hardRange" type="String" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,9 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:fillViewport="true"
             android:overScrollMode="never"
             android:paddingStart="@dimen/ncs_v2_space_24"
-            android:paddingTop="@dimen/ncs_v2_space_24"
+            android:paddingTop="@dimen/ncs_v2_space_8"
             android:paddingEnd="@dimen/ncs_v2_space_24">
 
         <LinearLayout
@@ -120,58 +128,63 @@
                 <include
                     android:id="@+id/ncs_v2_test_level_item"
                     layout="@layout/ncs_v2_level_item"
-                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_level_height"
                     app:description="@{@string/ncs_v2_unavailable}"
                     app:enabled="@{true}"
                     app:marker="@{@string/ncs_v2_level_marker_test}"
-                    app:selected="@{false}"
+                    app:selected="@{selectedLevel == Level.TEST}"
                     app:showDescription="@{false}"
                     app:title="@{@string/ncs_v2_test_level}" />
 
                 <include
                     android:id="@+id/ncs_v2_easy_level_item"
                     layout="@layout/ncs_v2_level_item"
-                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_level_height"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
-                    app:description="@{@string/ncs_v2_level_range(0, 10)}"
+                    app:description="@{easyRange}"
                     app:enabled="@{true}"
                     app:marker="@{@string/ncs_v2_level_marker_easy}"
-                    app:selected="@{false}"
+                    app:selected="@{selectedLevel == Level.EASY}"
                     app:showDescription="@{true}"
                     app:title="@{@string/ncs_v2_easy_level}" />
 
                 <include
                     android:id="@+id/ncs_v2_medium_level_item"
                     layout="@layout/ncs_v2_level_item"
-                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_level_height"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
-                    app:description="@{@string/ncs_v2_level_range(0, 20)}"
+                    app:description="@{normalRange}"
                     app:enabled="@{true}"
                     app:marker="@{@string/ncs_v2_level_marker_medium}"
-                    app:selected="@{false}"
+                    app:selected="@{selectedLevel == Level.NORMAL}"
                     app:showDescription="@{true}"
                     app:title="@{@string/ncs_v2_medium_level}" />
 
                 <include
                     android:id="@+id/ncs_v2_hard_level_item"
                     layout="@layout/ncs_v2_level_item"
-                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_level_height"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
-                    app:description="@{@string/ncs_v2_level_range(0, 30)}"
+                    app:description="@{hardRange}"
                     app:enabled="@{true}"
                     app:marker="@{@string/ncs_v2_level_marker_hard}"
-                    app:selected="@{true}"
+                    app:selected="@{selectedLevel == Level.HARD}"
                     app:showDescription="@{true}"
                     app:title="@{@string/ncs_v2_hard_level}" />
             </LinearLayout>
 
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="118dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="14dp"
@@ -197,12 +210,17 @@
                     android:textSize="@dimen/ncs_v2_text_17" />
             </LinearLayout>
 
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
         </LinearLayout>
         </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/ncs_v2_button_height"
             android:layout_marginStart="@dimen/ncs_v2_space_24"
             android:layout_marginEnd="@dimen/ncs_v2_space_24"
             android:layout_marginBottom="@dimen/ncs_v2_space_24"

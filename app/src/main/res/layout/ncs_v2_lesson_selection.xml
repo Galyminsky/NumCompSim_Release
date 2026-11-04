@@ -16,7 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/ncs_v2_space_24">
+            android:paddingStart="@dimen/ncs_v2_space_24"
+            android:paddingTop="@dimen/ncs_v2_space_8"
+            android:paddingEnd="@dimen/ncs_v2_space_24"
+            android:paddingBottom="@dimen/ncs_v2_space_24">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,7 +105,7 @@
                 <include
                     android:id="@+id/ncs_v2_addition_item"
                     layout="@layout/ncs_v2_lesson_item"
-                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_lesson_available_height"
                     app:available="@{true}"
                     app:symbol="@{@string/ncs_v2_math_plus}"
@@ -111,7 +114,7 @@
                 <include
                     android:id="@+id/ncs_v2_subtraction_item"
                     layout="@layout/ncs_v2_lesson_item"
-                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_lesson_coming_soon_height"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
                     app:available="@{false}"
@@ -121,7 +124,7 @@
                 <include
                     android:id="@+id/ncs_v2_multiplication_item"
                     layout="@layout/ncs_v2_lesson_item"
-                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_lesson_coming_soon_height"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
                     app:available="@{false}"
@@ -131,7 +134,7 @@
                 <include
                     android:id="@+id/ncs_v2_division_item"
                     layout="@layout/ncs_v2_lesson_item"
-                    android:layout_width="@dimen/ncs_v2_content_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_lesson_coming_soon_height"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
                     app:available="@{false}"

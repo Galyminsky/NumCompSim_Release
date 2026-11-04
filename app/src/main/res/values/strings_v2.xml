@@ -51,7 +51,7 @@
     <string name="ncs_v2_easy_level">Лёгкий</string>
     <string name="ncs_v2_medium_level">Средний</string>
     <string name="ncs_v2_hard_level">Тяжёлый</string>
-    <string name="ncs_v2_game_level_context">Тяжёлый · 0–30</string>
+    <string name="ncs_v2_game_level_context">%1$s · %2$s</string>
     <string name="ncs_v2_game_time_preview">01:27</string>
     <string name="ncs_v2_level_range">%1$d–%2$d</string>
     <string name="ncs_v2_level_and_range">%1$s · %2$s</string>
@@ -91,6 +91,7 @@
     <string name="ncs_v2_accuracy">Точность</string>
     <string name="ncs_v2_percentage">%1$d%%</string>
     <string name="ncs_v2_accuracy_required_reached">Нужно %1$d%% · цель достигнута</string>
+    <string name="ncs_v2_accuracy_required_missing">Нужно %1$d%% · не хватает ещё %2$d%%</string>
     <string name="ncs_v2_try_again">Попробовать снова</string>
     <string name="ncs_v2_play_again">Играть ещё</string>
     <string name="ncs_v2_choose_level">Выбрать уровень</string>

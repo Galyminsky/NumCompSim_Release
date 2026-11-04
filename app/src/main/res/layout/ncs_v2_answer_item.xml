@@ -15,7 +15,7 @@
 
     <FrameLayout
         android:id="@+id/ncs_v2_answer_root"
-        android:layout_width="@dimen/ncs_v2_answer_width"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/ncs_v2_answer_height"
         android:background="@{!enabled ? @drawable/ncs_v2_answer_card : incorrect ? @drawable/ncs_v2_answer_incorrect : correct ? @drawable/ncs_v2_answer_selected : @drawable/ncs_v2_answer_card}"
         android:enabled="@{enabled}"

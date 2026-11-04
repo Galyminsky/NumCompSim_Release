@@ -2,7 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data />
+    <data>
+        <variable name="levelLabel" type="String" />
+        <variable name="correctAnswerText" type="String" />
+        <variable name="accuracyText" type="String" />
+        <variable name="countTargetText" type="String" />
+        <variable name="accuracyTargetText" type="String" />
+        <variable name="countAchieved" type="boolean" />
+        <variable name="accuracyAchieved" type="boolean" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,9 +23,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:fillViewport="true"
             android:overScrollMode="never"
             android:paddingStart="@dimen/ncs_v2_space_24"
-            android:paddingTop="@dimen/ncs_v2_space_24"
+            android:paddingTop="@dimen/ncs_v2_space_8"
             android:paddingEnd="@dimen/ncs_v2_space_24">
 
         <LinearLayout
@@ -50,41 +59,47 @@
                     android:includeFontPadding="false"
                     android:paddingStart="@dimen/ncs_v2_space_12"
                     android:paddingEnd="@dimen/ncs_v2_space_12"
-                    android:text="@string/ncs_v2_test_level"
+                    android:text="@{levelLabel}"
                     android:textColor="@color/ncs_v2_primary"
                     android:textSize="@dimen/ncs_v2_text_13" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="22dp">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="20" />
 
                 <ImageView
                     android:layout_width="154dp"
                     android:layout_height="146dp"
+                    android:layout_gravity="center_horizontal"
                     android:contentDescription="@null"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_sad" />
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="16" />
 
                 <TextView
                     style="@style/TextAppearance.NcsV2.ResultTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ncs_v2_space_8"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:lineHeight="40dp"
                     android:minHeight="80dp"
                     android:text="@string/ncs_v2_result_failure_title" />
 
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="16" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ncs_v2_space_8"
                     android:fontFamily="@font/ncs_v2_nunito_bold"
                     android:gravity="center"
                     android:includeFontPadding="false"
@@ -93,7 +108,11 @@
                     android:text="@string/ncs_v2_result_failure_description_static"
                     android:textColor="@color/ncs_v2_muted"
                     android:textSize="@dimen/ncs_v2_text_17" />
-            </LinearLayout>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="44" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -109,11 +128,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/ncs_v2_feedback_height"
                     android:theme="@style/NcsV2MetricPreviewFailureCorrect"
-                    app:achieved="@{false}"
+                    app:achieved="@{countAchieved}"
                     app:label="@{@string/ncs_v2_correct_answers_label}"
                     app:standalone="@{false}"
-                    app:targetStatusText="@{@string/ncs_v2_required_missing(3, 2)}"
-                    app:valueText="@{@string/ncs_v2_result_failure_count}" />
+                    app:targetStatusText="@{countTargetText}"
+                    app:valueText="@{correctAnswerText}" />
 
                 <View
                     android:layout_width="match_parent"
@@ -130,26 +149,30 @@
                     android:layout_height="@dimen/ncs_v2_feedback_height"
                     android:layout_marginTop="@dimen/ncs_v2_space_16"
                     android:theme="@style/NcsV2MetricPreviewFailureAccuracy"
-                    app:achieved="@{true}"
+                    app:achieved="@{accuracyAchieved}"
                     app:label="@{@string/ncs_v2_accuracy}"
                     app:standalone="@{false}"
-                    app:targetStatusText="@{@string/ncs_v2_accuracy_required_reached(50)}"
-                    app:valueText="@{@string/ncs_v2_percentage(100)}" />
+                    app:targetStatusText="@{accuracyTargetText}"
+                    app:valueText="@{accuracyText}" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="155dp"
-                android:gravity="center"
-                android:orientation="vertical">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="40" />
 
                 <ImageView
-                    android:layout_width="220dp"
-                    android:layout_height="148dp"
+                    android:layout_width="204dp"
+                    android:layout_height="137dp"
+                    android:layout_gravity="center_horizontal"
                     android:contentDescription="@null"
-                    android:scaleType="fitXY"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/kids" />
-            </LinearLayout>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="40" />
 
         </LinearLayout>
         </ScrollView>

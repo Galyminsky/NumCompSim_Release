@@ -14,7 +14,7 @@
 
     <FrameLayout
         android:id="@+id/ncs_v2_metric_root"
-        android:layout_width="@dimen/ncs_v2_content_width"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <View
