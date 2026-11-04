@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="sum" type="int" />
+        <variable name="known" type="int" />
+        <variable name="missing" type="int" />
+        <variable name="correct" type="boolean" />
+        <variable name="incorrect" type="boolean" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ncs_v2_feedback_root"
+        android:layout_width="@dimen/ncs_v2_content_width"
+        android:layout_height="@dimen/ncs_v2_feedback_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/ncs_v2_feedback_indicator"
+            android:layout_width="@dimen/ncs_v2_space_32"
+            android:layout_height="@dimen/ncs_v2_space_32"
+            android:layout_marginEnd="@dimen/ncs_v2_feedback_gap"
+            android:background="@{correct ? @drawable/ncs_v2_indicator_success : incorrect ? @drawable/ncs_v2_indicator_attention : @drawable/ncs_v2_indicator_neutral}">
+
+            <TextView
+                android:id="@+id/ncs_v2_feedback_symbol"
+                style="@style/TextAppearance.NcsV2.FeedbackSymbol"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@{correct ? @string/ncs_v2_checkmark : incorrect ? @string/ncs_v2_math_multiply : @string/ncs_v2_level_marker_easy}"
+                android:textColor="@{correct ? @color/ncs_v2_success : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+                android:textSize="@dimen/ncs_v2_text_22" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/ncs_v2_feedback_message"
+            style="@style/TextAppearance.NcsV2.Black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:lineSpacingMultiplier="1.2"
+            android:text="@{correct ? @string/ncs_v2_answer_correct(known, missing, sum) : incorrect ? @string/ncs_v2_answer_wrong(known, missing, sum) : @string/ncs_v2_tap_correct_number}"
+            android:textColor="@{correct ? @color/ncs_v2_success : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+            android:textSize="@dimen/ncs_v2_text_20" />
+    </LinearLayout>
+</layout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ncs_v2_primary">#6950D8</color>
+    <color name="ncs_v2_primary_pressed">#5038B5</color>
+    <color name="ncs_v2_selected">#F0EBFF</color>
+    <color name="ncs_v2_ink">#292647</color>
+    <color name="ncs_v2_muted">#716D88</color>
+    <color name="ncs_v2_border">#DED8ED</color>
+    <color name="ncs_v2_paper">#FFFEFA</color>
+    <color name="ncs_v2_surface">#FFFFFF</color>
+    <color name="ncs_v2_warm">#FFF3DA</color>
+    <color name="ncs_v2_warm_ink">#93601F</color>
+    <color name="ncs_v2_success">#21765A</color>
+    <color name="ncs_v2_success_soft">#EAF6EE</color>
+</resources>

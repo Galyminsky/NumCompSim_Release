@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing used by the screens and UI-Kit components. -->
+    <dimen name="ncs_v2_space_4">4dp</dimen>
+    <dimen name="ncs_v2_space_8">8dp</dimen>
+    <dimen name="ncs_v2_space_12">12dp</dimen>
+    <dimen name="ncs_v2_space_16">16dp</dimen>
+    <dimen name="ncs_v2_space_18">18dp</dimen>
+    <dimen name="ncs_v2_space_24">24dp</dimen>
+    <dimen name="ncs_v2_space_32">32dp</dimen>
+
+    <!-- Reusable component geometry. -->
+    <dimen name="ncs_v2_content_width">354dp</dimen>
+    <dimen name="ncs_v2_touch_target_min">48dp</dimen>
+    <dimen name="ncs_v2_button_height">60dp</dimen>
+    <dimen name="ncs_v2_back_width">112dp</dimen>
+    <dimen name="ncs_v2_back_height">48dp</dimen>
+    <dimen name="ncs_v2_lesson_available_height">130dp</dimen>
+    <dimen name="ncs_v2_lesson_coming_soon_height">90dp</dimen>
+    <dimen name="ncs_v2_lesson_symbol_width">52dp</dimen>
+    <dimen name="ncs_v2_lesson_symbol_height">56dp</dimen>
+    <dimen name="ncs_v2_level_height">83dp</dimen>
+    <dimen name="ncs_v2_level_indicator_size">28dp</dimen>
+    <dimen name="ncs_v2_answer_width">110dp</dimen>
+    <dimen name="ncs_v2_answer_height">88dp</dimen>
+    <dimen name="ncs_v2_equation_height">114dp</dimen>
+    <dimen name="ncs_v2_equation_gap">13dp</dimen>
+    <dimen name="ncs_v2_equation_slot_width">69dp</dimen>
+    <dimen name="ncs_v2_equation_slot_height">76dp</dimen>
+    <dimen name="ncs_v2_badge_height">30dp</dimen>
+    <dimen name="ncs_v2_timer_width">150dp</dimen>
+    <dimen name="ncs_v2_timer_height">59dp</dimen>
+    <dimen name="ncs_v2_progress_width">304dp</dimen>
+    <dimen name="ncs_v2_progress_height">72dp</dimen>
+    <dimen name="ncs_v2_progress_label_gap">3dp</dimen>
+    <dimen name="ncs_v2_progress_track_height">10dp</dimen>
+    <dimen name="ncs_v2_feedback_height">56dp</dimen>
+    <dimen name="ncs_v2_feedback_gap">10dp</dimen>
+    <dimen name="ncs_v2_metric_value_row_height">35dp</dimen>
+    <dimen name="ncs_v2_metric_status_height">19dp</dimen>
+    <dimen name="ncs_v2_metric_text_gap">2dp</dimen>
+    <dimen name="ncs_v2_notebook_cell_width">47dp</dimen>
+    <dimen name="ncs_v2_notebook_cell_height">45dp</dimen>
+
+    <!-- Corners, outlines, and the primary button's lower edge. -->
+    <dimen name="ncs_v2_radius_number_field">12dp</dimen>
+    <dimen name="ncs_v2_radius_control">18dp</dimen>
+    <dimen name="ncs_v2_radius_panel">24dp</dimen>
+    <dimen name="ncs_v2_radius_screen">28dp</dimen>
+    <dimen name="ncs_v2_radius_pill">100dp</dimen>
+    <dimen name="ncs_v2_stroke_thin">1dp</dimen>
+    <dimen name="ncs_v2_stroke_regular">2dp</dimen>
+    <dimen name="ncs_v2_stroke_emphasis">3dp</dimen>
+    <dimen name="ncs_v2_button_lower_edge">4dp</dimen>
+    <!-- Inner corner of the primary face: 18dp outer radius minus 4dp lower edge. -->
+    <dimen name="ncs_v2_button_face_bottom_radius">14dp</dimen>
+
+    <!-- Repeated text and symbol sizes from the seven screens and UI-Kit. -->
+    <dimen name="ncs_v2_text_12">12sp</dimen>
+    <dimen name="ncs_v2_text_13">13sp</dimen>
+    <dimen name="ncs_v2_text_14">14sp</dimen>
+    <dimen name="ncs_v2_text_15">15sp</dimen>
+    <dimen name="ncs_v2_text_16">16sp</dimen>
+    <dimen name="ncs_v2_text_17">17sp</dimen>
+    <dimen name="ncs_v2_text_18">18sp</dimen>
+    <dimen name="ncs_v2_text_19">19sp</dimen>
+    <dimen name="ncs_v2_text_20">20sp</dimen>
+    <dimen name="ncs_v2_text_22">22sp</dimen>
+    <dimen name="ncs_v2_text_24">24sp</dimen>
+    <dimen name="ncs_v2_text_25">25sp</dimen>
+    <dimen name="ncs_v2_text_26">26sp</dimen>
+    <dimen name="ncs_v2_text_28">28sp</dimen>
+    <dimen name="ncs_v2_text_30">30sp</dimen>
+    <dimen name="ncs_v2_text_32">32sp</dimen>
+    <dimen name="ncs_v2_text_34">34sp</dimen>
+    <dimen name="ncs_v2_text_36">36sp</dimen>
+    <dimen name="ncs_v2_text_42">42sp</dimen>
+    <dimen name="ncs_v2_text_44">44sp</dimen>
+    <dimen name="ncs_v2_text_49">49sp</dimen>
+</resources>

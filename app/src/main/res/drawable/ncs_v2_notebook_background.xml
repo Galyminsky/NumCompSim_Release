@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/ncs_v2_paper" />
+    <item>
+        <bitmap
+            android:src="@drawable/ncs_v2_notebook_cell"
+            android:tileMode="repeat" />
+    </item>
+</layer-list>

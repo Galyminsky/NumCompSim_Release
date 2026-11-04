@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable name="label" type="String" />
+        <variable name="valueText" type="String" />
+        <variable name="targetStatusText" type="String" />
+        <variable name="achieved" type="boolean" />
+        <variable name="standalone" type="boolean" />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/ncs_v2_metric_root"
+        android:layout_width="@dimen/ncs_v2_content_width"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/ncs_v2_metric_card_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/ncs_v2_panel"
+            android:visibility="@{standalone ? View.VISIBLE : View.GONE}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ncs_v2_space_18"
+                android:visibility="@{standalone ? View.VISIBLE : View.GONE}" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ncs_v2_feedback_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/ncs_v2_space_18"
+                android:paddingEnd="@dimen/ncs_v2_space_18">
+
+                <FrameLayout
+                    android:id="@+id/ncs_v2_metric_status"
+                    android:layout_width="@dimen/ncs_v2_space_32"
+                    android:layout_height="@dimen/ncs_v2_space_32"
+                    android:background="@{achieved ? @drawable/ncs_v2_indicator_success : @drawable/ncs_v2_indicator_attention}">
+
+                    <TextView
+                        android:id="@+id/ncs_v2_metric_symbol"
+                        style="@style/TextAppearance.NcsV2.FeedbackSymbol"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@{achieved ? @string/ncs_v2_checkmark : @string/ncs_v2_exclamation}"
+                        android:textColor="@{achieved ? @color/ncs_v2_success : @color/ncs_v2_warm_ink}" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/ncs_v2_space_12"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ncs_v2_metric_value_row_height"
+                        android:baselineAligned="true"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/ncs_v2_metric_label"
+                            style="@style/TextAppearance.NcsV2.ExtraBold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@{label}"
+                            android:textColor="@color/ncs_v2_ink"
+                            android:textSize="@dimen/ncs_v2_text_16"
+                            tools:text="@string/ncs_v2_correct_answers_label" />
+
+                        <TextView
+                            android:id="@+id/ncs_v2_metric_value"
+                            style="@style/TextAppearance.NcsV2.Metric"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{valueText}"
+                            android:textColor="@color/ncs_v2_ink"
+                            tools:text="7" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/ncs_v2_metric_target"
+                        style="@style/TextAppearance.NcsV2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ncs_v2_metric_status_height"
+                        android:layout_marginTop="@dimen/ncs_v2_metric_text_gap"
+                        android:text="@{targetStatusText}"
+                        android:textColor="@{achieved ? @color/ncs_v2_success : @color/ncs_v2_warm_ink}"
+                        android:textSize="@dimen/ncs_v2_text_14"
+                        tools:text="Нужно 3 · цель достигнута" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ncs_v2_space_18"
+                android:visibility="@{standalone ? View.VISIBLE : View.GONE}" />
+        </LinearLayout>
+    </FrameLayout>
+</layout>
