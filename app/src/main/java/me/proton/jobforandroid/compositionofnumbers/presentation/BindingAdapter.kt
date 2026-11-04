@@ -9,10 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult
-
-interface OnOptionClickListener {
-    fun onOptionClick(option: Int)
-}
+import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
 
 @BindingAdapter("requiredAnswers")
 fun bindRequiredAnswers(textView: TextView, count: Int) {
@@ -42,15 +39,8 @@ fun bindRequiredPercentage(textView: TextView, count: Int) {
 fun bindScorePercentage(textView: TextView, gameResult: GameResult) {
     textView.text = String.format(
         textView.context.getString(R.string.score_percentage),
-        getPercentOfRightAnswers(gameResult)
+        calculatePercentOfRightAnswers(gameResult.countOfRightAnswers, gameResult.countOfQuestions)
     )
-}
-private fun getPercentOfRightAnswers(gameResult: GameResult) = with(gameResult) {
-    if (countOfQuestions == 0) {
-        0
-    } else {
-        ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
-    }
 }
 @BindingAdapter("resultEmoji")
 fun bindResultEmoji(imageView: ImageView, winner: Boolean) {
@@ -84,10 +74,21 @@ private fun getColorByState(context: Context, goodState: Boolean): Int {
 fun bindNumberAsText(textView: TextView, number: Int) {
     textView.text = number.toString()
 }
-@BindingAdapter("onOptionClickListener")
-fun bindOnOptionClickListener(textView: TextView, clickListener: OnOptionClickListener) {
-    textView.setOnClickListener {
-        clickListener.onOptionClick(textView.text.toString().toInt())
+@BindingAdapter(value = ["onOptionClickListener", "questionForOption", "optionIndex"], requireAll = true)
+fun bindOnOptionClickListener(
+    textView: TextView,
+    viewModel: GameViewModel?,
+    question: Question?,
+    optionIndex: Int
+) {
+    val option = question?.options?.getOrNull(optionIndex)
+    textView.text = option?.toString().orEmpty()
+    if (viewModel != null && question != null && option != null) {
+        textView.setOnClickListener {
+            viewModel.chooseAnswer(question, option)
+        }
+    } else {
+        textView.setOnClickListener(null)
     }
 }
 

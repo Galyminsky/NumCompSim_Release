@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentChooseLevelBinding
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
 
@@ -39,7 +40,9 @@ class ChooseLevelFragment : Fragment() {
         }
     }
     private fun launchGameFragment(level: Level) {
-       findNavController().navigate(
+       val navController = findNavController()
+       if (navController.currentDestination?.id != R.id.chooseLevelFragment2) return
+       navController.navigate(
            ChooseLevelFragmentDirections.actionChooseLevelFragment2ToGameFragment(level))
     }
     override fun onDestroyView() {
