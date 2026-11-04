@@ -58,6 +58,13 @@ class GameRepositoryTest {
     }
 
     @Test
+    fun accuracyHandlesNoAnswersAndAllCorrectOrWrong() {
+        assertEquals(0, calculatePercentOfRightAnswers(0, 0))
+        assertEquals(0, calculatePercentOfRightAnswers(0, 10))
+        assertEquals(100, calculatePercentOfRightAnswers(10, 10))
+    }
+
+    @Test
     fun settingsMatchEveryLevel() {
         assertEquals(GameSettings(10, 3, 50, 8), getSettings(Level.TEST))
         assertEquals(GameSettings(10, 10, 70, 60), getSettings(Level.EASY))

@@ -37,7 +37,7 @@
         android:id="@+id/chooseLevelFragment2"
         android:name="me.proton.jobforandroid.compositionofnumbers.presentation.ChooseLevelFragment"
         android:label="fragment_choose_level"
-        tools:layout="@layout/fragment_choose_level" >
+        tools:layout="@layout/ncs_v2_level_selection" >
         <action
             android:id="@+id/action_chooseLevelFragment2_to_gameFragment"
             app:destination="@id/gameFragment" />
@@ -46,7 +46,7 @@
         android:id="@+id/gameFragment"
         android:name="me.proton.jobforandroid.compositionofnumbers.presentation.GameFragment"
         android:label="fragment_game"
-        tools:layout="@layout/fragment_game" >
+        tools:layout="@layout/ncs_v2_game" >
         <action
             android:id="@+id/action_gameFragment_to_gameFinishedFragment"
             app:destination="@id/gameFinishedFragment"
@@ -60,7 +60,7 @@
         android:id="@+id/gameFinishedFragment"
         android:name="me.proton.jobforandroid.compositionofnumbers.presentation.GameFinishedFragment"
         android:label="fragment_game_finished"
-        tools:layout="@layout/fragment_game_finished" >
+        tools:layout="@layout/ncs_v2_result_success" >
         <argument
             android:name="gameResult"
             app:argType="me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult" />

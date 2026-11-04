@@ -98,11 +98,13 @@ class GameFinishedFragment : Fragment() {
         }
     }
 
-    private fun selectedLevel(): Level =
-        requireNotNull(
-            findNavController().getBackStackEntry(R.id.chooseLevelFragment2)
-                .savedStateHandle.get<Level>(SELECTED_LEVEL_KEY)
-        ) { "Selected level is missing from the level selection back stack entry" }
+    private fun selectedLevel(): Level {
+        val savedLevel: Level? = findNavController().getBackStackEntry(R.id.chooseLevelFragment2)
+            .savedStateHandle.get(SELECTED_LEVEL_KEY)
+        return requireNotNull(savedLevel) {
+            "Selected level is missing from the level selection back stack entry"
+        }
+    }
 
     private fun levelNameResId(level: Level): Int = when (level) {
         Level.TEST -> R.string.ncs_v2_test_level
