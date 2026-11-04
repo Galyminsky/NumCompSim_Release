@@ -1,0 +1,36 @@
+NUMCOMPSIM PRIVACY POLICY
+Effective date: November 5, 2026
+
+1. About the App
+NumCompSim is a free educational Android application developed by Yuriy Galyaminsky. It is intended for children aged 6 to 12 and helps them practice mathematical skills. This policy describes how data may be processed when using the application.
+
+2. Information Provided by Users
+Mathematical exercises do not require registration or the submission of a name, email address, phone number, or other contact information. Core gameplay is available without an internet connection.
+
+3. Firebase Analytics
+The application uses Google Analytics for Firebase to understand how NumCompSim is used and to improve the application. The service may automatically process usage events, session information, app and operating system versions, device characteristics, an app instance identifier, and approximate location inferred from network information. Data is processed by Google services under their applicable policies.
+The application is configured to exclude the Android Advertising ID (AD_ID) permission, disable Advertising ID collection through Firebase Analytics, and disable ad personalization signals. The application does not show personalized advertising to children.
+More information: https://firebase.google.com/support/privacy
+
+4. Google Play Games Services
+The application includes an integration with Google Play Games Services. Depending on the service configuration and Google account settings, Google may process technical information and Play Games profile data. Signing in to Play Games is not required to complete mathematical exercises.
+Google Privacy Policy: https://policies.google.com/privacy
+
+5. Children's Privacy
+The application does not require children to provide their names, photographs, contacts, addresses, or other personal details to solve exercises. The developer does not sell user data or use analytics for personalized advertising to children. The third-party services described above may process technical data. Parents and legal guardians may send privacy-related inquiries to the email address below.
+
+6. Permissions
+The application uses internet access permission for integrated Google services. Core gameplay does not request access to the camera, microphone, contacts, precise location, or personal files.
+
+7. Data Sharing, Retention, and Deletion
+Technical information and usage events may be sent to Google through Firebase Analytics and Google Play Games Services. Retention and deletion of data processed by these services depend on their policies and settings. Uninstalling the application does not necessarily immediately delete data previously processed by third-party services. For questions about data processing or requests to delete data accessible to the developer, contact the email address below.
+
+8. Security
+The developer aims to limit data processing to necessary purposes. No method of electronic data transmission or storage can guarantee absolute security.
+
+9. Changes to This Policy
+This policy may be updated when the application, third-party services, or applicable requirements change. The current version will be published by the developer.
+
+10. Contact
+Developer: Yuriy Galyaminsky
+Email: galyaminsky@gmail.com
