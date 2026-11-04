@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.games.PlayGamesSdk
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
 import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentWelcomeBinding
 
@@ -20,7 +18,7 @@ class WelcomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        analytics = Firebase.analytics
+        analytics = FirebaseAnalytics.getInstance(requireContext())
         PlayGamesSdk.initialize(requireActivity())
 
     }
@@ -41,7 +39,9 @@ class WelcomeFragment : Fragment() {
     }
 
     private fun launchChooseLevelFragment() {
-       findNavController().navigate(R.id.action_welcomeFragment_to_chooseLevelFragment2)
+       val navController = findNavController()
+       if (navController.currentDestination?.id != R.id.welcomeFragment) return
+       navController.navigate(R.id.action_welcomeFragment_to_chooseLevelFragment2)
     }
 
     companion object {

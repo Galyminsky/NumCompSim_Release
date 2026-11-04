@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.databinding.FragmentGameFinishedBinding
 
 class GameFinishedFragment : Fragment() {
     private val args by navArgs<GameFinishedFragmentArgs>()
     private var _binding: FragmentGameFinishedBinding? = null
     private val binding get() = _binding!!
+    private var retryNavigationStarted = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +37,11 @@ class GameFinishedFragment : Fragment() {
     }
 
     private fun retryGame() {
-      findNavController().popBackStack()
+      if (retryNavigationStarted) return
+      val navController = findNavController()
+      if (navController.currentDestination?.id != R.id.gameFinishedFragment) return
+      retryNavigationStarted = true
+      navController.popBackStack()
     }
 
     override fun onDestroyView() {

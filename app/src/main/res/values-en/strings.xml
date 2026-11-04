@@ -27,10 +27,10 @@
     <string name="score_answers">Your score: %s</string>
     <string name="score_percentage">Percentage of correct answers: %s</string>
     <string name="retry">Try again</string>
-    <string name="right_answers">Correct answers are %s out of %s needed</string>
+    <string name="right_answers">Correct answers are %1$d out of %2$d needed</string>
     <string name="required_percentage">The required percentage of correct answers: %s</string>
     <string name="required_score">The required number of correct answers: %s</string>
-    <string name="progress_answers">Correct answers %s (minimum %s)</string>
+    <string name="progress_answers">Correct answers %1$d (minimum %2$d)</string>
     <string name="imgCub">imgCub</string>
     <string name="imgGirl">imgGirl</string>
     <string name="imgBack">imgBack</string>

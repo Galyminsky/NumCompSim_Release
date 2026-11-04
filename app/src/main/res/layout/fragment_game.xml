@@ -107,13 +107,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:background="@android:color/holo_green_light"
-                android:text="@{viewModel.question.options.get(0).toString()}"
+                app:questionForOption="@{viewModel.question}"
+                app:optionIndex="@{0}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@id/tv_option_4"
                 app:layout_constraintEnd_toStartOf="@id/tv_option_5"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
-                app:onOptionClickListener="@{(option) -> viewModel.chooseAnswer(option)}"
+                app:onOptionClickListener="@{viewModel}"
                 tools:text="1" />
 
             <TextView
@@ -122,12 +123,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_orange_light"
-                android:text="@{viewModel.question.options.get(1).toString()}"
+                app:questionForOption="@{viewModel.question}"
+                app:optionIndex="@{1}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@id/tv_option_4"
                 app:layout_constraintEnd_toStartOf="@id/tv_option_6"
                 app:layout_constraintStart_toEndOf="@id/tv_option_4"
-                app:onOptionClickListener="@{(option) -> viewModel.chooseAnswer(option)}"
+                app:onOptionClickListener="@{viewModel}"
                 tools:text="2" />
 
             <TextView
@@ -137,12 +139,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:background="@android:color/holo_purple"
-                android:text="@{viewModel.question.options.get(2).toString()}"
+                app:questionForOption="@{viewModel.question}"
+                app:optionIndex="@{2}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toTopOf="@id/tv_option_4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_option_5"
-                app:onOptionClickListener="@{(option) -> viewModel.chooseAnswer(option)}"
+                app:onOptionClickListener="@{viewModel}"
                 tools:text="3" />
 
             <TextView
@@ -153,13 +156,14 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@android:color/holo_blue_light"
-                android:text="@{viewModel.question.options.get(3).toString()}"
+                app:questionForOption="@{viewModel.question}"
+                app:optionIndex="@{3}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_option_5"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
-                app:onOptionClickListener="@{(option) -> viewModel.chooseAnswer(option)}"
+                app:onOptionClickListener="@{viewModel}"
                 tools:text="4" />
 
             <TextView
@@ -169,12 +173,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="@android:color/holo_red_light"
-                android:text="@{viewModel.question.options.get(4).toString()}"
+                app:questionForOption="@{viewModel.question}"
+                app:optionIndex="@{4}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_option_6"
                 app:layout_constraintStart_toEndOf="@id/tv_option_4"
-                app:onOptionClickListener="@{(option) -> viewModel.chooseAnswer(option)}"
+                app:onOptionClickListener="@{viewModel}"
                 tools:text="5" />
 
             <TextView
@@ -185,12 +190,13 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@android:color/holo_blue_bright"
-                android:text="@{viewModel.question.options.get(5).toString()}"
+                app:questionForOption="@{viewModel.question}"
+                app:optionIndex="@{5}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_option_5"
-                app:onOptionClickListener="@{(option) -> viewModel.chooseAnswer(option)}"
+                app:onOptionClickListener="@{viewModel}"
                 tools:text="6" />
 
             <TextView

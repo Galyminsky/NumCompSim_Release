@@ -50,6 +50,7 @@ class GameViewModel(
         get() = _gameResult
     private var countOfRightAnswers = 0
     private var countOfQuestions = 0
+    private var gameFinished = false
 
     init {
         startGame()
@@ -62,14 +63,15 @@ class GameViewModel(
         updateProgress()
     }
 
-    fun chooseAnswer(number: Int) {
+    fun chooseAnswer(displayedQuestion: Question, number: Int) {
+        if (gameFinished || _question.value !== displayedQuestion) return
         checkAnswer(number)
         updateProgress()
         generateQuestion()
     }
 
     private fun updateProgress() {
-        val percent = calculatePercentOfRightAnswers()
+        val percent = calculatePercentOfRightAnswers(countOfRightAnswers, countOfQuestions)
         _percentOfRightAnswers.value = percent
         _progressAnswers.value = String.format(
             application.resources.getString(R.string.progress_answers),
@@ -78,13 +80,6 @@ class GameViewModel(
         )
         _enoughCount.value = countOfRightAnswers >= gameSettings.minCountOfRightAnswers
         _enoughPercent.value = percent >= gameSettings.minPercentOfRightAnswers
-    }
-
-    private fun calculatePercentOfRightAnswers(): Int {
-        if (countOfQuestions == 0) {
-            return 0
-        }
-        return ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
     }
 
     private fun checkAnswer(number: Int) {
@@ -127,6 +122,7 @@ class GameViewModel(
     }
 
     private fun finishGame() {
+        gameFinished = true
         _gameResult.value = GameResult(
             enoughCount.value == true && enoughPercent.value == true,
             countOfRightAnswers,
@@ -144,4 +140,11 @@ class GameViewModel(
         private const val MILLIS_IN_SECONDS = 1000L
         private const val SECONDS_IN_MINUTES = 60
     }
+}
+
+internal fun calculatePercentOfRightAnswers(countOfRightAnswers: Int, countOfQuestions: Int): Int {
+    if (countOfQuestions == 0) {
+        return 0
+    }
+    return ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
 }
