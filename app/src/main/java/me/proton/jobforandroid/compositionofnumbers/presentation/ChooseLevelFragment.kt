@@ -12,13 +12,16 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.data.GameRepositoryImpl
 import me.proton.jobforandroid.compositionofnumbers.databinding.NcsV2LevelSelectionBinding
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
+import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
 import me.proton.jobforandroid.compositionofnumbers.domain.usecases.GetGameSettingsUseCase
 
 class ChooseLevelFragment : Fragment() {
+    private val args by navArgs<ChooseLevelFragmentArgs>()
     private var _binding: NcsV2LevelSelectionBinding? = null
     private val binding get() = _binding!!
     private val getGameSettings = GetGameSettingsUseCase(GameRepositoryImpl)
@@ -143,7 +146,8 @@ class ChooseLevelFragment : Fragment() {
         requireNotNull(navController.currentBackStackEntry)
             .savedStateHandle.set(SELECTED_LEVEL_KEY, level)
         navController.navigate(
-            ChooseLevelFragmentDirections.actionChooseLevelFragment2ToGameFragment(level))
+            ChooseLevelFragmentDirections.actionChooseLevelFragment2ToGameFragment(level)
+                .setOperation(Question.Operation.valueOf(args.operation).name))
     }
 
     override fun onDestroyView() {

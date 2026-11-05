@@ -2,7 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data />
+    <data>
+        <import type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question.Operation" />
+        <variable name="selectedOperation" type="Operation" />
+    </data>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -92,7 +95,7 @@
                     android:fontFamily="@font/ncs_v2_nunito_semibold"
                     android:includeFontPadding="false"
                     android:lineHeight="21dp"
-                    android:text="@string/ncs_v2_addition_intro"
+                    android:text="@{selectedOperation == Operation.ADDITION ? @string/ncs_v2_addition_intro : @string/ncs_v2_subtraction_selection_intro}"
                     android:textColor="@color/ncs_v2_muted"
                     android:textSize="@dimen/ncs_v2_text_16" />
             </LinearLayout>
@@ -108,6 +111,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:available="@{true}"
+                    app:description="@{@string/ncs_v2_find_number_part}"
+                    app:expanded="@{selectedOperation == Operation.ADDITION}"
+                    app:paletteSelected="@{true}"
+                    app:paletteActivated="@{false}"
                     app:symbol="@{@string/ncs_v2_math_plus}"
                     app:title="@{@string/ncs_v2_addition}" />
 
@@ -117,7 +124,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
-                    app:available="@{false}"
+                    app:available="@{true}"
+                    app:description="@{@string/ncs_v2_subtraction_selection_description}"
+                    app:expanded="@{selectedOperation == Operation.SUBTRACTION}"
+                    app:paletteSelected="@{false}"
+                    app:paletteActivated="@{true}"
                     app:symbol="@{@string/ncs_v2_math_minus}"
                     app:title="@{@string/ncs_v2_subtraction}" />
 
@@ -128,6 +139,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
                     app:available="@{false}"
+                    app:description="@{@string/ncs_v2_coming_soon}"
+                    app:expanded="@{false}"
+                    app:paletteSelected="@{true}"
+                    app:paletteActivated="@{true}"
                     app:symbol="@{@string/ncs_v2_math_multiply}"
                     app:title="@{@string/ncs_v2_multiplication}" />
 
@@ -138,6 +153,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
                     app:available="@{false}"
+                    app:description="@{@string/ncs_v2_coming_soon}"
+                    app:expanded="@{false}"
+                    app:paletteSelected="@{false}"
+                    app:paletteActivated="@{false}"
                     app:symbol="@{@string/ncs_v2_math_divide}"
                     app:title="@{@string/ncs_v2_division}" />
             </LinearLayout>
@@ -160,7 +179,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:lineHeight="19dp"
-                    android:text="@string/ncs_v2_other_lessons_soon"
+                    android:text="@string/ncs_v2_other_lessons_soon_available"
                     android:textColor="@color/ncs_v2_muted"
                     android:textSize="@dimen/ncs_v2_text_15" />
 
@@ -182,7 +201,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
-                        android:text="@string/ncs_v2_start_addition"
+                        android:text="@{selectedOperation == Operation.ADDITION ? @string/ncs_v2_start_addition : @string/ncs_v2_start_subtraction}"
                         android:textColor="@color/ncs_v2_surface" />
 
                     <TextView

@@ -17,7 +17,11 @@ import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
 class GameFragment : Fragment() {
     private val args by navArgs<GameFragmentArgs>()
     private val viewModelFactory by lazy {
-        GameViewModelFactory(args.level, requireActivity().application)
+        GameViewModelFactory(
+            args.level,
+            requireActivity().application,
+            Question.Operation.valueOf(args.operation)
+        )
     }
     private val viewModel by lazy {
         ViewModelProvider(

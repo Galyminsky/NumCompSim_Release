@@ -37,7 +37,19 @@
     <string name="ncs_v2_division">Деление</string>
     <string name="ncs_v2_coming_soon">Скоро</string>
     <string name="ncs_v2_other_lessons_soon">Другие занятия ещё готовятся.\nА сложение уже можно попробовать!</string>
+    <string name="ncs_v2_other_lessons_soon_available">Умножение и деление ещё готовятся.</string>
     <string name="ncs_v2_start_addition">Начать сложение</string>
+    <string name="ncs_v2_start_subtraction">Начать вычитание</string>
+    <string name="ncs_v2_subtraction_selection_intro">Сегодня попробуем вычитание.</string>
+    <string name="ncs_v2_subtraction_selection_description">Найди разность чисел</string>
+    <string name="ncs_v2_lock_symbol">🔒</string>
+    <string name="ncs_v2_subtraction_intro_label">Введение: вычитание</string>
+    <string name="ncs_v2_subtraction_intro_title">Подружись\nс вычитанием!</string>
+    <string name="ncs_v2_subtraction_intro_explanation">Вычитай числа и находи пропущенное.\nВместо ? выбери верное число.</string>
+    <string name="ncs_v2_subtraction_intro_first_line">Найди разность чисел.</string>
+    <string name="ncs_v2_subtraction_intro_first_number">7</string>
+    <string name="ncs_v2_subtraction_intro_second_number">3</string>
+    <string name="ncs_v2_subtraction_intro_result_number">4</string>
 
     <string name="ncs_v2_welcome_numbers_title">Подружись\nс числами!</string>
     <string name="ncs_v2_find_missing_number">Найди число, которого не хватает.</string>

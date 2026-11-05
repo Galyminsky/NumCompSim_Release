@@ -123,6 +123,7 @@ class GameFinishedFragment : Fragment() {
         if (navController.popBackStack(R.id.chooseLevelFragment2, false)) {
             navController.navigate(
                 ChooseLevelFragmentDirections.actionChooseLevelFragment2ToGameFragment(level)
+                    .setOperation(args.gameResult.operation.name)
             )
         } else {
             retryNavigationStarted = false

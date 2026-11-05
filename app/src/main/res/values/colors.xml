@@ -15,4 +15,6 @@
     <color name="holo_blue_light">#ff33b5e5</color>
     <color name="holo_orange_light">#ffffbb33</color>
     <color name="holo_orange_dark">#ffff8800</color>
+    <!-- 12% light_red over white; base operation colors remain unchanged. -->
+    <color name="ncs_v2_division_soft">#FFE9E9</color>
 </resources>

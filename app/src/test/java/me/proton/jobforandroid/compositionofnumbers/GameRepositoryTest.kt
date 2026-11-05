@@ -20,13 +20,16 @@ class GameRepositoryTest {
 
     @Test
     fun gameResultRetainsOperationAndDefaultsToAddition() {
-        val settings = getSettings(Level.TEST)
-        val addition = GameResult(false, 0, 0, settings)
-        val subtraction = GameResult(true, 3, 3, settings, Question.Operation.SUBTRACTION)
-        assertEquals(Question.Operation.ADDITION, addition.operation)
-        assertEquals(Question.Operation.SUBTRACTION, subtraction.operation)
-        assertEquals(settings, subtraction.gameSettings)
-        assertEquals(3, subtraction.countOfRightAnswers)
+        for (level in Level.entries) {
+            val settings = getSettings(level)
+            val addition = GameResult(false, 0, 0, settings)
+            val subtraction = GameResult(true, 3, 3, settings, Question.Operation.SUBTRACTION)
+            assertEquals(Question.Operation.ADDITION, addition.operation)
+            assertEquals(Question.Operation.SUBTRACTION, subtraction.operation)
+            assertEquals(settings, addition.gameSettings)
+            assertEquals(settings, subtraction.gameSettings)
+            assertEquals(3, subtraction.countOfRightAnswers)
+        }
     }
 
     @Test
@@ -90,11 +93,31 @@ class GameRepositoryTest {
             Triple(Level.HARD, 9 to 10, 8 to 10)
         )
         for ((level, atThreshold, belowThreshold) in cases) {
-            val target = getSettings(level).minPercentOfRightAnswers
+            val settings = getSettings(level)
+            val target = settings.minPercentOfRightAnswers
             assertEquals(target, calculatePercentOfRightAnswers(atThreshold.first, atThreshold.second))
             assertTrue(calculatePercentOfRightAnswers(belowThreshold.first, belowThreshold.second) < target)
         }
         assertEquals(66, calculatePercentOfRightAnswers(2, 3))
+    }
+
+    @Test
+    fun countAndAccuracyThresholdsHaveIndependentBoundaryCases() {
+        val cases = listOf(
+            Triple(Level.TEST, 3 to 6, 3 to 7),
+            Triple(Level.EASY, 10 to 14, 10 to 15),
+            Triple(Level.NORMAL, 20 to 25, 20 to 26),
+            Triple(Level.HARD, 30 to 33, 30 to 34)
+        )
+        for ((level, bothMet, countOnly) in cases) {
+            val settings = getSettings(level)
+            assertEquals(settings.minCountOfRightAnswers, bothMet.first)
+            assertTrue(calculatePercentOfRightAnswers(bothMet.first, bothMet.second) >= settings.minPercentOfRightAnswers)
+            assertEquals(settings.minCountOfRightAnswers, countOnly.first)
+            assertTrue(calculatePercentOfRightAnswers(countOnly.first, countOnly.second) < settings.minPercentOfRightAnswers)
+            val accuracyOnlyCount = settings.minCountOfRightAnswers - 1
+            assertEquals(100, calculatePercentOfRightAnswers(accuracyOnlyCount, accuracyOnlyCount))
+        }
     }
 
     @Test
@@ -124,6 +147,8 @@ class GameRepositoryTest {
                 assertTrue("$level: visible=${question.visibleNumber}", question.visibleNumber in 0..question.sum)
                 assertTrue("$level: answer=${question.rightAnswer}", question.rightAnswer in 0..question.sum)
                 assertEquals(question.sum, question.visibleNumber + question.rightAnswer)
+                assertEquals(question.firstOperand + question.secondOperand, question.result)
+                assertEquals(question.secondOperand, question.rightAnswer)
                 assertEquals(6, question.options.size)
                 assertEquals(6, question.options.toSet().size)
                 assertEquals(1, question.options.count { it == question.rightAnswer })
@@ -146,6 +171,7 @@ class GameRepositoryTest {
                 assertTrue(question.result in 0..maximum)
                 assertTrue(question.firstOperand >= question.secondOperand)
                 assertEquals(question.firstOperand - question.secondOperand, question.result)
+                assertTrue(question.rightAnswer in 0..maximum)
                 val expected = if (question.unknownPosition == Question.UnknownPosition.RESULT) {
                     question.result
                 } else {
@@ -158,6 +184,44 @@ class GameRepositoryTest {
                 assertTrue(question.options.all { it in 0..maximum })
             }
             assertEquals(Question.UnknownPosition.entries.toSet(), seen)
+        }
+    }
+
+    @Test
+    fun allValidEquationsAtEachLevelBoundaryResolveTheMissingValue() {
+        for (level in Level.entries) {
+            val maximum = getSettings(level).maxSumValue
+            for (left in 0..maximum) {
+                for (right in 0..left) {
+                    val addition = Question(left, right, emptyList())
+                    assertEquals(left, addition.result)
+                    assertEquals(left - right, addition.rightAnswer)
+                    assertEquals(left, addition.firstOperand + addition.secondOperand)
+
+                    val missingResult = Question(left, right, emptyList(),
+                        Question.Operation.SUBTRACTION, Question.UnknownPosition.RESULT)
+                    assertEquals(left - right, missingResult.rightAnswer)
+                    assertEquals(left - right, missingResult.result)
+
+                    val missingSubtrahend = Question(left, left - right, emptyList(),
+                        Question.Operation.SUBTRACTION, Question.UnknownPosition.SECOND_OPERAND)
+                    assertEquals(right, missingSubtrahend.rightAnswer)
+                    assertEquals(right, missingSubtrahend.secondOperand)
+                    assertEquals(left - right, missingSubtrahend.result)
+                }
+            }
+        }
+    }
+
+    @Test
+    fun repeatedSubtractionGenerationUsesBothFormatsApproximatelyEqually() {
+        for (level in Level.entries) {
+            var missingResults = 0
+            repeat(1000) {
+                val question = generateQuestion.generateSubtraction(level)
+                if (question.unknownPosition == Question.UnknownPosition.RESULT) missingResults++
+            }
+            assertTrue("$level: missing results=$missingResults", missingResults in 400..600)
         }
     }
 
