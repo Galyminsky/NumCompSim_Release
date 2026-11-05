@@ -17,7 +17,11 @@ import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
 class GameFragment : Fragment() {
     private val args by navArgs<GameFragmentArgs>()
     private val viewModelFactory by lazy {
-        GameViewModelFactory(args.level, requireActivity().application)
+        GameViewModelFactory(
+            args.level,
+            requireActivity().application,
+            Question.Operation.valueOf(args.operation)
+        )
     }
     private val viewModel by lazy {
         ViewModelProvider(
@@ -59,7 +63,18 @@ class GameFragment : Fragment() {
         binding.levelContext = getString(
             R.string.ncs_v2_game_level_context,
             getString(levelNameResId(viewModel.level)),
-            getString(R.string.ncs_v2_level_range, 0, viewModel.maxSumValue)
+            if (viewModel.operation == Question.Operation.MULTIPLICATION ||
+                viewModel.operation == Question.Operation.DIVISION) {
+                val maxFactor = when (viewModel.level) {
+                    Level.TEST -> 3
+                    Level.EASY -> 5
+                    Level.NORMAL -> 10
+                    Level.HARD -> 12
+                }
+                getString(R.string.ncs_v2_level_range, 1, maxFactor)
+            } else {
+                getString(R.string.ncs_v2_level_range, 0, viewModel.maxSumValue)
+            }
         )
         binding.displayedQuestion = viewModel.question.value
         binding.selectedOptionIndex = -1
@@ -156,7 +171,7 @@ class GameFragment : Fragment() {
     private fun launchGameFinishedFragment(gameResult: GameResult) {
         if (findNavController().currentDestination?.id != R.id.gameFragment) return
         findNavController().navigate(
-            GameFragmentDirections.actionGameFragmentToGameFinishedFragment(gameResult)
+            GameFragmentDirections.actionGameFragmentToGameFinishedFragment(gameResult, args.level)
         )
     }
 

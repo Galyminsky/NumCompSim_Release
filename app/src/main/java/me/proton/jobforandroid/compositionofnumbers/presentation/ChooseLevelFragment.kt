@@ -12,13 +12,16 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.data.GameRepositoryImpl
 import me.proton.jobforandroid.compositionofnumbers.databinding.NcsV2LevelSelectionBinding
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
+import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
 import me.proton.jobforandroid.compositionofnumbers.domain.usecases.GetGameSettingsUseCase
 
 class ChooseLevelFragment : Fragment() {
+    private val args by navArgs<ChooseLevelFragmentArgs>()
     private var _binding: NcsV2LevelSelectionBinding? = null
     private val binding get() = _binding!!
     private val getGameSettings = GetGameSettingsUseCase(GameRepositoryImpl)
@@ -58,6 +61,9 @@ class ChooseLevelFragment : Fragment() {
 
         with(binding) {
             selectedLevel = this@ChooseLevelFragment.selectedLevel
+            testRange = levelRange(Level.TEST)
+            showTestRange = args.operation == Question.Operation.MULTIPLICATION.name ||
+                args.operation == Question.Operation.DIVISION.name
             easyRange = levelRange(Level.EASY)
             normalRange = levelRange(Level.NORMAL)
             hardRange = levelRange(Level.HARD)
@@ -79,7 +85,18 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun levelRange(level: Level): String =
-        getString(R.string.ncs_v2_level_range, 0, getGameSettings(level).maxSumValue)
+        if (args.operation == Question.Operation.MULTIPLICATION.name ||
+            args.operation == Question.Operation.DIVISION.name) {
+            val maxFactor = when (level) {
+                Level.TEST -> 3
+                Level.EASY -> 5
+                Level.NORMAL -> 10
+                Level.HARD -> 12
+            }
+            getString(R.string.ncs_v2_level_range, 1, maxFactor)
+        } else {
+            getString(R.string.ncs_v2_level_range, 0, getGameSettings(level).maxSumValue)
+        }
 
     private fun selectLevel(level: Level) {
         if (selectionInProgress || navigationStarted) return
@@ -143,7 +160,8 @@ class ChooseLevelFragment : Fragment() {
         requireNotNull(navController.currentBackStackEntry)
             .savedStateHandle.set(SELECTED_LEVEL_KEY, level)
         navController.navigate(
-            ChooseLevelFragmentDirections.actionChooseLevelFragment2ToGameFragment(level))
+            ChooseLevelFragmentDirections.actionChooseLevelFragment2ToGameFragment(level)
+                .setOperation(Question.Operation.valueOf(args.operation).name))
     }
 
     override fun onDestroyView() {

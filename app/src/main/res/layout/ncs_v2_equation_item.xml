@@ -4,19 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+        <import type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question.Operation" />
+        <import type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question.UnknownPosition" />
+        <variable name="question" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question" />
         <variable name="sum" type="int" />
         <variable name="known" type="int" />
         <variable name="missingText" type="String" />
         <variable name="solved" type="boolean" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/ncs_v2_equation_root"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ncs_v2_equation_height"
-        android:background="@drawable/ncs_v2_panel"
+        android:background="@drawable/ncs_v2_panel">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="@{question.operation == Operation.ADDITION ? View.VISIBLE : View.GONE}">
 
         <TextView
             android:id="@+id/ncs_v2_equation_sum"
@@ -69,4 +78,55 @@
             android:textColor="@color/ncs_v2_primary"
             tools:text="@string/ncs_v2_math_question_mark" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="@{question.operation == Operation.SUBTRACTION || question.operation == Operation.MULTIPLICATION || question.operation == Operation.DIVISION ? View.VISIBLE : View.GONE}">
+
+        <TextView
+            style="@style/TextAppearance.NcsV2.Equation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:numberAsText="@{question.firstOperand}" />
+
+        <TextView
+            style="@style/TextAppearance.NcsV2.ExtraBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ncs_v2_equation_gap"
+            android:text="@{question.operation == Operation.MULTIPLICATION ? @string/ncs_v2_math_multiply : question.operation == Operation.DIVISION ? @string/ncs_v2_math_divide : @string/ncs_v2_math_minus}"
+            android:textColor="@color/ncs_v2_muted"
+            android:textSize="@dimen/ncs_v2_text_30" />
+
+        <TextView
+            style="@style/TextAppearance.NcsV2.Equation"
+            android:layout_width="@dimen/ncs_v2_equation_slot_width"
+            android:layout_height="@dimen/ncs_v2_equation_slot_height"
+            android:layout_marginStart="@dimen/ncs_v2_equation_gap"
+            android:background="@{question.unknownPosition == UnknownPosition.SECOND_OPERAND ? @drawable/ncs_v2_equation_slot : null}"
+            android:gravity="center"
+            android:text="@{!solved &amp;&amp; question.unknownPosition == UnknownPosition.SECOND_OPERAND ? @string/ncs_v2_math_question_mark : question.secondOperand + ``}" />
+
+        <TextView
+            style="@style/TextAppearance.NcsV2.ExtraBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ncs_v2_equation_gap"
+            android:text="@string/ncs_v2_math_equals"
+            android:textColor="@color/ncs_v2_muted"
+            android:textSize="@dimen/ncs_v2_text_30" />
+
+        <TextView
+            style="@style/TextAppearance.NcsV2.Equation"
+            android:layout_width="@dimen/ncs_v2_equation_slot_width"
+            android:layout_height="@dimen/ncs_v2_equation_slot_height"
+            android:layout_marginStart="@dimen/ncs_v2_equation_gap"
+            android:background="@{question.unknownPosition == UnknownPosition.RESULT ? @drawable/ncs_v2_equation_slot : null}"
+            android:gravity="center"
+            android:text="@{!solved &amp;&amp; question.unknownPosition == UnknownPosition.RESULT ? @string/ncs_v2_math_question_mark : question.result + ``}" />
+    </LinearLayout>
+    </FrameLayout>
 </layout>

@@ -4,23 +4,23 @@
     <string name="ncs_v2_terms_title">Условия использования</string>
     <string name="ncs_v2_document_close">Закрыть</string>
     <string name="ncs_v2_documents_description">Политика конфиденциальности и условия использования</string>
-    <string name="ncs_v2_brand">NumCompSim</string>
+    <string name="ncs_v2_brand" translatable="false">NumCompSim</string>
     <string name="ncs_v2_brand_subtitle">Тренажёр состава числа</string>
     <string name="ncs_v2_back">Назад</string>
-    <string name="ncs_v2_arrow_back">←</string>
-    <string name="ncs_v2_arrow_forward">→</string>
-    <string name="ncs_v2_math_plus">+</string>
-    <string name="ncs_v2_math_minus">−</string>
-    <string name="ncs_v2_math_multiply">×</string>
-    <string name="ncs_v2_math_divide">÷</string>
-    <string name="ncs_v2_math_equals">=</string>
-    <string name="ncs_v2_math_question_mark">?</string>
-    <string name="ncs_v2_checkmark">✓</string>
-    <string name="ncs_v2_exclamation">!</string>
-    <string name="ncs_v2_level_marker_test">≈</string>
-    <string name="ncs_v2_level_marker_easy">•</string>
-    <string name="ncs_v2_level_marker_medium">••</string>
-    <string name="ncs_v2_level_marker_hard">•••</string>
+    <string name="ncs_v2_arrow_back" translatable="false">←</string>
+    <string name="ncs_v2_arrow_forward" translatable="false">→</string>
+    <string name="ncs_v2_math_plus" translatable="false">+</string>
+    <string name="ncs_v2_math_minus" translatable="false">−</string>
+    <string name="ncs_v2_math_multiply" translatable="false">×</string>
+    <string name="ncs_v2_math_divide" translatable="false">÷</string>
+    <string name="ncs_v2_math_equals" translatable="false">=</string>
+    <string name="ncs_v2_math_question_mark" translatable="false">?</string>
+    <string name="ncs_v2_checkmark" translatable="false">✓</string>
+    <string name="ncs_v2_exclamation" translatable="false">!</string>
+    <string name="ncs_v2_level_marker_test" translatable="false">≈</string>
+    <string name="ncs_v2_level_marker_easy" translatable="false">•</string>
+    <string name="ncs_v2_level_marker_medium" translatable="false">••</string>
+    <string name="ncs_v2_level_marker_hard" translatable="false">•••</string>
 
     <string name="ncs_v2_welcome_math_title">Математика —\nдавай дружить!</string>
     <string name="ncs_v2_welcome_math_description">Играй с числами и узнавай новое вместе с NumCompSim.</string>
@@ -37,7 +37,33 @@
     <string name="ncs_v2_division">Деление</string>
     <string name="ncs_v2_coming_soon">Скоро</string>
     <string name="ncs_v2_other_lessons_soon">Другие занятия ещё готовятся.\nА сложение уже можно попробовать!</string>
+    <string name="ncs_v2_other_lessons_soon_available">Деление ещё готовится.</string>
     <string name="ncs_v2_start_addition">Начать сложение</string>
+    <string name="ncs_v2_start_subtraction">Начать вычитание</string>
+    <string name="ncs_v2_start_multiplication">Начать умножение</string>
+    <string name="ncs_v2_start_division">Начать деление</string>
+    <string name="ncs_v2_division_selection_intro">Сегодня попробуем деление.</string>
+    <string name="ncs_v2_division_selection_description">Найди частное или делитель</string>
+    <string name="ncs_v2_division_intro_label">Введение: деление</string>
+    <string name="ncs_v2_multiplication_selection_intro">Сегодня попробуем умножение.</string>
+    <string name="ncs_v2_multiplication_selection_description">Найди произведение или множитель</string>
+    <string name="ncs_v2_multiplication_intro_label">Введение: умножение</string>
+    <string name="ncs_v2_multiplication_intro_title">Подружись\nс умножением!</string>
+    <string name="ncs_v2_multiplication_intro_explanation">Умножай числа и находи пропущенное.\nВместо ? выбери верное число.</string>
+    <string name="ncs_v2_multiplication_intro_first_line">Найди произведение чисел.</string>
+    <string name="ncs_v2_multiplication_intro_first_number">3</string>
+    <string name="ncs_v2_multiplication_intro_second_number">3</string>
+    <string name="ncs_v2_multiplication_intro_result_number">9</string>
+    <string name="ncs_v2_subtraction_selection_intro">Сегодня попробуем вычитание.</string>
+    <string name="ncs_v2_subtraction_selection_description">Найди разность чисел</string>
+    <string name="ncs_v2_lock_symbol" translatable="false">🔒</string>
+    <string name="ncs_v2_subtraction_intro_label">Введение: вычитание</string>
+    <string name="ncs_v2_subtraction_intro_title">Подружись\nс вычитанием!</string>
+    <string name="ncs_v2_subtraction_intro_explanation">Вычитай числа и находи пропущенное.\nВместо ? выбери верное число.</string>
+    <string name="ncs_v2_subtraction_intro_first_line">Найди разность чисел.</string>
+    <string name="ncs_v2_subtraction_intro_first_number">7</string>
+    <string name="ncs_v2_subtraction_intro_second_number">3</string>
+    <string name="ncs_v2_subtraction_intro_result_number">4</string>
 
     <string name="ncs_v2_welcome_numbers_title">Подружись\nс числами!</string>
     <string name="ncs_v2_find_missing_number">Найди число, которого не хватает.</string>
@@ -68,6 +94,12 @@
     <string name="ncs_v2_wrong_badge">× Ошибка</string>
     <string name="ncs_v2_answer_correct">Верно! %1$d + %2$d = %3$d</string>
     <string name="ncs_v2_answer_wrong">Ошибка. %1$d + %2$d = %3$d</string>
+    <string name="ncs_v2_subtraction_answer_correct">Верно! %1$d − %2$d = %3$d</string>
+    <string name="ncs_v2_subtraction_answer_wrong">Ошибка. %1$d − %2$d = %3$d</string>
+    <string name="ncs_v2_multiplication_answer_correct">Верно! %1$d × %2$d = %3$d</string>
+    <string name="ncs_v2_multiplication_answer_wrong">Ошибка. %1$d × %2$d = %3$d</string>
+    <string name="ncs_v2_division_answer_correct">Верно! %1$d ÷ %2$d = %3$d</string>
+    <string name="ncs_v2_division_answer_wrong">Ошибка. %1$d ÷ %2$d = %3$d</string>
     <string name="ncs_v2_correct_answers_singular">%1$d верный ответ</string>
     <string name="ncs_v2_correct_answers_plural">%1$d верных ответов</string>
     <string name="ncs_v2_required_minimum">Нужно минимум %1$d</string>

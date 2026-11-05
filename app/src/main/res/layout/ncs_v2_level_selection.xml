@@ -6,6 +6,8 @@
         <import type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Level" />
 
         <variable name="selectedLevel" type="Level" />
+        <variable name="testRange" type="String" />
+        <variable name="showTestRange" type="boolean" />
         <variable name="easyRange" type="String" />
         <variable name="normalRange" type="String" />
         <variable name="hardRange" type="String" />
@@ -125,11 +127,11 @@
                     layout="@layout/ncs_v2_level_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:description="@{@string/ncs_v2_unavailable}"
                     app:enabled="@{true}"
+                    app:description="@{testRange}"
                     app:marker="@{@string/ncs_v2_level_marker_test}"
                     app:selected="@{selectedLevel == Level.TEST}"
-                    app:showDescription="@{false}"
+                    app:showDescription="@{showTestRange}"
                     app:title="@{@string/ncs_v2_test_level}" />
 
                 <include
