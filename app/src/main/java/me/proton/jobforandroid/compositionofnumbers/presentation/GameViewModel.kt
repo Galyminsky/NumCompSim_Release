@@ -16,7 +16,8 @@ import me.proton.jobforandroid.compositionofnumbers.domain.usecases.GetGameSetti
 
 class GameViewModel(
     private val application: Application,
-    val level: Level
+    val level: Level,
+    val operation: Question.Operation = Question.Operation.ADDITION
 ) : ViewModel() {
 
     private lateinit var gameSettings: GameSettings
@@ -124,7 +125,10 @@ class GameViewModel(
     }
 
     private fun generateQuestion() {
-        _question.value = generateQuestionUseCase(gameSettings.maxSumValue)
+        _question.value = when (operation) {
+            Question.Operation.ADDITION -> generateQuestionUseCase(gameSettings.maxSumValue)
+            Question.Operation.SUBTRACTION -> generateQuestionUseCase.generateSubtraction(level)
+        }
     }
 
     private fun formatTime(millisUntilFinished: Long): String {
@@ -140,7 +144,8 @@ class GameViewModel(
             enoughCount.value == true && enoughPercent.value == true,
             countOfRightAnswers,
             countOfQuestions,
-            gameSettings
+            gameSettings,
+            operation
         )
     }
 

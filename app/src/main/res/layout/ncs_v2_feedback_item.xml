@@ -2,9 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="sum" type="int" />
-        <variable name="known" type="int" />
-        <variable name="missing" type="int" />
+        <import type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question.Operation" />
+        <variable name="question" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question" />
         <variable name="correct" type="boolean" />
         <variable name="incorrect" type="boolean" />
     </data>
@@ -41,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:lineSpacingMultiplier="1.2"
-            android:text="@{correct ? @string/ncs_v2_answer_correct(known, missing, sum) : incorrect ? @string/ncs_v2_answer_wrong(known, missing, sum) : @string/ncs_v2_tap_correct_number}"
+            android:text="@{correct ? (question.operation == Operation.ADDITION ? @string/ncs_v2_answer_correct(question.firstOperand, question.secondOperand, question.result) : @string/ncs_v2_subtraction_answer_correct(question.firstOperand, question.secondOperand, question.result)) : incorrect ? (question.operation == Operation.ADDITION ? @string/ncs_v2_answer_wrong(question.firstOperand, question.secondOperand, question.result) : @string/ncs_v2_subtraction_answer_wrong(question.firstOperand, question.secondOperand, question.result)) : @string/ncs_v2_tap_correct_number}"
             android:textColor="@{correct ? @color/ncs_v2_success : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
             android:textSize="@dimen/ncs_v2_text_20" />
     </LinearLayout>

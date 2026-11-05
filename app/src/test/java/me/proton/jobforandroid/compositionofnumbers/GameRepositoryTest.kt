@@ -2,6 +2,7 @@ package me.proton.jobforandroid.compositionofnumbers
 
 import me.proton.jobforandroid.compositionofnumbers.data.GameRepositoryImpl
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.GameSettings
+import me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
 import me.proton.jobforandroid.compositionofnumbers.domain.repository.GameRepository
@@ -18,10 +19,39 @@ class GameRepositoryTest {
     private val generateQuestion = GenerateQuestionUseCase(GameRepositoryImpl)
 
     @Test
+    fun gameResultRetainsOperationAndDefaultsToAddition() {
+        val settings = getSettings(Level.TEST)
+        val addition = GameResult(false, 0, 0, settings)
+        val subtraction = GameResult(true, 3, 3, settings, Question.Operation.SUBTRACTION)
+        assertEquals(Question.Operation.ADDITION, addition.operation)
+        assertEquals(Question.Operation.SUBTRACTION, subtraction.operation)
+        assertEquals(settings, subtraction.gameSettings)
+        assertEquals(3, subtraction.countOfRightAnswers)
+    }
+
+    @Test
     fun questionComputesCorrectAnswerAtRangeBoundaries() {
         assertEquals(0, Question(0, 0, listOf(0, 1, 2, 3, 4, 5)).rightAnswer)
         assertEquals(10, Question(10, 0, listOf(10, 0, 1, 2, 3, 4)).rightAnswer)
         assertEquals(0, Question(10, 10, listOf(0, 1, 2, 3, 4, 5)).rightAnswer)
+        val addition = Question(10, 3, listOf(7))
+        assertEquals(Question.Operation.ADDITION, addition.operation)
+        assertEquals(Question.UnknownPosition.SECOND_OPERAND, addition.unknownPosition)
+        assertEquals(3, addition.firstOperand)
+        assertEquals(7, addition.secondOperand)
+        assertEquals(10, addition.result)
+        val missingResult = Question(10, 3, listOf(7), Question.Operation.SUBTRACTION,
+            Question.UnknownPosition.RESULT)
+        assertEquals(10, missingResult.firstOperand)
+        assertEquals(3, missingResult.secondOperand)
+        assertEquals(7, missingResult.result)
+        assertEquals(7, missingResult.rightAnswer)
+        val missingSubtrahend = Question(10, 3, listOf(7), Question.Operation.SUBTRACTION,
+            Question.UnknownPosition.SECOND_OPERAND)
+        assertEquals(10, missingSubtrahend.firstOperand)
+        assertEquals(7, missingSubtrahend.secondOperand)
+        assertEquals(3, missingSubtrahend.result)
+        assertEquals(7, missingSubtrahend.rightAnswer)
     }
 
     @Test
@@ -33,10 +63,20 @@ class GameRepositoryTest {
                 calls += maxSumValue to countOfOptions
                 return Question(0, 0, listOf(0, 1, 2, 3, 4, 5))
             }
+            override fun generateSubtractionQuestion(maxValue: Int, countOfOptions: Int): Question {
+                calls += maxValue to countOfOptions
+                return Question(0, 0, listOf(0, 1, 2, 3, 4, 5),
+                    Question.Operation.SUBTRACTION, Question.UnknownPosition.RESULT)
+            }
         }
         val useCase = GenerateQuestionUseCase(repository)
         for (level in Level.entries) {
             assertEquals(6, useCase(getSettings(level).maxSumValue).options.size)
+        }
+        assertEquals(listOf(10 to 6, 10 to 6, 20 to 6, 30 to 6), calls)
+        calls.clear()
+        for (level in Level.entries) {
+            assertEquals(Question.Operation.SUBTRACTION, useCase.generateSubtraction(level).operation)
         }
         assertEquals(listOf(10 to 6, 10 to 6, 20 to 6, 30 to 6), calls)
     }
@@ -78,6 +118,8 @@ class GameRepositoryTest {
             val maximum = getSettings(level).maxSumValue
             repeat(100) {
                 val question = generateQuestion(maximum)
+                assertEquals(Question.Operation.ADDITION, question.operation)
+                assertEquals(Question.UnknownPosition.SECOND_OPERAND, question.unknownPosition)
                 assertTrue("$level: sum=${question.sum}", question.sum in 0..maximum)
                 assertTrue("$level: visible=${question.visibleNumber}", question.visibleNumber in 0..question.sum)
                 assertTrue("$level: answer=${question.rightAnswer}", question.rightAnswer in 0..question.sum)
@@ -86,6 +128,66 @@ class GameRepositoryTest {
                 assertEquals(6, question.options.toSet().size)
                 assertEquals(1, question.options.count { it == question.rightAnswer })
                 assertTrue(question.options.all { it in 0..maximum })
+            }
+        }
+    }
+
+    @Test
+    fun subtractionQuestionsCoverBothFormatsAndStayWithinEveryLevelRange() {
+        for (level in Level.entries) {
+            val maximum = getSettings(level).maxSumValue
+            val seen = mutableSetOf<Question.UnknownPosition>()
+            repeat(200) {
+                val question = generateQuestion.generateSubtraction(level)
+                seen += question.unknownPosition
+                assertEquals(Question.Operation.SUBTRACTION, question.operation)
+                assertTrue(question.firstOperand in 0..maximum)
+                assertTrue(question.secondOperand in 0..maximum)
+                assertTrue(question.result in 0..maximum)
+                assertTrue(question.firstOperand >= question.secondOperand)
+                assertEquals(question.firstOperand - question.secondOperand, question.result)
+                val expected = if (question.unknownPosition == Question.UnknownPosition.RESULT) {
+                    question.result
+                } else {
+                    question.secondOperand
+                }
+                assertEquals(expected, question.rightAnswer)
+                assertEquals(6, question.options.size)
+                assertEquals(6, question.options.toSet().size)
+                assertEquals(1, question.options.count { it == question.rightAnswer })
+                assertTrue(question.options.all { it in 0..maximum })
+            }
+            assertEquals(Question.UnknownPosition.entries.toSet(), seen)
+        }
+    }
+
+    @Test
+    fun subtractionAllowsZeroAndMaximumBoundaryCases() {
+        val zeroResult = Question(0, 0, listOf(0), Question.Operation.SUBTRACTION,
+            Question.UnknownPosition.RESULT)
+        val zeroSubtrahend = Question(0, 0, listOf(0), Question.Operation.SUBTRACTION,
+            Question.UnknownPosition.SECOND_OPERAND)
+        assertEquals(0, zeroResult.result)
+        assertEquals(0, zeroSubtrahend.secondOperand)
+        val maximum = Question(30, 0, listOf(30), Question.Operation.SUBTRACTION,
+            Question.UnknownPosition.RESULT)
+        assertEquals(30, maximum.rightAnswer)
+        repeat(100) {
+            val question = GameRepositoryImpl.generateSubtractionQuestion(5, 6)
+            assertEquals((0..5).toSet(), question.options.toSet())
+        }
+    }
+
+    @Test
+    fun subtractionRejectsInvalidRangesAndOptionCounts() {
+        for (maximum in listOf(-1, 0, 4, Int.MAX_VALUE)) {
+            assertThrows(IllegalArgumentException::class.java) {
+                GameRepositoryImpl.generateSubtractionQuestion(maximum, 6)
+            }
+        }
+        for (count in listOf(0, 7)) {
+            assertThrows(IllegalArgumentException::class.java) {
+                GameRepositoryImpl.generateSubtractionQuestion(5, count)
             }
         }
     }

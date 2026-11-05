@@ -68,6 +68,8 @@
     <string name="ncs_v2_wrong_badge">× Ошибка</string>
     <string name="ncs_v2_answer_correct">Верно! %1$d + %2$d = %3$d</string>
     <string name="ncs_v2_answer_wrong">Ошибка. %1$d + %2$d = %3$d</string>
+    <string name="ncs_v2_subtraction_answer_correct">Верно! %1$d − %2$d = %3$d</string>
+    <string name="ncs_v2_subtraction_answer_wrong">Ошибка. %1$d − %2$d = %3$d</string>
     <string name="ncs_v2_correct_answers_singular">%1$d верный ответ</string>
     <string name="ncs_v2_correct_answers_plural">%1$d верных ответов</string>
     <string name="ncs_v2_required_minimum">Нужно минимум %1$d</string>

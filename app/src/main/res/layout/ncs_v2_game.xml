@@ -101,8 +101,9 @@
                     android:layout_height="@dimen/ncs_v2_equation_height"
                     android:layout_marginTop="@dimen/ncs_v2_space_18"
                     app:known="@{displayedQuestion.visibleNumber}"
-                    app:missingText="@{@string/ncs_v2_math_question_mark}"
-                    app:solved="@{false}"
+                    app:missingText="@{displayedQuestion.rightAnswer + ``}"
+                    app:question="@{displayedQuestion}"
+                    app:solved="@{feedbackVisible}"
                     app:sum="@{displayedQuestion.sum}" />
             </LinearLayout>
 
@@ -224,9 +225,7 @@
                     android:layout_height="@dimen/ncs_v2_feedback_height"
                     app:correct="@{feedbackVisible &amp;&amp; feedbackCorrect}"
                     app:incorrect="@{feedbackVisible &amp;&amp; !feedbackCorrect}"
-                    app:known="@{displayedQuestion.visibleNumber}"
-                    app:missing="@{displayedQuestion.rightAnswer}"
-                    app:sum="@{displayedQuestion.sum}" />
+                    app:question="@{displayedQuestion}" />
             </LinearLayout>
 
             <Space

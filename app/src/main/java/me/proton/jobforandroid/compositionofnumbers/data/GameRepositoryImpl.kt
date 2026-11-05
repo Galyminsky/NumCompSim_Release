@@ -9,6 +9,37 @@ import kotlin.random.Random
 object GameRepositoryImpl: GameRepository  {
 
     override fun generateQuestion(maxSumValue: Int, countOfOptions: Int): Question {
+        validateRange(maxSumValue, countOfOptions)
+
+        val sum = Random.nextLong(maxSumValue.toLong() + 1).toInt()
+        val visibleNumber = Random.nextLong(sum.toLong() + 1).toInt()
+        val rightAnswer = sum - visibleNumber
+        return Question(sum, visibleNumber, generateOptions(maxSumValue, countOfOptions, rightAnswer))
+    }
+
+    override fun generateSubtractionQuestion(maxValue: Int, countOfOptions: Int): Question {
+        validateRange(maxValue, countOfOptions)
+        val minuend = Random.nextLong(maxValue.toLong() + 1).toInt()
+        val subtrahend = Random.nextLong(minuend.toLong() + 1).toInt()
+        val difference = minuend - subtrahend
+        val unknownPosition = if (Random.nextBoolean()) {
+            Question.UnknownPosition.RESULT
+        } else {
+            Question.UnknownPosition.SECOND_OPERAND
+        }
+        val visibleNumber = if (unknownPosition == Question.UnknownPosition.RESULT) {
+            subtrahend
+        } else {
+            difference
+        }
+        val rightAnswer = minuend - visibleNumber
+        return Question(
+            minuend, visibleNumber, generateOptions(maxValue, countOfOptions, rightAnswer),
+            Question.Operation.SUBTRACTION, unknownPosition
+        )
+    }
+
+    private fun validateRange(maxSumValue: Int, countOfOptions: Int) {
         require(maxSumValue >= 5) {
             "maxSumValue must be at least 5 to provide six unique options"
         }
@@ -18,10 +49,9 @@ object GameRepositoryImpl: GameRepository  {
         require(countOfOptions in 1..(maxSumValue + 1)) {
             "countOfOptions must be between 1 and maxSumValue + 1"
         }
+    }
 
-        val sum = Random.nextLong(maxSumValue.toLong() + 1).toInt()
-        val visibleNumber = Random.nextLong(sum.toLong() + 1).toInt()
-        val rightAnswer = sum - visibleNumber
+    private fun generateOptions(maxSumValue: Int, countOfOptions: Int, rightAnswer: Int): List<Int> {
         val selectedWrongIndices = HashSet<Long>()
         val wrongCandidateCount = maxSumValue.toLong()
         for (index in wrongCandidateCount - (countOfOptions - 1) until wrongCandidateCount) {
@@ -33,7 +63,7 @@ object GameRepositoryImpl: GameRepository  {
         }.toMutableList()
         options.add(rightAnswer)
         options.shuffle()
-        return Question(sum, visibleNumber, options)
+        return options
     }
 
     override fun getGameSettings(level: Level): GameSettings {
