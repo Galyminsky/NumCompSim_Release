@@ -20,13 +20,20 @@ class GameRepositoryTest {
 
     @Test
     fun gameResultRetainsOperationAndDefaultsToAddition() {
-        val settings = getSettings(Level.TEST)
-        val addition = GameResult(false, 0, 0, settings)
-        val subtraction = GameResult(true, 3, 3, settings, Question.Operation.SUBTRACTION)
-        assertEquals(Question.Operation.ADDITION, addition.operation)
-        assertEquals(Question.Operation.SUBTRACTION, subtraction.operation)
-        assertEquals(settings, subtraction.gameSettings)
-        assertEquals(3, subtraction.countOfRightAnswers)
+        for (level in Level.entries) {
+            val settings = getSettings(level)
+            val addition = GameResult(false, 0, 0, settings)
+            val subtraction = GameResult(true, 3, 3, settings, Question.Operation.SUBTRACTION)
+            val multiplication = GameResult(true, 3, 3, settings, Question.Operation.MULTIPLICATION)
+            assertEquals(Question.Operation.ADDITION, addition.operation)
+            assertEquals(Question.Operation.SUBTRACTION, subtraction.operation)
+            assertEquals(Question.Operation.MULTIPLICATION, multiplication.operation)
+            assertEquals(settings, addition.gameSettings)
+            assertEquals(settings, subtraction.gameSettings)
+            assertEquals(settings, multiplication.gameSettings)
+            assertEquals(3, subtraction.countOfRightAnswers)
+            assertEquals(3, multiplication.countOfRightAnswers)
+        }
     }
 
     @Test
@@ -68,6 +75,11 @@ class GameRepositoryTest {
                 return Question(0, 0, listOf(0, 1, 2, 3, 4, 5),
                     Question.Operation.SUBTRACTION, Question.UnknownPosition.RESULT)
             }
+            override fun generateMultiplicationQuestion(level: Level, countOfOptions: Int): Question {
+                calls += level.ordinal to countOfOptions
+                return Question(1, 1, listOf(1, 0, 2, 3, 4, 5),
+                    Question.Operation.MULTIPLICATION, Question.UnknownPosition.RESULT, 1)
+            }
         }
         val useCase = GenerateQuestionUseCase(repository)
         for (level in Level.entries) {
@@ -79,6 +91,88 @@ class GameRepositoryTest {
             assertEquals(Question.Operation.SUBTRACTION, useCase.generateSubtraction(level).operation)
         }
         assertEquals(listOf(10 to 6, 10 to 6, 20 to 6, 30 to 6), calls)
+        calls.clear()
+        for (level in Level.entries) {
+            assertEquals(Question.Operation.MULTIPLICATION, useCase.generateMultiplication(level).operation)
+        }
+        assertEquals(listOf(0 to 6, 1 to 6, 2 to 6, 3 to 6), calls)
+    }
+
+    @Test
+    fun multiplicationQuestionsRespectBothFormatsAndAllLevelBounds() {
+        val factorLimits = mapOf(Level.TEST to 3, Level.EASY to 5,
+            Level.NORMAL to 10, Level.HARD to 12)
+        for ((level, maxFactor) in factorLimits) {
+            val maxProduct = maxFactor * maxFactor
+            val formats = mutableSetOf<Question.UnknownPosition>()
+            repeat(200) {
+                val question = generateQuestion.generateMultiplication(level)
+                formats += question.unknownPosition
+                assertEquals(Question.Operation.MULTIPLICATION, question.operation)
+                assertTrue(question.firstOperand in 1..maxFactor)
+                assertTrue(question.secondOperand in 1..maxFactor)
+                assertEquals(question.firstOperand * question.secondOperand, question.result)
+                assertTrue(question.result in 1..maxProduct)
+                assertEquals(if (question.unknownPosition == Question.UnknownPosition.RESULT)
+                    question.result else question.secondOperand, question.rightAnswer)
+                assertTrue(question.rightAnswer > 0)
+                assertEquals(6, question.options.size)
+                assertEquals(6, question.options.toSet().size)
+                assertEquals(1, question.options.count { it == question.rightAnswer })
+                assertTrue(question.options.all { it in 0..maxProduct })
+            }
+            assertEquals(Question.UnknownPosition.entries.toSet(), formats)
+        }
+    }
+
+    @Test
+    fun multiplicationModelCoversEveryFactorPairAndRejectsInvalidProducts() {
+        for (maxFactor in listOf(3, 5, 10, 12)) {
+            for (first in 1..maxFactor) for (second in 1..maxFactor) {
+                val product = first * second
+                for (position in Question.UnknownPosition.entries) {
+                    val question = Question(product, first, emptyList(),
+                        Question.Operation.MULTIPLICATION, position, second)
+                    assertEquals(first, question.firstOperand)
+                    assertEquals(second, question.secondOperand)
+                    assertEquals(product, question.result)
+                    assertEquals(if (position == Question.UnknownPosition.RESULT) product else second,
+                        question.rightAnswer)
+                }
+            }
+        }
+        for ((product, first, second) in listOf(Triple(0, 0, 1), Triple(0, 1, 0),
+            Triple(7, 2, 3), Triple(Int.MAX_VALUE, Int.MAX_VALUE, 2))) {
+            assertThrows(IllegalArgumentException::class.java) {
+                Question(product, first, emptyList(), Question.Operation.MULTIPLICATION,
+                    Question.UnknownPosition.RESULT, second)
+            }
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            Question(1, 1, emptyList(), Question.Operation.MULTIPLICATION,
+                Question.UnknownPosition.RESULT)
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            GameRepositoryImpl.generateMultiplicationQuestion(Level.TEST, 11)
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            GameRepositoryImpl.generateMultiplicationQuestion(Level.HARD, 0)
+        }
+    }
+
+    @Test
+    fun multiplicationFormatsAreApproximatelyBalancedAndZeroCanBeWrong() {
+        for (level in Level.entries) {
+            var resultFormats = 0
+            var zeroWrongSeen = false
+            repeat(1000) {
+                val question = generateQuestion.generateMultiplication(level)
+                if (question.unknownPosition == Question.UnknownPosition.RESULT) resultFormats++
+                if (0 in question.options) zeroWrongSeen = true
+            }
+            assertTrue("$level: result formats=$resultFormats", resultFormats in 400..600)
+            assertTrue("$level: zero never appeared as a wrong option", zeroWrongSeen)
+        }
     }
 
     @Test
@@ -90,11 +184,31 @@ class GameRepositoryTest {
             Triple(Level.HARD, 9 to 10, 8 to 10)
         )
         for ((level, atThreshold, belowThreshold) in cases) {
-            val target = getSettings(level).minPercentOfRightAnswers
+            val settings = getSettings(level)
+            val target = settings.minPercentOfRightAnswers
             assertEquals(target, calculatePercentOfRightAnswers(atThreshold.first, atThreshold.second))
             assertTrue(calculatePercentOfRightAnswers(belowThreshold.first, belowThreshold.second) < target)
         }
         assertEquals(66, calculatePercentOfRightAnswers(2, 3))
+    }
+
+    @Test
+    fun countAndAccuracyThresholdsHaveIndependentBoundaryCases() {
+        val cases = listOf(
+            Triple(Level.TEST, 3 to 6, 3 to 7),
+            Triple(Level.EASY, 10 to 14, 10 to 15),
+            Triple(Level.NORMAL, 20 to 25, 20 to 26),
+            Triple(Level.HARD, 30 to 33, 30 to 34)
+        )
+        for ((level, bothMet, countOnly) in cases) {
+            val settings = getSettings(level)
+            assertEquals(settings.minCountOfRightAnswers, bothMet.first)
+            assertTrue(calculatePercentOfRightAnswers(bothMet.first, bothMet.second) >= settings.minPercentOfRightAnswers)
+            assertEquals(settings.minCountOfRightAnswers, countOnly.first)
+            assertTrue(calculatePercentOfRightAnswers(countOnly.first, countOnly.second) < settings.minPercentOfRightAnswers)
+            val accuracyOnlyCount = settings.minCountOfRightAnswers - 1
+            assertEquals(100, calculatePercentOfRightAnswers(accuracyOnlyCount, accuracyOnlyCount))
+        }
     }
 
     @Test
@@ -124,6 +238,8 @@ class GameRepositoryTest {
                 assertTrue("$level: visible=${question.visibleNumber}", question.visibleNumber in 0..question.sum)
                 assertTrue("$level: answer=${question.rightAnswer}", question.rightAnswer in 0..question.sum)
                 assertEquals(question.sum, question.visibleNumber + question.rightAnswer)
+                assertEquals(question.firstOperand + question.secondOperand, question.result)
+                assertEquals(question.secondOperand, question.rightAnswer)
                 assertEquals(6, question.options.size)
                 assertEquals(6, question.options.toSet().size)
                 assertEquals(1, question.options.count { it == question.rightAnswer })
@@ -146,6 +262,7 @@ class GameRepositoryTest {
                 assertTrue(question.result in 0..maximum)
                 assertTrue(question.firstOperand >= question.secondOperand)
                 assertEquals(question.firstOperand - question.secondOperand, question.result)
+                assertTrue(question.rightAnswer in 0..maximum)
                 val expected = if (question.unknownPosition == Question.UnknownPosition.RESULT) {
                     question.result
                 } else {
@@ -158,6 +275,44 @@ class GameRepositoryTest {
                 assertTrue(question.options.all { it in 0..maximum })
             }
             assertEquals(Question.UnknownPosition.entries.toSet(), seen)
+        }
+    }
+
+    @Test
+    fun allValidEquationsAtEachLevelBoundaryResolveTheMissingValue() {
+        for (level in Level.entries) {
+            val maximum = getSettings(level).maxSumValue
+            for (left in 0..maximum) {
+                for (right in 0..left) {
+                    val addition = Question(left, right, emptyList())
+                    assertEquals(left, addition.result)
+                    assertEquals(left - right, addition.rightAnswer)
+                    assertEquals(left, addition.firstOperand + addition.secondOperand)
+
+                    val missingResult = Question(left, right, emptyList(),
+                        Question.Operation.SUBTRACTION, Question.UnknownPosition.RESULT)
+                    assertEquals(left - right, missingResult.rightAnswer)
+                    assertEquals(left - right, missingResult.result)
+
+                    val missingSubtrahend = Question(left, left - right, emptyList(),
+                        Question.Operation.SUBTRACTION, Question.UnknownPosition.SECOND_OPERAND)
+                    assertEquals(right, missingSubtrahend.rightAnswer)
+                    assertEquals(right, missingSubtrahend.secondOperand)
+                    assertEquals(left - right, missingSubtrahend.result)
+                }
+            }
+        }
+    }
+
+    @Test
+    fun repeatedSubtractionGenerationUsesBothFormatsApproximatelyEqually() {
+        for (level in Level.entries) {
+            var missingResults = 0
+            repeat(1000) {
+                val question = generateQuestion.generateSubtraction(level)
+                if (question.unknownPosition == Question.UnknownPosition.RESULT) missingResults++
+            }
+            assertTrue("$level: missing results=$missingResults", missingResults in 400..600)
         }
     }
 

@@ -13,5 +13,6 @@ interface GameRepository {
         maxValue: Int,
         countOfOptions: Int
     ): Question
+    fun generateMultiplicationQuestion(level: Level, countOfOptions: Int): Question
     fun getGameSettings(level: Level): GameSettings
 }

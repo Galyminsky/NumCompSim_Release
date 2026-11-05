@@ -39,6 +39,34 @@ object GameRepositoryImpl: GameRepository  {
         )
     }
 
+    override fun generateMultiplicationQuestion(level: Level, countOfOptions: Int): Question {
+        val maxFactor = when (level) {
+            Level.TEST -> 3
+            Level.EASY -> 5
+            Level.NORMAL -> 10
+            Level.HARD -> 12
+        }
+        val maxProduct = (maxFactor.toLong() * maxFactor.toLong()).also {
+            require(it <= Int.MAX_VALUE)
+        }.toInt()
+        validateRange(maxProduct, countOfOptions)
+        val first = Random.nextInt(1, maxFactor + 1)
+        val second = Random.nextInt(1, maxFactor + 1)
+        val product = (first.toLong() * second.toLong()).also {
+            require(it <= Int.MAX_VALUE)
+        }.toInt()
+        val unknownPosition = if (Random.nextBoolean()) {
+            Question.UnknownPosition.RESULT
+        } else {
+            Question.UnknownPosition.SECOND_OPERAND
+        }
+        val rightAnswer = if (unknownPosition == Question.UnknownPosition.RESULT) product else second
+        return Question(
+            product, first, generateOptions(maxProduct, countOfOptions, rightAnswer),
+            Question.Operation.MULTIPLICATION, unknownPosition, second
+        )
+    }
+
     private fun validateRange(maxSumValue: Int, countOfOptions: Int) {
         require(maxSumValue >= 5) {
             "maxSumValue must be at least 5 to provide six unique options"

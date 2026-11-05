@@ -128,6 +128,7 @@ class GameViewModel(
         _question.value = when (operation) {
             Question.Operation.ADDITION -> generateQuestionUseCase(gameSettings.maxSumValue)
             Question.Operation.SUBTRACTION -> generateQuestionUseCase.generateSubtraction(level)
+            Question.Operation.MULTIPLICATION -> generateQuestionUseCase.generateMultiplication(level)
         }
     }
 

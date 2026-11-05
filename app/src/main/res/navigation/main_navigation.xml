@@ -23,6 +23,12 @@
         <action
             android:id="@+id/action_ncsV2LessonSelectionFragment_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_ncsV2LessonSelectionFragment_to_subtractionIntroFragment"
+            app:destination="@id/subtractionIntroFragment" />
+        <action
+            android:id="@+id/action_ncsV2LessonSelectionFragment_to_multiplicationIntroFragment"
+            app:destination="@id/multiplicationIntroFragment" />
     </fragment>
 
     <fragment
@@ -34,6 +40,24 @@
             app:destination="@id/chooseLevelFragment2" />
     </fragment>
     <fragment
+        android:id="@+id/subtractionIntroFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.SubtractionIntroFragment"
+        android:label="@string/ncs_v2_subtraction_intro_label"
+        tools:layout="@layout/ncs_v2_subtraction_intro">
+        <action
+            android:id="@+id/action_subtractionIntroFragment_to_chooseLevelFragment2"
+            app:destination="@id/chooseLevelFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/multiplicationIntroFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.MultiplicationIntroFragment"
+        android:label="@string/ncs_v2_multiplication_intro_label"
+        tools:layout="@layout/ncs_v2_multiplication_intro">
+        <action
+            android:id="@+id/action_multiplicationIntroFragment_to_chooseLevelFragment2"
+            app:destination="@id/chooseLevelFragment2" />
+    </fragment>
+    <fragment
         android:id="@+id/chooseLevelFragment2"
         android:name="me.proton.jobforandroid.compositionofnumbers.presentation.ChooseLevelFragment"
         android:label="fragment_choose_level"
@@ -41,6 +65,10 @@
         <action
             android:id="@+id/action_chooseLevelFragment2_to_gameFragment"
             app:destination="@id/gameFragment" />
+        <argument
+            android:name="operation"
+            app:argType="string"
+            android:defaultValue="ADDITION" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
@@ -55,6 +83,10 @@
         <argument
             android:name="level"
             app:argType="me.proton.jobforandroid.compositionofnumbers.domain.entity.Level" />
+        <argument
+            android:name="operation"
+            app:argType="string"
+            android:defaultValue="ADDITION" />
     </fragment>
     <fragment
         android:id="@+id/gameFinishedFragment"

@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_enabled="false" android:drawable="@drawable/ncs_v2_surface_outline" />
-    <item android:drawable="@drawable/ncs_v2_selected_outline" />
+    <item android:state_selected="true" android:state_activated="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ncs_v2_warm" />
+            <stroke android:width="@dimen/ncs_v2_stroke_regular" android:color="@color/holo_orange_light" />
+            <corners android:radius="@dimen/ncs_v2_radius_control" />
+        </shape>
+    </item>
+    <item android:state_selected="true" android:state_activated="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ncs_v2_selected" />
+            <stroke android:width="@dimen/ncs_v2_stroke_regular" android:color="@color/ncs_v2_primary" />
+            <corners android:radius="@dimen/ncs_v2_radius_control" />
+        </shape>
+    </item>
+    <item android:state_selected="false" android:state_activated="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ncs_v2_success_soft" />
+            <stroke android:width="@dimen/ncs_v2_stroke_regular" android:color="@color/ncs_v2_success" />
+            <corners android:radius="@dimen/ncs_v2_radius_control" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ncs_v2_division_soft" />
+            <stroke android:width="@dimen/ncs_v2_stroke_regular" android:color="@color/light_red" />
+            <corners android:radius="@dimen/ncs_v2_radius_control" />
+        </shape>
+    </item>
 </selector>

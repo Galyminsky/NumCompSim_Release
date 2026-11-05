@@ -84,7 +84,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="@{question.operation == Operation.SUBTRACTION ? View.VISIBLE : View.GONE}">
+        android:visibility="@{question.operation == Operation.SUBTRACTION || question.operation == Operation.MULTIPLICATION ? View.VISIBLE : View.GONE}">
 
         <TextView
             style="@style/TextAppearance.NcsV2.Equation"
@@ -97,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/ncs_v2_equation_gap"
-            android:text="@string/ncs_v2_math_minus"
+            android:text="@{question.operation == Operation.MULTIPLICATION ? @string/ncs_v2_math_multiply : @string/ncs_v2_math_minus}"
             android:textColor="@color/ncs_v2_muted"
             android:textSize="@dimen/ncs_v2_text_30" />
 

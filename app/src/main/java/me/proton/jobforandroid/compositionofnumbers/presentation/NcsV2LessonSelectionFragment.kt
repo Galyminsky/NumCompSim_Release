@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.graphics.drawable.GradientDrawable
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +15,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.databinding.NcsV2LessonSelectionBinding
+import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
 
 class NcsV2LessonSelectionFragment : Fragment() {
+    private var selectedOperation = Question.Operation.ADDITION
     private var _binding: NcsV2LessonSelectionBinding? = null
     private val binding get() = _binding!!
     private var sounds: UiSoundPool? = null
@@ -25,7 +28,11 @@ class NcsV2LessonSelectionFragment : Fragment() {
     private val navigateAfterFeedback = Runnable {
         if (_binding != null &&
             findNavController().currentDestination?.id == R.id.ncsV2LessonSelectionFragment) {
-            findNavController().navigate(R.id.action_ncsV2LessonSelectionFragment_to_welcomeFragment)
+            findNavController().navigate(when (selectedOperation) {
+                Question.Operation.ADDITION -> R.id.action_ncsV2LessonSelectionFragment_to_welcomeFragment
+                Question.Operation.SUBTRACTION -> R.id.action_ncsV2LessonSelectionFragment_to_subtractionIntroFragment
+                Question.Operation.MULTIPLICATION -> R.id.action_ncsV2LessonSelectionFragment_to_multiplicationIntroFragment
+            })
         }
     }
 
@@ -40,12 +47,25 @@ class NcsV2LessonSelectionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        selectedOperation = savedInstanceState?.getString(SELECTED_OPERATION_KEY)
+            ?.let(Question.Operation::valueOf) ?: selectedOperation
         selectionStarted = false
         sounds = UiSoundPool(requireContext(), R.raw.key_press)
         binding.ncsV2BackButton.installButtonPressAnimation { !selectionStarted }
         binding.ncsV2StartAdditionButton.installButtonPressAnimation { !selectionStarted }
-        binding.ncsV2AdditionItem.root.setOnClickListener { selectAddition() }
-        binding.ncsV2StartAdditionButton.setOnClickListener { selectAddition() }
+        binding.selectedOperation = selectedOperation
+        binding.ncsV2AdditionItem.root.setOnClickListener { selectLesson(Question.Operation.ADDITION) }
+        binding.ncsV2SubtractionItem.root.setOnClickListener { selectLesson(Question.Operation.SUBTRACTION) }
+        binding.ncsV2MultiplicationItem.root.setOnClickListener { selectLesson(Question.Operation.MULTIPLICATION) }
+        binding.ncsV2StartAdditionButton.setOnClickListener { startSelectedLesson() }
+        binding.ncsV2AdditionItem.ncsV2LessonSymbolContainer.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.ncs_v2_primary))
+        binding.ncsV2SubtractionItem.ncsV2LessonSymbolContainer.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.ncs_v2_success))
+        binding.ncsV2MultiplicationItem.ncsV2LessonSymbolContainer.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.holo_orange_light))
+        binding.ncsV2DivisionItem.ncsV2LessonSymbolContainer.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.light_red))
         binding.ncsV2BackButton.setOnClickListener {
             if (selectionStarted) return@setOnClickListener
             val navController = findNavController()
@@ -56,14 +76,36 @@ class NcsV2LessonSelectionFragment : Fragment() {
         }
     }
 
-    private fun selectAddition() {
+    private fun selectLesson(operation: Question.Operation) {
+        if (selectionStarted ||
+            findNavController().currentDestination?.id != R.id.ncsV2LessonSelectionFragment) return
+        if (selectedOperation == operation) return
+        selectedOperation = operation
+        binding.selectedOperation = operation
+        sounds?.play(R.raw.key_press)
+    }
+
+    private fun startSelectedLesson() {
         if (selectionStarted ||
             findNavController().currentDestination?.id != R.id.ncsV2LessonSelectionFragment) return
         selectionStarted = true
+        val operation = selectedOperation
         sounds?.play(R.raw.key_press)
-        val card = binding.ncsV2AdditionItem.root
-        val selectedColor = ContextCompat.getColor(requireContext(), R.color.ncs_v2_selected)
-        val accentColor = ContextCompat.getColor(requireContext(), R.color.ncs_v2_primary)
+        val card = when (operation) {
+            Question.Operation.ADDITION -> binding.ncsV2AdditionItem.root
+            Question.Operation.SUBTRACTION -> binding.ncsV2SubtractionItem.root
+            Question.Operation.MULTIPLICATION -> binding.ncsV2MultiplicationItem.root
+        }
+        val selectedColor = ContextCompat.getColor(requireContext(), when (operation) {
+            Question.Operation.ADDITION -> R.color.ncs_v2_selected
+            Question.Operation.SUBTRACTION -> R.color.ncs_v2_success_soft
+            Question.Operation.MULTIPLICATION -> R.color.ncs_v2_warm
+        })
+        val accentColor = ContextCompat.getColor(requireContext(), when (operation) {
+            Question.Operation.ADDITION -> R.color.ncs_v2_primary
+            Question.Operation.SUBTRACTION -> R.color.ncs_v2_success
+            Question.Operation.MULTIPLICATION -> R.color.holo_orange_light
+        })
         val fill = requireNotNull(
             ContextCompat.getDrawable(requireContext(), R.drawable.ncs_v2_selected_outline)
         ).mutate() as GradientDrawable
@@ -93,6 +135,11 @@ class NcsV2LessonSelectionFragment : Fragment() {
         binding.root.postDelayed(navigateAfterFeedback, FEEDBACK_DURATION_MS + SELECTED_HOLD_MS)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(SELECTED_OPERATION_KEY, selectedOperation.name)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onDestroyView() {
         binding.ncsV2BackButton.cancelButtonPressAnimation()
         binding.ncsV2StartAdditionButton.cancelButtonPressAnimation()
@@ -106,6 +153,16 @@ class NcsV2LessonSelectionFragment : Fragment() {
             scaleX = 1f
             scaleY = 1f
         }
+        binding.ncsV2SubtractionItem.root.apply {
+            setBackgroundResource(R.drawable.ncs_v2_lesson_card)
+            scaleX = 1f
+            scaleY = 1f
+        }
+        binding.ncsV2MultiplicationItem.root.apply {
+            setBackgroundResource(R.drawable.ncs_v2_lesson_card)
+            scaleX = 1f
+            scaleY = 1f
+        }
         sounds?.release()
         sounds = null
         super.onDestroyView()
@@ -113,6 +170,7 @@ class NcsV2LessonSelectionFragment : Fragment() {
     }
 
     companion object {
+        private const val SELECTED_OPERATION_KEY = "selected_operation"
         private const val FEEDBACK_DURATION_MS = 120L
         private const val SELECTED_HOLD_MS = 150L
     }
