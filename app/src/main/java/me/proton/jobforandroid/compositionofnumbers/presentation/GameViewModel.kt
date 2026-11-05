@@ -129,6 +129,7 @@ class GameViewModel(
             Question.Operation.ADDITION -> generateQuestionUseCase(gameSettings.maxSumValue)
             Question.Operation.SUBTRACTION -> generateQuestionUseCase.generateSubtraction(level)
             Question.Operation.MULTIPLICATION -> generateQuestionUseCase.generateMultiplication(level)
+            Question.Operation.DIVISION -> generateQuestionUseCase.generateDivision(level)
         }
     }
 

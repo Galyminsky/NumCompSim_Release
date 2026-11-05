@@ -95,7 +95,7 @@
                     android:fontFamily="@font/ncs_v2_nunito_semibold"
                     android:includeFontPadding="false"
                     android:lineHeight="21dp"
-                    android:text="@{selectedOperation == Operation.ADDITION ? @string/ncs_v2_addition_intro : selectedOperation == Operation.SUBTRACTION ? @string/ncs_v2_subtraction_selection_intro : @string/ncs_v2_multiplication_selection_intro}"
+                    android:text="@{selectedOperation == Operation.ADDITION ? @string/ncs_v2_addition_intro : selectedOperation == Operation.SUBTRACTION ? @string/ncs_v2_subtraction_selection_intro : selectedOperation == Operation.MULTIPLICATION ? @string/ncs_v2_multiplication_selection_intro : @string/ncs_v2_division_selection_intro}"
                     android:textColor="@color/ncs_v2_muted"
                     android:textSize="@dimen/ncs_v2_text_16" />
             </LinearLayout>
@@ -152,9 +152,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/ncs_v2_space_12"
-                    app:available="@{false}"
-                    app:description="@{@string/ncs_v2_coming_soon}"
-                    app:expanded="@{false}"
+                    app:available="@{true}"
+                    app:description="@{@string/ncs_v2_division_selection_description}"
+                    app:expanded="@{selectedOperation == Operation.DIVISION}"
                     app:paletteSelected="@{false}"
                     app:paletteActivated="@{false}"
                     app:symbol="@{@string/ncs_v2_math_divide}"
@@ -171,17 +171,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/ncs_v2_nunito_bold"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:lineHeight="19dp"
-                    android:text="@string/ncs_v2_other_lessons_soon_available"
-                    android:textColor="@color/ncs_v2_muted"
-                    android:textSize="@dimen/ncs_v2_text_15" />
 
                 <LinearLayout
                     android:id="@+id/ncs_v2_start_addition_button"
@@ -201,7 +190,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
-                    android:text="@{selectedOperation == Operation.ADDITION ? @string/ncs_v2_start_addition : selectedOperation == Operation.SUBTRACTION ? @string/ncs_v2_start_subtraction : @string/ncs_v2_start_multiplication}"
+                    android:text="@{selectedOperation == Operation.ADDITION ? @string/ncs_v2_start_addition : selectedOperation == Operation.SUBTRACTION ? @string/ncs_v2_start_subtraction : selectedOperation == Operation.MULTIPLICATION ? @string/ncs_v2_start_multiplication : @string/ncs_v2_start_division}"
                         android:textColor="@color/ncs_v2_surface" />
 
                     <TextView

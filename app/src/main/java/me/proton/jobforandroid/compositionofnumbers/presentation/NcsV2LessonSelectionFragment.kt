@@ -32,6 +32,7 @@ class NcsV2LessonSelectionFragment : Fragment() {
                 Question.Operation.ADDITION -> R.id.action_ncsV2LessonSelectionFragment_to_welcomeFragment
                 Question.Operation.SUBTRACTION -> R.id.action_ncsV2LessonSelectionFragment_to_subtractionIntroFragment
                 Question.Operation.MULTIPLICATION -> R.id.action_ncsV2LessonSelectionFragment_to_multiplicationIntroFragment
+                Question.Operation.DIVISION -> R.id.action_ncsV2LessonSelectionFragment_to_divisionIntroFragment
             })
         }
     }
@@ -57,6 +58,7 @@ class NcsV2LessonSelectionFragment : Fragment() {
         binding.ncsV2AdditionItem.root.setOnClickListener { selectLesson(Question.Operation.ADDITION) }
         binding.ncsV2SubtractionItem.root.setOnClickListener { selectLesson(Question.Operation.SUBTRACTION) }
         binding.ncsV2MultiplicationItem.root.setOnClickListener { selectLesson(Question.Operation.MULTIPLICATION) }
+        binding.ncsV2DivisionItem.root.setOnClickListener { selectLesson(Question.Operation.DIVISION) }
         binding.ncsV2StartAdditionButton.setOnClickListener { startSelectedLesson() }
         binding.ncsV2AdditionItem.ncsV2LessonSymbolContainer.backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.ncs_v2_primary))
@@ -95,16 +97,19 @@ class NcsV2LessonSelectionFragment : Fragment() {
             Question.Operation.ADDITION -> binding.ncsV2AdditionItem.root
             Question.Operation.SUBTRACTION -> binding.ncsV2SubtractionItem.root
             Question.Operation.MULTIPLICATION -> binding.ncsV2MultiplicationItem.root
+            Question.Operation.DIVISION -> binding.ncsV2DivisionItem.root
         }
         val selectedColor = ContextCompat.getColor(requireContext(), when (operation) {
             Question.Operation.ADDITION -> R.color.ncs_v2_selected
             Question.Operation.SUBTRACTION -> R.color.ncs_v2_success_soft
             Question.Operation.MULTIPLICATION -> R.color.ncs_v2_warm
+            Question.Operation.DIVISION -> R.color.ncs_v2_division_soft
         })
         val accentColor = ContextCompat.getColor(requireContext(), when (operation) {
             Question.Operation.ADDITION -> R.color.ncs_v2_primary
             Question.Operation.SUBTRACTION -> R.color.ncs_v2_success
             Question.Operation.MULTIPLICATION -> R.color.holo_orange_light
+            Question.Operation.DIVISION -> R.color.light_red
         })
         val fill = requireNotNull(
             ContextCompat.getDrawable(requireContext(), R.drawable.ncs_v2_selected_outline)
@@ -159,6 +164,11 @@ class NcsV2LessonSelectionFragment : Fragment() {
             scaleY = 1f
         }
         binding.ncsV2MultiplicationItem.root.apply {
+            setBackgroundResource(R.drawable.ncs_v2_lesson_card)
+            scaleX = 1f
+            scaleY = 1f
+        }
+        binding.ncsV2DivisionItem.root.apply {
             setBackgroundResource(R.drawable.ncs_v2_lesson_card)
             scaleX = 1f
             scaleY = 1f

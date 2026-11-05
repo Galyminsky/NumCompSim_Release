@@ -67,6 +67,30 @@ object GameRepositoryImpl: GameRepository  {
         )
     }
 
+    override fun generateDivisionQuestion(level: Level, countOfOptions: Int): Question {
+        val maxDivisorAndQuotient = when (level) {
+            Level.TEST -> 3
+            Level.EASY -> 5
+            Level.NORMAL -> 10
+            Level.HARD -> 12
+        }
+        val maxDividend = maxDivisorAndQuotient * maxDivisorAndQuotient
+        validateRange(maxDividend, countOfOptions)
+        val divisor = Random.nextInt(1, maxDivisorAndQuotient + 1)
+        val quotient = Random.nextInt(1, maxDivisorAndQuotient + 1)
+        val dividend = divisor * quotient
+        val unknownPosition = if (Random.nextBoolean()) {
+            Question.UnknownPosition.RESULT
+        } else {
+            Question.UnknownPosition.SECOND_OPERAND
+        }
+        val rightAnswer = if (unknownPosition == Question.UnknownPosition.RESULT) quotient else divisor
+        return Question(
+            dividend, divisor, generateOptions(maxDividend, countOfOptions, rightAnswer),
+            Question.Operation.DIVISION, unknownPosition, divisionQuotient = quotient
+        )
+    }
+
     private fun validateRange(maxSumValue: Int, countOfOptions: Int) {
         require(maxSumValue >= 5) {
             "maxSumValue must be at least 5 to provide six unique options"

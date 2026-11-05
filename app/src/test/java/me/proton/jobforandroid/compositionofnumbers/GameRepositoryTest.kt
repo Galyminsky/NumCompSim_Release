@@ -25,14 +25,18 @@ class GameRepositoryTest {
             val addition = GameResult(false, 0, 0, settings)
             val subtraction = GameResult(true, 3, 3, settings, Question.Operation.SUBTRACTION)
             val multiplication = GameResult(true, 3, 3, settings, Question.Operation.MULTIPLICATION)
+            val division = GameResult(true, 3, 3, settings, Question.Operation.DIVISION)
             assertEquals(Question.Operation.ADDITION, addition.operation)
             assertEquals(Question.Operation.SUBTRACTION, subtraction.operation)
             assertEquals(Question.Operation.MULTIPLICATION, multiplication.operation)
+            assertEquals(Question.Operation.DIVISION, division.operation)
             assertEquals(settings, addition.gameSettings)
             assertEquals(settings, subtraction.gameSettings)
             assertEquals(settings, multiplication.gameSettings)
+            assertEquals(settings, division.gameSettings)
             assertEquals(3, subtraction.countOfRightAnswers)
             assertEquals(3, multiplication.countOfRightAnswers)
+            assertEquals(3, division.countOfRightAnswers)
         }
     }
 
@@ -80,6 +84,11 @@ class GameRepositoryTest {
                 return Question(1, 1, listOf(1, 0, 2, 3, 4, 5),
                     Question.Operation.MULTIPLICATION, Question.UnknownPosition.RESULT, 1)
             }
+            override fun generateDivisionQuestion(level: Level, countOfOptions: Int): Question {
+                calls += level.ordinal to countOfOptions
+                return Question(1, 1, listOf(1, 0, 2, 3, 4, 5),
+                    Question.Operation.DIVISION, Question.UnknownPosition.RESULT, divisionQuotient = 1)
+            }
         }
         val useCase = GenerateQuestionUseCase(repository)
         for (level in Level.entries) {
@@ -96,6 +105,88 @@ class GameRepositoryTest {
             assertEquals(Question.Operation.MULTIPLICATION, useCase.generateMultiplication(level).operation)
         }
         assertEquals(listOf(0 to 6, 1 to 6, 2 to 6, 3 to 6), calls)
+        calls.clear()
+        for (level in Level.entries) {
+            assertEquals(Question.Operation.DIVISION, useCase.generateDivision(level).operation)
+        }
+        assertEquals(listOf(0 to 6, 1 to 6, 2 to 6, 3 to 6), calls)
+    }
+
+    @Test
+    fun divisionQuestionsStayExactAndRespectAllLevelBoundsAndFormats() {
+        val limits = mapOf(Level.TEST to 3, Level.EASY to 5,
+            Level.NORMAL to 10, Level.HARD to 12)
+        for ((level, limit) in limits) {
+            val seen = mutableSetOf<Question.UnknownPosition>()
+            repeat(500) {
+                val question = generateQuestion.generateDivision(level)
+                seen += question.unknownPosition
+                assertEquals(Question.Operation.DIVISION, question.operation)
+                assertTrue(question.firstOperand in 1..limit * limit)
+                assertTrue(question.secondOperand in 1..limit)
+                assertTrue(question.result in 1..limit)
+                assertEquals(question.firstOperand, question.secondOperand * question.result)
+                assertEquals(0, question.firstOperand % question.secondOperand)
+                assertEquals(question.firstOperand / question.secondOperand, question.result)
+                assertEquals(if (question.unknownPosition == Question.UnknownPosition.RESULT)
+                    question.result else question.secondOperand, question.rightAnswer)
+                assertTrue(question.rightAnswer > 0)
+                assertEquals(6, question.options.size)
+                assertEquals(6, question.options.toSet().size)
+                assertEquals(1, question.options.count { it == question.rightAnswer })
+                assertTrue(question.options.all { it in 0..limit * limit })
+            }
+            assertEquals(Question.UnknownPosition.entries.toSet(), seen)
+        }
+    }
+
+    @Test
+    fun divisionModelCoversEveryPairAndRejectsZeroInexactAndOverflow() {
+        for (limit in listOf(3, 5, 10, 12)) {
+            for (divisor in 1..limit) for (quotient in 1..limit) {
+                for (position in Question.UnknownPosition.entries) {
+                    val question = Question(divisor * quotient, divisor, emptyList(),
+                        Question.Operation.DIVISION, position, divisionQuotient = quotient)
+                    assertEquals(divisor * quotient, question.firstOperand)
+                    assertEquals(divisor, question.secondOperand)
+                    assertEquals(quotient, question.result)
+                    assertEquals(if (position == Question.UnknownPosition.RESULT) quotient else divisor,
+                        question.rightAnswer)
+                }
+            }
+        }
+        for ((dividend, divisor, quotient) in listOf(Triple(0, 1, 0), Triple(1, 0, 1),
+            Triple(7, 2, 3), Triple(Int.MAX_VALUE, Int.MAX_VALUE, 2))) {
+            assertThrows(IllegalArgumentException::class.java) {
+                Question(dividend, divisor, emptyList(), Question.Operation.DIVISION,
+                    Question.UnknownPosition.RESULT, divisionQuotient = quotient)
+            }
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            Question(1, 1, emptyList(), Question.Operation.DIVISION, Question.UnknownPosition.RESULT)
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            GameRepositoryImpl.generateDivisionQuestion(Level.TEST, 11)
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            GameRepositoryImpl.generateDivisionQuestion(Level.HARD, 0)
+        }
+    }
+
+    @Test
+    fun divisionFormatsAreApproximatelyBalancedAndZeroCanOnlyBeWrong() {
+        for (level in Level.entries) {
+            var resultFormats = 0
+            var zeroWrongSeen = false
+            repeat(1000) {
+                val question = generateQuestion.generateDivision(level)
+                if (question.unknownPosition == Question.UnknownPosition.RESULT) resultFormats++
+                if (0 in question.options) zeroWrongSeen = true
+                assertTrue(question.rightAnswer != 0)
+            }
+            assertTrue("$level: result formats=$resultFormats", resultFormats in 400..600)
+            assertTrue("$level: zero never appeared as a wrong option", zeroWrongSeen)
+        }
     }
 
     @Test

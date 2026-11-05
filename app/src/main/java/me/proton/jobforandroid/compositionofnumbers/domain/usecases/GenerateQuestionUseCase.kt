@@ -17,6 +17,9 @@ class GenerateQuestionUseCase(
     fun generateMultiplication(level: Level): Question {
         return repository.generateMultiplicationQuestion(level, COUNT_OF_OPTIONS)
     }
+    fun generateDivision(level: Level): Question {
+        return repository.generateDivisionQuestion(level, COUNT_OF_OPTIONS)
+    }
     private companion object {
         private const val COUNT_OF_OPTIONS = 6
     }

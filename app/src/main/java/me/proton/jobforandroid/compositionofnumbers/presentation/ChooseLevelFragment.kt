@@ -62,7 +62,8 @@ class ChooseLevelFragment : Fragment() {
         with(binding) {
             selectedLevel = this@ChooseLevelFragment.selectedLevel
             testRange = levelRange(Level.TEST)
-            showTestRange = args.operation == Question.Operation.MULTIPLICATION.name
+            showTestRange = args.operation == Question.Operation.MULTIPLICATION.name ||
+                args.operation == Question.Operation.DIVISION.name
             easyRange = levelRange(Level.EASY)
             normalRange = levelRange(Level.NORMAL)
             hardRange = levelRange(Level.HARD)
@@ -84,7 +85,8 @@ class ChooseLevelFragment : Fragment() {
     }
 
     private fun levelRange(level: Level): String =
-        if (args.operation == Question.Operation.MULTIPLICATION.name) {
+        if (args.operation == Question.Operation.MULTIPLICATION.name ||
+            args.operation == Question.Operation.DIVISION.name) {
             val maxFactor = when (level) {
                 Level.TEST -> 3
                 Level.EASY -> 5

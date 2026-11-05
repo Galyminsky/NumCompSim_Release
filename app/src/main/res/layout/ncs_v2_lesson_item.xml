@@ -83,7 +83,7 @@
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@{available ? @string/ncs_v2_can_play : @string/ncs_v2_coming_soon}"
-                    android:textColor="@{available ? (paletteSelected ? (paletteActivated ? @color/holo_orange_light : @color/ncs_v2_primary) : @color/ncs_v2_success) : @color/ncs_v2_warm_ink}"
+                    android:textColor="@{available ? (paletteSelected ? (paletteActivated ? @color/holo_orange_light : @color/ncs_v2_primary) : (paletteActivated ? @color/ncs_v2_success : @color/light_red)) : @color/ncs_v2_warm_ink}"
                     android:visibility="@{expanded ? View.VISIBLE : View.GONE}" />
 
                 <TextView

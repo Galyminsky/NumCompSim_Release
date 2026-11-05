@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_ncsV2LessonSelectionFragment_to_multiplicationIntroFragment"
             app:destination="@id/multiplicationIntroFragment" />
+        <action
+            android:id="@+id/action_ncsV2LessonSelectionFragment_to_divisionIntroFragment"
+            app:destination="@id/divisionIntroFragment" />
     </fragment>
 
     <fragment
@@ -55,6 +58,15 @@
         tools:layout="@layout/ncs_v2_multiplication_intro">
         <action
             android:id="@+id/action_multiplicationIntroFragment_to_chooseLevelFragment2"
+            app:destination="@id/chooseLevelFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/divisionIntroFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.DivisionIntroFragment"
+        android:label="@string/ncs_v2_division_intro_label"
+        tools:layout="@layout/ncs_v2_division_intro">
+        <action
+            android:id="@+id/action_divisionIntroFragment_to_chooseLevelFragment2"
             app:destination="@id/chooseLevelFragment2" />
     </fragment>
     <fragment

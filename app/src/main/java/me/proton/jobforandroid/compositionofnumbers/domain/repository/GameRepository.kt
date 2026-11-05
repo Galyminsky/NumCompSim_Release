@@ -14,5 +14,6 @@ interface GameRepository {
         countOfOptions: Int
     ): Question
     fun generateMultiplicationQuestion(level: Level, countOfOptions: Int): Question
+    fun generateDivisionQuestion(level: Level, countOfOptions: Int): Question
     fun getGameSettings(level: Level): GameSettings
 }

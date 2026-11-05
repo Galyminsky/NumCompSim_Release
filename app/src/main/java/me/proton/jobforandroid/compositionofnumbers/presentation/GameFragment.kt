@@ -63,7 +63,8 @@ class GameFragment : Fragment() {
         binding.levelContext = getString(
             R.string.ncs_v2_game_level_context,
             getString(levelNameResId(viewModel.level)),
-            if (viewModel.operation == Question.Operation.MULTIPLICATION) {
+            if (viewModel.operation == Question.Operation.MULTIPLICATION ||
+                viewModel.operation == Question.Operation.DIVISION) {
                 val maxFactor = when (viewModel.level) {
                     Level.TEST -> 3
                     Level.EASY -> 5
