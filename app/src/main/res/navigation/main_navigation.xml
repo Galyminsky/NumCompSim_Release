@@ -108,5 +108,8 @@
         <argument
             android:name="gameResult"
             app:argType="me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult" />
+        <argument
+            android:name="level"
+            app:argType="me.proton.jobforandroid.compositionofnumbers.domain.entity.Level" />
     </fragment>
 </navigation>

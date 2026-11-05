@@ -50,7 +50,7 @@ class GameFinishedFragment : Fragment() {
             ncsV2ResultPlayAgainButton.installButtonPressAnimation()
             ncsV2ResultChooseLevelButton.installButtonPressAnimation()
             gameResult = result
-            levelLabel = getString(levelNameResId(selectedLevel()))
+            levelLabel = getString(levelNameResId(args.level))
             correctAnswerText = result.countOfRightAnswers.toString()
             accuracyText = getString(
                 R.string.ncs_v2_percentage,
@@ -70,7 +70,7 @@ class GameFinishedFragment : Fragment() {
             )
             val hasCountGoal = result.countOfRightAnswers >= requiredCount
             val hasAccuracyGoal = accuracy >= requiredAccuracy
-            levelLabel = getString(levelNameResId(selectedLevel()))
+            levelLabel = getString(levelNameResId(args.level))
             correctAnswerText = result.countOfRightAnswers.toString()
             accuracyText = getString(R.string.ncs_v2_percentage, accuracy)
             countAchieved = hasCountGoal
@@ -98,14 +98,6 @@ class GameFinishedFragment : Fragment() {
         }
     }
 
-    private fun selectedLevel(): Level {
-        val savedLevel: Level? = findNavController().getBackStackEntry(R.id.chooseLevelFragment2)
-            .savedStateHandle.get(SELECTED_LEVEL_KEY)
-        return requireNotNull(savedLevel) {
-            "Selected level is missing from the level selection back stack entry"
-        }
-    }
-
     private fun levelNameResId(level: Level): Int = when (level) {
         Level.TEST -> R.string.ncs_v2_test_level
         Level.EASY -> R.string.ncs_v2_easy_level
@@ -117,7 +109,7 @@ class GameFinishedFragment : Fragment() {
         if (retryNavigationStarted) return
         val navController = findNavController()
         if (navController.currentDestination?.id != R.id.gameFinishedFragment) return
-        val level = selectedLevel()
+        val level = args.level
         sounds?.play(R.raw.key_press)
         retryNavigationStarted = true
         if (navController.popBackStack(R.id.chooseLevelFragment2, false)) {
@@ -161,7 +153,6 @@ class GameFinishedFragment : Fragment() {
     }
 
     companion object {
-        private const val SELECTED_LEVEL_KEY = "ncs_v2_selected_level"
         private const val RESULT_SOUND_TRIGGERED = "ncs_v2_result_sound_triggered"
     }
 }

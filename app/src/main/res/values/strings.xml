@@ -2,11 +2,11 @@
     <string name="app_name">NumCompSim</string>
 
     <string translatable="false"  name="game_services_project_id">609404540906</string>
-    <string name="score_answers">Ваш счет: %s</string>
-    <string name="score_percentage">Процент правильных ответов: %s</string>
+    <string name="score_answers">Ваш счет: %d</string>
+    <string name="score_percentage">Процент правильных ответов: %d</string>
     <string name="right_answers">Правильных ответов %1$d из %2$d необходимых</string>
-    <string name="required_percentage">Необходимый процент правильных ответов: %s</string>
-    <string name="required_score">Необходимое количество правильных ответов: %s</string>
+    <string name="required_percentage">Необходимый процент правильных ответов: %d</string>
+    <string name="required_score">Необходимое количество правильных ответов: %d</string>
     <string name="progress_answers">Правильных ответов %1$d (минимум %2$d)</string>
     <string name="imgBack" translatable="false">imgBack</string>
 

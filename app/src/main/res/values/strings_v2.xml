@@ -4,23 +4,23 @@
     <string name="ncs_v2_terms_title">Условия использования</string>
     <string name="ncs_v2_document_close">Закрыть</string>
     <string name="ncs_v2_documents_description">Политика конфиденциальности и условия использования</string>
-    <string name="ncs_v2_brand">NumCompSim</string>
+    <string name="ncs_v2_brand" translatable="false">NumCompSim</string>
     <string name="ncs_v2_brand_subtitle">Тренажёр состава числа</string>
     <string name="ncs_v2_back">Назад</string>
-    <string name="ncs_v2_arrow_back">←</string>
-    <string name="ncs_v2_arrow_forward">→</string>
-    <string name="ncs_v2_math_plus">+</string>
-    <string name="ncs_v2_math_minus">−</string>
-    <string name="ncs_v2_math_multiply">×</string>
-    <string name="ncs_v2_math_divide">÷</string>
-    <string name="ncs_v2_math_equals">=</string>
-    <string name="ncs_v2_math_question_mark">?</string>
-    <string name="ncs_v2_checkmark">✓</string>
-    <string name="ncs_v2_exclamation">!</string>
-    <string name="ncs_v2_level_marker_test">≈</string>
-    <string name="ncs_v2_level_marker_easy">•</string>
-    <string name="ncs_v2_level_marker_medium">••</string>
-    <string name="ncs_v2_level_marker_hard">•••</string>
+    <string name="ncs_v2_arrow_back" translatable="false">←</string>
+    <string name="ncs_v2_arrow_forward" translatable="false">→</string>
+    <string name="ncs_v2_math_plus" translatable="false">+</string>
+    <string name="ncs_v2_math_minus" translatable="false">−</string>
+    <string name="ncs_v2_math_multiply" translatable="false">×</string>
+    <string name="ncs_v2_math_divide" translatable="false">÷</string>
+    <string name="ncs_v2_math_equals" translatable="false">=</string>
+    <string name="ncs_v2_math_question_mark" translatable="false">?</string>
+    <string name="ncs_v2_checkmark" translatable="false">✓</string>
+    <string name="ncs_v2_exclamation" translatable="false">!</string>
+    <string name="ncs_v2_level_marker_test" translatable="false">≈</string>
+    <string name="ncs_v2_level_marker_easy" translatable="false">•</string>
+    <string name="ncs_v2_level_marker_medium" translatable="false">••</string>
+    <string name="ncs_v2_level_marker_hard" translatable="false">•••</string>
 
     <string name="ncs_v2_welcome_math_title">Математика —\nдавай дружить!</string>
     <string name="ncs_v2_welcome_math_description">Играй с числами и узнавай новое вместе с NumCompSim.</string>
@@ -56,7 +56,7 @@
     <string name="ncs_v2_multiplication_intro_result_number">9</string>
     <string name="ncs_v2_subtraction_selection_intro">Сегодня попробуем вычитание.</string>
     <string name="ncs_v2_subtraction_selection_description">Найди разность чисел</string>
-    <string name="ncs_v2_lock_symbol">🔒</string>
+    <string name="ncs_v2_lock_symbol" translatable="false">🔒</string>
     <string name="ncs_v2_subtraction_intro_label">Введение: вычитание</string>
     <string name="ncs_v2_subtraction_intro_title">Подружись\nс вычитанием!</string>
     <string name="ncs_v2_subtraction_intro_explanation">Вычитай числа и находи пропущенное.\nВместо ? выбери верное число.</string>

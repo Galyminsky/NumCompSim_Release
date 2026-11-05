@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "me.proton.jobforandroid.compositionofnumbers"
-        minSdk 24
+        minSdk 29
         targetSdk 36
         versionCode 5
         versionName "2.0"

@@ -171,7 +171,7 @@ class GameFragment : Fragment() {
     private fun launchGameFinishedFragment(gameResult: GameResult) {
         if (findNavController().currentDestination?.id != R.id.gameFragment) return
         findNavController().navigate(
-            GameFragmentDirections.actionGameFragmentToGameFinishedFragment(gameResult)
+            GameFragmentDirections.actionGameFragmentToGameFinishedFragment(gameResult, args.level)
         )
     }
 

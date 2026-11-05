@@ -1,25 +1,23 @@
 package me.proton.jobforandroid.compositionofnumbers.presentation
 
 import android.app.Dialog
-import android.content.res.Configuration
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.style.StyleSpan
 import android.text.style.LeadingMarginSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.databinding.NcsV2WelcomeBinding
-import java.util.Locale
 
 class NcsV2WelcomeFragment : Fragment() {
     private var _binding: NcsV2WelcomeBinding? = null
@@ -53,19 +51,15 @@ class NcsV2WelcomeFragment : Fragment() {
     private fun showDocuments() {
         if (documentDialog?.isShowing == true) return
         val context = requireContext()
-        val configuration = Configuration(context.resources.configuration).apply {
-            setLocale(Locale.forLanguageTag("ru"))
-        }
-        val russianResources = context.createConfigurationContext(configuration).resources
         val dialogView = layoutInflater.inflate(R.layout.ncs_v2_documents_dialog, null)
         val privacyTab = dialogView.findViewById<TextView>(R.id.ncs_v2_privacy_tab)
         val termsTab = dialogView.findViewById<TextView>(R.id.ncs_v2_terms_tab)
         val bodyView = dialogView.findViewById<TextView>(R.id.ncs_v2_document_body)
         val scrollView = dialogView.findViewById<ScrollView>(R.id.ncs_v2_document_scroll)
         fun selectDocument(bodyRes: Int) {
-            val body = russianResources.getString(bodyRes)
+            val body = getString(bodyRes)
             val formatted = SpannableString(body)
-            Regex("(?m)^\\d+\\. [^\\n]+|^(?:Разработчик|Приложение|Электронная почта):[^\\n]*")
+            Regex("(?m)^\\d+\\. [^\\n]+|^(?:Разработчик|Приложение|Электронная почта|Developer|Application|Email):[^\\n]*")
                 .findAll(body).forEach { match ->
                     formatted.setSpan(
                         StyleSpan(Typeface.BOLD), match.range.first, match.range.last + 1,
@@ -73,7 +67,7 @@ class NcsV2WelcomeFragment : Fragment() {
                     )
                 }
             val indent = (12 * context.resources.displayMetrics.density).toInt()
-            Regex("(?m)^(?!\\d+\\.|ПОЛИТИКА|УСЛОВИЯ|Дата вступления|Разработчик:|Приложение:|Электронная почта:|https?://|$)[^\\n]+")
+            Regex("(?m)^(?!\\d+\\.|ПОЛИТИКА|УСЛОВИЯ|NUMCOMPSIM|Дата вступления|Effective date|Разработчик:|Приложение:|Электронная почта:|Developer:|Application:|Email:|https?://|$)[^\\n]+")
                 .findAll(body).forEach { match ->
                     formatted.setSpan(
                         LeadingMarginSpan.Standard(indent, 0), match.range.first,
