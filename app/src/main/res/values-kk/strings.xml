@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NumCompSim</string>
+
+    <string name="score_answers">Сенің ұпайың: %d</string>
+    <string name="score_percentage">Дұрыс жауаптар пайызы: %d</string>
+    <string name="right_answers">Дұрыс жауаптар: қажетті %2$d-дан %1$d</string>
+    <string name="required_percentage">Дұрыс жауаптардың қажетті пайызы: %d</string>
+    <string name="required_score">Дұрыс жауаптардың қажетті саны: %d</string>
+    <string name="progress_answers">Дұрыс жауаптар: %1$d (кем дегенде %2$d)</string>
+    <string name="privacy_policy_full_text">NUMCOMPSIM ҚҰПИЯЛЫЛЫҚ САЯСАТЫ\nКүшіне енген күні: 2026 жылғы 5 қараша\n\n1. Қолданба туралы\nNumCompSim — Юрий Галяминский (Yuriy Galyaminsky) әзірлеген Android үшін тегін білім беру қолданбасы. Ол 6 жастан 12 жасқа дейінгі балаларға арналған және математикалық дағдыларды шыңдауға көмектеседі. Осы саясат қолданбаны пайдалану кезіндегі деректерді өңдеу тәртібін сипаттайды.\n\n2. Пайдаланушы ұсынатын деректер\nМатематикалық тапсырмалар үшін тіркелу немесе аты-жөнін, электрондық пошта мекенжайын, телефон нөмірін және басқа байланыс мәліметтерін енгізу талап етілмейді. Негізгі ойын тапсырмалары интернет қосылымынсыз қолжетімді.\n\n3. Firebase Аналитикасы\nҚолданбада NumCompSim қалай пайдаланылатынын түсіну және қолданбаны жақсарту үшін Google Analytics for Firebase қолданылады. Сервис пайдалану оқиғаларын, сеанстар туралы ақпаратты, қолданба мен операциялық жүйе нұсқаларын, құрылғы сипаттамаларын, қолданба данасының идентификаторын және желілік деректер негізінде болжамды орналасқан жерді автоматты түрде өңдей алады. Өңдеуді Google сервистері өз ережелеріне сәйкес жүзеге асырады.\nҚолданба конфигурациясында Android жарнамалық идентификаторына (AD_ID) рұқсат алынып тасталған, Firebase Analytics арқылы оны жинау өшірілген және жарнаманы дербестендіру сигналдары өшірілген. Қолданба балаларға дербестендірілген жарнаманы көрсетпейді.\nҚұжаттама: https://firebase.google.com/support/privacy\n\n4. Google Play Games Services\nҚолданбада Google Play Games Services интеграциясы бар. Сервис конфигурациясына және Google есептік жазбасының баптауларына байланысты Google техникалық ақпаратты және Play Games профилінің деректерін өңдей алады. Математикалық тапсырмаларды орындау үшін Play Games-ке кіру міндетті емес.\nGoogle саясаты: https://policies.google.com/privacy\n\n5. Балалардың деректерін қорғау\nҚолданба тапсырмаларды шешу үшін баладан атын, фотосуреттерін, байланыс мәліметтерін, мекенжайын немесе басқа жеке деректерін ұсынуды талап етпейді. Әзірлеуші пайдаланушы деректерін сатпайды және аналитиканы балаларға дербестендірілген жарнама үшін пайдаланбайды. Жоғарыда аталған үшінші тарап сервистері техникалық деректерді өңдеуі мүмкін. Ата-аналар мен заңды өкілдер құпиялылыққа қатысты сұрақтарын төмендегі байланыс мекенжайына жібере алады.\n\n6. Рұқсаттар\nҚолданба біріктірілген Google сервистері үшін интернетке қол жеткізу рұқсатын пайдаланады. Негізгі ойын процесі үшін камераға, микрофонға, байланыстарға, дәл орналасқан жерге немесе пайдаланушының жеке файлдарына рұқсат сұралмайды.\n\n7. Деректерді беру, сақтау және жою\nТехникалық ақпарат пен пайдалану оқиғалары Firebase Analytics және Google Play Games Services жұмысы кезінде Google-ге берілуі мүмкін. Осы сервистер өңдейтін деректерді сақтау және жою олардың ережелері мен баптауларына байланысты. Қолданбаны жою бұрын үшінші тарап сервистері өңдеген деректерді дереу жоюға кепілдік бермейді. Деректерді өңдеу бойынша сұрақтармен немесе әзірлеушіге қолжетімді деректерді жою туралы сұраулармен электрондық пошта арқылы хабарласуға болады.\n\n8. Қауіпсіздік\nӘзірлеуші деректерді өңдеуді қажетті мақсаттармен шектеуге тырысады. Электрондық деректерді беру немесе сақтау әдістерінің ешқайсысы абсолютті қауіпсіздікке кепілдік бере алмайды.\n\n9. Саясаттағы өзгерістер\nСаясат қолданба, үшінші тарап сервистері немесе қолданылатын талаптар өзгерген кезде жаңартылуы мүмкін. Саясаттың қолданыстағы нұсқасын әзірлеуші жариялайды.\n\n10. Байланыс ақпараты\nӘзірлеуші: Yuriy Galyaminsky\nЭлектрондық пошта: galyaminsky@gmail.com\n</string>
+    <string name="terms_and_conditions_full_text">NUMCOMPSIM ПАЙДАЛАНУ ШАРТТАРЫ\nКүшіне енген күні: 2026 жылғы 5 қараша\n\n1. Жалпы ережелер\nNumCompSim — Юрий Галяминский (Yuriy Galyaminsky) әзірлеген математикалық дағдыларды шыңдауға арналған Android үшін тегін білім беру қолданбасы. Қолданба 6–12 жастағы балаларға арналған. Осы шарттар оны пайдалануды реттейді. Егер қолданбаны бала пайдаланса, ата-аналарға немесе заңды өкілдерге шарттармен бірге танысу ұсынылады.\n\n2. Мақсаты және қолжетімділігі\nNumCompSim математикалық тапсырмаларды ойын түрінде орындауға арналған. Қолданба мектепте оқытуды немесе педагогтің консультациясын алмастырмайды және белгілі бір оқыту нәтижесіне кепілдік бермейді.\nҚолданба тегін ұсынылады. Ағымдағы нұсқада ақылы жазылымдар немесе қолданбаішілік сатып алулар қарастырылмаған. Негізгі математикалық тапсырмалар интернет қосылымынсыз жұмыс істейді. Кейбір қосылған Google сервистері үшін желі қажет болуы мүмкін.\n\n3. Пайдалану ережелері\nПайдаланушы қолданбаны жеке коммерциялық емес мақсаттарда орната алады және пайдалана алады. Қолданбаны заңсыз әрекеттер үшін пайдалануға немесе оның жұмысына немесе қосылған сервистердің жұмысына араласуға тыйым салынады. Бағдарламалық кодқа, атауға және басқа қорғалатын материалдарға құқықтар олардың құқық иеленушілеріне тиесілі. Осы шарттар тиісті рұқсатсыз қолданбаның өзгертілген көшірмелерін таратуға немесе оның белгілерін пайдалануға құқық бермейді. Бұл шектеулер қолданыстағы заңнамада немесе үшінші тарап компоненттерінің лицензияларының шарттарында тікелей қарастырылған құқықтарды жоймайды.\n\n4. Үшінші тарап сервистері және деректер\nҚолданбада Google Analytics for Firebase және Google Play Games Services қосылған. Олар өз шарттары мен саясаттарына сәйкес техникалық деректерді және қолданбаны пайдалану туралы ақпаратты өңдей алады. Математикалық тапсырмаларды орындау үшін Google Play Games-ке тіркелу немесе кіру талап етілмейді.\nДеректерді өңдеу тәртібі NumCompSim Құпиялылық саясатында егжей-тегжейлі баяндалған. Google саясаты туралы ақпарат: https://policies.google.com/privacy. Firebase туралы ақпарат: https://firebase.google.com/support/privacy.\n\n5. Балалар мен ата-аналар\nNumCompSim 6–12 жастағы балаларға арналған. Қолданба мысалдарды шешу үшін баладан атын, телефонын, мекенжайын немесе электрондық поштасын көрсетуді талап етпейді. Ата-аналар немесе заңды өкілдер қолданбаның жұмысы және деректерді өңдеу сұрақтары бойынша әзірлеушіге хабарласа алады.\n\n6. Жаңартулар мен өзгерістер\nӘзірлеуші қателерді түзете алады, безендіруді өзгерте алады, тапсырмаларды қоса алады және қолданбаны жаңарта алады. Жаңартуларды орнату мүмкіндігі құрылғыға, Android нұсқасына және дүкенде қолданбаның қолжетімділігіне байланысты. Егер шарттар айтарлықтай өзгерсе, жаңартылған басылым жаңа күшіне ену күнімен жарияланады.\n\n7. Қолданбаның жұмысы және жауапкершілік\nӘзірлеуші NumCompSim-нің дұрыс жұмыс істеуін қамтамасыз етуге тырысады, алайда техникалық қателерге, құрылғы шектеулеріне немесе үшінші тарап сервистерінің жұмысына байланысты кейбір функциялар уақытша қолжетімсіз болуы мүмкін. Қолданба үздіксіз немесе қатесіз жұмыс істеу уәдесінсіз қолжетімді күйде ұсынылады. Осы шарттардағы ештеңе тұтынушылардың міндетті құқықтарын немесе қолданыстағы заңнама бойынша алып тастауға болмайтын жауапкершілікті шектемейді.\n\n8. Пайдалануды тоқтату\nПайдаланушы қолданбаны құрылғыдан жою арқылы NumCompSim пайдалануды кез келген уақытта тоқтата алады. Қолданбаны жоюдың өзі бұрын үшінші тарап сервистері өңдеген деректердің дереу жойылуына кепілдік бермейді; егжей-тегжейлі ақпарат Құпиялылық саясатында көрсетілген.\n\n9. Байланыс ақпараты\nӘзірлеуші: Yuriy Galyaminsky\nҚолданба: NumCompSim\nЭлектрондық пошта: galyaminsky@gmail.com\n</string>
+    <string name="ncs_v2_privacy_policy_title">Құпиялылық саясаты</string>
+    <string name="ncs_v2_terms_title">Пайдалану шарттары</string>
+    <string name="ncs_v2_document_close">Жабу</string>
+    <string name="ncs_v2_documents_description">Құпиялылық саясаты және пайдалану шарттары</string>
+    <string name="ncs_v2_brand_subtitle">Сан құрамын жаттықтыру</string>
+    <string name="ncs_v2_back">Кері</string>
+
+    <string name="ncs_v2_welcome_math_title">Математикамен\nдостасайық!</string>
+    <string name="ncs_v2_welcome_math_description">NumCompSim-мен бірге сандармен ойнап, жаңа нәрселерді үйрен.</string>
+    <string name="ncs_v2_you_can_do_it">Қолыңнан бәрі келеді!</string>
+    <string name="ncs_v2_small_discovery">Шағын жаңалықтан бастайық па?</string>
+    <string name="ncs_v2_choose_lesson">Сабақты таңдау</string>
+    <string name="ncs_v2_choose_lesson_title">Нені\nжаттықтырамыз?</string>
+    <string name="ncs_v2_addition_intro">Бүгін қосудан бастаймыз.</string>
+    <string name="ncs_v2_addition">Қосу</string>
+    <string name="ncs_v2_can_play">Ойнауға болады</string>
+    <string name="ncs_v2_find_number_part">Санның бөлігін тап</string>
+    <string name="ncs_v2_subtraction">Азайту</string>
+    <string name="ncs_v2_multiplication">Көбейту</string>
+    <string name="ncs_v2_division">Бөлу</string>
+    <string name="ncs_v2_coming_soon">Жуырда</string>
+    <string name="ncs_v2_other_lessons_soon">Басқа сабақтар әлі дайындалуда.\nАл қосуды қазірдің өзінде байқап көруге болады!</string>
+    <string name="ncs_v2_other_lessons_soon_available">Бөлу әлі дайындалуда.</string>
+    <string name="ncs_v2_start_addition">Қосуды бастау</string>
+    <string name="ncs_v2_start_subtraction">Азайтуды бастау</string>
+    <string name="ncs_v2_start_multiplication">Көбейтуді бастау</string>
+    <string name="ncs_v2_start_division">Бөлуді бастау</string>
+    <string name="ncs_v2_division_selection_intro">Бүгін бөлуді байқап көреміз.</string>
+    <string name="ncs_v2_division_selection_description">Бөліндіні немесе бөлгішті тап</string>
+    <string name="ncs_v2_division_intro_label">Кіріспе: бөлу</string>
+    <string name="ncs_v2_multiplication_selection_intro">Бүгін көбейтуді байқап көреміз.</string>
+    <string name="ncs_v2_multiplication_selection_description">Көбейтіндіні немесе көбейткішті тап</string>
+    <string name="ncs_v2_multiplication_intro_label">Кіріспе: көбейту</string>
+    <string name="ncs_v2_multiplication_intro_title">Көбейтумен\nдос бол!</string>
+    <string name="ncs_v2_multiplication_intro_explanation">Сандарды көбейтіп, өткізіп алған санды тап.\n? орнына дұрыс санды таңда.</string>
+    <string name="ncs_v2_multiplication_intro_first_line">Сандардың көбейтіндісін тап.</string>
+    <string name="ncs_v2_multiplication_intro_first_number">3</string>
+    <string name="ncs_v2_multiplication_intro_second_number">3</string>
+    <string name="ncs_v2_multiplication_intro_result_number">9</string>
+    <string name="ncs_v2_subtraction_selection_intro">Бүгін азайтуды байқап көреміз.</string>
+    <string name="ncs_v2_subtraction_selection_description">Сандардың айырмасын тап</string>
+    <string name="ncs_v2_subtraction_intro_label">Кіріспе: азайту</string>
+    <string name="ncs_v2_subtraction_intro_title">Азайтумен\nдос бол!</string>
+    <string name="ncs_v2_subtraction_intro_explanation">Сандарды азайтып, өткізіп алған санды тап.\n? орнына дұрыс санды таңда.</string>
+    <string name="ncs_v2_subtraction_intro_first_line">Сандардың айырмасын тап.</string>
+    <string name="ncs_v2_subtraction_intro_first_number">7</string>
+    <string name="ncs_v2_subtraction_intro_second_number">3</string>
+    <string name="ncs_v2_subtraction_intro_result_number">4</string>
+
+    <string name="ncs_v2_welcome_numbers_title">Сандармен\nдос бол!</string>
+    <string name="ncs_v2_find_missing_number">Жетіспейтін санды тап.</string>
+    <string name="ncs_v2_together">Бірге\nжасайық!</string>
+    <string name="ncs_v2_how_it_works">БҰЛ ҚАЛАЙ ЖҰМЫС ІСТЕЙДІ</string>
+    <string name="ncs_v2_addends_explanation">Қосылғыштарды қосқанда қосынды шығады.\n? орнына дұрыс санды таңда.</string>
+    <string name="ncs_v2_addends_first_line">Қосылғыштарды қосқанда қосынды шығады.</string>
+    <string name="ncs_v2_addends_instead">Орнына</string>
+    <string name="ncs_v2_addends_choose_correct">дұрыс санды таңда.</string>
+    <string name="ncs_v2_choose_level_first">Алдымен деңгейді таңдаймыз</string>
+    <string name="ncs_v2_ready">Мен дайынмын!</string>
+    <string name="ncs_v2_choose_level_title">Өз деңгейіңді\nтаңда</string>
+    <string name="ncs_v2_where_start">Неден бастаймыз?</string>
+    <string name="ncs_v2_test_level">Сынақ</string>
+    <string name="ncs_v2_easy_level">Жеңіл</string>
+    <string name="ncs_v2_medium_level">Орташа</string>
+    <string name="ncs_v2_hard_level">Қиын</string>
+    <string name="ncs_v2_game_level_context">%1$s · %2$s</string>
+    <string name="ncs_v2_game_time_preview">01:27</string>
+    <string name="ncs_v2_level_range">%1$d–%2$d</string>
+    <string name="ncs_v2_level_and_range">%1$s · %2$s</string>
+    <string name="ncs_v2_level_can_reselect">Деңгейді қайтадан\nтаңдауға болады.</string>
+    <string name="ncs_v2_start_game">Ойынды бастау</string>
+
+    <string name="ncs_v2_missing_number_question">Қай сан\nжетіспейді?</string>
+    <string name="ncs_v2_tap_correct_number">Дұрыс санды таңда</string>
+    <string name="ncs_v2_correct_badge">✓ Дұрыс</string>
+    <string name="ncs_v2_wrong_badge">× Қате</string>
+    <string name="ncs_v2_answer_correct">Дұрыс! %1$d + %2$d = %3$d</string>
+    <string name="ncs_v2_answer_wrong">Қате. %1$d + %2$d = %3$d</string>
+    <string name="ncs_v2_subtraction_answer_correct">Дұрыс! %1$d − %2$d = %3$d</string>
+    <string name="ncs_v2_subtraction_answer_wrong">Қате. %1$d − %2$d = %3$d</string>
+    <string name="ncs_v2_multiplication_answer_correct">Дұрыс! %1$d × %2$d = %3$d</string>
+    <string name="ncs_v2_multiplication_answer_wrong">Қате. %1$d × %2$d = %3$d</string>
+    <string name="ncs_v2_division_answer_correct">Дұрыс! %1$d ÷ %2$d = %3$d</string>
+    <string name="ncs_v2_division_answer_wrong">Қате. %1$d ÷ %2$d = %3$d</string>
+    <string name="ncs_v2_correct_answers_singular">%1$d дұрыс жауап</string>
+    <string name="ncs_v2_correct_answers_plural">%1$d дұрыс жауап</string>
+    <string name="ncs_v2_required_minimum">Кем дегенде %1$d қажет</string>
+    <string name="ncs_v2_minimum_reached">✓ Минимумға жеттің</string>
+    <string name="ncs_v2_time_left">Қалды</string>
+    <string name="ncs_v2_time_low">! Уақыт аз</string>
+    <string name="ncs_v2_great_start">Тамаша бастама!</string>
+
+    <string name="ncs_v2_game_result">Ойын нәтижесі</string>
+    <string name="ncs_v2_result_success_title">Қолыңнан келді!</string>
+    <string name="ncs_v2_result_success_count">7</string>
+    <string name="ncs_v2_result_success_count_target">3 қажет · мақсатқа жеттің</string>
+    <string name="ncs_v2_result_success_accuracy_value">58%</string>
+    <string name="ncs_v2_result_success_accuracy_target">50% қажет · мақсатқа жеттің</string>
+    <string name="ncs_v2_result_success_description">Екі мақсат та орындалды.\nСандармен тамаша жұмыс істедің!</string>
+    <string name="ncs_v2_result_failure_title">Әзірге болмады</string>
+    <string name="ncs_v2_result_failure_description_static">Қателер жоқ — бұл өте жақсы!\nБірақ 1 емес, 3 дұрыс жауап керек.</string>
+    <string name="ncs_v2_result_failure_count">1</string>
+    <string name="ncs_v2_result_failure_count_target">3 қажет · тағы 2 жетіспейді</string>
+    <string name="ncs_v2_result_failure_accuracy_value">100%</string>
+    <string name="ncs_v2_result_failure_description">Қателер жоқ — бұл өте жақсы!\nБірақ %1$d емес, %2$d дұрыс жауап керек.</string>
+    <string name="ncs_v2_correct_answers_label">Дұрыс жауаптар</string>
+    <string name="ncs_v2_required_reached">%1$d қажет · мақсатқа жеттің</string>
+    <string name="ncs_v2_required_missing">%1$d қажет · тағы %2$d жетіспейді</string>
+    <string name="ncs_v2_accuracy">Дәлдік</string>
+    <string name="ncs_v2_percentage">%1$d%%</string>
+    <string name="ncs_v2_accuracy_required_reached">%1$d%% қажет · мақсатқа жеттің</string>
+    <string name="ncs_v2_accuracy_required_missing">%1$d%% қажет · тағы %2$d%% жетіспейді</string>
+    <string name="ncs_v2_try_again">Қайтадан байқап көр</string>
+    <string name="ncs_v2_play_again">Тағы ойнау</string>
+    <string name="ncs_v2_choose_level">Деңгейді таңдау</string>
+
+    <string name="ncs_v2_unavailable">Қолжетімсіз</string>
+    <string name="ncs_v2_pressed">Басылды</string>
+</resources>

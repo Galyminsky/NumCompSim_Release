@@ -59,21 +59,42 @@ class NcsV2WelcomeFragment : Fragment() {
         fun selectDocument(bodyRes: Int) {
             val body = getString(bodyRes)
             val formatted = SpannableString(body)
-            Regex("(?m)^\\d+\\. [^\\n]+|^(?:Разработчик|Приложение|Электронная почта|Developer|Application|Email):[^\\n]*")
-                .findAll(body).forEach { match ->
-                    formatted.setSpan(
-                        StyleSpan(Typeface.BOLD), match.range.first, match.range.last + 1,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                }
             val indent = (12 * context.resources.displayMetrics.density).toInt()
-            Regex("(?m)^(?!\\d+\\.|ПОЛИТИКА|УСЛОВИЯ|NUMCOMPSIM|Дата вступления|Effective date|Разработчик:|Приложение:|Электронная почта:|Developer:|Application:|Email:|https?://|$)[^\\n]+")
-                .findAll(body).forEach { match ->
-                    formatted.setSpan(
-                        LeadingMarginSpan.Standard(indent, 0), match.range.first,
-                        match.range.last + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
+            val lines = body.split("\n")
+            val sectionHeaderIndices = lines.indices.filter { i ->
+                lines[i].trim().matches(Regex("^\\d+\\..*"))
+            }
+            val lastSectionHeaderIndex = sectionHeaderIndices.lastOrNull() ?: -1
+
+            var currentOffset = 0
+            for (i in lines.indices) {
+                val line = lines[i]
+                val lineLength = line.length
+                if (line.isNotBlank()) {
+                    val isSectionHeader = i in sectionHeaderIndices
+                    val isContactLine = lastSectionHeaderIndex != -1 && i > lastSectionHeaderIndex
+                    val isHeaderOrTitle = i == 0 || i == 1 || isSectionHeader || isContactLine
+
+                    if (isSectionHeader || isContactLine) {
+                        formatted.setSpan(
+                            StyleSpan(Typeface.BOLD),
+                            currentOffset,
+                            currentOffset + lineLength,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+
+                    if (!isHeaderOrTitle) {
+                        formatted.setSpan(
+                            LeadingMarginSpan.Standard(indent, 0),
+                            currentOffset,
+                            currentOffset + lineLength,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
                 }
+                currentOffset += lineLength + 1
+            }
             bodyView.text = formatted
             val privacySelected = bodyRes == R.string.privacy_policy_full_text
             privacyTab.setBackgroundResource(if (privacySelected) R.drawable.ncs_v2_selected_outline else android.R.color.transparent)
