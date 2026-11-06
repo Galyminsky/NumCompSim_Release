@@ -55,6 +55,7 @@ class NcsV2LessonSelectionFragment : Fragment() {
         binding.ncsV2BackButton.installButtonPressAnimation { !selectionStarted }
         binding.ncsV2StartAdditionButton.installButtonPressAnimation { !selectionStarted }
         binding.selectedOperation = selectedOperation
+        binding.startButtonText = getString(startButtonTextRes(selectedOperation))
         binding.ncsV2AdditionItem.root.setOnClickListener { selectLesson(Question.Operation.ADDITION) }
         binding.ncsV2SubtractionItem.root.setOnClickListener { selectLesson(Question.Operation.SUBTRACTION) }
         binding.ncsV2MultiplicationItem.root.setOnClickListener { selectLesson(Question.Operation.MULTIPLICATION) }
@@ -84,7 +85,15 @@ class NcsV2LessonSelectionFragment : Fragment() {
         if (selectedOperation == operation) return
         selectedOperation = operation
         binding.selectedOperation = operation
+        binding.startButtonText = getString(startButtonTextRes(operation))
         sounds?.play(R.raw.key_press)
+    }
+
+    private fun startButtonTextRes(operation: Question.Operation): Int = when (operation) {
+        Question.Operation.ADDITION -> R.string.ncs_v2_start_addition
+        Question.Operation.SUBTRACTION -> R.string.ncs_v2_start_subtraction
+        Question.Operation.MULTIPLICATION -> R.string.ncs_v2_start_multiplication
+        Question.Operation.DIVISION -> R.string.ncs_v2_start_division
     }
 
     private fun startSelectedLesson() {

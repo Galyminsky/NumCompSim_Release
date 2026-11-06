@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# Navigation XML resolves these argument types by fully qualified class name.
+-keepnames class me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
+-keepnames class me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult

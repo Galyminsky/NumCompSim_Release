@@ -723,3 +723,13 @@
 
 
 
+
+## Release crash fix (2026-11-06)
+
+- Release APK Logcat confirms ClassNotFoundException for me.proton.jobforandroid.compositionofnumbers.domain.entity.Level while Android Navigation inflates main_navigation.xml. Navigation resolves custom app:argType classes by their fully qualified names; R8 obfuscation can break that lookup.
+- Added exact -keepnames rules for Level and GameResult, the two custom argument types in main_navigation.xml. MainActivity orientation changed from fullSensor to portrait.
+
+## Текст кнопки выбора операции (2026-11-06)
+
+- Причина: текст основной кнопки выбирался вложенным выражением Data Binding в XML; в Release APK при вычитании оставался текст сложения, а при умножении и делении текст отсутствовал. Строки для всех четырёх операций присутствуют в базовой, английской, казахской и украинской локализациях.
+- Фрагмент теперь задаёт локализованный текст кнопки по выбранной операции при открытии экрана и каждом изменении выбора; XML привязывает TextView к этой строке. Соответствие: сложение, вычитание, умножение, деление — соответствующие ncs_v2_start_* ресурсы.

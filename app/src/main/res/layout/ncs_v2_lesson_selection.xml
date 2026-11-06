@@ -5,6 +5,7 @@
     <data>
         <import type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question.Operation" />
         <variable name="selectedOperation" type="Operation" />
+        <variable name="startButtonText" type="String" />
     </data>
 
     <ScrollView
@@ -190,7 +191,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
-                    android:text="@{selectedOperation == Operation.ADDITION ? @string/ncs_v2_start_addition : selectedOperation == Operation.SUBTRACTION ? @string/ncs_v2_start_subtraction : selectedOperation == Operation.MULTIPLICATION ? @string/ncs_v2_start_multiplication : @string/ncs_v2_start_division}"
+                    android:text="@{startButtonText}"
                         android:textColor="@color/ncs_v2_surface" />
 
                     <TextView
