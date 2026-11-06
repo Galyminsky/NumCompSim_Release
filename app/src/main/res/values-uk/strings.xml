@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NumCompSim</string>
+
+    <string name="score_answers">Твій рахунок: %d</string>
+    <string name="score_percentage">Відсоток правильних відповідей: %d</string>
+    <string name="right_answers">Правильних відповідей %1$d з %2$d необхідних</string>
+    <string name="required_percentage">Необхідний відсоток правильних відповідей: %d</string>
+    <string name="required_score">Необхідна кількість правильних відповідей: %d</string>
+    <string name="progress_answers">Правильних відповідей %1$d (мінімум %2$d)</string>
+    <string name="privacy_policy_full_text">ПОЛІТИКА КОНФІДЕНЦІЙНОСТІ NUMCOMPSIM\nДата набрання чинності: 5 листопада 2026 року\n\n1. Про додаток\nNumCompSim — безкоштовний освітній додаток для Android, розроблений Юрієм Галямінським (Yuriy Galyaminsky). Він призначений для дітей від 6 до 12 років і допомагає тренувати математичні навички. Ця політика описує обробку даних під час використання додатка.\n\n2. Дані, які надає користувач\nДля математичних завдань не потрібна реєстрація або введення імені, адреси електронної пошти, номера телефону та інших контактних даних. Основні ігрові завдання доступні без підключення до інтернету.\n\n3. Аналітика Firebase\nУ додатку використовується Google Analytics for Firebase для розуміння того, як використовується NumCompSim, та покращення додатка. Сервіс може автоматично обробляти події використання, відомості про сеанси, версії додатка та операційної системи, характеристики пристрою, ідентифікатор екземпляра додатка та приблизне місцерозташування на основі мережевих даних. Обробка здійснюється сервісами Google відповідно до їхніх правил.\nУ конфігурації додатка виключено дозвіл на рекламний ідентифікатор Android (AD_ID), відключено його збір засобами Firebase Analytics та відключено сигнали персоналізації реклами. Додаток не показує персоналізовану рекламу дітям.\nДокументація: https://firebase.google.com/support/privacy\n\n4. Google Play Games Services\nУ додатку присутня інтеграція Google Play Games Services. Залежно від конфігурації сервісу та налаштувань облікового запису Google може обробляти технічні відомості та дані профілю Play Games. Для виконання математичних завдань вхід у Play Games не є обов\'язковим.\nПолітика Google: https://policies.google.com/privacy\n\n5. Захист даних дітей\nДодаток не вимагає від дитини надавати ім\'я, фотографії, контакти, адресу або інші особисті відомості для розв\'язання прикладів. Розробник не продає дані користувачів і не використовує аналітику для персоналізованої реклами дітям. Зазначені вище сторонні сервіси можуть обробляти технічні дані. Батьки та законні представники можуть надсилати запитання щодо конфіденційності за контактною адресою нижче.\n\n6. Дозволи\nДодаток використовує дозвіл на доступ до інтернету для інтегрованих сервісів Google. Для основного ігрового процесу не запитується доступ до камери, мікрофона, контактів, точного місцерозташування або особистих файлів користувача.\n\n7. Передавання, зберігання та видалення даних\nТехнічні відомості та події використання можуть передаватися Google під час роботи Firebase Analytics та Google Play Games Services. Зберігання та видалення даних, які обробляються цими сервісами, залежать від їхніх правил і налаштувань. Видалення додатка не гарантує негайного видалення даних, які раніше оброблялися сторонніми сервісами. З запитаннями щодо обробки даних або запитами на видалення даних, доступних розробнику, можна звернутися електронною поштою.\n\n8. Безпека\nРозробник прагне обмежувати обробку даних необхідними цілями. Жоден спосіб передавання або зберігання електронних даних не гарантує абсолютної безпеки.\n\n9. Зміни до політики\nПолітика може оновлюватися в разі зміни додатка, сторонніх сервісів або застосовних вимог. Актуальна редакція публікується розробником.\n\n10. Контакти\nРозробник: Yuriy Galyaminsky\nЕлектронна пошта: galyaminsky@gmail.com\n</string>
+    <string name="terms_and_conditions_full_text">УМОВИ ВИКОРИСТАННЯ NUMCOMPSIM\nДата набрання чинності: 5 листопада 2026 року\n\n1. Загальні положення\nNumCompSim — безкоштовний освітній Android-додаток для тренування математичних навичок, розроблений Юрієм Галямінським (Yuriy Galyaminsky). Додаток призначений для дітей 6–12 років. Ці умови регулюють його використання. Якщо додатком користується дитина, батькам або законним представникам рекомендується ознайомитися з умовами разом із нею.\n\n2. Призначення та доступність\nNumCompSim призначений для практики математичних завдань у формі гри. Додаток не замінює навчання в школі або консультації педагога та не гарантує конкретного результату навчання.\nДодаток надається безкоштовно. У поточній версії не передбачено платних передплат або покупок у додатку. Основні математичні завдання працюють без підключення до інтернету. Для деяких підключених сервісів Google може знадобитися мережа.\n\n3. Правила використання\nКористувач може встановлювати та використовувати додаток у особистих некомерційних цілях. Забороняється використовувати додаток для протиправних дій або втручатися в його роботу чи роботу підключених сервісів. Права на програмний код, назву та інші матеріали, що охороняються, належать їхнім правовласникам. Ці умови не надають права поширювати змінені копії додатка або використовувати його позначення без відповідного дозволу. Ці обмеження не скасовують прав, прямо передбачених застосовним законодавством або умовами ліцензій сторонніх компонентів.\n\n4. Сторонні сервіси та дані\nУ додатку підключено Google Analytics for Firebase та Google Play Games Services. Вони можуть обробляти технічні дані та відомості про використання додатка відповідно до своїх умов і політик. Реєстрація або вхід у Google Play Games не потрібні для виконання математичних завдань.\nПорядок обробки даних детально викладено в Політиці конфіденційності NumCompSim. Відомості про політику Google: https://policies.google.com/privacy. Інформація про Firebase: https://firebase.google.com/support/privacy.\n\n5. Діти та батьки\nNumCompSim розрахований на дітей 6–12 років. Додаток не вимагає від дитини вказувати ім\'я, телефон, адресу або електронну пошту, щоб розв\'язувати приклади. Батьки або законні представники можуть звертатися до розробника з питань роботи додатка та обробки даних.\n\n6. Оновлення та зміни\nРозробник може виправляти помилки, змінювати оформлення, додавати завдання та оновлювати додаток. Можливість встановлення оновлень залежить від пристрою, версії Android та доступності додатка в магазині. Якщо умови істотно зміняться, оновлена редакція буде опублікована з новою датою набрання чинності.\n\n7. Робота додатка та відповідальність\nРозробник прагне забезпечувати коректну роботу NumCompSim, однак окремі функції можуть бути тимчасово недоступні через технічні помилки, обмеження пристрою або роботу сторонніх сервісів. Додаток надається в доступному стані без обіцянки безперервної або безпомилкової роботи. Ніщо в цих умовах не обмежує обов\'язкових прав споживачів або відповідальності, яку не можна виключити за застосовним законодавством.\n\n8. Припинення використання\nКористувач може припинити використання NumCompSim у будь-який час, видаливши додаток із пристрою. Видалення додатка само по собі не гарантує негайного видалення даних, раніше оброблених сторонніми сервісами; подробиці вказано в Політиці конфіденційності.\n\n9. Контакти\nРозробник: Yuriy Galyaminsky\nДодаток: NumCompSim\nЕлектронна пошта: galyaminsky@gmail.com\n</string>
+    <string name="ncs_v2_privacy_policy_title">Політика конфіденційності</string>
+    <string name="ncs_v2_terms_title">Умови використання</string>
+    <string name="ncs_v2_document_close">Закрити</string>
+    <string name="ncs_v2_documents_description">Політика конфіденційності та умови використання</string>
+    <string name="ncs_v2_brand_subtitle">Тренажер складу числа</string>
+    <string name="ncs_v2_back">Назад</string>
+
+    <string name="ncs_v2_welcome_math_title">Математика —\nдавай дружити!</string>
+    <string name="ncs_v2_welcome_math_description">Грай із числами та дізнавайся нове разом із NumCompSim.</string>
+    <string name="ncs_v2_you_can_do_it">У тебе все вдасться!</string>
+    <string name="ncs_v2_small_discovery">Почнемо з маленького відкриття?</string>
+    <string name="ncs_v2_choose_lesson">Обрати заняття</string>
+    <string name="ncs_v2_choose_lesson_title">Що будемо\nтренувати?</string>
+    <string name="ncs_v2_addition_intro">Сьогодні почнемо з додавання.</string>
+    <string name="ncs_v2_addition">Додавання</string>
+    <string name="ncs_v2_can_play">Можна грати</string>
+    <string name="ncs_v2_find_number_part">Знайди частину числа</string>
+    <string name="ncs_v2_subtraction">Віднімання</string>
+    <string name="ncs_v2_multiplication">Множення</string>
+    <string name="ncs_v2_division">Ділення</string>
+    <string name="ncs_v2_coming_soon">Скоро</string>
+    <string name="ncs_v2_other_lessons_soon">Інші заняття ще готуються.\nА додавання вже можна спробувати!</string>
+    <string name="ncs_v2_other_lessons_soon_available">Ділення ще готується.</string>
+    <string name="ncs_v2_start_addition">Розпочати додавання</string>
+    <string name="ncs_v2_start_subtraction">Розпочати віднімання</string>
+    <string name="ncs_v2_start_multiplication">Розпочати множення</string>
+    <string name="ncs_v2_start_division">Розпочати ділення</string>
+    <string name="ncs_v2_division_selection_intro">Сьогодні спробуємо ділення.</string>
+    <string name="ncs_v2_division_selection_description">Знайди частку або дільник</string>
+    <string name="ncs_v2_division_intro_label">Вступ: ділення</string>
+    <string name="ncs_v2_multiplication_selection_intro">Сьогодні спробуємо множення.</string>
+    <string name="ncs_v2_multiplication_selection_description">Знайди добуток або множник</string>
+    <string name="ncs_v2_multiplication_intro_label">Вступ: множення</string>
+    <string name="ncs_v2_multiplication_intro_title">Подружися\nз множенням!</string>
+    <string name="ncs_v2_multiplication_intro_explanation">Множ числа та знаходь пропущене число.\nЗамість ? обери правильне число.</string>
+    <string name="ncs_v2_multiplication_intro_first_line">Знайди добуток чисел.</string>
+    <string name="ncs_v2_multiplication_intro_first_number">3</string>
+    <string name="ncs_v2_multiplication_intro_second_number">3</string>
+    <string name="ncs_v2_multiplication_intro_result_number">9</string>
+    <string name="ncs_v2_subtraction_selection_intro">Сьогодні спробуємо віднімання.</string>
+    <string name="ncs_v2_subtraction_selection_description">Знайди різницю чисел</string>
+    <string name="ncs_v2_subtraction_intro_label">Вступ: віднімання</string>
+    <string name="ncs_v2_subtraction_intro_title">Подружися\nз відніманням!</string>
+    <string name="ncs_v2_subtraction_intro_explanation">Віднімай числа та знаходь пропущене число.\nЗамість ? обери правильне число.</string>
+    <string name="ncs_v2_subtraction_intro_first_line">Знайди різницю чисел.</string>
+    <string name="ncs_v2_subtraction_intro_first_number">7</string>
+    <string name="ncs_v2_subtraction_intro_second_number">3</string>
+    <string name="ncs_v2_subtraction_intro_result_number">4</string>
+
+    <string name="ncs_v2_welcome_numbers_title">Подружися\nз числами!</string>
+    <string name="ncs_v2_find_missing_number">Знайди число, якого не вистачає.</string>
+    <string name="ncs_v2_together">Давай\nразом!</string>
+    <string name="ncs_v2_how_it_works">ОСЬ ЯК ЦЕ ПРАЦЮЄ</string>
+    <string name="ncs_v2_addends_explanation">Два доданки разом дають суму.\nЗамість ? обери правильне число.</string>
+    <string name="ncs_v2_addends_first_line">Два доданки разом дають суму.</string>
+    <string name="ncs_v2_addends_instead">Замість</string>
+    <string name="ncs_v2_addends_choose_correct">обери правильне число.</string>
+    <string name="ncs_v2_choose_level_first">Спочатку оберемо рівень</string>
+    <string name="ncs_v2_ready">Можна починати!</string>
+    <string name="ncs_v2_choose_level_title">Обери\nсвій рівень</string>
+    <string name="ncs_v2_where_start">З чого почнемо?</string>
+    <string name="ncs_v2_test_level">Тестовий</string>
+    <string name="ncs_v2_easy_level">Легкий</string>
+    <string name="ncs_v2_medium_level">Середній</string>
+    <string name="ncs_v2_hard_level">Складний</string>
+    <string name="ncs_v2_game_level_context">%1$s · %2$s</string>
+    <string name="ncs_v2_game_time_preview">01:27</string>
+    <string name="ncs_v2_level_range">%1$d–%2$d</string>
+    <string name="ncs_v2_level_and_range">%1$s · %2$s</string>
+    <string name="ncs_v2_level_can_reselect">Рівень можна\nобрати знову.</string>
+    <string name="ncs_v2_start_game">Розпочати гру</string>
+
+    <string name="ncs_v2_missing_number_question">Якого числа\nне вистачає?</string>
+    <string name="ncs_v2_tap_correct_number">Натисни на правильне число</string>
+    <string name="ncs_v2_correct_badge">✓ Правильно</string>
+    <string name="ncs_v2_wrong_badge">× Помилка</string>
+    <string name="ncs_v2_answer_correct">Правильно! %1$d + %2$d = %3$d</string>
+    <string name="ncs_v2_answer_wrong">Помилка. %1$d + %2$d = %3$d</string>
+    <string name="ncs_v2_subtraction_answer_correct">Правильно! %1$d − %2$d = %3$d</string>
+    <string name="ncs_v2_subtraction_answer_wrong">Помилка. %1$d − %2$d = %3$d</string>
+    <string name="ncs_v2_multiplication_answer_correct">Правильно! %1$d × %2$d = %3$d</string>
+    <string name="ncs_v2_multiplication_answer_wrong">Помилка. %1$d × %2$d = %3$d</string>
+    <string name="ncs_v2_division_answer_correct">Правильно! %1$d ÷ %2$d = %3$d</string>
+    <string name="ncs_v2_division_answer_wrong">Помилка. %1$d ÷ %2$d = %3$d</string>
+    <string name="ncs_v2_correct_answers_singular">%1$d правильна відповідь</string>
+    <string name="ncs_v2_correct_answers_plural">%1$d правильних відповідей</string>
+    <string name="ncs_v2_required_minimum">Потрібно щонайменше %1$d</string>
+    <string name="ncs_v2_minimum_reached">✓ Мінімум досягнуто</string>
+    <string name="ncs_v2_time_left">Залишилося</string>
+    <string name="ncs_v2_time_low">! Мало часу</string>
+    <string name="ncs_v2_great_start">Чудовий початок!</string>
+
+    <string name="ncs_v2_game_result">Результат гри</string>
+    <string name="ncs_v2_result_success_title">У тебе все вийшло!</string>
+    <string name="ncs_v2_result_success_count">7</string>
+    <string name="ncs_v2_result_success_count_target">Потрібно 3 · мету досягнуто</string>
+    <string name="ncs_v2_result_success_accuracy_value">58%</string>
+    <string name="ncs_v2_result_success_accuracy_target">Потрібно 50% · мету досягнуто</string>
+    <string name="ncs_v2_result_success_description">Обидві мети досягнуто.\nЧудова робота з числами!</string>
+    <string name="ncs_v2_result_failure_title">Поки що не вийшло</string>
+    <string name="ncs_v2_result_failure_description_static">Помилок немає — це чудово!\nАле потрібна не 1, а 3 правильні відповіді.</string>
+    <string name="ncs_v2_result_failure_count">1</string>
+    <string name="ncs_v2_result_failure_count_target">Потрібно 3 · не вистачає ще 2</string>
+    <string name="ncs_v2_result_failure_accuracy_value">100%</string>
+    <string name="ncs_v2_result_failure_description">Помилок немає — це чудово!\nАле потрібна не %1$d, а %2$d правильні відповіді.</string>
+    <string name="ncs_v2_correct_answers_label">Правильні відповіді</string>
+    <string name="ncs_v2_required_reached">Потрібно %1$d · мету досягнуто</string>
+    <string name="ncs_v2_required_missing">Потрібно %1$d · не вистачає ще %2$d</string>
+    <string name="ncs_v2_accuracy">Точність</string>
+    <string name="ncs_v2_percentage">%1$d%%</string>
+    <string name="ncs_v2_accuracy_required_reached">Потрібно %1$d%% · мету досягнуто</string>
+    <string name="ncs_v2_accuracy_required_missing">Потрібно %1$d%% · не вистачає ще %2$d%%</string>
+    <string name="ncs_v2_try_again">Спробувати знову</string>
+    <string name="ncs_v2_play_again">Грати ще</string>
+    <string name="ncs_v2_choose_level">Обрати рівень</string>
+
+    <string name="ncs_v2_unavailable">Недоступно</string>
+    <string name="ncs_v2_pressed">Натиснуто</string>
+</resources>
