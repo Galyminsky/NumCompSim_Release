@@ -126,4 +126,60 @@
     <string name="ncs_v2_choose_level">Choose level</string>
     <string name="ncs_v2_unavailable">Unavailable</string>
     <string name="ncs_v2_pressed">Pressed</string>
+    <string name="ncs_v2_hub_subtitle">Choose an activity and start practicing!</string>
+    <string name="ncs_v2_hub_arithmetic">Arithmetic</string>
+    <string name="ncs_v2_hub_arithmetic_detail">Four operations\nwith numbers</string>
+    <string name="ncs_v2_hub_comparison">Comparison</string>
+    <string name="ncs_v2_hub_comparison_detail">Compare numbers\nand expressions</string>
+    <string name="ncs_v2_hub_coming_soon">Coming soon</string>
+    <string name="ncs_v2_hub_new_exercise">New\nexercise</string>
+    <string name="ncs_v2_hub_in_development">In development</string>
+    <string name="ncs_v2_hub_hint">Choose a card to start</string>
+    <string name="ncs_v2_hub_arithmetic_description">Arithmetic. Four operations with numbers</string>
+    <string name="ncs_v2_hub_comparison_description">Comparison. Compare numbers and expressions</string>
+    <string name="ncs_v2_comparison_brand_subtitle">Math Practice</string>
+    <string name="ncs_v2_comparison_rules_title">Let us\ncompare!</string>
+    <string name="ncs_v2_comparison_rules_instruction">Choose a sign: &lt;, = or &gt;.</string>
+    <string name="ncs_v2_comparison_rules_speech">Compare!</string>
+    <string name="ncs_v2_comparison_rules_example_label">HOW TO COMPARE NUMBERS</string>
+    <string name="ncs_v2_comparison_rules_explanation">36 ÷ 4 = 9, and 9 is greater than 8.\nChoose the sign between the sides.</string>
+    <string name="ncs_v2_comparison_rules_hint">Now choose a difficulty</string>
+    <string name="ncs_v2_comparison_rules_ready">I am ready!</string>
+    <string name="ncs_v2_comparison_rules_example_accessibility">36 divided by 4 is greater than 8</string>
+    <string name="ncs_v2_comparison_test_detail">Numbers 0–10 · 15 s</string>
+    <string name="ncs_v2_comparison_easy_detail">Numbers 0–100 · 60 s</string>
+    <string name="ncs_v2_comparison_normal_detail">Expression and number · 90 s</string>
+    <string name="ncs_v2_comparison_hard_detail">Two expressions · 120 s</string>
+    <string name="ncs_v2_comparison_game_context">Medium · Comparison</string>
+    <string name="ncs_v2_comparison_game_question">Which sign\nfits?</string>
+    <string name="ncs_v2_comparison_game_expression_accessibility">36 divided by 4, choose a sign, 8</string>
+    <string name="ncs_v2_comparison_game_choose_sign">Choose the correct sign</string>
+    <string name="ncs_v2_comparison_game_hint">First, calculate both sides</string>
+    <string name="ncs_v2_comparison_game_stats">8 answers · 6 correct</string>
+    <plurals name="ncs_v2_comparison_answered_count">
+        <item quantity="one">%d answer</item>
+        <item quantity="other">%d answers</item>
+    </plurals>
+    <plurals name="ncs_v2_comparison_correct_count">
+        <item quantity="one">%d correct</item>
+        <item quantity="other">%d correct</item>
+    </plurals>
+    <string name="ncs_v2_comparison_game_explanation_format">%1$s, so %2$s</string>
+    <string name="ncs_v2_comparison_game_minimum">At least %1$d answers needed</string>
+    <string name="ncs_v2_comparison_game_encouragement">Keep up the good work!</string>
+    <string name="ncs_v2_comparison_game_correct_expression_accessibility">36 divided by 4 is greater than 8</string>
+    <string name="ncs_v2_comparison_game_correct_explanation">36 ÷ 4 = 9, so 9 &gt; 8</string>
+    <string name="ncs_v2_comparison_result_success_description">Both goals reached.\nYou compare numbers really well!</string>
+    <string name="ncs_v2_comparison_result_failure_description">You answered 20 questions — well done!\nYour accuracy is still below 70%.</string>
+    <string name="ncs_v2_comparison_result_failure_dynamic">To succeed, answer at least %1$d questions\nand reach %2$d%% accuracy.</string>
+    <string name="ncs_v2_comparison_result_minimum_met_dynamic">At least %1$d answers · completed</string>
+    <string name="ncs_v2_comparison_result_minimum_missing_dynamic">At least %1$d answers · not yet completed</string>
+    <string name="ncs_v2_comparison_result_accuracy_met_dynamic">Need %1$d%% · goal reached</string>
+    <string name="ncs_v2_comparison_result_accuracy_missing_dynamic">Need %1$d%% · goal not reached yet</string>
+    <string name="ncs_v2_comparison_result_count_label">Correct / answered</string>
+    <string name="ncs_v2_comparison_result_minimum_met">At least 15 answers · completed</string>
+    <string name="ncs_v2_comparison_result_accuracy_met">Need 70% · goal reached</string>
+    <string name="ncs_v2_comparison_result_accuracy_missing">Need 70% · goal not reached yet</string>
+    <string name="ncs_v2_comparison_result_retry">Try again</string>
+    <string name="ncs_v2_comparison_result_choose_level">Choose difficulty</string>
 </resources>

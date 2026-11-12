@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:background="@drawable/ncs_v2_hub_future_card" android:enabled="false" android:orientation="vertical" android:paddingStart="@dimen/ncs_v2_space_16" android:paddingEnd="@dimen/ncs_v2_space_8" android:paddingTop="@dimen/ncs_v2_space_8" android:paddingBottom="@dimen/ncs_v2_space_8">
+  <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:includeFontPadding="false" android:text="@string/ncs_v2_hub_lock" android:textSize="@dimen/ncs_v2_text_22" android:fontFamily="@font/ncs_v2_nunito_bold" />
+  <Space android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />
+  <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:fontFamily="@font/ncs_v2_nunito_black" android:includeFontPadding="false" android:text="@string/ncs_v2_hub_new_exercise" android:textColor="@color/ncs_v2_muted" android:textSize="@dimen/ncs_v2_text_15" />
+  <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:fontFamily="@font/ncs_v2_nunito_bold" android:includeFontPadding="false" android:text="@string/ncs_v2_hub_in_development" android:textColor="@color/ncs_v2_muted" android:textSize="@dimen/ncs_v2_text_14" />
+  <Space android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1" />
+</LinearLayout>

@@ -11,8 +11,74 @@
         android:label="Общее приветствие"
         tools:layout="@layout/ncs_v2_welcome">
         <action
-            android:id="@+id/action_ncsV2WelcomeFragment_to_ncsV2LessonSelectionFragment"
+            android:id="@+id/action_ncsV2WelcomeFragment_to_mainHubFragment"
+            app:destination="@id/mainHubFragment"
+            app:popUpTo="@id/ncsV2WelcomeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainHubFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.MainHubFragment"
+        android:label="Главный хаб"
+        tools:layout="@layout/ncs_v2_main_hub">
+        <action
+            android:id="@+id/action_mainHubFragment_to_ncsV2LessonSelectionFragment"
             app:destination="@id/ncsV2LessonSelectionFragment" />
+        <action
+            android:id="@+id/action_mainHubFragment_to_comparisonRulesFragment"
+            app:destination="@id/comparisonRulesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/comparisonRulesFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.ComparisonRulesFragment"
+        android:label="Правила сравнения"
+        tools:layout="@layout/ncs_v2_comparison_rules">
+        <action
+            android:id="@+id/action_comparisonRulesFragment_to_comparisonLevelFragment"
+            app:destination="@id/comparisonLevelFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/comparisonLevelFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.ComparisonLevelFragment"
+        android:label="Выбор сложности сравнения"
+        tools:layout="@layout/ncs_v2_comparison_level">
+        <action
+            android:id="@+id/action_comparisonLevelFragment_to_comparisonGameFragment"
+            app:destination="@id/comparisonGameFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/comparisonGameFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.ComparisonGameFragment"
+        android:label="@string/ncs_v2_hub_comparison"
+        tools:layout="@layout/ncs_v2_comparison_game">
+        <action
+            android:id="@+id/action_comparisonGameFragment_to_comparisonResultFragment"
+            app:destination="@id/comparisonResultFragment"
+            app:popUpTo="@id/comparisonGameFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="level"
+            app:argType="me.proton.jobforandroid.compositionofnumbers.domain.entity.ComparisonLevel" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/comparisonResultFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.ComparisonResultFragment"
+        android:label="@string/ncs_v2_game_result"
+        tools:layout="@layout/ncs_v2_comparison_result">
+        <action
+            android:id="@+id/action_comparisonResultFragment_to_comparisonGameFragment"
+            app:destination="@id/comparisonGameFragment"
+            app:popUpTo="@id/comparisonResultFragment"
+            app:popUpToInclusive="true" />
+        <argument android:name="level"
+            app:argType="me.proton.jobforandroid.compositionofnumbers.domain.entity.ComparisonLevel" />
+        <argument android:name="answeredCount" app:argType="integer" />
+        <argument android:name="correctCount" app:argType="integer" />
     </fragment>
 
     <fragment

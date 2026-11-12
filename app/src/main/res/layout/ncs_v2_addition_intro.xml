@@ -148,6 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                android:gravity="center"
                 android:includeFontPadding="false"
                 android:text="@string/ncs_v2_how_it_works"
                 android:textColor="@color/ncs_v2_primary"
@@ -226,6 +227,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
                     android:fontFamily="@font/ncs_v2_nunito_semibold"
+                    android:gravity="center"
                     android:includeFontPadding="false"
                     android:lineHeight="22dp"
                     android:text="@string/ncs_v2_addends_first_line"
@@ -236,6 +238,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
                     android:baselineAligned="true"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
                     <TextView

@@ -129,4 +129,60 @@
 
     <string name="ncs_v2_unavailable">Қолжетімсіз</string>
     <string name="ncs_v2_pressed">Басылды</string>
+    <string name="ncs_v2_hub_subtitle">Сабақты таңдап, жаттығуды баста!</string>
+    <string name="ncs_v2_hub_arithmetic">Арифметика</string>
+    <string name="ncs_v2_hub_arithmetic_detail">Сандармен төрт\nамал</string>
+    <string name="ncs_v2_hub_comparison">Салыстыру</string>
+    <string name="ncs_v2_hub_comparison_detail">Сандар мен\nөрнектерді салыстыр</string>
+    <string name="ncs_v2_hub_coming_soon">Жақында пайда болады</string>
+    <string name="ncs_v2_hub_new_exercise">Жаңа\nжаттығу</string>
+    <string name="ncs_v2_hub_in_development">Әзірленуде</string>
+    <string name="ncs_v2_hub_hint">Бастау үшін карточканы таңда</string>
+    <string name="ncs_v2_hub_arithmetic_description">Арифметика. Сандармен төрт амал</string>
+    <string name="ncs_v2_hub_comparison_description">Салыстыру. Сандар мен өрнектерді салыстыр</string>
+    <string name="ncs_v2_comparison_brand_subtitle">Математика жаттықтырғышы</string>
+    <string name="ncs_v2_comparison_rules_title">Кел,\nсалыстырайық!</string>
+    <string name="ncs_v2_comparison_rules_instruction">Таңбаны таңда: &lt;, = немесе &gt;.</string>
+    <string name="ncs_v2_comparison_rules_speech">Салыстыр!</string>
+    <string name="ncs_v2_comparison_rules_example_label">САНДАРДЫ ҚАЛАЙ САЛЫСТЫРАМЫЗ</string>
+    <string name="ncs_v2_comparison_rules_explanation">36 ÷ 4 = 9, ал 9 саны 8-ден үлкен.\nЕкі жақтың арасына таңба қой.</string>
+    <string name="ncs_v2_comparison_rules_hint">Енді қиындық деңгейін таңдайық</string>
+    <string name="ncs_v2_comparison_rules_ready">Дайынмын!</string>
+    <string name="ncs_v2_comparison_rules_example_accessibility">36-ны 4-ке бөлгенде шыққан сан 8-ден үлкен</string>
+    <string name="ncs_v2_comparison_test_detail">0–10 сандары · 15 с</string>
+    <string name="ncs_v2_comparison_easy_detail">0–100 сандары · 60 с</string>
+    <string name="ncs_v2_comparison_normal_detail">Өрнек пен сан · 90 с</string>
+    <string name="ncs_v2_comparison_hard_detail">Екі өрнек · 120 с</string>
+    <string name="ncs_v2_comparison_game_context">Орташа · Салыстыру</string>
+    <string name="ncs_v2_comparison_game_question">Қай таңба\nсәйкес келеді?</string>
+    <string name="ncs_v2_comparison_game_expression_accessibility">36-ны 4-ке бөлу, таңбаны таңда, 8</string>
+    <string name="ncs_v2_comparison_game_choose_sign">Дұрыс таңбаны таңда</string>
+    <string name="ncs_v2_comparison_game_hint">Алдымен екі жақтың мәнін есепте</string>
+    <string name="ncs_v2_comparison_game_stats">8 жауап · 6 дұрыс</string>
+    <plurals name="ncs_v2_comparison_answered_count">
+        <item quantity="one">%d жауап</item>
+        <item quantity="other">%d жауап</item>
+    </plurals>
+    <plurals name="ncs_v2_comparison_correct_count">
+        <item quantity="one">%d дұрыс</item>
+        <item quantity="other">%d дұрыс</item>
+    </plurals>
+    <string name="ncs_v2_comparison_game_explanation_format">%1$s, демек %2$s</string>
+    <string name="ncs_v2_comparison_game_minimum">Кемінде %1$d жауап қажет</string>
+    <string name="ncs_v2_comparison_game_encouragement">Осы қарқынмен жалғастыр!</string>
+    <string name="ncs_v2_comparison_game_correct_expression_accessibility">36-ны 4-ке бөлгенде шыққан сан 8-ден үлкен</string>
+    <string name="ncs_v2_comparison_game_correct_explanation">36 ÷ 4 = 9, демек 9 &gt; 8</string>
+    <string name="ncs_v2_comparison_result_success_description">Екі мақсатқа да жеттің.\nСандарды тамаша салыстырасың!</string>
+    <string name="ncs_v2_comparison_result_failure_description">20 сұраққа жауап бердің — жарайсың!\nБірақ дәлдік әлі 70%-дан төмен.</string>
+    <string name="ncs_v2_comparison_result_failure_dynamic">Жетістікке кемінде %1$d жауап\nжәне %2$d%% дәлдік қажет.</string>
+    <string name="ncs_v2_comparison_result_minimum_met_dynamic">Кемінде %1$d жауап · орындалды</string>
+    <string name="ncs_v2_comparison_result_minimum_missing_dynamic">Кемінде %1$d жауап · әзірге орындалмады</string>
+    <string name="ncs_v2_comparison_result_accuracy_met_dynamic">%1$d%% қажет · мақсатқа жеттің</string>
+    <string name="ncs_v2_comparison_result_accuracy_missing_dynamic">%1$d%% қажет · әзірге жетпедің</string>
+    <string name="ncs_v2_comparison_result_count_label">Дұрыс / жауап берілді</string>
+    <string name="ncs_v2_comparison_result_minimum_met">Кемінде 15 жауап · орындалды</string>
+    <string name="ncs_v2_comparison_result_accuracy_met">70% қажет · мақсатқа жеттің</string>
+    <string name="ncs_v2_comparison_result_accuracy_missing">70% қажет · әзірге жетпедің</string>
+    <string name="ncs_v2_comparison_result_retry">Қайталау</string>
+    <string name="ncs_v2_comparison_result_choose_level">Қиындықты таңдау</string>
 </resources>

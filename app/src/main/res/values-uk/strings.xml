@@ -129,4 +129,64 @@
 
     <string name="ncs_v2_unavailable">Недоступно</string>
     <string name="ncs_v2_pressed">Натиснуто</string>
+    <string name="ncs_v2_hub_subtitle">Обирай заняття та тренуйся!</string>
+    <string name="ncs_v2_hub_arithmetic">Арифметика</string>
+    <string name="ncs_v2_hub_arithmetic_detail">Чотири дії\nз числами</string>
+    <string name="ncs_v2_hub_comparison">Порівняння</string>
+    <string name="ncs_v2_hub_comparison_detail">Порівняй числа\nта вирази</string>
+    <string name="ncs_v2_hub_coming_soon">Незабаром з’являться</string>
+    <string name="ncs_v2_hub_new_exercise">Нова\nвправа</string>
+    <string name="ncs_v2_hub_in_development">У розробці</string>
+    <string name="ncs_v2_hub_hint">Обери картку, щоб почати</string>
+    <string name="ncs_v2_hub_arithmetic_description">Арифметика. Чотири дії з числами</string>
+    <string name="ncs_v2_hub_comparison_description">Порівняння. Порівняй числа та вирази</string>
+    <string name="ncs_v2_comparison_brand_subtitle">Тренажер з математики</string>
+    <string name="ncs_v2_comparison_rules_title">Давай\nпорівнювати!</string>
+    <string name="ncs_v2_comparison_rules_instruction">Обирай знак: &lt;, = або &gt;.</string>
+    <string name="ncs_v2_comparison_rules_speech">Порівняй!</string>
+    <string name="ncs_v2_comparison_rules_example_label">ЯК ПОРІВНЮВАТИ ЧИСЛА</string>
+    <string name="ncs_v2_comparison_rules_explanation">36 ÷ 4 = 9, а 9 більше за 8.\nОбери знак між сторонами.</string>
+    <string name="ncs_v2_comparison_rules_hint">Тепер оберемо складність</string>
+    <string name="ncs_v2_comparison_rules_ready">Я готовий!</string>
+    <string name="ncs_v2_comparison_rules_example_accessibility">36 поділити на 4 більше за 8</string>
+    <string name="ncs_v2_comparison_test_detail">Числа 0–10 · 15 с</string>
+    <string name="ncs_v2_comparison_easy_detail">Числа 0–100 · 60 с</string>
+    <string name="ncs_v2_comparison_normal_detail">Вираз і число · 90 с</string>
+    <string name="ncs_v2_comparison_hard_detail">Два вирази · 120 с</string>
+    <string name="ncs_v2_comparison_game_context">Середній · Порівняння</string>
+    <string name="ncs_v2_comparison_game_question">Який знак\nпідійде?</string>
+    <string name="ncs_v2_comparison_game_expression_accessibility">36 поділити на 4, обрати знак, 8</string>
+    <string name="ncs_v2_comparison_game_choose_sign">Обери правильний знак</string>
+    <string name="ncs_v2_comparison_game_hint">Спочатку обчисли значення сторін</string>
+    <string name="ncs_v2_comparison_game_stats">8 відповідей · 6 правильних</string>
+    <plurals name="ncs_v2_comparison_answered_count">
+        <item quantity="one">%d відповідь</item>
+        <item quantity="few">%d відповіді</item>
+        <item quantity="many">%d відповідей</item>
+        <item quantity="other">%d відповіді</item>
+    </plurals>
+    <plurals name="ncs_v2_comparison_correct_count">
+        <item quantity="one">%d правильна</item>
+        <item quantity="few">%d правильні</item>
+        <item quantity="many">%d правильних</item>
+        <item quantity="other">%d правильних</item>
+    </plurals>
+    <string name="ncs_v2_comparison_game_explanation_format">%1$s, отже %2$s</string>
+    <string name="ncs_v2_comparison_game_minimum">Потрібно щонайменше %1$d відповідей</string>
+    <string name="ncs_v2_comparison_game_encouragement">Продовжуй у тому ж дусі!</string>
+    <string name="ncs_v2_comparison_game_correct_expression_accessibility">36 поділити на 4 більше за 8</string>
+    <string name="ncs_v2_comparison_game_correct_explanation">36 ÷ 4 = 9, отже 9 &gt; 8</string>
+    <string name="ncs_v2_comparison_result_success_description">Обидві цілі досягнуто.\nТи чудово порівнюєш числа!</string>
+    <string name="ncs_v2_comparison_result_failure_description">20 відповідей є — молодець!\nАле точність поки нижча за 70%.</string>
+    <string name="ncs_v2_comparison_result_failure_dynamic">Для успіху потрібно щонайменше %1$d відповідей\nі точність %2$d%%.</string>
+    <string name="ncs_v2_comparison_result_minimum_met_dynamic">Мінімум %1$d відповідей · виконано</string>
+    <string name="ncs_v2_comparison_result_minimum_missing_dynamic">Мінімум %1$d відповідей · ще не виконано</string>
+    <string name="ncs_v2_comparison_result_accuracy_met_dynamic">Потрібно %1$d%% · мету досягнуто</string>
+    <string name="ncs_v2_comparison_result_accuracy_missing_dynamic">Потрібно %1$d%% · мети ще не досягнуто</string>
+    <string name="ncs_v2_comparison_result_count_label">Правильно / відповіли</string>
+    <string name="ncs_v2_comparison_result_minimum_met">Мінімум 15 відповідей · виконано</string>
+    <string name="ncs_v2_comparison_result_accuracy_met">Потрібно 70% · мету досягнуто</string>
+    <string name="ncs_v2_comparison_result_accuracy_missing">Потрібно 70% · мети ще не досягнуто</string>
+    <string name="ncs_v2_comparison_result_retry">Повторити</string>
+    <string name="ncs_v2_comparison_result_choose_level">Вибір складності</string>
 </resources>

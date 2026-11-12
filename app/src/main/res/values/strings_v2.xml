@@ -134,4 +134,16 @@
 
     <string name="ncs_v2_unavailable">Недоступно</string>
     <string name="ncs_v2_pressed">Нажато</string>
+    <string name="ncs_v2_comparison_brand_subtitle">Тренажёр по математике</string>
+    <string name="ncs_v2_comparison_rules_title">Давай\nсравнивать!</string>
+    <string name="ncs_v2_comparison_rules_instruction">Выбирай знак: &lt;, = или &gt;.</string>
+    <string name="ncs_v2_comparison_rules_speech">Сравни!</string>
+    <string name="ncs_v2_comparison_rules_example_label">КАК СРАВНИВАТЬ ЧИСЛА</string>
+    <string name="ncs_v2_comparison_rules_explanation">36 ÷ 4 = 9, а 9 больше 8.\nВыбери знак между сторонами.</string>
+    <string name="ncs_v2_comparison_rules_hint">Теперь выберем сложность</string>
+    <string name="ncs_v2_comparison_rules_ready">Я готов!</string>
+    <string name="ncs_v2_comparison_rules_example_accessibility">36 разделить на 4 больше 8</string>
+    <string name="ncs_v2_comparison_rules_example_left" translatable="false">36 ÷ 4</string>
+    <string name="ncs_v2_comparison_rules_example_sign" translatable="false">&gt;</string>
+    <string name="ncs_v2_comparison_rules_example_right" translatable="false">8</string>
 </resources>
