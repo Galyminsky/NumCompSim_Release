@@ -40,12 +40,7 @@ object GameRepositoryImpl: GameRepository  {
     }
 
     override fun generateMultiplicationQuestion(level: Level, countOfOptions: Int): Question {
-        val maxFactor = when (level) {
-            Level.TEST -> 3
-            Level.EASY -> 5
-            Level.NORMAL -> 10
-            Level.HARD -> 12
-        }
+        val maxFactor = level.maxFactor
         val maxProduct = (maxFactor.toLong() * maxFactor.toLong()).also {
             require(it <= Int.MAX_VALUE)
         }.toInt()
@@ -68,12 +63,7 @@ object GameRepositoryImpl: GameRepository  {
     }
 
     override fun generateDivisionQuestion(level: Level, countOfOptions: Int): Question {
-        val maxDivisorAndQuotient = when (level) {
-            Level.TEST -> 3
-            Level.EASY -> 5
-            Level.NORMAL -> 10
-            Level.HARD -> 12
-        }
+        val maxDivisorAndQuotient = level.maxFactor
         val maxDividend = maxDivisorAndQuotient * maxDivisorAndQuotient
         validateRange(maxDividend, countOfOptions)
         val divisor = Random.nextInt(1, maxDivisorAndQuotient + 1)

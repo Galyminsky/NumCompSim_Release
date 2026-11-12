@@ -77,7 +77,7 @@ object ComparisonBasicSessionGenerator {
         val usedKeys = HashSet<String>()
         val usedExpressions = HashSet<ComparisonSide.Expression>()
 
-        return signs.indices.map { index ->
+        val questions = signs.indices.map { index ->
             val operation = operations[index]
             val complex = complexSlots[index]
             val sign = signs[index]
@@ -123,6 +123,7 @@ object ComparisonBasicSessionGenerator {
             }
             checkNotNull(chosen) { "No valid NORMAL question for the planned slot" }
         }
+        return ComparisonOperationPlanner.shuffleReadyQuestions(questions, random)
     }
 
     private fun buildNormalExpressions(random: Random): Map<Pair<ComparisonOperation, Boolean>, List<ComparisonSide.Expression>> {

@@ -6,22 +6,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import me.proton.jobforandroid.compositionofnumbers.R
-import me.proton.jobforandroid.compositionofnumbers.data.GameRepositoryImpl
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.GameSettings
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
 import me.proton.jobforandroid.compositionofnumbers.domain.usecases.GenerateQuestionUseCase
 import me.proton.jobforandroid.compositionofnumbers.domain.usecases.GetGameSettingsUseCase
+import me.proton.jobforandroid.compositionofnumbers.domain.repository.GameRepository
 
 class GameViewModel(
     private val application: Application,
     val level: Level,
-    val operation: Question.Operation = Question.Operation.ADDITION
+    val operation: Question.Operation = Question.Operation.ADDITION,
+    repository: GameRepository
 ) : ViewModel() {
 
     private lateinit var gameSettings: GameSettings
-    private val repository = GameRepositoryImpl
     private val generateQuestionUseCase = GenerateQuestionUseCase(repository)
     private val getGameSettingsUseCase = GetGameSettingsUseCase(repository)
     private var timer: CountDownTimer? = null

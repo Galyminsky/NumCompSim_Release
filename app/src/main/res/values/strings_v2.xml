@@ -116,11 +116,17 @@
     <string name="ncs_v2_result_success_accuracy_target">Нужно 50% · цель достигнута</string>
     <string name="ncs_v2_result_success_description">Обе цели достигнуты.\nТы здорово справился с числами!</string>
     <string name="ncs_v2_result_failure_title">Пока не получилось</string>
-    <string name="ncs_v2_result_failure_description_static">Ошибок нет — это здорово!\nНо нужен не 1, а 3 верных ответа.</string>
+    <string name="ncs_v2_result_failure_count_description">Пока не хватает верных ответов.\nНужно %1$d, сейчас %2$d.</string>
+    <string name="ncs_v2_result_failure_accuracy_description">Точность пока недостаточна.\nНужно %1$d%%, сейчас %2$d%%.</string>
+    <plurals name="ncs_v2_result_failure_both_description">
+        <item quantity="one">Пока не достигнуты обе цели.\nНужен %1$d верный ответ и %2$d%% точности.</item>
+        <item quantity="few">Пока не достигнуты обе цели.\nНужно %1$d верных ответа и %2$d%% точности.</item>
+        <item quantity="many">Пока не достигнуты обе цели.\nНужно %1$d верных ответов и %2$d%% точности.</item>
+        <item quantity="other">Пока не достигнуты обе цели.\nНужно %1$d верных ответов и %2$d%% точности.</item>
+    </plurals>
     <string name="ncs_v2_result_failure_count">1</string>
     <string name="ncs_v2_result_failure_count_target">Нужно 3 · не хватает ещё 2</string>
     <string name="ncs_v2_result_failure_accuracy_value">100%</string>
-    <string name="ncs_v2_result_failure_description">Ошибок нет — это здорово!\nНо нужен не %1$d, а %2$d верных ответа.</string>
     <string name="ncs_v2_correct_answers_label">Верные ответы</string>
     <string name="ncs_v2_required_reached">Нужно %1$d · цель достигнута</string>
     <string name="ncs_v2_required_missing">Нужно %1$d · не хватает ещё %2$d</string>

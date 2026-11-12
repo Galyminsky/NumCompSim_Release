@@ -111,11 +111,17 @@
     <string name="ncs_v2_result_success_accuracy_target">Потрібно 50% · мету досягнуто</string>
     <string name="ncs_v2_result_success_description">Обидві мети досягнуто.\nЧудова робота з числами!</string>
     <string name="ncs_v2_result_failure_title">Поки що не вийшло</string>
-    <string name="ncs_v2_result_failure_description_static">Помилок немає — це чудово!\nАле потрібна не 1, а 3 правильні відповіді.</string>
+    <string name="ncs_v2_result_failure_count_description">Правильних відповідей поки замало.\nПотрібно: %1$d, зараз: %2$d.</string>
+    <string name="ncs_v2_result_failure_accuracy_description">Точність поки недостатня.\nПотрібно: %1$d%%, зараз: %2$d%%.</string>
+    <plurals name="ncs_v2_result_failure_both_description">
+        <item quantity="one">Обидві цілі поки не досягнуті.\nПотрібна %1$d правильна відповідь і %2$d%% точності.</item>
+        <item quantity="few">Обидві цілі поки не досягнуті.\nПотрібно %1$d правильні відповіді і %2$d%% точності.</item>
+        <item quantity="many">Обидві цілі поки не досягнуті.\nПотрібно %1$d правильних відповідей і %2$d%% точності.</item>
+        <item quantity="other">Обидві цілі поки не досягнуті.\nПотрібно %1$d правильних відповідей і %2$d%% точності.</item>
+    </plurals>
     <string name="ncs_v2_result_failure_count">1</string>
     <string name="ncs_v2_result_failure_count_target">Потрібно 3 · не вистачає ще 2</string>
     <string name="ncs_v2_result_failure_accuracy_value">100%</string>
-    <string name="ncs_v2_result_failure_description">Помилок немає — це чудово!\nАле потрібна не %1$d, а %2$d правильні відповіді.</string>
     <string name="ncs_v2_correct_answers_label">Правильні відповіді</string>
     <string name="ncs_v2_required_reached">Потрібно %1$d · мету досягнуто</string>
     <string name="ncs_v2_required_missing">Потрібно %1$d · не вистачає ще %2$d</string>

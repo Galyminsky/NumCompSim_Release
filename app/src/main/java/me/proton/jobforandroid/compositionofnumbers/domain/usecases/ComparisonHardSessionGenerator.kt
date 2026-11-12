@@ -34,7 +34,7 @@ internal object ComparisonHardSessionGenerator {
         val usedKeys = HashSet<String>()
         val usedExpressions = HashSet<ComparisonSide.Expression>()
 
-        return signs.indices.map { index ->
+        val questions = signs.indices.map { index ->
             val group = groups[index]
             val first = when (group) {
                 ComparisonOperationGroup.ARITHMETIC -> arithmeticPools.getValue(complex[2 * index])
@@ -67,6 +67,7 @@ internal object ComparisonHardSessionGenerator {
             usedExpressions.add(question.right as ComparisonSide.Expression)
             question
         }
+        return ComparisonOperationPlanner.shuffleReadyQuestions(questions, random)
     }
 
     private data class Pool(

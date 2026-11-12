@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import me.proton.jobforandroid.compositionofnumbers.R
 import com.google.android.gms.games.PlayGamesSdk
+import me.proton.jobforandroid.compositionofnumbers.data.GameRepositoryImpl
+import me.proton.jobforandroid.compositionofnumbers.domain.repository.GameRepository
 
 class MainActivity : AppCompatActivity() {
+    val gameRepository: GameRepository = GameRepositoryImpl
     private lateinit var analytics: FirebaseAnalytics
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

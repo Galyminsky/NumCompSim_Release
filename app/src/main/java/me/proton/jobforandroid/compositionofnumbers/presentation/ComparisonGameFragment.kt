@@ -1,6 +1,8 @@
 package me.proton.jobforandroid.compositionofnumbers.presentation
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -35,8 +37,9 @@ class ComparisonGameFragment : Fragment() {
     private var stoppedRemainingMs: Long? = null
     private var resultNavigationStarted = false
     private var sounds: UiSoundPool? = null
-    private val finishFeedback = Runnable { advanceAfterFeedback() }
-    private val updateTimer = Runnable { renderTimer() }
+    private val callbackHandler = Handler(Looper.getMainLooper())
+    private var finishFeedback: Runnable? = null
+    private var updateTimer: Runnable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +47,11 @@ class ComparisonGameFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = NcsV2ComparisonGameBinding.inflate(inflater, container, false)
+        val gameBinding = binding
+        finishFeedback = Runnable {
+            if (_binding === gameBinding) advanceAfterFeedback()
+        }
+        updateTimer = Runnable { renderTimer(gameBinding) }
         return binding.root
     }
 
@@ -102,7 +110,7 @@ class ComparisonGameFragment : Fragment() {
             }
         }
         if (resultNavigationStarted) return
-        renderTimer()
+        renderTimer(binding)
         binding.ncsV2ComparisonLessButton.setOnClickListener { answer(ComparisonSign.LESS) }
         binding.ncsV2ComparisonEqualButton.setOnClickListener { answer(ComparisonSign.EQUAL) }
         binding.ncsV2ComparisonGreaterButton.setOnClickListener { answer(ComparisonSign.GREATER) }
@@ -119,7 +127,7 @@ class ComparisonGameFragment : Fragment() {
         val gameSession = requireNotNull(session)
         if (expireIfNeeded(gameSession)) {
             answerButtons().forEach { it.isEnabled = false }
-            renderTimer()
+            renderTimer(binding)
             return
         }
         if (gameSession.state != ComparisonGameSession.State.QUESTION ||
@@ -265,10 +273,10 @@ class ComparisonGameFragment : Fragment() {
         }
     }
 
-    private fun answerButtons() = listOf(
-        binding.ncsV2ComparisonLessButton,
-        binding.ncsV2ComparisonEqualButton,
-        binding.ncsV2ComparisonGreaterButton
+    private fun answerButtons(gameBinding: NcsV2ComparisonGameBinding = binding) = listOf(
+        gameBinding.ncsV2ComparisonLessButton,
+        gameBinding.ncsV2ComparisonEqualButton,
+        gameBinding.ncsV2ComparisonGreaterButton
     )
 
     private fun signSymbol(sign: ComparisonSign): String = getString(when (sign) {
@@ -280,7 +288,9 @@ class ComparisonGameFragment : Fragment() {
     private fun scheduleFeedbackEnd() {
         val remaining = feedbackEndUptimeMs - SystemClock.uptimeMillis()
         if (remaining <= 0L) advanceAfterFeedback()
-        else binding.root.postDelayed(finishFeedback, remaining)
+        else if (_binding != null) {
+            finishFeedback?.let { callbackHandler.postDelayed(it, remaining) }
+        }
     }
 
     private fun advanceAfterFeedback() {
@@ -294,7 +304,7 @@ class ComparisonGameFragment : Fragment() {
             feedbackQuestion = null
             _binding?.let { renderQuestion(requireNotNull(gameSession.currentQuestion)) }
         }
-        _binding?.let { renderTimer() }
+        _binding?.let { renderTimer(it) }
         if (gameSession.state == ComparisonGameSession.State.FINISHED) {
             navigateToResult(gameSession)
         }
@@ -306,22 +316,23 @@ class ComparisonGameFragment : Fragment() {
         return true
     }
 
-    private fun renderTimer() {
+    private fun renderTimer(gameBinding: NcsV2ComparisonGameBinding) {
+        if (_binding !== gameBinding) return
         val gameSession = session ?: return
         val remainingMs = stoppedRemainingMs
             ?: (deadlineElapsedMs - SystemClock.elapsedRealtime()).coerceAtLeast(0L)
         val remainingSeconds = (remainingMs + 999L) / 1000L
-        binding.ncsV2ComparisonGameTimeValue.text = String.format(
+        gameBinding.ncsV2ComparisonGameTimeValue.text = String.format(
             Locale.ROOT, "%02d:%02d", remainingSeconds / 60, remainingSeconds % 60
         )
-        binding.root.removeCallbacks(updateTimer)
+        updateTimer?.let { callbackHandler.removeCallbacks(it) }
         if (remainingMs == 0L) {
             gameSession.expireTime()
             if (gameSession.state == ComparisonGameSession.State.FINISHED) {
-                answerButtons().forEach { it.isEnabled = false }
+                answerButtons(gameBinding).forEach { it.isEnabled = false }
             }
         } else if (gameSession.state != ComparisonGameSession.State.FINISHED) {
-            binding.root.postDelayed(updateTimer, (remainingMs - 1L) % 1000L + 1L)
+            updateTimer?.let { callbackHandler.postDelayed(it, (remainingMs - 1L) % 1000L + 1L) }
         }
         if (gameSession.state == ComparisonGameSession.State.FINISHED) {
             stoppedRemainingMs = remainingMs
@@ -433,8 +444,10 @@ class ComparisonGameFragment : Fragment() {
         }
         sounds?.release()
         sounds = null
-        binding.root.removeCallbacks(finishFeedback)
-        binding.root.removeCallbacks(updateTimer)
+        finishFeedback?.let { callbackHandler.removeCallbacks(it) }
+        updateTimer?.let { callbackHandler.removeCallbacks(it) }
+        finishFeedback = null
+        updateTimer = null
         super.onDestroyView()
         _binding = null
     }

@@ -111,11 +111,15 @@
     <string name="ncs_v2_result_success_accuracy_target">50% қажет · мақсатқа жеттің</string>
     <string name="ncs_v2_result_success_description">Екі мақсат та орындалды.\nСандармен тамаша жұмыс істедің!</string>
     <string name="ncs_v2_result_failure_title">Әзірге болмады</string>
-    <string name="ncs_v2_result_failure_description_static">Қателер жоқ — бұл өте жақсы!\nБірақ 1 емес, 3 дұрыс жауап керек.</string>
+    <string name="ncs_v2_result_failure_count_description">Дұрыс жауаптар саны әлі жеткіліксіз.\nҚажет: %1$d, қазір: %2$d.</string>
+    <string name="ncs_v2_result_failure_accuracy_description">Дәлдік әлі жеткіліксіз.\nҚажет: %1$d%%, қазір: %2$d%%.</string>
+    <plurals name="ncs_v2_result_failure_both_description">
+        <item quantity="one">Екі мақсат та әлі орындалмады.\n%1$d дұрыс жауап және %2$d%% дәлдік қажет.</item>
+        <item quantity="other">Екі мақсат та әлі орындалмады.\n%1$d дұрыс жауап және %2$d%% дәлдік қажет.</item>
+    </plurals>
     <string name="ncs_v2_result_failure_count">1</string>
     <string name="ncs_v2_result_failure_count_target">3 қажет · тағы 2 жетіспейді</string>
     <string name="ncs_v2_result_failure_accuracy_value">100%</string>
-    <string name="ncs_v2_result_failure_description">Қателер жоқ — бұл өте жақсы!\nБірақ %1$d емес, %2$d дұрыс жауап керек.</string>
     <string name="ncs_v2_correct_answers_label">Дұрыс жауаптар</string>
     <string name="ncs_v2_required_reached">%1$d қажет · мақсатқа жеттің</string>
     <string name="ncs_v2_required_missing">%1$d қажет · тағы %2$d жетіспейді</string>

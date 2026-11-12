@@ -20,6 +20,7 @@ class GameFragment : Fragment() {
         GameViewModelFactory(
             args.level,
             requireActivity().application,
+            (requireActivity() as MainActivity).gameRepository,
             Question.Operation.valueOf(args.operation)
         )
     }
@@ -65,13 +66,7 @@ class GameFragment : Fragment() {
             getString(levelNameResId(viewModel.level)),
             if (viewModel.operation == Question.Operation.MULTIPLICATION ||
                 viewModel.operation == Question.Operation.DIVISION) {
-                val maxFactor = when (viewModel.level) {
-                    Level.TEST -> 3
-                    Level.EASY -> 5
-                    Level.NORMAL -> 10
-                    Level.HARD -> 12
-                }
-                getString(R.string.ncs_v2_level_range, 1, maxFactor)
+                getString(R.string.ncs_v2_level_range, 1, viewModel.level.maxFactor)
             } else {
                 getString(R.string.ncs_v2_level_range, 0, viewModel.maxSumValue)
             }

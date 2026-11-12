@@ -34,6 +34,48 @@ class ComparisonSessionTest {
     }
 
     @Test
+    fun fractionalAccuracyBoundariesUseActualAnswerCountsAndTruncatedPercentages() {
+        data class Case(
+            val level: ComparisonLevel,
+            val answered: Int,
+            val passingCorrect: Int,
+            val passingPercent: Int,
+            val failingPercent: Int,
+            val minimumAnswers: Int,
+            val requiredPercent: Int
+        )
+
+        val cases = listOf(
+            Case(ComparisonLevel.TEST, 7, 5, 71, 57, 5, 60),
+            Case(ComparisonLevel.EASY, 17, 12, 70, 64, 15, 70),
+            Case(ComparisonLevel.NORMAL, 13, 10, 76, 69, 12, 75),
+            Case(ComparisonLevel.HARD, 11, 9, 81, 72, 10, 80)
+        )
+        for (case in cases) {
+            val settings = ComparisonSessionSettings.forLevel(case.level)
+            assertEquals(case.level.toString(), case.minimumAnswers, settings.minimumAnswers)
+            assertEquals(case.level.toString(), case.requiredPercent, settings.requiredAccuracyPercent)
+            assertTrue(case.level.toString(), case.answered >= settings.minimumAnswers)
+
+            for (correct in listOf(case.passingCorrect, case.passingCorrect - 1)) {
+                var session = ComparisonSession.start(case.level)
+                repeat(correct) { session = session.answer(true) }
+                repeat(case.answered - correct) { session = session.answer(false) }
+                val result = session.toResult()
+
+                assertEquals(case.level.toString(), case.answered, result.answeredCount)
+                assertEquals(case.level.toString(), correct, result.correctCount)
+                assertEquals(
+                    case.level.toString(),
+                    if (correct == case.passingCorrect) case.passingPercent else case.failingPercent,
+                    result.accuracyPercent
+                )
+                assertEquals(case.level.toString(), correct == case.passingCorrect, result.isSuccess)
+            }
+        }
+    }
+
+    @Test
     fun minimumIsRequiredButDoesNotEndSession() {
         for (level in ComparisonLevel.entries) {
             val minimum = ComparisonSessionSettings.forLevel(level).minimumAnswers

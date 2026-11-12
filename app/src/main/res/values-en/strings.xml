@@ -109,11 +109,15 @@
     <string name="ncs_v2_result_success_accuracy_target">Need 50% · goal reached</string>
     <string name="ncs_v2_result_success_description">Both goals reached.\nYou did a great job with numbers!</string>
     <string name="ncs_v2_result_failure_title">Not quite yet</string>
-    <string name="ncs_v2_result_failure_description_static">No mistakes — that is great!\nBut you need 3 correct answers, not 1.</string>
+    <string name="ncs_v2_result_failure_count_description">More correct answers are needed.\nGoal: %1$d; current: %2$d.</string>
+    <string name="ncs_v2_result_failure_accuracy_description">Accuracy is below the goal.\nGoal: %1$d%%; current: %2$d%%.</string>
+    <plurals name="ncs_v2_result_failure_both_description">
+        <item quantity="one">Neither goal has been reached yet.\nNeed %1$d correct answer and %2$d%% accuracy.</item>
+        <item quantity="other">Neither goal has been reached yet.\nNeed %1$d correct answers and %2$d%% accuracy.</item>
+    </plurals>
     <string name="ncs_v2_result_failure_count">1</string>
     <string name="ncs_v2_result_failure_count_target">Need 3 · 2 more to go</string>
     <string name="ncs_v2_result_failure_accuracy_value">100%</string>
-    <string name="ncs_v2_result_failure_description">No mistakes — that is great!\nBut %1$d is not enough; you need %2$d correct answers.</string>
     <string name="ncs_v2_correct_answers_label">Correct answers</string>
     <string name="ncs_v2_required_reached">Need %1$d · goal reached</string>
     <string name="ncs_v2_required_missing">Need %1$d · %2$d more to go</string>
