@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.data.ComparisonSessionDataSource
@@ -88,6 +91,15 @@ class ComparisonGameFragment : Fragment() {
             deadlineElapsedMs = SystemClock.elapsedRealtime() +
                 settings.durationSeconds * 1000L
         }
+        // Retry completion after returning from the background or recreating the view.
+        viewLifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onResume(owner: LifecycleOwner) {
+                expireIfNeeded(gameSession)
+                if (gameSession.state == ComparisonGameSession.State.FINISHED) {
+                    navigateToResult(gameSession)
+                }
+            }
+        })
         expireIfNeeded(gameSession)
         if (gameSession.state == ComparisonGameSession.State.FINISHED) {
             navigateToResult(gameSession)
@@ -339,6 +351,9 @@ class ComparisonGameFragment : Fragment() {
     }
 
     private fun navigateToResult(gameSession: ComparisonGameSession) {
+        if (_binding == null ||
+            !viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) ||
+            parentFragmentManager.isStateSaved) return
         if (resultNavigationStarted || gameSession.state != ComparisonGameSession.State.FINISHED) return
         val navController = findNavController()
         if (navController.currentDestination?.id != R.id.comparisonGameFragment) return

@@ -2,6 +2,7 @@ package me.proton.jobforandroid.compositionofnumbers.presentation
 
 import android.app.Application
 import android.os.CountDownTimer
+import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +26,7 @@ class GameViewModel(
     private val generateQuestionUseCase = GenerateQuestionUseCase(repository)
     private val getGameSettingsUseCase = GetGameSettingsUseCase(repository)
     private var timer: CountDownTimer? = null
+    private var deadlineElapsedMs = 0L
     private val _formattedTime = MutableLiveData<String>()
     val formattedTime: LiveData<String>
         get() = _formattedTime
@@ -74,11 +76,22 @@ class GameViewModel(
         updateProgress()
     }
 
-    fun chooseAnswer(displayedQuestion: Question, number: Int) {
-        if (gameFinished || _question.value !== displayedQuestion) return
+    fun chooseAnswer(displayedQuestion: Question, number: Int): Boolean {
+        val nowElapsedMs = SystemClock.elapsedRealtime()
+        if (!canAcceptArithmeticAnswer(
+                displayedQuestion, _question.value, gameFinished, nowElapsedMs, deadlineElapsedMs
+            )) {
+            if (!gameFinished && nowElapsedMs >= deadlineElapsedMs) finishGame()
+            return false
+        }
         checkAnswer(number)
         updateProgress()
         generateQuestion()
+        return true
+    }
+
+    fun finishIfTimeExpired() {
+        if (!gameFinished && SystemClock.elapsedRealtime() >= deadlineElapsedMs) finishGame()
     }
 
     private fun updateProgress() {
@@ -121,6 +134,8 @@ class GameViewModel(
                 finishGame()
             }
         }
+        deadlineElapsedMs = SystemClock.elapsedRealtime() +
+            gameSettings.gameTimeInSeconds * MILLIS_IN_SECONDS
         timer?.start()
     }
 
@@ -141,7 +156,9 @@ class GameViewModel(
     }
 
     private fun finishGame() {
+        if (gameFinished) return
         gameFinished = true
+        timer?.cancel()
         _gameResult.value = GameResult(
             enoughCount.value == true && enoughPercent.value == true,
             countOfRightAnswers,
@@ -167,3 +184,12 @@ internal fun calculatePercentOfRightAnswers(countOfRightAnswers: Int, countOfQue
     }
     return (countOfRightAnswers.toLong() * 100 / countOfQuestions).toInt()
 }
+
+/** An answer belongs to the current question and must arrive strictly before the deadline. */
+internal fun canAcceptArithmeticAnswer(
+    displayedQuestion: Question,
+    currentQuestion: Question?,
+    gameFinished: Boolean,
+    nowElapsedMs: Long,
+    deadlineElapsedMs: Long
+): Boolean = !gameFinished && displayedQuestion === currentQuestion && nowElapsedMs < deadlineElapsedMs
