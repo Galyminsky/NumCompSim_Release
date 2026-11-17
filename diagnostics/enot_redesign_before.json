@@ -1,0 +1,1714 @@
+{
+  "ncs_v2_addition_intro.xml": {
+    "sha256": "a9fd5db36dc5bd0a124c361d53bf36d0fd84e9a354e987928e7f917a1103a115",
+    "ids": [
+      "@+id/ncs_v2_ready_button"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_answer_item.xml": {
+    "sha256": "616c942a95964306821fadd0e1465d8c7f6cd0a3a184d0fdf9e6e4ef9a4f0e74",
+    "ids": [
+      "@+id/ncs_v2_answer_root",
+      "@+id/ncs_v2_answer_value",
+      "@+id/ncs_v2_answer_status"
+    ],
+    "variables": [
+      {
+        "name": "answerValue",
+        "type": "int"
+      },
+      {
+        "name": "enabled",
+        "type": "boolean"
+      },
+      {
+        "name": "pressed",
+        "type": "boolean"
+      },
+      {
+        "name": "correct",
+        "type": "boolean"
+      },
+      {
+        "name": "incorrect",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "id": "@+id/ncs_v2_answer_root",
+        "k": "android:background",
+        "v": "@{correct ? @drawable/ncs_v2_answer_correct : incorrect ? @drawable/ncs_v2_answer_wrong : @drawable/ncs_v2_answer_card}"
+      },
+      {
+        "id": "@+id/ncs_v2_answer_root",
+        "k": "android:enabled",
+        "v": "@{enabled}"
+      },
+      {
+        "id": "@+id/ncs_v2_answer_root",
+        "k": "android:pressed",
+        "v": "@{pressed}"
+      },
+      {
+        "id": "@+id/ncs_v2_answer_value",
+        "k": "android:textColor",
+        "v": "@{correct || incorrect ? @color/ncs_v2_surface : @color/ncs_v2_ink}"
+      },
+      {
+        "id": "@+id/ncs_v2_answer_value",
+        "k": "app:numberAsText",
+        "v": "@{answerValue}"
+      },
+      {
+        "id": "@+id/ncs_v2_answer_status",
+        "k": "android:text",
+        "v": "@{incorrect ? @string/ncs_v2_wrong_badge : correct ? @string/ncs_v2_correct_badge : @string/ncs_v2_pressed}"
+      },
+      {
+        "id": "@+id/ncs_v2_answer_status",
+        "k": "android:visibility",
+        "v": "@{incorrect || correct ? View.VISIBLE : View.GONE}"
+      }
+    ]
+  },
+  "ncs_v2_comparison_game.xml": {
+    "sha256": "f1bf75c7437c0c98c902f6c18adf25ce7568e860d8da65a4c0e68d1ed76e9170",
+    "ids": [
+      "@+id/ncs_v2_comparison_game_back_button",
+      "@+id/ncs_v2_comparison_game_context",
+      "@+id/ncs_v2_comparison_game_title",
+      "@+id/ncs_v2_comparison_expression_card",
+      "@+id/ncs_v2_comparison_expression_row",
+      "@+id/ncs_v2_comparison_expression_left",
+      "@+id/ncs_v2_comparison_expression_sign",
+      "@+id/ncs_v2_comparison_expression_right",
+      "@+id/ncs_v2_comparison_game_instruction",
+      "@+id/ncs_v2_comparison_answer_row",
+      "@+id/ncs_v2_comparison_less_button",
+      "@+id/ncs_v2_comparison_equal_button",
+      "@+id/ncs_v2_comparison_greater_button",
+      "@+id/ncs_v2_comparison_feedback_row",
+      "@+id/ncs_v2_comparison_correct_indicator",
+      "@+id/ncs_v2_comparison_feedback_text",
+      "@+id/ncs_v2_comparison_stats_row",
+      "@+id/ncs_v2_comparison_game_stats_value",
+      "@+id/ncs_v2_comparison_game_minimum",
+      "@+id/ncs_v2_comparison_game_time_value",
+      "@+id/ncs_v2_comparison_progress_track",
+      "@+id/ncs_v2_comparison_progress_fill",
+      "@+id/ncs_v2_comparison_game_illustration",
+      "@+id/ncs_v2_comparison_game_hint"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_comparison_level.xml": {
+    "sha256": "5f5370b11933af8c0fc9a54d38afe20005c7979a817a8b951ae888da0e60f8a3",
+    "ids": [
+      "@+id/ncs_v2_comparison_level_toolbar",
+      "@+id/ncs_v2_comparison_level_back_button",
+      "@+id/ncs_v2_comparison_level_heading",
+      "@+id/ncs_v2_comparison_test_level",
+      "@+id/ncs_v2_comparison_easy_level",
+      "@+id/ncs_v2_comparison_normal_level",
+      "@+id/ncs_v2_comparison_hard_level",
+      "@+id/ncs_v2_comparison_level_start_button"
+    ],
+    "variables": [
+      {
+        "name": "selectedLevel",
+        "type": "ComparisonLevel"
+      }
+    ],
+    "bindings": [
+      {
+        "id": "@+id/ncs_v2_comparison_test_level",
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_comparison_test_detail}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_test_level",
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_test_level",
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_test}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_test_level",
+        "k": "app:selected",
+        "v": "@{selectedLevel == ComparisonLevel.TEST}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_test_level",
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_test_level",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_test_level}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_easy_level",
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_comparison_easy_detail}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_easy_level",
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_easy_level",
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_easy}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_easy_level",
+        "k": "app:selected",
+        "v": "@{selectedLevel == ComparisonLevel.EASY}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_easy_level",
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_easy_level",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_easy_level}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_normal_level",
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_comparison_normal_detail}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_normal_level",
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_normal_level",
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_medium}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_normal_level",
+        "k": "app:selected",
+        "v": "@{selectedLevel == ComparisonLevel.NORMAL}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_normal_level",
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_normal_level",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_medium_level}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_hard_level",
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_comparison_hard_detail}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_hard_level",
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_hard_level",
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_hard}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_hard_level",
+        "k": "app:selected",
+        "v": "@{selectedLevel == ComparisonLevel.HARD}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_hard_level",
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_hard_level",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_hard_level}"
+      }
+    ]
+  },
+  "ncs_v2_comparison_result.xml": {
+    "sha256": "e3e96ebc80efd92d84da8a0eac99898aa45c71a3f964f1eebeba6fc67f1e165d",
+    "ids": [
+      "@+id/ncs_v2_comparison_result_face",
+      "@+id/ncs_v2_comparison_result_count_metric",
+      "@+id/ncs_v2_comparison_result_accuracy_metric",
+      "@+id/ncs_v2_comparison_result_retry_button",
+      "@+id/ncs_v2_comparison_result_choose_level_button"
+    ],
+    "variables": [
+      {
+        "name": "success",
+        "type": "boolean"
+      },
+      {
+        "name": "levelLabel",
+        "type": "String"
+      },
+      {
+        "name": "descriptionText",
+        "type": "String"
+      },
+      {
+        "name": "countText",
+        "type": "String"
+      },
+      {
+        "name": "accuracyText",
+        "type": "String"
+      },
+      {
+        "name": "minimumAchieved",
+        "type": "boolean"
+      },
+      {
+        "name": "accuracyAchieved",
+        "type": "boolean"
+      },
+      {
+        "name": "minimumStatusText",
+        "type": "String"
+      },
+      {
+        "name": "accuracyStatusText",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{levelLabel}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_result_face",
+        "k": "android:src",
+        "v": "@{success ? @drawable/ic_smile : @drawable/ic_sad}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{success ? @string/ncs_v2_result_success_title : @string/ncs_v2_result_failure_title}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{descriptionText}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_result_count_metric",
+        "k": "app:achieved",
+        "v": "@{minimumAchieved}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_result_count_metric",
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_comparison_result_count_label}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_result_count_metric",
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_result_count_metric",
+        "k": "app:targetStatusText",
+        "v": "@{minimumStatusText}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_result_count_metric",
+        "k": "app:valueText",
+        "v": "@{countText}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_result_accuracy_metric",
+        "k": "app:achieved",
+        "v": "@{accuracyAchieved}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_result_accuracy_metric",
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_accuracy}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_result_accuracy_metric",
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_result_accuracy_metric",
+        "k": "app:targetStatusText",
+        "v": "@{accuracyStatusText}"
+      },
+      {
+        "id": "@+id/ncs_v2_comparison_result_accuracy_metric",
+        "k": "app:valueText",
+        "v": "@{accuracyText}"
+      },
+      {
+        "k": "android:scaleX",
+        "v": "@{success ? -1f : 1f}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{success ? View.VISIBLE : View.GONE}"
+      }
+    ]
+  },
+  "ncs_v2_comparison_rules.xml": {
+    "sha256": "bdbe52c56c4c47398b24aac8613bc888143d9b1f6dc17ea9e418150c854ff28e",
+    "ids": [
+      "@+id/ncs_v2_comparison_rules_ready_button"
+    ],
+    "variables": [],
+    "bindings": [
+      {
+        "k": "android:visibility",
+        "v": "@{View.VISIBLE}"
+      }
+    ]
+  },
+  "ncs_v2_division_intro.xml": {
+    "sha256": "7b6aa02ce7a40f8e7c39ed52d6e4944a7ab98cf30a763b4de649aa88a66b0cdc",
+    "ids": [
+      "@+id/ncs_v2_ready_button"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_documents_dialog.xml": {
+    "sha256": "ba40db85fdd13c96143b9a1c0f5750ac36a65fc37953b9612dc973c78bf2a30b",
+    "ids": [
+      "@+id/ncs_v2_privacy_tab",
+      "@+id/ncs_v2_terms_tab",
+      "@+id/ncs_v2_document_scroll",
+      "@+id/ncs_v2_document_body",
+      "@+id/ncs_v2_document_close_button"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_equation_item.xml": {
+    "sha256": "223a7f1e06a227fa42a677583151cf5edf0d61eb954a64f010c00e24eba35c81",
+    "ids": [
+      "@+id/ncs_v2_equation_root",
+      "@+id/ncs_v2_equation_sum",
+      "@+id/ncs_v2_equation_equals",
+      "@+id/ncs_v2_equation_known",
+      "@+id/ncs_v2_equation_plus",
+      "@+id/ncs_v2_equation_missing"
+    ],
+    "variables": [
+      {
+        "name": "question",
+        "type": "me.proton.jobforandroid.compositionofnumbers.domain.entity.Question"
+      },
+      {
+        "name": "sum",
+        "type": "int"
+      },
+      {
+        "name": "known",
+        "type": "int"
+      },
+      {
+        "name": "missingText",
+        "type": "String"
+      },
+      {
+        "name": "solved",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:visibility",
+        "v": "@{question.operation == Operation.ADDITION ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "id": "@+id/ncs_v2_equation_sum",
+        "k": "app:numberAsText",
+        "v": "@{sum}"
+      },
+      {
+        "id": "@+id/ncs_v2_equation_known",
+        "k": "app:numberAsText",
+        "v": "@{known}"
+      },
+      {
+        "id": "@+id/ncs_v2_equation_missing",
+        "k": "android:text",
+        "v": "@{solved ? missingText : @string/ncs_v2_math_question_mark}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{question.operation == Operation.SUBTRACTION || question.operation == Operation.MULTIPLICATION || question.operation == Operation.DIVISION ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "app:numberAsText",
+        "v": "@{question.firstOperand}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{question.operation == Operation.MULTIPLICATION ? @string/ncs_v2_math_multiply : question.operation == Operation.DIVISION ? @string/ncs_v2_math_divide : @string/ncs_v2_math_minus}"
+      },
+      {
+        "k": "android:background",
+        "v": "@{question.unknownPosition == UnknownPosition.SECOND_OPERAND ? @drawable/ncs_v2_equation_slot : null}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{!solved && question.unknownPosition == UnknownPosition.SECOND_OPERAND ? @string/ncs_v2_math_question_mark : question.secondOperand + ``}"
+      },
+      {
+        "k": "android:background",
+        "v": "@{question.unknownPosition == UnknownPosition.RESULT ? @drawable/ncs_v2_equation_slot : null}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{!solved && question.unknownPosition == UnknownPosition.RESULT ? @string/ncs_v2_math_question_mark : question.result + ``}"
+      }
+    ]
+  },
+  "ncs_v2_feedback_item.xml": {
+    "sha256": "dce9d43a63a2cd9700253495ea754991bd72e5fe44753ff7abdc83c45e5c1601",
+    "ids": [
+      "@+id/ncs_v2_feedback_root",
+      "@+id/ncs_v2_feedback_indicator",
+      "@+id/ncs_v2_feedback_symbol",
+      "@+id/ncs_v2_feedback_message"
+    ],
+    "variables": [
+      {
+        "name": "question",
+        "type": "me.proton.jobforandroid.compositionofnumbers.domain.entity.Question"
+      },
+      {
+        "name": "correct",
+        "type": "boolean"
+      },
+      {
+        "name": "incorrect",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "id": "@+id/ncs_v2_feedback_indicator",
+        "k": "android:background",
+        "v": "@{correct ? @drawable/ncs_v2_indicator_success : incorrect ? @drawable/ncs_v2_indicator_attention : @drawable/ncs_v2_indicator_neutral}"
+      },
+      {
+        "id": "@+id/ncs_v2_feedback_symbol",
+        "k": "android:text",
+        "v": "@{correct ? @string/ncs_v2_checkmark : incorrect ? @string/ncs_v2_math_multiply : @string/ncs_v2_level_marker_easy}"
+      },
+      {
+        "id": "@+id/ncs_v2_feedback_symbol",
+        "k": "android:textColor",
+        "v": "@{correct ? @color/ncs_v2_success : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+      },
+      {
+        "id": "@+id/ncs_v2_feedback_message",
+        "k": "android:text",
+        "v": "@{correct ? (question.operation == Operation.ADDITION ? @string/ncs_v2_answer_correct(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.SUBTRACTION ? @string/ncs_v2_subtraction_answer_correct(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.MULTIPLICATION ? @string/ncs_v2_multiplication_answer_correct(question.firstOperand, question.secondOperand, question.result) : @string/ncs_v2_division_answer_correct(question.firstOperand, question.secondOperand, question.result)) : incorrect ? (question.operation == Operation.ADDITION ? @string/ncs_v2_answer_wrong(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.SUBTRACTION ? @string/ncs_v2_subtraction_answer_wrong(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.MULTIPLICATION ? @string/ncs_v2_multiplication_answer_wrong(question.firstOperand, question.secondOperand, question.result) : @string/ncs_v2_division_answer_wrong(question.firstOperand, question.secondOperand, question.result)) : @string/ncs_v2_tap_correct_number}"
+      },
+      {
+        "id": "@+id/ncs_v2_feedback_message",
+        "k": "android:textColor",
+        "v": "@{correct ? @color/ncs_v2_success : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+      }
+    ]
+  },
+  "ncs_v2_game.xml": {
+    "sha256": "409e6525d1d4ee497274c94eef58c1ab308559334b0a00627d1106de25d05c9f",
+    "ids": [
+      "@+id/ncs_v2_game_back_button",
+      "@+id/ncs_v2_game_equation",
+      "@+id/ncs_v2_game_answer_1",
+      "@+id/ncs_v2_game_answer_2",
+      "@+id/ncs_v2_game_answer_3",
+      "@+id/ncs_v2_game_answer_4",
+      "@+id/ncs_v2_game_answer_5",
+      "@+id/ncs_v2_game_answer_6",
+      "@+id/ncs_v2_game_feedback",
+      "@+id/ncs_v2_game_progress",
+      "@+id/ncs_v2_game_timer"
+    ],
+    "variables": [
+      {
+        "name": "viewModel",
+        "type": "me.proton.jobforandroid.compositionofnumbers.presentation.GameViewModel"
+      },
+      {
+        "name": "displayedQuestion",
+        "type": "me.proton.jobforandroid.compositionofnumbers.domain.entity.Question"
+      },
+      {
+        "name": "selectedOptionIndex",
+        "type": "int"
+      },
+      {
+        "name": "feedbackVisible",
+        "type": "boolean"
+      },
+      {
+        "name": "feedbackCorrect",
+        "type": "boolean"
+      },
+      {
+        "name": "levelContext",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{levelContext}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_equation",
+        "k": "app:known",
+        "v": "@{displayedQuestion.visibleNumber}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_equation",
+        "k": "app:missingText",
+        "v": "@{displayedQuestion.rightAnswer + ``}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_equation",
+        "k": "app:question",
+        "v": "@{displayedQuestion}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_equation",
+        "k": "app:solved",
+        "v": "@{feedbackVisible}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_equation",
+        "k": "app:sum",
+        "v": "@{displayedQuestion.sum}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_1",
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[0]}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_1",
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 0}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_1",
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_1",
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 0}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_1",
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 0}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_2",
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[1]}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_2",
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 1}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_2",
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_2",
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 1}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_2",
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 1}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_3",
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[2]}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_3",
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 2}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_3",
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_3",
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 2}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_3",
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 2}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_4",
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[3]}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_4",
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 3}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_4",
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_4",
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 3}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_4",
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 3}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_5",
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[4]}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_5",
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 4}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_5",
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_5",
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 4}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_5",
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 4}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_6",
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[5]}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_6",
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 5}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_6",
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_6",
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 5}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_answer_6",
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 5}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_feedback",
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_feedback",
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_feedback",
+        "k": "app:question",
+        "v": "@{displayedQuestion}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_progress",
+        "k": "app:correctAnswers",
+        "v": "@{viewModel.correctAnswers}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_progress",
+        "k": "app:requiredAnswers",
+        "v": "@{viewModel.requiredAnswers}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_timer",
+        "k": "app:formattedTime",
+        "v": "@{viewModel.formattedTime}"
+      },
+      {
+        "id": "@+id/ncs_v2_game_timer",
+        "k": "app:urgent",
+        "v": "@{viewModel.timeUrgent}"
+      }
+    ]
+  },
+  "ncs_v2_hub_future_card.xml": {
+    "sha256": "44df44b25442a1b0a83ecf9b82acb7f7056e09b3588315ac059e9d07aa736092",
+    "ids": [],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_lesson_item.xml": {
+    "sha256": "fb24bfb93dd0db98669883d181cd4111e2681eb053d6a50ce1a9c871db7501b1",
+    "ids": [
+      "@+id/ncs_v2_lesson_symbol_container"
+    ],
+    "variables": [
+      {
+        "name": "available",
+        "type": "boolean"
+      },
+      {
+        "name": "paletteSelected",
+        "type": "boolean"
+      },
+      {
+        "name": "paletteActivated",
+        "type": "boolean"
+      },
+      {
+        "name": "expanded",
+        "type": "boolean"
+      },
+      {
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "name": "symbol",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:selected",
+        "v": "@{paletteSelected}"
+      },
+      {
+        "k": "android:activated",
+        "v": "@{paletteActivated}"
+      },
+      {
+        "k": "android:enabled",
+        "v": "@{available}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{expanded ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "id": "@+id/ncs_v2_lesson_symbol_container",
+        "k": "android:enabled",
+        "v": "@{available}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{symbol}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{available ? @color/ncs_v2_surface : @color/ncs_v2_muted}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{title}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{available ? @color/ncs_v2_ink : @color/ncs_v2_muted}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{available ? @string/ncs_v2_can_play : @string/ncs_v2_coming_soon}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{available ? (paletteSelected ? (paletteActivated ? @color/holo_orange_light : @color/ncs_v2_primary) : (paletteActivated ? @color/ncs_v2_success : @color/light_red)) : @color/ncs_v2_warm_ink}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{expanded ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{description}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{expanded ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{available ? View.GONE : View.VISIBLE}"
+      }
+    ]
+  },
+  "ncs_v2_lesson_selection.xml": {
+    "sha256": "3ce03245dd4b659c00ace9744e4ed8398a7aec799e7e8651b8e703dcaadbf9ad",
+    "ids": [
+      "@+id/ncs_v2_back_button",
+      "@+id/ncs_v2_addition_item",
+      "@+id/ncs_v2_subtraction_item",
+      "@+id/ncs_v2_multiplication_item",
+      "@+id/ncs_v2_division_item",
+      "@+id/ncs_v2_start_addition_button"
+    ],
+    "variables": [
+      {
+        "name": "selectedOperation",
+        "type": "Operation"
+      },
+      {
+        "name": "startButtonText",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{selectedOperation == Operation.ADDITION ? @string/ncs_v2_addition_intro : selectedOperation == Operation.SUBTRACTION ? @string/ncs_v2_subtraction_selection_intro : selectedOperation == Operation.MULTIPLICATION ? @string/ncs_v2_multiplication_selection_intro : @string/ncs_v2_division_selection_intro}"
+      },
+      {
+        "id": "@+id/ncs_v2_addition_item",
+        "k": "app:available",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_addition_item",
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_find_number_part}"
+      },
+      {
+        "id": "@+id/ncs_v2_addition_item",
+        "k": "app:expanded",
+        "v": "@{selectedOperation == Operation.ADDITION}"
+      },
+      {
+        "id": "@+id/ncs_v2_addition_item",
+        "k": "app:paletteSelected",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_addition_item",
+        "k": "app:paletteActivated",
+        "v": "@{false}"
+      },
+      {
+        "id": "@+id/ncs_v2_addition_item",
+        "k": "app:symbol",
+        "v": "@{@string/ncs_v2_math_plus}"
+      },
+      {
+        "id": "@+id/ncs_v2_addition_item",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_addition}"
+      },
+      {
+        "id": "@+id/ncs_v2_subtraction_item",
+        "k": "app:available",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_subtraction_item",
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_subtraction_selection_description}"
+      },
+      {
+        "id": "@+id/ncs_v2_subtraction_item",
+        "k": "app:expanded",
+        "v": "@{selectedOperation == Operation.SUBTRACTION}"
+      },
+      {
+        "id": "@+id/ncs_v2_subtraction_item",
+        "k": "app:paletteSelected",
+        "v": "@{false}"
+      },
+      {
+        "id": "@+id/ncs_v2_subtraction_item",
+        "k": "app:paletteActivated",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_subtraction_item",
+        "k": "app:symbol",
+        "v": "@{@string/ncs_v2_math_minus}"
+      },
+      {
+        "id": "@+id/ncs_v2_subtraction_item",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_subtraction}"
+      },
+      {
+        "id": "@+id/ncs_v2_multiplication_item",
+        "k": "app:available",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_multiplication_item",
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_multiplication_selection_description}"
+      },
+      {
+        "id": "@+id/ncs_v2_multiplication_item",
+        "k": "app:expanded",
+        "v": "@{selectedOperation == Operation.MULTIPLICATION}"
+      },
+      {
+        "id": "@+id/ncs_v2_multiplication_item",
+        "k": "app:paletteSelected",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_multiplication_item",
+        "k": "app:paletteActivated",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_multiplication_item",
+        "k": "app:symbol",
+        "v": "@{@string/ncs_v2_math_multiply}"
+      },
+      {
+        "id": "@+id/ncs_v2_multiplication_item",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_multiplication}"
+      },
+      {
+        "id": "@+id/ncs_v2_division_item",
+        "k": "app:available",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_division_item",
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_division_selection_description}"
+      },
+      {
+        "id": "@+id/ncs_v2_division_item",
+        "k": "app:expanded",
+        "v": "@{selectedOperation == Operation.DIVISION}"
+      },
+      {
+        "id": "@+id/ncs_v2_division_item",
+        "k": "app:paletteSelected",
+        "v": "@{false}"
+      },
+      {
+        "id": "@+id/ncs_v2_division_item",
+        "k": "app:paletteActivated",
+        "v": "@{false}"
+      },
+      {
+        "id": "@+id/ncs_v2_division_item",
+        "k": "app:symbol",
+        "v": "@{@string/ncs_v2_math_divide}"
+      },
+      {
+        "id": "@+id/ncs_v2_division_item",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_division}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{startButtonText}"
+      }
+    ]
+  },
+  "ncs_v2_level_item.xml": {
+    "sha256": "4447d528c74ff6665c7e1f50dd1ed28944c7ba3a7f7d44be5806b17dff79489e",
+    "ids": [],
+    "variables": [
+      {
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "name": "marker",
+        "type": "String"
+      },
+      {
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "name": "showDescription",
+        "type": "boolean"
+      },
+      {
+        "name": "selected",
+        "type": "boolean"
+      },
+      {
+        "name": "enabled",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:enabled",
+        "v": "@{enabled}"
+      },
+      {
+        "k": "android:selected",
+        "v": "@{selected}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{marker}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{enabled ? @color/ncs_v2_primary : @color/ncs_v2_muted}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{title}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{enabled ? @color/ncs_v2_ink : @color/ncs_v2_muted}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{enabled ? description : @string/ncs_v2_unavailable}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{showDescription ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "android:enabled",
+        "v": "@{enabled}"
+      },
+      {
+        "k": "android:selected",
+        "v": "@{selected}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{enabled ? @string/ncs_v2_checkmark : @string/ncs_v2_math_minus}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{enabled ? @color/ncs_v2_surface : @color/ncs_v2_muted}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{selected || !enabled ? View.VISIBLE : View.INVISIBLE}"
+      }
+    ]
+  },
+  "ncs_v2_level_selection.xml": {
+    "sha256": "7a4551a004c080c9dd2037c119ffd92c3abf4b480fc2fca6404551cd00e2116b",
+    "ids": [
+      "@+id/ncs_v2_back_button",
+      "@+id/ncs_v2_test_level_item",
+      "@+id/ncs_v2_easy_level_item",
+      "@+id/ncs_v2_medium_level_item",
+      "@+id/ncs_v2_hard_level_item",
+      "@+id/ncs_v2_start_game_button"
+    ],
+    "variables": [
+      {
+        "name": "selectedLevel",
+        "type": "Level"
+      },
+      {
+        "name": "testRange",
+        "type": "String"
+      },
+      {
+        "name": "showTestRange",
+        "type": "boolean"
+      },
+      {
+        "name": "easyRange",
+        "type": "String"
+      },
+      {
+        "name": "normalRange",
+        "type": "String"
+      },
+      {
+        "name": "hardRange",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "id": "@+id/ncs_v2_test_level_item",
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_test_level_item",
+        "k": "app:description",
+        "v": "@{testRange}"
+      },
+      {
+        "id": "@+id/ncs_v2_test_level_item",
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_test}"
+      },
+      {
+        "id": "@+id/ncs_v2_test_level_item",
+        "k": "app:selected",
+        "v": "@{selectedLevel == Level.TEST}"
+      },
+      {
+        "id": "@+id/ncs_v2_test_level_item",
+        "k": "app:showDescription",
+        "v": "@{showTestRange}"
+      },
+      {
+        "id": "@+id/ncs_v2_test_level_item",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_test_level}"
+      },
+      {
+        "id": "@+id/ncs_v2_easy_level_item",
+        "k": "app:description",
+        "v": "@{easyRange}"
+      },
+      {
+        "id": "@+id/ncs_v2_easy_level_item",
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_easy_level_item",
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_easy}"
+      },
+      {
+        "id": "@+id/ncs_v2_easy_level_item",
+        "k": "app:selected",
+        "v": "@{selectedLevel == Level.EASY}"
+      },
+      {
+        "id": "@+id/ncs_v2_easy_level_item",
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_easy_level_item",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_easy_level}"
+      },
+      {
+        "id": "@+id/ncs_v2_medium_level_item",
+        "k": "app:description",
+        "v": "@{normalRange}"
+      },
+      {
+        "id": "@+id/ncs_v2_medium_level_item",
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_medium_level_item",
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_medium}"
+      },
+      {
+        "id": "@+id/ncs_v2_medium_level_item",
+        "k": "app:selected",
+        "v": "@{selectedLevel == Level.NORMAL}"
+      },
+      {
+        "id": "@+id/ncs_v2_medium_level_item",
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_medium_level_item",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_medium_level}"
+      },
+      {
+        "id": "@+id/ncs_v2_hard_level_item",
+        "k": "app:description",
+        "v": "@{hardRange}"
+      },
+      {
+        "id": "@+id/ncs_v2_hard_level_item",
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_hard_level_item",
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_hard}"
+      },
+      {
+        "id": "@+id/ncs_v2_hard_level_item",
+        "k": "app:selected",
+        "v": "@{selectedLevel == Level.HARD}"
+      },
+      {
+        "id": "@+id/ncs_v2_hard_level_item",
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "id": "@+id/ncs_v2_hard_level_item",
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_hard_level}"
+      }
+    ]
+  },
+  "ncs_v2_main_hub.xml": {
+    "sha256": "d9c3891283a773b1868a30e38317cdc30a7a09e53ca20ff92a5477b33b1aa980",
+    "ids": [
+      "@+id/ncs_v2_main_hub_heading",
+      "@+id/ncs_v2_hub_arithmetic_card",
+      "@+id/ncs_v2_hub_comparison_card"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_metric_item.xml": {
+    "sha256": "5a6580176beecbe29dff58e4e21270d6eb7811166751953e5f3380a8c6898c2c",
+    "ids": [
+      "@+id/ncs_v2_metric_root",
+      "@+id/ncs_v2_metric_card_background",
+      "@+id/ncs_v2_metric_status",
+      "@+id/ncs_v2_metric_symbol",
+      "@+id/ncs_v2_metric_label",
+      "@+id/ncs_v2_metric_value",
+      "@+id/ncs_v2_metric_target"
+    ],
+    "variables": [
+      {
+        "name": "label",
+        "type": "String"
+      },
+      {
+        "name": "valueText",
+        "type": "String"
+      },
+      {
+        "name": "targetStatusText",
+        "type": "String"
+      },
+      {
+        "name": "achieved",
+        "type": "boolean"
+      },
+      {
+        "name": "standalone",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "id": "@+id/ncs_v2_metric_card_background",
+        "k": "android:visibility",
+        "v": "@{standalone ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{standalone ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "id": "@+id/ncs_v2_metric_status",
+        "k": "android:background",
+        "v": "@{achieved ? @drawable/ncs_v2_indicator_success : @drawable/ncs_v2_indicator_attention}"
+      },
+      {
+        "id": "@+id/ncs_v2_metric_symbol",
+        "k": "android:text",
+        "v": "@{achieved ? @string/ncs_v2_checkmark : @string/ncs_v2_exclamation}"
+      },
+      {
+        "id": "@+id/ncs_v2_metric_symbol",
+        "k": "android:textColor",
+        "v": "@{achieved ? @color/ncs_v2_success : @color/ncs_v2_warm_ink}"
+      },
+      {
+        "id": "@+id/ncs_v2_metric_label",
+        "k": "android:text",
+        "v": "@{label}"
+      },
+      {
+        "id": "@+id/ncs_v2_metric_value",
+        "k": "android:text",
+        "v": "@{valueText}"
+      },
+      {
+        "id": "@+id/ncs_v2_metric_target",
+        "k": "android:text",
+        "v": "@{targetStatusText}"
+      },
+      {
+        "id": "@+id/ncs_v2_metric_target",
+        "k": "android:textColor",
+        "v": "@{achieved ? @color/ncs_v2_success : @color/ncs_v2_warm_ink}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{standalone ? View.VISIBLE : View.GONE}"
+      }
+    ]
+  },
+  "ncs_v2_multiplication_intro.xml": {
+    "sha256": "9d4f9053488d7abf49546066b4a5d8e74f760196faf141e74d5b230cf0bf98c8",
+    "ids": [
+      "@+id/ncs_v2_ready_button"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_progress_item.xml": {
+    "sha256": "05d5ecf18c37559f99bbc771f54eea58a59cb1c9f4e2f9d6dd424e3600f03a4d",
+    "ids": [
+      "@+id/ncs_v2_progress_root",
+      "@+id/ncs_v2_progress_count",
+      "@+id/ncs_v2_progress_status",
+      "@+id/ncs_v2_progress_track",
+      "@+id/ncs_v2_progress_bar",
+      "@+id/ncs_v2_progress_minimum_fill"
+    ],
+    "variables": [
+      {
+        "name": "correctAnswers",
+        "type": "int"
+      },
+      {
+        "name": "requiredAnswers",
+        "type": "int"
+      }
+    ],
+    "bindings": [
+      {
+        "id": "@+id/ncs_v2_progress_count",
+        "k": "android:text",
+        "v": "@{correctAnswers == 1 ? @string/ncs_v2_correct_answers_singular(correctAnswers) : @string/ncs_v2_correct_answers_plural(correctAnswers)}"
+      },
+      {
+        "id": "@+id/ncs_v2_progress_status",
+        "k": "android:text",
+        "v": "@{requiredAnswers > 0 && correctAnswers >= requiredAnswers ? @string/ncs_v2_minimum_reached : @string/ncs_v2_required_minimum(requiredAnswers)}"
+      },
+      {
+        "id": "@+id/ncs_v2_progress_status",
+        "k": "android:textColor",
+        "v": "@{requiredAnswers > 0 && correctAnswers >= requiredAnswers ? @color/ncs_v2_success : @color/ncs_v2_muted}"
+      },
+      {
+        "id": "@+id/ncs_v2_progress_bar",
+        "k": "android:max",
+        "v": "@{requiredAnswers}"
+      },
+      {
+        "id": "@+id/ncs_v2_progress_bar",
+        "k": "android:progress",
+        "v": "@{correctAnswers}"
+      },
+      {
+        "id": "@+id/ncs_v2_progress_minimum_fill",
+        "k": "android:visibility",
+        "v": "@{correctAnswers > 0 && correctAnswers < requiredAnswers ? View.VISIBLE : View.GONE}"
+      }
+    ]
+  },
+  "ncs_v2_result_failure.xml": {
+    "sha256": "218752702d88a3855c491430036abfa9ffd4862ba3e3bf39364773686f6d1966",
+    "ids": [
+      "@+id/ncs_v2_result_correct_metric",
+      "@+id/ncs_v2_result_accuracy_metric",
+      "@+id/ncs_v2_result_failure_retry_button",
+      "@+id/ncs_v2_result_failure_choose_level_button"
+    ],
+    "variables": [
+      {
+        "name": "levelLabel",
+        "type": "String"
+      },
+      {
+        "name": "failureDescription",
+        "type": "String"
+      },
+      {
+        "name": "correctAnswerText",
+        "type": "String"
+      },
+      {
+        "name": "accuracyText",
+        "type": "String"
+      },
+      {
+        "name": "countTargetText",
+        "type": "String"
+      },
+      {
+        "name": "accuracyTargetText",
+        "type": "String"
+      },
+      {
+        "name": "countAchieved",
+        "type": "boolean"
+      },
+      {
+        "name": "accuracyAchieved",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{levelLabel}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{failureDescription}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_correct_metric",
+        "k": "app:achieved",
+        "v": "@{countAchieved}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_correct_metric",
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_correct_answers_label}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_correct_metric",
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_correct_metric",
+        "k": "app:targetStatusText",
+        "v": "@{countTargetText}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_correct_metric",
+        "k": "app:valueText",
+        "v": "@{correctAnswerText}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_accuracy_metric",
+        "k": "app:achieved",
+        "v": "@{accuracyAchieved}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_accuracy_metric",
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_accuracy}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_accuracy_metric",
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_accuracy_metric",
+        "k": "app:targetStatusText",
+        "v": "@{accuracyTargetText}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_accuracy_metric",
+        "k": "app:valueText",
+        "v": "@{accuracyText}"
+      }
+    ]
+  },
+  "ncs_v2_result_success.xml": {
+    "sha256": "a8d34771b4bb82146a19bd92fba35f2133dba47dd4be50854ac3890ddf25d594",
+    "ids": [
+      "@+id/ncs_v2_result_correct_metric",
+      "@+id/ncs_v2_result_accuracy_metric",
+      "@+id/ncs_v2_result_play_again_button",
+      "@+id/ncs_v2_result_choose_level_button"
+    ],
+    "variables": [
+      {
+        "name": "gameResult",
+        "type": "me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult"
+      },
+      {
+        "name": "levelLabel",
+        "type": "String"
+      },
+      {
+        "name": "correctAnswerText",
+        "type": "String"
+      },
+      {
+        "name": "accuracyText",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{levelLabel}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_correct_metric",
+        "k": "app:achieved",
+        "v": "@{gameResult.winner}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_correct_metric",
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_correct_answers_label}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_correct_metric",
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_correct_metric",
+        "k": "app:targetStatusText",
+        "v": "@{@string/ncs_v2_required_reached(gameResult.gameSettings.minCountOfRightAnswers)}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_correct_metric",
+        "k": "app:valueText",
+        "v": "@{correctAnswerText}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_accuracy_metric",
+        "k": "app:achieved",
+        "v": "@{gameResult.winner}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_accuracy_metric",
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_accuracy}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_accuracy_metric",
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_accuracy_metric",
+        "k": "app:targetStatusText",
+        "v": "@{@string/ncs_v2_accuracy_required_reached(gameResult.gameSettings.minPercentOfRightAnswers)}"
+      },
+      {
+        "id": "@+id/ncs_v2_result_accuracy_metric",
+        "k": "app:valueText",
+        "v": "@{accuracyText}"
+      }
+    ]
+  },
+  "ncs_v2_subtraction_intro.xml": {
+    "sha256": "4fe95be1b918bfc75bc64af6517833a7c2049deb7737b2db6fa00123ecbd8a78",
+    "ids": [
+      "@+id/ncs_v2_ready_button"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_timer_item.xml": {
+    "sha256": "e9729ab95e07b06bdc05f3bc955a8dcced597fa37fd396983e0aef1a5b84e9fc",
+    "ids": [
+      "@+id/ncs_v2_timer_root",
+      "@+id/ncs_v2_timer_label",
+      "@+id/ncs_v2_timer_value"
+    ],
+    "variables": [
+      {
+        "name": "formattedTime",
+        "type": "String"
+      },
+      {
+        "name": "urgent",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "id": "@+id/ncs_v2_timer_label",
+        "k": "android:text",
+        "v": "@{urgent ? @string/ncs_v2_time_low : @string/ncs_v2_time_left}"
+      },
+      {
+        "id": "@+id/ncs_v2_timer_label",
+        "k": "android:textColor",
+        "v": "@{urgent ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+      },
+      {
+        "id": "@+id/ncs_v2_timer_value",
+        "k": "android:text",
+        "v": "@{formattedTime}"
+      },
+      {
+        "id": "@+id/ncs_v2_timer_value",
+        "k": "android:textColor",
+        "v": "@{urgent ? @color/ncs_v2_warm_ink : @color/ncs_v2_ink}"
+      }
+    ]
+  },
+  "ncs_v2_welcome.xml": {
+    "sha256": "9ffa8a7cd2ee6848a8cf19b24c46598353df9231be6af51878599ac31fb6094a",
+    "ids": [
+      "@+id/ncs_v2_documents_button",
+      "@+id/ncs_v2_choose_lesson_button"
+    ],
+    "variables": [],
+    "bindings": []
+  }
+}

@@ -1,27 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-
+<?xml
+    version="1.0"
+    encoding="utf-8"
+?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+>
     <data>
-        <import type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question.Operation" />
-        <variable name="question" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question" />
-        <variable name="correct" type="boolean" />
-        <variable name="incorrect" type="boolean" />
+        <import
+            type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question.Operation"
+        />
+        <variable
+            name="question"
+            type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Question"
+        />
+        <variable
+            name="correct"
+            type="boolean"
+        />
+        <variable
+            name="incorrect"
+            type="boolean"
+        />
     </data>
-
     <LinearLayout
         android:id="@+id/ncs_v2_feedback_root"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ncs_v2_feedback_height"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:minHeight="@dimen/ncs_v2_space_32"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+    >
         <FrameLayout
             android:id="@+id/ncs_v2_feedback_indicator"
             android:layout_width="@dimen/ncs_v2_space_32"
             android:layout_height="@dimen/ncs_v2_space_32"
             android:layout_marginEnd="@dimen/ncs_v2_feedback_gap"
-            android:background="@{correct ? @drawable/ncs_v2_indicator_success : incorrect ? @drawable/ncs_v2_indicator_attention : @drawable/ncs_v2_indicator_neutral}">
-
+            android:background="@{correct ? @drawable/ncs_v2_indicator_success : incorrect ? @drawable/ncs_v2_indicator_attention : @drawable/ncs_v2_indicator_neutral}"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+        >
             <TextView
                 android:id="@+id/ncs_v2_feedback_symbol"
                 style="@style/TextAppearance.NcsV2.FeedbackSymbol"
@@ -29,10 +48,10 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@{correct ? @string/ncs_v2_checkmark : incorrect ? @string/ncs_v2_math_multiply : @string/ncs_v2_level_marker_easy}"
-                android:textColor="@{correct ? @color/ncs_v2_success : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
-                android:textSize="@dimen/ncs_v2_text_22" />
+                android:textColor="@{correct ? @color/ncs_v2_muted : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+                android:textSize="@dimen/ncs_v2_text_22"
+            />
         </FrameLayout>
-
         <TextView
             android:id="@+id/ncs_v2_feedback_message"
             style="@style/TextAppearance.NcsV2.Black"
@@ -41,7 +60,8 @@
             android:layout_weight="1"
             android:lineSpacingMultiplier="1.2"
             android:text="@{correct ? (question.operation == Operation.ADDITION ? @string/ncs_v2_answer_correct(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.SUBTRACTION ? @string/ncs_v2_subtraction_answer_correct(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.MULTIPLICATION ? @string/ncs_v2_multiplication_answer_correct(question.firstOperand, question.secondOperand, question.result) : @string/ncs_v2_division_answer_correct(question.firstOperand, question.secondOperand, question.result)) : incorrect ? (question.operation == Operation.ADDITION ? @string/ncs_v2_answer_wrong(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.SUBTRACTION ? @string/ncs_v2_subtraction_answer_wrong(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.MULTIPLICATION ? @string/ncs_v2_multiplication_answer_wrong(question.firstOperand, question.secondOperand, question.result) : @string/ncs_v2_division_answer_wrong(question.firstOperand, question.secondOperand, question.result)) : @string/ncs_v2_tap_correct_number}"
-            android:textColor="@{correct ? @color/ncs_v2_success : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
-            android:textSize="@dimen/ncs_v2_text_20" />
+            android:textColor="@{correct ? @color/ncs_v2_muted : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+            android:textSize="@dimen/ncs_v2_text_20"
+        />
     </LinearLayout>
 </layout>

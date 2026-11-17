@@ -154,6 +154,7 @@ class ComparisonGameFragment : Fragment() {
 
     private fun renderQuestion(question: ComparisonQuestion) {
         displayedQuestion = question
+        binding.ncsV2ComparisonGameIllustration.setImageResource(R.drawable.raccoon_timer)
         renderExpression(question, getString(R.string.ncs_v2_math_question_mark))
         answerButtons().forEach { button ->
             button.isActivated = false
@@ -163,11 +164,12 @@ class ComparisonGameFragment : Fragment() {
         }
         binding.ncsV2ComparisonCorrectIndicator.visibility = View.GONE
         binding.ncsV2ComparisonFeedbackText.setText(R.string.ncs_v2_comparison_game_hint)
-        binding.ncsV2ComparisonFeedbackText.setTextColor(requireContext().getColor(R.color.ncs_v2_muted))
+        binding.ncsV2ComparisonFeedbackText.setTextColor(requireContext().getColor(R.color.ncs_v2_primary))
         renderStats()
     }
 
     private fun renderFeedback(question: ComparisonQuestion, sign: ComparisonSign) {
+        binding.ncsV2ComparisonGameIllustration.setImageResource(R.drawable.raccoon_thinking)
         val correctSign = question.correctSign
         renderExpression(question, signSymbol(correctSign))
         answerButtons().forEachIndexed { index, button ->
@@ -175,24 +177,20 @@ class ComparisonGameFragment : Fragment() {
             button.isEnabled = false
             button.isActivated = false
             if (buttonSign == sign && sign == correctSign) {
-                button.setBackgroundResource(R.drawable.ncs_v2_answer_correct)
+                button.setBackgroundResource(R.drawable.ncs_v2_comparison_answer_card)
                 button.setTextColor(requireContext().getColor(R.color.ncs_v2_surface))
             } else if (buttonSign == sign) {
                 button.setBackgroundResource(R.drawable.ncs_v2_answer_wrong)
                 button.setTextColor(requireContext().getColor(R.color.ncs_v2_surface))
             } else if (buttonSign == correctSign) {
-                button.setBackgroundResource(R.drawable.ncs_v2_answer_correct)
+                button.setBackgroundResource(R.drawable.ncs_v2_comparison_answer_card)
                 button.setTextColor(requireContext().getColor(R.color.ncs_v2_surface))
             }
         }
         val correct = requireNotNull(requireNotNull(session).lastAnswerCorrect)
         binding.ncsV2ComparisonCorrectIndicator.visibility = if (correct) View.VISIBLE else View.GONE
         binding.ncsV2ComparisonFeedbackText.text = explanation(question)
-        binding.ncsV2ComparisonFeedbackText.setTextColor(
-            requireContext().getColor(
-                if (correct) R.color.ncs_v2_comparison_correct_border else R.color.ncs_v2_muted
-            )
-        )
+        binding.ncsV2ComparisonFeedbackText.setTextColor(requireContext().getColor(R.color.ncs_v2_muted))
         renderStats()
     }
 

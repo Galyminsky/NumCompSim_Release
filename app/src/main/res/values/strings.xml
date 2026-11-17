@@ -1,4 +1,7 @@
 <resources>
+    <string name="ncs_v2_schetenot_first" translatable="false">Счёт</string>
+    <string name="ncs_v2_schetenot_second" translatable="false">Енот</string>
+    <string name="ncs_v2_schetenot_subtitle" translatable="false">Математика — легко и интересно!</string>
     <string name="app_name">NumCompSim</string>
 
     <string translatable="false"  name="game_services_project_id">609404540906</string>
