@@ -5,7 +5,7 @@
 <resources>
     <string
         name="app_name"
-    >NumCompSim</string>
+    >СчётЕнот</string>
     <string
         translatable="false"
         name="game_services_project_id"

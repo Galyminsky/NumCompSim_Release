@@ -5,7 +5,7 @@
 <resources>
     <string
         name="app_name"
-    >NumCompSim</string>
+    >СчётЕнот</string>
     <string
         name="score_answers"
     >Сенің ұпайың: %d</string>
