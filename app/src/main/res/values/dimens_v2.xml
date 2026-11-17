@@ -25,9 +25,6 @@
         name="ncs_v2_space_32"
     >32dp</dimen>
     <dimen
-        name="ncs_v2_content_width"
-    >354dp</dimen>
-    <dimen
         name="ncs_v2_touch_target_min"
     >48dp</dimen>
     <dimen
@@ -39,9 +36,6 @@
     <dimen
         name="ncs_v2_back_height"
     >48dp</dimen>
-    <dimen
-        name="ncs_v2_lesson_available_height"
-    >130dp</dimen>
     <dimen
         name="ncs_v2_lesson_coming_soon_height"
     >90dp</dimen>
@@ -57,9 +51,6 @@
     <dimen
         name="ncs_v2_level_indicator_size"
     >28dp</dimen>
-    <dimen
-        name="ncs_v2_answer_width"
-    >110dp</dimen>
     <dimen
         name="ncs_v2_answer_height"
     >@dimen/ncs_v2_progress_height</dimen>
@@ -85,9 +76,6 @@
         name="ncs_v2_timer_height"
     >59dp</dimen>
     <dimen
-        name="ncs_v2_progress_width"
-    >304dp</dimen>
-    <dimen
         name="ncs_v2_progress_height"
     >72dp</dimen>
     <dimen
@@ -112,12 +100,6 @@
         name="ncs_v2_metric_text_gap"
     >2dp</dimen>
     <dimen
-        name="ncs_v2_notebook_cell_width"
-    >47dp</dimen>
-    <dimen
-        name="ncs_v2_notebook_cell_height"
-    >45dp</dimen>
-    <dimen
         name="ncs_v2_radius_number_field"
     >12dp</dimen>
     <dimen
@@ -126,9 +108,6 @@
     <dimen
         name="ncs_v2_radius_panel"
     >24dp</dimen>
-    <dimen
-        name="ncs_v2_radius_screen"
-    >28dp</dimen>
     <dimen
         name="ncs_v2_radius_pill"
     >100dp</dimen>
@@ -180,9 +159,6 @@
     <dimen
         name="ncs_v2_text_24"
     >24sp</dimen>
-    <dimen
-        name="ncs_v2_text_25"
-    >25sp</dimen>
     <dimen
         name="ncs_v2_text_26"
     >26sp</dimen>

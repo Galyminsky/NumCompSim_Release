@@ -20,9 +20,6 @@
         translatable="false"
     >СчётЕнот</string>
     <string
-        name="ncs_v2_brand_subtitle"
-    >Тренажёр состава числа</string>
-    <string
         name="ncs_v2_back"
     >Назад</string>
     <string
@@ -124,12 +121,6 @@
         name="ncs_v2_coming_soon"
     >Скоро</string>
     <string
-        name="ncs_v2_other_lessons_soon"
-    >Другие занятия ещё готовятся.\nА сложение уже можно попробовать!</string>
-    <string
-        name="ncs_v2_other_lessons_soon_available"
-    >Деление ещё готовится.</string>
-    <string
         name="ncs_v2_start_addition"
     >Начать сложение</string>
     <string
@@ -221,9 +212,6 @@
         name="ncs_v2_how_it_works"
     >ВОТ КАК ЭТО РАБОТАЕТ</string>
     <string
-        name="ncs_v2_addends_explanation"
-    >Два слагаемых вместе дают сумму.\nВместо ? выбери верное число.</string>
-    <string
         name="ncs_v2_addends_first_line"
     >Два слагаемых вместе дают сумму.</string>
     <string
@@ -260,14 +248,8 @@
         name="ncs_v2_game_level_context"
     >%1$s · %2$s</string>
     <string
-        name="ncs_v2_game_time_preview"
-    >01:27</string>
-    <string
         name="ncs_v2_level_range"
     >%1$d–%2$d</string>
-    <string
-        name="ncs_v2_level_and_range"
-    >%1$s · %2$s</string>
     <string
         name="ncs_v2_level_can_reselect"
     >Уровень можно\nвыбрать заново.</string>
@@ -423,17 +405,11 @@
         name="ncs_v2_pressed"
     >Нажато</string>
     <string
-        name="ncs_v2_comparison_brand_subtitle"
-    >Тренажёр по математике</string>
-    <string
         name="ncs_v2_comparison_rules_title"
     >Давай\nсравнивать!</string>
     <string
         name="ncs_v2_comparison_rules_instruction"
     >Выбирай знак: &lt;, = или &gt;.</string>
-    <string
-        name="ncs_v2_comparison_rules_speech"
-    >Сравни!</string>
     <string
         name="ncs_v2_comparison_rules_example_label"
     >КАК СРАВНИВАТЬ ЧИСЛА</string>

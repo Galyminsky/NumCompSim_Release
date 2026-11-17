@@ -10,12 +10,6 @@
         name="score_answers"
     >Твій рахунок: %d</string>
     <string
-        name="score_percentage"
-    >Відсоток правильних відповідей: %d</string>
-    <string
-        name="right_answers"
-    >Правильних відповідей %1$d з %2$d необхідних</string>
-    <string
         name="required_percentage"
     >Необхідний відсоток правильних відповідей: %d</string>
     <string
@@ -42,9 +36,6 @@
     <string
         name="ncs_v2_documents_description"
     >Політика конфіденційності та умови використання</string>
-    <string
-        name="ncs_v2_brand_subtitle"
-    >Тренажер складу числа</string>
     <string
         name="ncs_v2_back"
     >Назад</string>
@@ -90,12 +81,6 @@
     <string
         name="ncs_v2_coming_soon"
     >Скоро</string>
-    <string
-        name="ncs_v2_other_lessons_soon"
-    >Інші заняття ще готуються.\nА додавання вже можна спробувати!</string>
-    <string
-        name="ncs_v2_other_lessons_soon_available"
-    >Ділення ще готується.</string>
     <string
         name="ncs_v2_start_addition"
     >Розпочати додавання</string>
@@ -184,9 +169,6 @@
         name="ncs_v2_how_it_works"
     >ОСЬ ЯК ЦЕ ПРАЦЮЄ</string>
     <string
-        name="ncs_v2_addends_explanation"
-    >Два доданки разом дають суму.\nЗамість ? обери правильне число.</string>
-    <string
         name="ncs_v2_addends_first_line"
     >Два доданки разом дають суму.</string>
     <string
@@ -223,14 +205,8 @@
         name="ncs_v2_game_level_context"
     >%1$s · %2$s</string>
     <string
-        name="ncs_v2_game_time_preview"
-    >01:27</string>
-    <string
         name="ncs_v2_level_range"
     >%1$d–%2$d</string>
-    <string
-        name="ncs_v2_level_and_range"
-    >%1$s · %2$s</string>
     <string
         name="ncs_v2_level_can_reselect"
     >Рівень можна\nобрати знову.</string>
@@ -419,17 +395,11 @@
         name="ncs_v2_hub_comparison_description"
     >Порівняння. Порівняй числа та вирази</string>
     <string
-        name="ncs_v2_comparison_brand_subtitle"
-    >Тренажер з математики</string>
-    <string
         name="ncs_v2_comparison_rules_title"
     >Давай\nпорівнювати!</string>
     <string
         name="ncs_v2_comparison_rules_instruction"
     >Обирай знак: &lt;, = або &gt;.</string>
-    <string
-        name="ncs_v2_comparison_rules_speech"
-    >Порівняй!</string>
     <string
         name="ncs_v2_comparison_rules_example_label"
     >ЯК ПОРІВНЮВАТИ ЧИСЛА</string>
@@ -517,17 +487,8 @@
         name="ncs_v2_comparison_game_encouragement"
     >Продовжуй у тому ж дусі!</string>
     <string
-        name="ncs_v2_comparison_game_correct_expression_accessibility"
-    >36 поділити на 4 більше за 8</string>
-    <string
-        name="ncs_v2_comparison_game_correct_explanation"
-    >36 ÷ 4 = 9, отже 9 &gt; 8</string>
-    <string
         name="ncs_v2_comparison_result_success_description"
     >Обидві цілі досягнуто.\nТи чудово порівнюєш числа!</string>
-    <string
-        name="ncs_v2_comparison_result_failure_description"
-    >20 відповідей є — молодець!\nАле точність поки нижча за 70%.</string>
     <string
         name="ncs_v2_comparison_result_failure_dynamic"
     >Для успіху потрібно щонайменше %1$d відповідей\nі точність %2$d%%.</string>
@@ -546,15 +507,6 @@
     <string
         name="ncs_v2_comparison_result_count_label"
     >Правильно / відповіли</string>
-    <string
-        name="ncs_v2_comparison_result_minimum_met"
-    >Мінімум 15 відповідей · виконано</string>
-    <string
-        name="ncs_v2_comparison_result_accuracy_met"
-    >Потрібно 70% · мету досягнуто</string>
-    <string
-        name="ncs_v2_comparison_result_accuracy_missing"
-    >Потрібно 70% · мети ще не досягнуто</string>
     <string
         name="ncs_v2_comparison_result_retry"
     >Повторити</string>

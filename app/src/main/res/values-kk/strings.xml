@@ -10,12 +10,6 @@
         name="score_answers"
     >Сенің ұпайың: %d</string>
     <string
-        name="score_percentage"
-    >Дұрыс жауаптар пайызы: %d</string>
-    <string
-        name="right_answers"
-    >Дұрыс жауаптар: қажетті %2$d-дан %1$d</string>
-    <string
         name="required_percentage"
     >Дұрыс жауаптардың қажетті пайызы: %d</string>
     <string
@@ -42,9 +36,6 @@
     <string
         name="ncs_v2_documents_description"
     >Құпиялылық саясаты және пайдалану шарттары</string>
-    <string
-        name="ncs_v2_brand_subtitle"
-    >Сан құрамын жаттықтыру</string>
     <string
         name="ncs_v2_back"
     >Кері</string>
@@ -90,12 +81,6 @@
     <string
         name="ncs_v2_coming_soon"
     >Жуырда</string>
-    <string
-        name="ncs_v2_other_lessons_soon"
-    >Басқа сабақтар әлі дайындалуда.\nАл қосуды қазірдің өзінде байқап көруге болады!</string>
-    <string
-        name="ncs_v2_other_lessons_soon_available"
-    >Бөлу әлі дайындалуда.</string>
     <string
         name="ncs_v2_start_addition"
     >Қосуды бастау</string>
@@ -184,9 +169,6 @@
         name="ncs_v2_how_it_works"
     >БҰЛ ҚАЛАЙ ЖҰМЫС ІСТЕЙДІ</string>
     <string
-        name="ncs_v2_addends_explanation"
-    >Қосылғыштарды қосқанда қосынды шығады.\n? орнына дұрыс санды таңда.</string>
-    <string
         name="ncs_v2_addends_first_line"
     >Қосылғыштарды қосқанда қосынды шығады.</string>
     <string
@@ -223,14 +205,8 @@
         name="ncs_v2_game_level_context"
     >%1$s · %2$s</string>
     <string
-        name="ncs_v2_game_time_preview"
-    >01:27</string>
-    <string
         name="ncs_v2_level_range"
     >%1$d–%2$d</string>
-    <string
-        name="ncs_v2_level_and_range"
-    >%1$s · %2$s</string>
     <string
         name="ncs_v2_level_can_reselect"
     >Деңгейді қайтадан\nтаңдауға болады.</string>
@@ -413,17 +389,11 @@
         name="ncs_v2_hub_comparison_description"
     >Салыстыру. Сандар мен өрнектерді салыстыр</string>
     <string
-        name="ncs_v2_comparison_brand_subtitle"
-    >Математика жаттықтырғышы</string>
-    <string
         name="ncs_v2_comparison_rules_title"
     >Кел,\nсалыстырайық!</string>
     <string
         name="ncs_v2_comparison_rules_instruction"
     >Таңбаны таңда: &lt;, = немесе &gt;.</string>
-    <string
-        name="ncs_v2_comparison_rules_speech"
-    >Салыстыр!</string>
     <string
         name="ncs_v2_comparison_rules_example_label"
     >САНДАРДЫ ҚАЛАЙ САЛЫСТЫРАМЫЗ</string>
@@ -499,17 +469,8 @@
         name="ncs_v2_comparison_game_encouragement"
     >Осы қарқынмен жалғастыр!</string>
     <string
-        name="ncs_v2_comparison_game_correct_expression_accessibility"
-    >36-ны 4-ке бөлгенде шыққан сан 8-ден үлкен</string>
-    <string
-        name="ncs_v2_comparison_game_correct_explanation"
-    >36 ÷ 4 = 9, демек 9 &gt; 8</string>
-    <string
         name="ncs_v2_comparison_result_success_description"
     >Екі мақсатқа да жеттің.\nСандарды тамаша салыстырасың!</string>
-    <string
-        name="ncs_v2_comparison_result_failure_description"
-    >20 сұраққа жауап бердің — жарайсың!\nБірақ дәлдік әлі 70%-дан төмен.</string>
     <string
         name="ncs_v2_comparison_result_failure_dynamic"
     >Жетістікке кемінде %1$d жауап\nжәне %2$d%% дәлдік қажет.</string>
@@ -528,15 +489,6 @@
     <string
         name="ncs_v2_comparison_result_count_label"
     >Дұрыс / жауап берілді</string>
-    <string
-        name="ncs_v2_comparison_result_minimum_met"
-    >Кемінде 15 жауап · орындалды</string>
-    <string
-        name="ncs_v2_comparison_result_accuracy_met"
-    >70% қажет · мақсатқа жеттің</string>
-    <string
-        name="ncs_v2_comparison_result_accuracy_missing"
-    >70% қажет · әзірге жетпедің</string>
     <string
         name="ncs_v2_comparison_result_retry"
     >Қайталау</string>

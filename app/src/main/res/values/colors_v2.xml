@@ -55,27 +55,6 @@
         name="ncs_v2_success_soft"
     >#DFF6EC</color>
     <color
-        name="ncs_v2_hub_arithmetic_border"
-    >#D9CFFA</color>
-    <color
-        name="ncs_v2_hub_comparison_surface"
-    >#E0F7F0</color>
-    <color
-        name="ncs_v2_hub_comparison_border"
-    >#BAE0D1</color>
-    <color
-        name="ncs_v2_hub_comparison_ink"
-    >#2F976C</color>
-    <color
-        name="ncs_v2_hub_future_border"
-    >#E3DBED</color>
-    <color
-        name="ncs_v2_comparison_expression_border"
-    >#CCBAFA</color>
-    <color
-        name="ncs_v2_comparison_correct_border"
-    >#237E5B</color>
-    <color
         name="ncs_v2_expression_ink"
     >#292647</color>
     <color
