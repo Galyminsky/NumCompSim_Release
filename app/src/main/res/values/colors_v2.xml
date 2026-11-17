@@ -12,4 +12,11 @@
     <color name="ncs_v2_warm_ink">#93601F</color>
     <color name="ncs_v2_success">#21765A</color>
     <color name="ncs_v2_success_soft">#EAF6EE</color>
+    <color name="ncs_v2_hub_arithmetic_border">#D9CFFA</color>
+    <color name="ncs_v2_hub_comparison_surface">#E0F7F0</color>
+    <color name="ncs_v2_hub_comparison_border">#BAE0D1</color>
+    <color name="ncs_v2_hub_comparison_ink">#2F976C</color>
+    <color name="ncs_v2_hub_future_border">#E3DBED</color>
+    <color name="ncs_v2_comparison_expression_border">#CCBAFA</color>
+    <color name="ncs_v2_comparison_correct_border">#237E5B</color>
 </resources>

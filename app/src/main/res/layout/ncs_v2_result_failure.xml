@@ -4,6 +4,7 @@
 
     <data>
         <variable name="levelLabel" type="String" />
+        <variable name="failureDescription" type="String" />
         <variable name="correctAnswerText" type="String" />
         <variable name="accuracyText" type="String" />
         <variable name="countTargetText" type="String" />
@@ -100,7 +101,7 @@
                     android:includeFontPadding="false"
                     android:lineHeight="22dp"
                     android:minHeight="44dp"
-                    android:text="@string/ncs_v2_result_failure_description_static"
+                    android:text="@{failureDescription}"
                     android:textColor="@color/ncs_v2_muted"
                     android:textSize="@dimen/ncs_v2_text_17" />
 

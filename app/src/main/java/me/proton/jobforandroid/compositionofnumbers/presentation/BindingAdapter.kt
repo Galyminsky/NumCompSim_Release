@@ -8,8 +8,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import me.proton.jobforandroid.compositionofnumbers.R
-import me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult
-import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
 
 @BindingAdapter("requiredAnswers")
 fun bindRequiredAnswers(textView: TextView, count: Int) {
@@ -38,14 +36,6 @@ fun bindRequiredPercentage(textView: TextView, count: Int) {
     )
 }
 
-@BindingAdapter("scorePercentage")
-fun bindScorePercentage(textView: TextView, gameResult: GameResult) {
-    textView.text = String.format(
-        textView.resources.configuration.locales[0],
-        textView.context.getString(R.string.score_percentage),
-        calculatePercentOfRightAnswers(gameResult.countOfRightAnswers, gameResult.countOfQuestions)
-    )
-}
 @BindingAdapter("resultEmoji")
 fun bindResultEmoji(imageView: ImageView, winner: Boolean) {
     imageView.setImageResource(getSmileResId(winner))
@@ -77,22 +67,5 @@ private fun getColorByState(context: Context, goodState: Boolean): Int {
 @BindingAdapter("numberAsText")
 fun bindNumberAsText(textView: TextView, number: Int) {
     textView.text = number.toString()
-}
-@BindingAdapter(value = ["onOptionClickListener", "questionForOption", "optionIndex"], requireAll = true)
-fun bindOnOptionClickListener(
-    textView: TextView,
-    viewModel: GameViewModel?,
-    question: Question?,
-    optionIndex: Int
-) {
-    val option = question?.options?.getOrNull(optionIndex)
-    textView.text = option?.toString().orEmpty()
-    if (viewModel != null && question != null && option != null) {
-        textView.setOnClickListener {
-            viewModel.chooseAnswer(question, option)
-        }
-    } else {
-        textView.setOnClickListener(null)
-    }
 }
 

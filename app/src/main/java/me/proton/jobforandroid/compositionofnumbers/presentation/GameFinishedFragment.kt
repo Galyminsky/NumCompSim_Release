@@ -10,7 +10,24 @@ import androidx.navigation.fragment.navArgs
 import me.proton.jobforandroid.compositionofnumbers.R
 import me.proton.jobforandroid.compositionofnumbers.databinding.NcsV2ResultFailureBinding
 import me.proton.jobforandroid.compositionofnumbers.databinding.NcsV2ResultSuccessBinding
+import me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
+
+internal enum class ArithmeticFailureReason { COUNT, ACCURACY, BOTH }
+
+internal fun arithmeticFailureReason(result: GameResult): ArithmeticFailureReason {
+    val settings = result.gameSettings
+    val countMet = result.countOfRightAnswers >= settings.minCountOfRightAnswers
+    val accuracyMet = calculatePercentOfRightAnswers(
+        result.countOfRightAnswers, result.countOfQuestions
+    ) >= settings.minPercentOfRightAnswers
+    return when {
+        !countMet && !accuracyMet -> ArithmeticFailureReason.BOTH
+        !countMet -> ArithmeticFailureReason.COUNT
+        !accuracyMet -> ArithmeticFailureReason.ACCURACY
+        else -> error("A failed game result must have an unmet goal")
+    }
+}
 
 class GameFinishedFragment : Fragment() {
     private val args by navArgs<GameFinishedFragmentArgs>()
@@ -70,6 +87,20 @@ class GameFinishedFragment : Fragment() {
             )
             val hasCountGoal = result.countOfRightAnswers >= requiredCount
             val hasAccuracyGoal = accuracy >= requiredAccuracy
+            failureDescription = when (arithmeticFailureReason(result)) {
+                ArithmeticFailureReason.COUNT -> getString(
+                    R.string.ncs_v2_result_failure_count_description,
+                    requiredCount, result.countOfRightAnswers
+                )
+                ArithmeticFailureReason.ACCURACY -> getString(
+                    R.string.ncs_v2_result_failure_accuracy_description,
+                    requiredAccuracy, accuracy
+                )
+                ArithmeticFailureReason.BOTH -> resources.getQuantityString(
+                    R.plurals.ncs_v2_result_failure_both_description,
+                    requiredCount, requiredCount, requiredAccuracy
+                )
+            }
             levelLabel = getString(levelNameResId(args.level))
             correctAnswerText = result.countOfRightAnswers.toString()
             accuracyText = getString(R.string.ncs_v2_percentage, accuracy)

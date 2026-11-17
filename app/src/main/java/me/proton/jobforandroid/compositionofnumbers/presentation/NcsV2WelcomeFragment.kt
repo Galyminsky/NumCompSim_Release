@@ -42,7 +42,7 @@ class NcsV2WelcomeFragment : Fragment() {
             val navController = findNavController()
             if (navController.currentDestination?.id == R.id.ncsV2WelcomeFragment) {
                 sounds?.play(R.raw.key_press)
-                navController.navigate(R.id.action_ncsV2WelcomeFragment_to_ncsV2LessonSelectionFragment)
+                navController.navigate(R.id.action_ncsV2WelcomeFragment_to_mainHubFragment)
             }
         }
         binding.ncsV2DocumentsButton.setOnClickListener { showDocuments() }

@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import me.proton.jobforandroid.compositionofnumbers.R
-import me.proton.jobforandroid.compositionofnumbers.data.GameRepositoryImpl
 import me.proton.jobforandroid.compositionofnumbers.databinding.NcsV2LevelSelectionBinding
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
 import me.proton.jobforandroid.compositionofnumbers.domain.entity.Question
@@ -24,7 +23,9 @@ class ChooseLevelFragment : Fragment() {
     private val args by navArgs<ChooseLevelFragmentArgs>()
     private var _binding: NcsV2LevelSelectionBinding? = null
     private val binding get() = _binding!!
-    private val getGameSettings = GetGameSettingsUseCase(GameRepositoryImpl)
+    private val getGameSettings by lazy {
+        GetGameSettingsUseCase((requireActivity() as MainActivity).gameRepository)
+    }
     private var selectedLevel = Level.TEST
     private var sounds: UiSoundPool? = null
     private var animatedCard: View? = null
@@ -87,13 +88,7 @@ class ChooseLevelFragment : Fragment() {
     private fun levelRange(level: Level): String =
         if (args.operation == Question.Operation.MULTIPLICATION.name ||
             args.operation == Question.Operation.DIVISION.name) {
-            val maxFactor = when (level) {
-                Level.TEST -> 3
-                Level.EASY -> 5
-                Level.NORMAL -> 10
-                Level.HARD -> 12
-            }
-            getString(R.string.ncs_v2_level_range, 1, maxFactor)
+            getString(R.string.ncs_v2_level_range, 1, level.maxFactor)
         } else {
             getString(R.string.ncs_v2_level_range, 0, getGameSettings(level).maxSumValue)
         }
