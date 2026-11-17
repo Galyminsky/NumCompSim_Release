@@ -165,5 +165,5 @@ internal fun calculatePercentOfRightAnswers(countOfRightAnswers: Int, countOfQue
     if (countOfQuestions == 0) {
         return 0
     }
-    return ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
+    return (countOfRightAnswers.toLong() * 100 / countOfQuestions).toInt()
 }
