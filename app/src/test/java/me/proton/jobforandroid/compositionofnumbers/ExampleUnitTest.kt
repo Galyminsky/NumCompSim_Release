@@ -17,6 +17,12 @@ class ExampleUnitTest {
     }
 
     @Test
+    fun answerPercentagePreservesExactPercentagesWithoutOverflow() {
+        assertEquals(58, calculatePercentOfRightAnswers(29, 50))
+        assertEquals(100, calculatePercentOfRightAnswers(Int.MAX_VALUE, Int.MAX_VALUE))
+    }
+
+    @Test
     fun answerPercentageUsesZeroForNoAnswersAndTruncatesFractions() {
         assertEquals(0, calculatePercentOfRightAnswers(0, 0))
         assertEquals(0, calculatePercentOfRightAnswers(0, 3))

@@ -22,3 +22,4 @@
 # Navigation XML resolves these argument types by fully qualified class name.
 -keepnames class me.proton.jobforandroid.compositionofnumbers.domain.entity.Level
 -keepnames class me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult
+-keepnames class me.proton.jobforandroid.compositionofnumbers.domain.entity.ComparisonLevel

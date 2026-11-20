@@ -1,16 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml
+    version="1.0"
+    encoding="utf-8"
+?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ncs_v2_panel"
     android:orientation="vertical"
-    android:padding="@dimen/ncs_v2_space_16">
-
+    android:padding="@dimen/ncs_v2_space_16"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+    >
         <TextView
             android:id="@+id/ncs_v2_privacy_tab"
             style="@style/NcsV2.View.TouchTarget"
@@ -24,8 +32,8 @@
             android:padding="@dimen/ncs_v2_space_8"
             android:text="@string/ncs_v2_privacy_policy_title"
             android:textColor="@color/ncs_v2_primary"
-            android:textSize="@dimen/ncs_v2_text_14" />
-
+            android:textSize="@dimen/ncs_v2_text_14"
+        />
         <TextView
             android:id="@+id/ncs_v2_terms_tab"
             style="@style/NcsV2.View.TouchTarget"
@@ -39,9 +47,9 @@
             android:padding="@dimen/ncs_v2_space_8"
             android:text="@string/ncs_v2_terms_title"
             android:textColor="@color/ncs_v2_muted"
-            android:textSize="@dimen/ncs_v2_text_14" />
+            android:textSize="@dimen/ncs_v2_text_14"
+        />
     </LinearLayout>
-
     <ScrollView
         android:id="@+id/ncs_v2_document_scroll"
         android:layout_width="match_parent"
@@ -49,19 +57,23 @@
         android:layout_weight="1"
         android:layout_marginTop="@dimen/ncs_v2_space_12"
         android:fillViewport="false"
-        android:overScrollMode="ifContentScrolls">
-
+        android:overScrollMode="ifContentScrolls"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+    >
         <TextView
             android:id="@+id/ncs_v2_document_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ncs_v2_nunito_semibold"
             android:lineSpacingMultiplier="1.3"
-            android:paddingBottom="@dimen/ncs_v2_space_16"
+            android:paddingBottom="@dimen/ncs_v2_space_12"
             android:textColor="@color/ncs_v2_ink"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:paddingTop="@dimen/ncs_v2_space_12"
+        />
     </ScrollView>
-
     <TextView
         android:id="@+id/ncs_v2_document_close_button"
         style="@style/NcsV2.View.Action"
@@ -75,5 +87,6 @@
         android:gravity="center"
         android:text="@string/ncs_v2_document_close"
         android:textColor="@color/ncs_v2_surface"
-        android:textSize="@dimen/ncs_v2_text_20" />
+        android:textSize="@dimen/ncs_v2_text_20"
+    />
 </LinearLayout>

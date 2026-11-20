@@ -1,22 +1,63 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml
+    version="1.0"
+    encoding="utf-8"
+?>
 <resources>
-    <color name="ncs_v2_primary">#6950D8</color>
-    <color name="ncs_v2_primary_pressed">#5038B5</color>
-    <color name="ncs_v2_selected">#F0EBFF</color>
-    <color name="ncs_v2_ink">#292647</color>
-    <color name="ncs_v2_muted">#716D88</color>
-    <color name="ncs_v2_border">#DED8ED</color>
-    <color name="ncs_v2_paper">#FFFEFA</color>
-    <color name="ncs_v2_surface">#FFFFFF</color>
-    <color name="ncs_v2_warm">#FFF3DA</color>
-    <color name="ncs_v2_warm_ink">#93601F</color>
-    <color name="ncs_v2_success">#21765A</color>
-    <color name="ncs_v2_success_soft">#EAF6EE</color>
-    <color name="ncs_v2_hub_arithmetic_border">#D9CFFA</color>
-    <color name="ncs_v2_hub_comparison_surface">#E0F7F0</color>
-    <color name="ncs_v2_hub_comparison_border">#BAE0D1</color>
-    <color name="ncs_v2_hub_comparison_ink">#2F976C</color>
-    <color name="ncs_v2_hub_future_border">#E3DBED</color>
-    <color name="ncs_v2_comparison_expression_border">#CCBAFA</color>
-    <color name="ncs_v2_comparison_correct_border">#237E5B</color>
+    <color
+        name="ncs_v2_primary"
+    >#0755B8</color>
+    <color
+        name="ncs_v2_orange"
+    >#F58A00</color>
+    <color
+        name="ncs_v2_yellow"
+    >#FFB900</color>
+    <color
+        name="ncs_v2_primary_pressed"
+    >#0755B8</color>
+    <color
+        name="ncs_v2_selected"
+    >#E8F2FF</color>
+    <color
+        name="ncs_v2_ink"
+    >#292522</color>
+    <color
+        name="ncs_v2_muted"
+    >#716C68</color>
+    <color
+        name="ncs_v2_border"
+    >#E6EAF0</color>
+    <color
+        name="ncs_v2_paper"
+    >#F7F9FC</color>
+    <color
+        name="ncs_v2_surface"
+    >#FFFFFF</color>
+    <color
+        name="ncs_v2_warm"
+    >#FFF2DC</color>
+    <color
+        name="ncs_v2_error"
+    >#C9323A</color>
+    <color
+        name="ncs_v2_disabled"
+    >#F0F2F5</color>
+    <color
+        name="ncs_v2_operation_add"
+    >#6950D8</color>
+    <color
+        name="ncs_v2_warm_ink"
+    >#93601F</color>
+    <color
+        name="ncs_v2_success"
+    >#21765A</color>
+    <color
+        name="ncs_v2_success_soft"
+    >#DFF6EC</color>
+    <color
+        name="ncs_v2_expression_ink"
+    >#292647</color>
+    <color
+        name="ncs_v2_brand_subtitle_ink"
+    >#716D88</color>
 </resources>

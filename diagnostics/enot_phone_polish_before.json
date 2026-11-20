@@ -1,0 +1,1506 @@
+{
+  "ncs_v2_addition_intro.xml": {
+    "ids": [
+      "@+id/ncs_v2_ready_button"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_answer_item.xml": {
+    "ids": [
+      "@+id/ncs_v2_answer_root",
+      "@+id/ncs_v2_answer_value",
+      "@+id/ncs_v2_answer_status"
+    ],
+    "variables": [
+      {
+        "name": "answerValue",
+        "type": "int"
+      },
+      {
+        "name": "enabled",
+        "type": "boolean"
+      },
+      {
+        "name": "pressed",
+        "type": "boolean"
+      },
+      {
+        "name": "correct",
+        "type": "boolean"
+      },
+      {
+        "name": "incorrect",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:background",
+        "v": "@{correct ? @drawable/ncs_v2_answer_correct : incorrect ? @drawable/ncs_v2_answer_wrong : @drawable/ncs_v2_answer_card}"
+      },
+      {
+        "k": "android:enabled",
+        "v": "@{enabled}"
+      },
+      {
+        "k": "android:pressed",
+        "v": "@{pressed}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{correct || incorrect ? @color/ncs_v2_surface : @color/ncs_v2_ink}"
+      },
+      {
+        "k": "app:numberAsText",
+        "v": "@{answerValue}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{incorrect ? @string/ncs_v2_wrong_badge : correct ? @string/ncs_v2_correct_badge : @string/ncs_v2_pressed}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{incorrect || correct ? View.VISIBLE : View.GONE}"
+      }
+    ]
+  },
+  "ncs_v2_brand_header.xml": {
+    "ids": [],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_comparison_game.xml": {
+    "ids": [
+      "@+id/ncs_v2_comparison_game_back_button",
+      "@+id/ncs_v2_comparison_game_context",
+      "@+id/ncs_v2_comparison_game_title",
+      "@+id/ncs_v2_comparison_expression_card",
+      "@+id/ncs_v2_comparison_expression_row",
+      "@+id/ncs_v2_comparison_expression_left",
+      "@+id/ncs_v2_comparison_expression_sign",
+      "@+id/ncs_v2_comparison_expression_right",
+      "@+id/ncs_v2_comparison_game_instruction",
+      "@+id/ncs_v2_comparison_answer_row",
+      "@+id/ncs_v2_comparison_less_button",
+      "@+id/ncs_v2_comparison_equal_button",
+      "@+id/ncs_v2_comparison_greater_button",
+      "@+id/ncs_v2_comparison_feedback_row",
+      "@+id/ncs_v2_comparison_correct_indicator",
+      "@+id/ncs_v2_comparison_feedback_text",
+      "@+id/ncs_v2_comparison_stats_row",
+      "@+id/ncs_v2_comparison_game_stats_value",
+      "@+id/ncs_v2_comparison_game_minimum",
+      "@+id/ncs_v2_comparison_game_time_value",
+      "@+id/ncs_v2_comparison_progress_track",
+      "@+id/ncs_v2_comparison_progress_fill",
+      "@+id/ncs_v2_comparison_game_illustration",
+      "@+id/ncs_v2_comparison_game_hint"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_comparison_level.xml": {
+    "ids": [
+      "@+id/ncs_v2_comparison_level_toolbar",
+      "@+id/ncs_v2_comparison_level_back_button",
+      "@+id/ncs_v2_comparison_level_heading",
+      "@+id/ncs_v2_comparison_test_level",
+      "@+id/ncs_v2_comparison_easy_level",
+      "@+id/ncs_v2_comparison_normal_level",
+      "@+id/ncs_v2_comparison_hard_level",
+      "@+id/ncs_v2_comparison_level_start_button"
+    ],
+    "variables": [
+      {
+        "name": "selectedLevel",
+        "type": "ComparisonLevel"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_comparison_test_detail}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_test}"
+      },
+      {
+        "k": "app:selected",
+        "v": "@{selectedLevel == ComparisonLevel.TEST}"
+      },
+      {
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_test_level}"
+      },
+      {
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_comparison_easy_detail}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_easy}"
+      },
+      {
+        "k": "app:selected",
+        "v": "@{selectedLevel == ComparisonLevel.EASY}"
+      },
+      {
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_easy_level}"
+      },
+      {
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_comparison_normal_detail}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_medium}"
+      },
+      {
+        "k": "app:selected",
+        "v": "@{selectedLevel == ComparisonLevel.NORMAL}"
+      },
+      {
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_medium_level}"
+      },
+      {
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_comparison_hard_detail}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_hard}"
+      },
+      {
+        "k": "app:selected",
+        "v": "@{selectedLevel == ComparisonLevel.HARD}"
+      },
+      {
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_hard_level}"
+      }
+    ]
+  },
+  "ncs_v2_comparison_result.xml": {
+    "ids": [
+      "@+id/ncs_v2_comparison_result_face",
+      "@+id/ncs_v2_comparison_result_count_metric",
+      "@+id/ncs_v2_comparison_result_accuracy_metric",
+      "@+id/ncs_v2_comparison_result_retry_button",
+      "@+id/ncs_v2_comparison_result_choose_level_button"
+    ],
+    "variables": [
+      {
+        "name": "success",
+        "type": "boolean"
+      },
+      {
+        "name": "levelLabel",
+        "type": "String"
+      },
+      {
+        "name": "descriptionText",
+        "type": "String"
+      },
+      {
+        "name": "countText",
+        "type": "String"
+      },
+      {
+        "name": "accuracyText",
+        "type": "String"
+      },
+      {
+        "name": "minimumAchieved",
+        "type": "boolean"
+      },
+      {
+        "name": "accuracyAchieved",
+        "type": "boolean"
+      },
+      {
+        "name": "minimumStatusText",
+        "type": "String"
+      },
+      {
+        "name": "accuracyStatusText",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{levelLabel}"
+      },
+      {
+        "k": "android:src",
+        "v": "@{success ? @drawable/raccoon_success : @drawable/raccoon_failure}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{success ? @string/ncs_v2_result_success_title : @string/ncs_v2_result_failure_title}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{descriptionText}"
+      },
+      {
+        "k": "app:achieved",
+        "v": "@{minimumAchieved}"
+      },
+      {
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_comparison_result_count_label}"
+      },
+      {
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "k": "app:targetStatusText",
+        "v": "@{minimumStatusText}"
+      },
+      {
+        "k": "app:valueText",
+        "v": "@{countText}"
+      },
+      {
+        "k": "app:achieved",
+        "v": "@{accuracyAchieved}"
+      },
+      {
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_accuracy}"
+      },
+      {
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "k": "app:targetStatusText",
+        "v": "@{accuracyStatusText}"
+      },
+      {
+        "k": "app:valueText",
+        "v": "@{accuracyText}"
+      },
+      {
+        "k": "android:src",
+        "v": "@{success ? @drawable/raccoon_happy : @drawable/raccoon_thinking}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{success ? View.VISIBLE : View.GONE}"
+      }
+    ]
+  },
+  "ncs_v2_comparison_rules.xml": {
+    "ids": [
+      "@+id/ncs_v2_comparison_rules_ready_button"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_division_intro.xml": {
+    "ids": [
+      "@+id/ncs_v2_ready_button"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_documents_dialog.xml": {
+    "ids": [
+      "@+id/ncs_v2_privacy_tab",
+      "@+id/ncs_v2_terms_tab",
+      "@+id/ncs_v2_document_scroll",
+      "@+id/ncs_v2_document_body",
+      "@+id/ncs_v2_document_close_button"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_equation_item.xml": {
+    "ids": [
+      "@+id/ncs_v2_equation_root",
+      "@+id/ncs_v2_equation_sum",
+      "@+id/ncs_v2_equation_equals",
+      "@+id/ncs_v2_equation_known",
+      "@+id/ncs_v2_equation_plus",
+      "@+id/ncs_v2_equation_missing"
+    ],
+    "variables": [
+      {
+        "name": "question",
+        "type": "me.proton.jobforandroid.compositionofnumbers.domain.entity.Question"
+      },
+      {
+        "name": "sum",
+        "type": "int"
+      },
+      {
+        "name": "known",
+        "type": "int"
+      },
+      {
+        "name": "missingText",
+        "type": "String"
+      },
+      {
+        "name": "solved",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:visibility",
+        "v": "@{question.operation == Operation.ADDITION ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "app:numberAsText",
+        "v": "@{sum}"
+      },
+      {
+        "k": "app:numberAsText",
+        "v": "@{known}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{solved ? missingText : @string/ncs_v2_math_question_mark}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{question.operation == Operation.SUBTRACTION || question.operation == Operation.MULTIPLICATION || question.operation == Operation.DIVISION ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "app:numberAsText",
+        "v": "@{question.firstOperand}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{question.operation == Operation.MULTIPLICATION ? @string/ncs_v2_math_multiply : question.operation == Operation.DIVISION ? @string/ncs_v2_math_divide : @string/ncs_v2_math_minus}"
+      },
+      {
+        "k": "android:background",
+        "v": "@{question.unknownPosition == UnknownPosition.SECOND_OPERAND ? @drawable/ncs_v2_equation_slot : null}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{!solved && question.unknownPosition == UnknownPosition.SECOND_OPERAND ? @string/ncs_v2_math_question_mark : question.secondOperand + ``}"
+      },
+      {
+        "k": "android:background",
+        "v": "@{question.unknownPosition == UnknownPosition.RESULT ? @drawable/ncs_v2_equation_slot : null}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{!solved && question.unknownPosition == UnknownPosition.RESULT ? @string/ncs_v2_math_question_mark : question.result + ``}"
+      }
+    ]
+  },
+  "ncs_v2_feedback_item.xml": {
+    "ids": [
+      "@+id/ncs_v2_feedback_root",
+      "@+id/ncs_v2_feedback_indicator",
+      "@+id/ncs_v2_feedback_symbol",
+      "@+id/ncs_v2_feedback_message"
+    ],
+    "variables": [
+      {
+        "name": "question",
+        "type": "me.proton.jobforandroid.compositionofnumbers.domain.entity.Question"
+      },
+      {
+        "name": "correct",
+        "type": "boolean"
+      },
+      {
+        "name": "incorrect",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:background",
+        "v": "@{correct ? @drawable/ncs_v2_indicator_success : incorrect ? @drawable/ncs_v2_indicator_attention : @drawable/ncs_v2_indicator_neutral}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{correct ? @string/ncs_v2_checkmark : incorrect ? @string/ncs_v2_math_multiply : @string/ncs_v2_level_marker_easy}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{correct ? @color/ncs_v2_muted : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{correct ? (question.operation == Operation.ADDITION ? @string/ncs_v2_answer_correct(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.SUBTRACTION ? @string/ncs_v2_subtraction_answer_correct(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.MULTIPLICATION ? @string/ncs_v2_multiplication_answer_correct(question.firstOperand, question.secondOperand, question.result) : @string/ncs_v2_division_answer_correct(question.firstOperand, question.secondOperand, question.result)) : incorrect ? (question.operation == Operation.ADDITION ? @string/ncs_v2_answer_wrong(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.SUBTRACTION ? @string/ncs_v2_subtraction_answer_wrong(question.firstOperand, question.secondOperand, question.result) : question.operation == Operation.MULTIPLICATION ? @string/ncs_v2_multiplication_answer_wrong(question.firstOperand, question.secondOperand, question.result) : @string/ncs_v2_division_answer_wrong(question.firstOperand, question.secondOperand, question.result)) : @string/ncs_v2_tap_correct_number}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{correct ? @color/ncs_v2_muted : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+      }
+    ]
+  },
+  "ncs_v2_game.xml": {
+    "ids": [
+      "@+id/ncs_v2_game_back_button",
+      "@+id/ncs_v2_game_equation",
+      "@+id/ncs_v2_game_answer_1",
+      "@+id/ncs_v2_game_answer_2",
+      "@+id/ncs_v2_game_answer_3",
+      "@+id/ncs_v2_game_answer_4",
+      "@+id/ncs_v2_game_answer_5",
+      "@+id/ncs_v2_game_answer_6",
+      "@+id/ncs_v2_game_feedback",
+      "@+id/ncs_v2_game_progress",
+      "@+id/ncs_v2_game_timer"
+    ],
+    "variables": [
+      {
+        "name": "viewModel",
+        "type": "me.proton.jobforandroid.compositionofnumbers.presentation.GameViewModel"
+      },
+      {
+        "name": "displayedQuestion",
+        "type": "me.proton.jobforandroid.compositionofnumbers.domain.entity.Question"
+      },
+      {
+        "name": "selectedOptionIndex",
+        "type": "int"
+      },
+      {
+        "name": "feedbackVisible",
+        "type": "boolean"
+      },
+      {
+        "name": "feedbackCorrect",
+        "type": "boolean"
+      },
+      {
+        "name": "levelContext",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{levelContext}"
+      },
+      {
+        "k": "app:known",
+        "v": "@{displayedQuestion.visibleNumber}"
+      },
+      {
+        "k": "app:missingText",
+        "v": "@{displayedQuestion.rightAnswer + ``}"
+      },
+      {
+        "k": "app:question",
+        "v": "@{displayedQuestion}"
+      },
+      {
+        "k": "app:solved",
+        "v": "@{feedbackVisible}"
+      },
+      {
+        "k": "app:sum",
+        "v": "@{displayedQuestion.sum}"
+      },
+      {
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[0]}"
+      },
+      {
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 0}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 0}"
+      },
+      {
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 0}"
+      },
+      {
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[1]}"
+      },
+      {
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 1}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 1}"
+      },
+      {
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 1}"
+      },
+      {
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[2]}"
+      },
+      {
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 2}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 2}"
+      },
+      {
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 2}"
+      },
+      {
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[3]}"
+      },
+      {
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 3}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 3}"
+      },
+      {
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 3}"
+      },
+      {
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[4]}"
+      },
+      {
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 4}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 4}"
+      },
+      {
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 4}"
+      },
+      {
+        "k": "app:answerValue",
+        "v": "@{displayedQuestion.options[5]}"
+      },
+      {
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect && selectedOptionIndex == 5}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{!feedbackVisible}"
+      },
+      {
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect && selectedOptionIndex == 5}"
+      },
+      {
+        "k": "app:pressed",
+        "v": "@{feedbackVisible && selectedOptionIndex == 5}"
+      },
+      {
+        "k": "app:correct",
+        "v": "@{feedbackVisible && feedbackCorrect}"
+      },
+      {
+        "k": "app:incorrect",
+        "v": "@{feedbackVisible && !feedbackCorrect}"
+      },
+      {
+        "k": "app:question",
+        "v": "@{displayedQuestion}"
+      },
+      {
+        "k": "app:correctAnswers",
+        "v": "@{viewModel.correctAnswers}"
+      },
+      {
+        "k": "app:requiredAnswers",
+        "v": "@{viewModel.requiredAnswers}"
+      },
+      {
+        "k": "app:formattedTime",
+        "v": "@{viewModel.formattedTime}"
+      },
+      {
+        "k": "app:urgent",
+        "v": "@{viewModel.timeUrgent}"
+      }
+    ]
+  },
+  "ncs_v2_hub_future_card.xml": {
+    "ids": [],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_lesson_item.xml": {
+    "ids": [
+      "@+id/ncs_v2_lesson_symbol_container"
+    ],
+    "variables": [
+      {
+        "name": "available",
+        "type": "boolean"
+      },
+      {
+        "name": "paletteSelected",
+        "type": "boolean"
+      },
+      {
+        "name": "paletteActivated",
+        "type": "boolean"
+      },
+      {
+        "name": "expanded",
+        "type": "boolean"
+      },
+      {
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "name": "symbol",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:background",
+        "v": "@{expanded ? @drawable/ncs_v2_lesson_card : @drawable/ncs_v2_panel}"
+      },
+      {
+        "k": "android:selected",
+        "v": "@{paletteSelected}"
+      },
+      {
+        "k": "android:activated",
+        "v": "@{paletteActivated}"
+      },
+      {
+        "k": "android:enabled",
+        "v": "@{available}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{expanded ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "android:enabled",
+        "v": "@{available}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{symbol}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{available ? @color/ncs_v2_surface : @color/ncs_v2_muted}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{title}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{available ? @color/ncs_v2_ink : @color/ncs_v2_muted}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{available ? @string/ncs_v2_can_play : @string/ncs_v2_coming_soon}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{available ? (paletteSelected ? (paletteActivated ? @color/holo_orange_light : @color/ncs_v2_primary) : (paletteActivated ? @color/ncs_v2_success : @color/light_red)) : @color/ncs_v2_warm_ink}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{expanded ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{description}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{expanded ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{available ? View.GONE : View.VISIBLE}"
+      }
+    ]
+  },
+  "ncs_v2_lesson_selection.xml": {
+    "ids": [
+      "@+id/ncs_v2_back_button",
+      "@+id/ncs_v2_addition_item",
+      "@+id/ncs_v2_subtraction_item",
+      "@+id/ncs_v2_multiplication_item",
+      "@+id/ncs_v2_division_item",
+      "@+id/ncs_v2_start_addition_button"
+    ],
+    "variables": [
+      {
+        "name": "selectedOperation",
+        "type": "Operation"
+      },
+      {
+        "name": "startButtonText",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{selectedOperation == Operation.ADDITION ? @string/ncs_v2_addition_intro : selectedOperation == Operation.SUBTRACTION ? @string/ncs_v2_subtraction_selection_intro : selectedOperation == Operation.MULTIPLICATION ? @string/ncs_v2_multiplication_selection_intro : @string/ncs_v2_division_selection_intro}"
+      },
+      {
+        "k": "app:available",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_find_number_part}"
+      },
+      {
+        "k": "app:expanded",
+        "v": "@{selectedOperation == Operation.ADDITION}"
+      },
+      {
+        "k": "app:paletteSelected",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:paletteActivated",
+        "v": "@{false}"
+      },
+      {
+        "k": "app:symbol",
+        "v": "@{@string/ncs_v2_math_plus}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_addition}"
+      },
+      {
+        "k": "app:available",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_subtraction_selection_description}"
+      },
+      {
+        "k": "app:expanded",
+        "v": "@{selectedOperation == Operation.SUBTRACTION}"
+      },
+      {
+        "k": "app:paletteSelected",
+        "v": "@{false}"
+      },
+      {
+        "k": "app:paletteActivated",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:symbol",
+        "v": "@{@string/ncs_v2_math_minus}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_subtraction}"
+      },
+      {
+        "k": "app:available",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_multiplication_selection_description}"
+      },
+      {
+        "k": "app:expanded",
+        "v": "@{selectedOperation == Operation.MULTIPLICATION}"
+      },
+      {
+        "k": "app:paletteSelected",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:paletteActivated",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:symbol",
+        "v": "@{@string/ncs_v2_math_multiply}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_multiplication}"
+      },
+      {
+        "k": "app:available",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:description",
+        "v": "@{@string/ncs_v2_division_selection_description}"
+      },
+      {
+        "k": "app:expanded",
+        "v": "@{selectedOperation == Operation.DIVISION}"
+      },
+      {
+        "k": "app:paletteSelected",
+        "v": "@{false}"
+      },
+      {
+        "k": "app:paletteActivated",
+        "v": "@{false}"
+      },
+      {
+        "k": "app:symbol",
+        "v": "@{@string/ncs_v2_math_divide}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_division}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{startButtonText}"
+      }
+    ]
+  },
+  "ncs_v2_level_item.xml": {
+    "ids": [],
+    "variables": [
+      {
+        "name": "title",
+        "type": "String"
+      },
+      {
+        "name": "marker",
+        "type": "String"
+      },
+      {
+        "name": "description",
+        "type": "String"
+      },
+      {
+        "name": "showDescription",
+        "type": "boolean"
+      },
+      {
+        "name": "selected",
+        "type": "boolean"
+      },
+      {
+        "name": "enabled",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:enabled",
+        "v": "@{enabled}"
+      },
+      {
+        "k": "android:selected",
+        "v": "@{selected}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{marker}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{enabled ? @color/ncs_v2_primary : @color/ncs_v2_muted}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{title}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{enabled ? @color/ncs_v2_ink : @color/ncs_v2_muted}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{enabled ? description : @string/ncs_v2_unavailable}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{showDescription ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "android:enabled",
+        "v": "@{enabled}"
+      },
+      {
+        "k": "android:selected",
+        "v": "@{selected}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{enabled ? @string/ncs_v2_checkmark : @string/ncs_v2_math_minus}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{enabled ? @color/ncs_v2_surface : @color/ncs_v2_muted}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{selected || !enabled ? View.VISIBLE : View.INVISIBLE}"
+      }
+    ]
+  },
+  "ncs_v2_level_selection.xml": {
+    "ids": [
+      "@+id/ncs_v2_back_button",
+      "@+id/ncs_v2_test_level_item",
+      "@+id/ncs_v2_easy_level_item",
+      "@+id/ncs_v2_medium_level_item",
+      "@+id/ncs_v2_hard_level_item",
+      "@+id/ncs_v2_start_game_button"
+    ],
+    "variables": [
+      {
+        "name": "selectedLevel",
+        "type": "Level"
+      },
+      {
+        "name": "testRange",
+        "type": "String"
+      },
+      {
+        "name": "showTestRange",
+        "type": "boolean"
+      },
+      {
+        "name": "easyRange",
+        "type": "String"
+      },
+      {
+        "name": "normalRange",
+        "type": "String"
+      },
+      {
+        "name": "hardRange",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:description",
+        "v": "@{testRange}"
+      },
+      {
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_test}"
+      },
+      {
+        "k": "app:selected",
+        "v": "@{selectedLevel == Level.TEST}"
+      },
+      {
+        "k": "app:showDescription",
+        "v": "@{showTestRange}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_test_level}"
+      },
+      {
+        "k": "app:description",
+        "v": "@{easyRange}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_easy}"
+      },
+      {
+        "k": "app:selected",
+        "v": "@{selectedLevel == Level.EASY}"
+      },
+      {
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_easy_level}"
+      },
+      {
+        "k": "app:description",
+        "v": "@{normalRange}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_medium}"
+      },
+      {
+        "k": "app:selected",
+        "v": "@{selectedLevel == Level.NORMAL}"
+      },
+      {
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_medium_level}"
+      },
+      {
+        "k": "app:description",
+        "v": "@{hardRange}"
+      },
+      {
+        "k": "app:enabled",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:marker",
+        "v": "@{@string/ncs_v2_level_marker_hard}"
+      },
+      {
+        "k": "app:selected",
+        "v": "@{selectedLevel == Level.HARD}"
+      },
+      {
+        "k": "app:showDescription",
+        "v": "@{true}"
+      },
+      {
+        "k": "app:title",
+        "v": "@{@string/ncs_v2_hard_level}"
+      }
+    ]
+  },
+  "ncs_v2_main_hub.xml": {
+    "ids": [
+      "@+id/ncs_v2_main_hub_heading",
+      "@+id/ncs_v2_hub_arithmetic_card",
+      "@+id/ncs_v2_hub_comparison_card"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_metric_item.xml": {
+    "ids": [
+      "@+id/ncs_v2_metric_root",
+      "@+id/ncs_v2_metric_card_background",
+      "@+id/ncs_v2_metric_status",
+      "@+id/ncs_v2_metric_symbol",
+      "@+id/ncs_v2_metric_label",
+      "@+id/ncs_v2_metric_value",
+      "@+id/ncs_v2_metric_target"
+    ],
+    "variables": [
+      {
+        "name": "label",
+        "type": "String"
+      },
+      {
+        "name": "valueText",
+        "type": "String"
+      },
+      {
+        "name": "targetStatusText",
+        "type": "String"
+      },
+      {
+        "name": "achieved",
+        "type": "boolean"
+      },
+      {
+        "name": "standalone",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:visibility",
+        "v": "@{standalone ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{standalone ? View.VISIBLE : View.GONE}"
+      },
+      {
+        "k": "android:background",
+        "v": "@{achieved ? @drawable/ncs_v2_indicator_success : @drawable/ncs_v2_indicator_attention}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{achieved ? @string/ncs_v2_checkmark : @string/ncs_v2_exclamation}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{achieved ? @color/ncs_v2_muted : @color/ncs_v2_warm_ink}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{label}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{valueText}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{targetStatusText}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{standalone ? View.VISIBLE : View.GONE}"
+      }
+    ]
+  },
+  "ncs_v2_multiplication_intro.xml": {
+    "ids": [
+      "@+id/ncs_v2_ready_button"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_progress_item.xml": {
+    "ids": [
+      "@+id/ncs_v2_progress_root",
+      "@+id/ncs_v2_progress_count",
+      "@+id/ncs_v2_progress_status",
+      "@+id/ncs_v2_progress_track",
+      "@+id/ncs_v2_progress_bar",
+      "@+id/ncs_v2_progress_minimum_fill"
+    ],
+    "variables": [
+      {
+        "name": "correctAnswers",
+        "type": "int"
+      },
+      {
+        "name": "requiredAnswers",
+        "type": "int"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{correctAnswers == 1 ? @string/ncs_v2_correct_answers_singular(correctAnswers) : @string/ncs_v2_correct_answers_plural(correctAnswers)}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{requiredAnswers > 0 && correctAnswers >= requiredAnswers ? @string/ncs_v2_minimum_reached : @string/ncs_v2_required_minimum(requiredAnswers)}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{requiredAnswers > 0 && correctAnswers >= requiredAnswers ? @color/ncs_v2_success : @color/ncs_v2_primary}"
+      },
+      {
+        "k": "android:max",
+        "v": "@{requiredAnswers}"
+      },
+      {
+        "k": "android:progress",
+        "v": "@{correctAnswers}"
+      },
+      {
+        "k": "android:visibility",
+        "v": "@{correctAnswers > 0 && correctAnswers < requiredAnswers ? View.VISIBLE : View.GONE}"
+      }
+    ]
+  },
+  "ncs_v2_result_failure.xml": {
+    "ids": [
+      "@+id/ncs_v2_result_correct_metric",
+      "@+id/ncs_v2_result_accuracy_metric",
+      "@+id/ncs_v2_result_failure_retry_button",
+      "@+id/ncs_v2_result_failure_choose_level_button"
+    ],
+    "variables": [
+      {
+        "name": "levelLabel",
+        "type": "String"
+      },
+      {
+        "name": "failureDescription",
+        "type": "String"
+      },
+      {
+        "name": "correctAnswerText",
+        "type": "String"
+      },
+      {
+        "name": "accuracyText",
+        "type": "String"
+      },
+      {
+        "name": "countTargetText",
+        "type": "String"
+      },
+      {
+        "name": "accuracyTargetText",
+        "type": "String"
+      },
+      {
+        "name": "countAchieved",
+        "type": "boolean"
+      },
+      {
+        "name": "accuracyAchieved",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{levelLabel}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{failureDescription}"
+      },
+      {
+        "k": "app:achieved",
+        "v": "@{countAchieved}"
+      },
+      {
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_correct_answers_label}"
+      },
+      {
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "k": "app:targetStatusText",
+        "v": "@{countTargetText}"
+      },
+      {
+        "k": "app:valueText",
+        "v": "@{correctAnswerText}"
+      },
+      {
+        "k": "app:achieved",
+        "v": "@{accuracyAchieved}"
+      },
+      {
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_accuracy}"
+      },
+      {
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "k": "app:targetStatusText",
+        "v": "@{accuracyTargetText}"
+      },
+      {
+        "k": "app:valueText",
+        "v": "@{accuracyText}"
+      }
+    ]
+  },
+  "ncs_v2_result_success.xml": {
+    "ids": [
+      "@+id/ncs_v2_result_correct_metric",
+      "@+id/ncs_v2_result_accuracy_metric",
+      "@+id/ncs_v2_result_play_again_button",
+      "@+id/ncs_v2_result_choose_level_button"
+    ],
+    "variables": [
+      {
+        "name": "gameResult",
+        "type": "me.proton.jobforandroid.compositionofnumbers.domain.entity.GameResult"
+      },
+      {
+        "name": "levelLabel",
+        "type": "String"
+      },
+      {
+        "name": "correctAnswerText",
+        "type": "String"
+      },
+      {
+        "name": "accuracyText",
+        "type": "String"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{levelLabel}"
+      },
+      {
+        "k": "app:achieved",
+        "v": "@{gameResult.winner}"
+      },
+      {
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_correct_answers_label}"
+      },
+      {
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "k": "app:targetStatusText",
+        "v": "@{@string/ncs_v2_required_reached(gameResult.gameSettings.minCountOfRightAnswers)}"
+      },
+      {
+        "k": "app:valueText",
+        "v": "@{correctAnswerText}"
+      },
+      {
+        "k": "app:achieved",
+        "v": "@{gameResult.winner}"
+      },
+      {
+        "k": "app:label",
+        "v": "@{@string/ncs_v2_accuracy}"
+      },
+      {
+        "k": "app:standalone",
+        "v": "@{false}"
+      },
+      {
+        "k": "app:targetStatusText",
+        "v": "@{@string/ncs_v2_accuracy_required_reached(gameResult.gameSettings.minPercentOfRightAnswers)}"
+      },
+      {
+        "k": "app:valueText",
+        "v": "@{accuracyText}"
+      }
+    ]
+  },
+  "ncs_v2_subtraction_intro.xml": {
+    "ids": [
+      "@+id/ncs_v2_ready_button"
+    ],
+    "variables": [],
+    "bindings": []
+  },
+  "ncs_v2_timer_item.xml": {
+    "ids": [
+      "@+id/ncs_v2_timer_root",
+      "@+id/ncs_v2_timer_label",
+      "@+id/ncs_v2_timer_value"
+    ],
+    "variables": [
+      {
+        "name": "formattedTime",
+        "type": "String"
+      },
+      {
+        "name": "urgent",
+        "type": "boolean"
+      }
+    ],
+    "bindings": [
+      {
+        "k": "android:text",
+        "v": "@{urgent ? @string/ncs_v2_time_low : @string/ncs_v2_time_left}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{urgent ? @color/ncs_v2_warm_ink : @color/ncs_v2_primary}"
+      },
+      {
+        "k": "android:text",
+        "v": "@{formattedTime}"
+      },
+      {
+        "k": "android:textColor",
+        "v": "@{urgent ? @color/ncs_v2_warm_ink : @color/ncs_v2_ink}"
+      }
+    ]
+  },
+  "ncs_v2_welcome.xml": {
+    "ids": [
+      "@+id/ncs_v2_documents_button",
+      "@+id/ncs_v2_choose_lesson_button"
+    ],
+    "variables": [],
+    "bindings": []
+  }
+}

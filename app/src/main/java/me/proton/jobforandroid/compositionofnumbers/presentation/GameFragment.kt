@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -113,8 +116,12 @@ class GameFragment : Fragment() {
             findNavController().currentDestination?.id != R.id.gameFragment) return
         val question = binding.displayedQuestion ?: return
         val answer = question.options.getOrNull(optionIndex) ?: return
-        sounds?.play(if (answer == question.rightAnswer) R.raw.answer_correct else R.raw.answer_wrong)
         showingFeedback = true
+        if (!viewModel.chooseAnswer(question, answer)) {
+            showingFeedback = false
+            return
+        }
+        sounds?.play(if (answer == question.rightAnswer) R.raw.answer_correct else R.raw.answer_wrong)
         answerViews()[optionIndex].animate()
             .scaleX(0.96f).scaleY(0.96f)
             .setDuration(ANIMATION_HALF_MS)
@@ -128,11 +135,17 @@ class GameFragment : Fragment() {
         binding.selectedOptionIndex = optionIndex
         binding.feedbackCorrect = answer == question.rightAnswer
         binding.feedbackVisible = true
-        viewModel.chooseAnswer(question, answer)
         binding.root.postDelayed(showNextQuestion, FEEDBACK_DISPLAY_MS)
     }
 
     private fun observeViewModel() {
+        // Keep a deferred result in the ViewModel until this view can navigate.
+        viewLifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
+            override fun onResume(owner: LifecycleOwner) {
+                viewModel.finishIfTimeExpired()
+                viewModel.gameResult.value?.let { launchGameFinishedFragment(it) }
+            }
+        })
         viewModel.question.observe(viewLifecycleOwner) { question ->
             if (showingFeedback) {
                 queuedQuestion = question
@@ -164,6 +177,9 @@ class GameFragment : Fragment() {
     }
 
     private fun launchGameFinishedFragment(gameResult: GameResult) {
+        if (_binding == null ||
+            !viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED) ||
+            parentFragmentManager.isStateSaved) return
         if (findNavController().currentDestination?.id != R.id.gameFragment) return
         findNavController().navigate(
             GameFragmentDirections.actionGameFragmentToGameFinishedFragment(gameResult, args.level)

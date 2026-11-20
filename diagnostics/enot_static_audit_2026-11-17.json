@@ -1,0 +1,226 @@
+{
+  "xmlFiles": 80,
+  "errors": [],
+  "missingIds": [],
+  "changedVariables": [],
+  "removedBindings": [
+    {
+      "file": "ncs_v2_comparison_result.xml",
+      "id": "@+id/ncs_v2_comparison_result_face",
+      "k": "android:src",
+      "v": "@{success ? @drawable/ic_smile : @drawable/ic_sad}"
+    },
+    {
+      "file": "ncs_v2_comparison_result.xml",
+      "k": "android:scaleX",
+      "v": "@{success ? -1f : 1f}"
+    },
+    {
+      "file": "ncs_v2_comparison_rules.xml",
+      "k": "android:visibility",
+      "v": "@{View.VISIBLE}"
+    },
+    {
+      "file": "ncs_v2_feedback_item.xml",
+      "id": "@+id/ncs_v2_feedback_symbol",
+      "k": "android:textColor",
+      "v": "@{correct ? @color/ncs_v2_success : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+    },
+    {
+      "file": "ncs_v2_feedback_item.xml",
+      "id": "@+id/ncs_v2_feedback_message",
+      "k": "android:textColor",
+      "v": "@{correct ? @color/ncs_v2_success : incorrect ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+    },
+    {
+      "file": "ncs_v2_metric_item.xml",
+      "id": "@+id/ncs_v2_metric_symbol",
+      "k": "android:textColor",
+      "v": "@{achieved ? @color/ncs_v2_success : @color/ncs_v2_warm_ink}"
+    },
+    {
+      "file": "ncs_v2_metric_item.xml",
+      "id": "@+id/ncs_v2_metric_target",
+      "k": "android:textColor",
+      "v": "@{achieved ? @color/ncs_v2_success : @color/ncs_v2_warm_ink}"
+    },
+    {
+      "file": "ncs_v2_progress_item.xml",
+      "id": "@+id/ncs_v2_progress_status",
+      "k": "android:textColor",
+      "v": "@{requiredAnswers > 0 && correctAnswers >= requiredAnswers ? @color/ncs_v2_success : @color/ncs_v2_muted}"
+    },
+    {
+      "file": "ncs_v2_timer_item.xml",
+      "id": "@+id/ncs_v2_timer_label",
+      "k": "android:textColor",
+      "v": "@{urgent ? @color/ncs_v2_warm_ink : @color/ncs_v2_muted}"
+    }
+  ],
+  "missingReferences": [],
+  "oldIllustrations": [],
+  "assets": [
+    {
+      "name": "decor_comparison.png",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 831655,
+      "identicalToExport": true
+    },
+    {
+      "name": "decor_math_tools.png",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 913519,
+      "identicalToExport": true
+    },
+    {
+      "name": "decor_multiply_divide.png",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 914034,
+      "identicalToExport": true
+    },
+    {
+      "name": "decor_plus_minus.png",
+      "width": 1536,
+      "height": 1024,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 806867,
+      "identicalToExport": true
+    },
+    {
+      "name": "logo_schetenot.png",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 1458566,
+      "identicalToExport": true
+    },
+    {
+      "name": "raccoon_failure.png",
+      "width": 1312,
+      "height": 1199,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 1178743,
+      "identicalToExport": true
+    },
+    {
+      "name": "raccoon_happy.png",
+      "width": 1312,
+      "height": 1199,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 1408568,
+      "identicalToExport": true
+    },
+    {
+      "name": "raccoon_levels.png",
+      "width": 1312,
+      "height": 1199,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 1508324,
+      "identicalToExport": true
+    },
+    {
+      "name": "raccoon_math.png",
+      "width": 1312,
+      "height": 1199,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 1555345,
+      "identicalToExport": true
+    },
+    {
+      "name": "raccoon_success.png",
+      "width": 1254,
+      "height": 1254,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 1309807,
+      "identicalToExport": true
+    },
+    {
+      "name": "raccoon_thinking.png",
+      "width": 1312,
+      "height": 1199,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 1209147,
+      "identicalToExport": true
+    },
+    {
+      "name": "raccoon_timer.png",
+      "width": 1312,
+      "height": 1199,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 1506312,
+      "identicalToExport": true
+    },
+    {
+      "name": "raccoon_welcome.png",
+      "width": 1312,
+      "height": 1199,
+      "hasAlpha": true,
+      "transparent": true,
+      "bytes": 1499135,
+      "identicalToExport": true
+    }
+  ],
+  "changedLayouts": [
+    "ncs_v2_addition_intro.xml",
+    "ncs_v2_answer_item.xml",
+    "ncs_v2_comparison_game.xml",
+    "ncs_v2_comparison_level.xml",
+    "ncs_v2_comparison_result.xml",
+    "ncs_v2_comparison_rules.xml",
+    "ncs_v2_division_intro.xml",
+    "ncs_v2_equation_item.xml",
+    "ncs_v2_feedback_item.xml",
+    "ncs_v2_game.xml",
+    "ncs_v2_lesson_item.xml",
+    "ncs_v2_lesson_selection.xml",
+    "ncs_v2_level_item.xml",
+    "ncs_v2_level_selection.xml",
+    "ncs_v2_main_hub.xml",
+    "ncs_v2_metric_item.xml",
+    "ncs_v2_multiplication_intro.xml",
+    "ncs_v2_progress_item.xml",
+    "ncs_v2_result_failure.xml",
+    "ncs_v2_result_success.xml",
+    "ncs_v2_subtraction_intro.xml",
+    "ncs_v2_timer_item.xml",
+    "ncs_v2_welcome.xml"
+  ],
+  "newResources": [
+    {
+      "name": "ncs_v2_brand_header",
+      "used": true
+    },
+    {
+      "name": "decor_multiply_divide",
+      "used": true
+    },
+    {
+      "name": "ncs_v2_expression_ink",
+      "used": true
+    },
+    {
+      "name": "ncs_v2_brand_subtitle_ink",
+      "used": true
+    }
+  ],
+  "unexpectedRemovedBindings": [],
+  "bindingNotes": "Only artwork, mirrored legacy artwork, constant VISIBLE and visual colors changed. All data variables, IDs, input values, counters, visibility conditions, selected states, correctness expressions and domain thresholds retained."
+}

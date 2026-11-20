@@ -1,37 +1,266 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-  <data>
-    <import type="me.proton.jobforandroid.compositionofnumbers.domain.entity.ComparisonLevel" />
-    <variable name="selectedLevel" type="ComparisonLevel" />
-  </data>
-  <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/ncs_v2_notebook_background" android:fitsSystemWindows="true">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="@dimen/ncs_v2_back_height" android:layout_marginStart="@dimen/ncs_v2_space_24" android:layout_marginEnd="@dimen/ncs_v2_space_24" android:gravity="center_vertical" android:orientation="horizontal" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.02906" app:layout_constraintStart_toStartOf="parent" android:id="@+id/ncs_v2_comparison_level_toolbar">
-      <LinearLayout android:id="@+id/ncs_v2_comparison_level_back_button" android:layout_width="wrap_content" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal">
-        <TextView style="@style/TextAppearance.NcsV2.BackArrow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:includeFontPadding="false" android:text="@string/ncs_v2_arrow_back" android:textColor="@color/ncs_v2_primary" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="@dimen/ncs_v2_space_8" android:fontFamily="@font/ncs_v2_nunito_extrabold" android:includeFontPadding="false" android:text="@string/ncs_v2_back" android:textColor="@color/ncs_v2_primary" android:textSize="@dimen/ncs_v2_text_17" />
-      </LinearLayout>
-      <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:fontFamily="@font/ncs_v2_nunito_extrabold" android:gravity="end" android:includeFontPadding="false" android:text="@string/ncs_v2_brand" android:textColor="@color/ncs_v2_muted" android:textSize="@dimen/ncs_v2_text_14" />
-    </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginStart="@dimen/ncs_v2_space_24" android:layout_marginEnd="@dimen/ncs_v2_space_24" android:gravity="center_vertical" android:orientation="horizontal" app:layout_constraintStart_toStartOf="parent" app:layout_constraintHeight_default="percent" app:layout_constraintHeight_percent="0.160183" android:id="@+id/ncs_v2_comparison_level_heading" app:layout_constraintTop_toBottomOf="@id/ncs_v2_comparison_level_toolbar">
-      <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-        <TextView style="@style/TextAppearance.NcsV2.ScreenTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:includeFontPadding="false" android:lineHeight="35dp" android:text="@string/ncs_v2_choose_level_title" />
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/ncs_v2_space_8" android:fontFamily="@font/ncs_v2_nunito_semibold" android:includeFontPadding="false" android:text="@string/ncs_v2_where_start" android:textColor="@color/ncs_v2_muted" android:textSize="@dimen/ncs_v2_text_17" />
-      </LinearLayout>
-      <ImageView android:layout_width="123dp" android:layout_height="58dp" android:layout_marginStart="6dp" android:contentDescription="@null" android:scaleType="fitXY" android:src="@drawable/cuub_1" />
-    </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginStart="@dimen/ncs_v2_space_24" android:layout_marginEnd="@dimen/ncs_v2_space_24" android:orientation="vertical" app:layout_constraintStart_toStartOf="parent" app:layout_constraintHeight_default="percent" app:layout_constraintHeight_percent="0.421053" app:layout_constraintTop_toBottomOf="@id/ncs_v2_comparison_level_heading">
-      <include android:id="@+id/ncs_v2_comparison_test_level" layout="@layout/ncs_v2_level_item" android:layout_width="match_parent" android:layout_height="0dp" app:description="@{@string/ncs_v2_comparison_test_detail}" app:enabled="@{true}" app:marker="@{@string/ncs_v2_level_marker_test}" app:selected="@{selectedLevel == ComparisonLevel.TEST}" app:showDescription="@{true}" app:title="@{@string/ncs_v2_test_level}" android:layout_weight="1" android:layout_marginTop="@dimen/ncs_v2_space_8" />
-      <include android:id="@+id/ncs_v2_comparison_easy_level" layout="@layout/ncs_v2_level_item" android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="@dimen/ncs_v2_space_8" app:description="@{@string/ncs_v2_comparison_easy_detail}" app:enabled="@{true}" app:marker="@{@string/ncs_v2_level_marker_easy}" app:selected="@{selectedLevel == ComparisonLevel.EASY}" app:showDescription="@{true}" app:title="@{@string/ncs_v2_easy_level}" android:layout_weight="1" />
-      <include android:id="@+id/ncs_v2_comparison_normal_level" layout="@layout/ncs_v2_level_item" android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="@dimen/ncs_v2_space_8" app:description="@{@string/ncs_v2_comparison_normal_detail}" app:enabled="@{true}" app:marker="@{@string/ncs_v2_level_marker_medium}" app:selected="@{selectedLevel == ComparisonLevel.NORMAL}" app:showDescription="@{true}" app:title="@{@string/ncs_v2_medium_level}" android:layout_weight="1" />
-      <include android:id="@+id/ncs_v2_comparison_hard_level" layout="@layout/ncs_v2_level_item" android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="@dimen/ncs_v2_space_8" app:description="@{@string/ncs_v2_comparison_hard_detail}" app:enabled="@{true}" app:marker="@{@string/ncs_v2_level_marker_hard}" app:selected="@{selectedLevel == ComparisonLevel.HARD}" app:showDescription="@{true}" app:title="@{@string/ncs_v2_hard_level}" android:layout_weight="1" />
-    </LinearLayout>
-    <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginStart="@dimen/ncs_v2_space_24" android:layout_marginEnd="@dimen/ncs_v2_space_24" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.83737" app:layout_constraintStart_toStartOf="parent" app:layout_constraintHeight_default="percent" app:layout_constraintHeight_percent="0.148741">
-      <ImageView android:layout_width="132dp" android:layout_height="match_parent" android:layout_marginStart="22dp" android:layout_marginTop="0dp" android:contentDescription="@null" android:scaleType="fitCenter" android:src="@drawable/girl_2" />
-      <TextView android:layout_width="176dp" android:layout_height="wrap_content" android:layout_marginStart="178dp" android:layout_marginTop="@dimen/ncs_v2_space_24" android:fontFamily="@font/ncs_v2_nunito_extrabold" android:includeFontPadding="false" android:lineSpacingMultiplier="1.3" android:text="@string/ncs_v2_level_can_reselect" android:textColor="@color/ncs_v2_ink" android:textSize="@dimen/ncs_v2_text_17" />
-    </FrameLayout>
-    <LinearLayout android:id="@+id/ncs_v2_comparison_level_start_button" style="@style/NcsV2.View.Action" android:layout_width="match_parent" android:layout_height="@dimen/ncs_v2_button_height" android:layout_marginStart="@dimen/ncs_v2_space_24" android:layout_marginEnd="@dimen/ncs_v2_space_24" android:background="@drawable/ncs_v2_primary_button" android:gravity="center" android:orientation="horizontal" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="@dimen/ncs_v2_space_24">
-      <TextView style="@style/TextAppearance.NcsV2.Action" android:layout_width="wrap_content" android:layout_height="wrap_content" android:includeFontPadding="false" android:text="@string/ncs_v2_start_game" android:textColor="@color/ncs_v2_surface" />
-      <TextView style="@style/TextAppearance.NcsV2.ForwardArrow" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="14dp" android:includeFontPadding="false" android:text="@string/ncs_v2_arrow_forward" android:textColor="@color/ncs_v2_surface" />
-    </LinearLayout>
-  </androidx.constraintlayout.widget.ConstraintLayout>
+<?xml
+    version="1.0"
+    encoding="utf-8"
+?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <data>
+        <import
+            type="me.proton.jobforandroid.compositionofnumbers.domain.entity.ComparisonLevel"
+        />
+        <variable
+            name="selectedLevel"
+            type="ComparisonLevel"
+        />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/ncs_v2_paper"
+        android:fitsSystemWindows="true"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/ncs_v2_space_12"
+            android:paddingBottom="@dimen/ncs_v2_space_12"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+        >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ncs_v2_back_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:id="@+id/ncs_v2_comparison_level_toolbar"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+            >
+                <LinearLayout
+                    android:id="@+id/ncs_v2_comparison_level_back_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:minHeight="48dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                >
+                    <TextView
+                        style="@style/TextAppearance.NcsV2.BackArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_arrow_back"
+                        android:textColor="@color/ncs_v2_primary"
+                    />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/ncs_v2_space_8"
+                        android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_back"
+                        android:textColor="@color/ncs_v2_primary"
+                        android:textSize="@dimen/ncs_v2_text_17"
+                    />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                    android:gravity="end"
+                    android:includeFontPadding="false"
+                    android:text="@string/ncs_v2_brand"
+                    android:textColor="@color/ncs_v2_primary"
+                    android:textSize="@dimen/ncs_v2_text_14"
+                />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:id="@+id/ncs_v2_comparison_level_heading"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+            >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                >
+                    <TextView
+                        style="@style/TextAppearance.NcsV2.ScreenTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_choose_level_title"
+                        android:lineSpacingMultiplier="1.08"
+                    />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ncs_v2_space_8"
+                        android:fontFamily="@font/ncs_v2_nunito_semibold"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_where_start"
+                        android:textColor="@color/ncs_v2_primary"
+                        android:textSize="@dimen/ncs_v2_text_17"
+                    />
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="123dp"
+                    android:layout_height="88dp"
+                    android:layout_marginStart="6dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/decor_math_tools"
+                    android:importantForAccessibility="no"
+                />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+            >
+                <include
+                    android:id="@+id/ncs_v2_comparison_test_level"
+                    layout="@layout/ncs_v2_level_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:description="@{@string/ncs_v2_comparison_test_detail}"
+                    app:enabled="@{true}"
+                    app:marker="@{@string/ncs_v2_level_marker_test}"
+                    app:selected="@{selectedLevel == ComparisonLevel.TEST}"
+                    app:showDescription="@{true}"
+                    app:title="@{@string/ncs_v2_test_level}"
+                />
+                <include
+                    android:id="@+id/ncs_v2_comparison_easy_level"
+                    layout="@layout/ncs_v2_level_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:description="@{@string/ncs_v2_comparison_easy_detail}"
+                    app:enabled="@{true}"
+                    app:marker="@{@string/ncs_v2_level_marker_easy}"
+                    app:selected="@{selectedLevel == ComparisonLevel.EASY}"
+                    app:showDescription="@{true}"
+                    app:title="@{@string/ncs_v2_easy_level}"
+                />
+                <include
+                    android:id="@+id/ncs_v2_comparison_normal_level"
+                    layout="@layout/ncs_v2_level_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:description="@{@string/ncs_v2_comparison_normal_detail}"
+                    app:enabled="@{true}"
+                    app:marker="@{@string/ncs_v2_level_marker_medium}"
+                    app:selected="@{selectedLevel == ComparisonLevel.NORMAL}"
+                    app:showDescription="@{true}"
+                    app:title="@{@string/ncs_v2_medium_level}"
+                />
+                <include
+                    android:id="@+id/ncs_v2_comparison_hard_level"
+                    layout="@layout/ncs_v2_level_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:description="@{@string/ncs_v2_comparison_hard_detail}"
+                    app:enabled="@{true}"
+                    app:marker="@{@string/ncs_v2_level_marker_hard}"
+                    app:selected="@{selectedLevel == ComparisonLevel.HARD}"
+                    app:showDescription="@{true}"
+                    app:title="@{@string/ncs_v2_hard_level}"
+                />
+            </LinearLayout>
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+            >
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="140dp"
+                    android:src="@drawable/raccoon_levels"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@null"
+                    android:importantForAccessibility="no"
+                    android:layout_gravity="center_horizontal"
+                />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ncs_v2_nunito_bold"
+                    android:includeFontPadding="false"
+                    android:text="@{(@string/ncs_v2_level_can_reselect).replace(`\n`, ` `)}"
+                    android:textColor="@color/ncs_v2_ink"
+                    android:textSize="17sp"
+                    android:gravity="center"
+                />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ncs_v2_comparison_level_start_button"
+                style="@style/NcsV2.View.Action"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ncs_v2_button_height"
+                android:background="@drawable/ncs_v2_primary_button"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:minHeight="48dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+            >
+                <TextView
+                    style="@style/TextAppearance.NcsV2.Action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="@string/ncs_v2_start_game"
+                    android:textColor="@color/ncs_v2_surface"
+                />
+                <TextView
+                    style="@style/TextAppearance.NcsV2.ForwardArrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/ncs_v2_arrow_forward"
+                    android:textColor="@color/ncs_v2_surface"
+                />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </layout>
+

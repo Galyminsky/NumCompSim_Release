@@ -62,7 +62,7 @@ class NcsV2LessonSelectionFragment : Fragment() {
         binding.ncsV2DivisionItem.root.setOnClickListener { selectLesson(Question.Operation.DIVISION) }
         binding.ncsV2StartAdditionButton.setOnClickListener { startSelectedLesson() }
         binding.ncsV2AdditionItem.ncsV2LessonSymbolContainer.backgroundTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.ncs_v2_primary))
+            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.ncs_v2_operation_add))
         binding.ncsV2SubtractionItem.ncsV2LessonSymbolContainer.backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.ncs_v2_success))
         binding.ncsV2MultiplicationItem.ncsV2LessonSymbolContainer.backgroundTintList =

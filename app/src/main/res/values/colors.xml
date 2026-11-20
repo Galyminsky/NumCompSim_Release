@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#c000c0</color>
     <color name="purple_700">#670067</color>
     <color name="teal_200">#FF03DAC5</color>
@@ -9,12 +8,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="light_red">#ffff4444</color>
-    <color name="holo_red_dark">#ffcc0000</color>
-    <color name="holo_green_light">#ff99cc00</color>
-    <color name="holo_green_dark">#ff669900</color>
-    <color name="holo_blue_light">#ff33b5e5</color>
     <color name="holo_orange_light">#ffffbb33</color>
-    <color name="holo_orange_dark">#ffff8800</color>
     <!-- 12% light_red over white; base operation colors remain unchanged. -->
     <color name="ncs_v2_division_soft">#FFE9E9</color>
 </resources>

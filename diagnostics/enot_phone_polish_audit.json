@@ -1,0 +1,25 @@
+{
+  "errors": [],
+  "missingIDs": [],
+  "variablesChanged": [],
+  "missingRefs": [],
+  "changedBindings": [],
+  "scrollFallbacks": [
+    "ncs_v2_addition_intro.xml",
+    "ncs_v2_comparison_game.xml",
+    "ncs_v2_comparison_level.xml",
+    "ncs_v2_comparison_result.xml",
+    "ncs_v2_comparison_rules.xml",
+    "ncs_v2_division_intro.xml",
+    "ncs_v2_documents_dialog.xml",
+    "ncs_v2_game.xml",
+    "ncs_v2_lesson_selection.xml",
+    "ncs_v2_level_selection.xml",
+    "ncs_v2_main_hub.xml",
+    "ncs_v2_multiplication_intro.xml",
+    "ncs_v2_result_failure.xml",
+    "ncs_v2_result_success.xml",
+    "ncs_v2_subtraction_intro.xml",
+    "ncs_v2_welcome.xml"
+  ]
+}
