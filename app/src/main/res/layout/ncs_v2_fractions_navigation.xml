@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="contextLabel" type="String"/>
+    </data>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical">
+        <LinearLayout android:id="@+id/fractions_back" android:layout_width="wrap_content" android:layout_height="match_parent" android:gravity="center_vertical" android:clickable="true" android:focusable="true" android:contentDescription="@string/fractions_back">
+            <TextView style="@style/TextAppearance.NcsV2.Fractions.Regular" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="26sp" android:textColor="@color/ncs_v2_primary" android:importantForAccessibility="no" android:text="←"/>
+            <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:textSize="17sp" android:textColor="@color/ncs_v2_primary" android:importantForAccessibility="no" android:text="@string/fractions_back"/>
+        </LinearLayout>
+        <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+        <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="14sp" android:textColor="@color/ncs_v2_primary" tools:text="?attr/fractions_preview_context" android:text="@{contextLabel}"/>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="left" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="right" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="sign" type="String"/>
+    </data>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="150dp" android:background="@drawable/ncs_v2_fraction_parts_panel" android:gravity="center" android:paddingEnd="8dp" tools:theme="@style/FractionsComparisonPreview">
+        <include android:id="@+id/fractions_comparison_left" layout="@layout/ncs_v2_fraction" android:layout_width="wrap_content" android:layout_height="wrap_content" android:theme="@style/FractionsLargeExample.TwoFourths" app:fraction="@{left}" app:large="@{true}"/>
+        <FrameLayout android:layout_width="69dp" android:layout_height="76dp" android:layout_marginStart="23dp" android:layout_marginEnd="14dp" android:translationY="-1dp" android:background="@{sign == null ? @drawable/ncs_v2_fractions_question_slot : null}" tools:background="?attr/fractions_preview_slot_background">
+            <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:text="?" android:textSize="49sp" android:textColor="@color/ncs_v2_yellow" android:visibility="@{sign == null ? View.VISIBLE : View.GONE}" tools:visibility="?attr/fractions_preview_question_visibility"/>
+            <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:text="@{sign}" android:textSize="38sp" android:textColor="@color/ncs_v2_primary" android:visibility="@{sign == null ? View.GONE : View.VISIBLE}" tools:visibility="?attr/fractions_preview_resolved_visibility" tools:text="="/>
+        </FrameLayout>
+        <include android:id="@+id/fractions_comparison_right" layout="@layout/ncs_v2_fraction" android:layout_width="wrap_content" android:layout_height="wrap_content" android:theme="@style/FractionsLargeExample.Half" app:fraction="@{right}" app:large="@{true}"/>
+    </LinearLayout>
+</layout>

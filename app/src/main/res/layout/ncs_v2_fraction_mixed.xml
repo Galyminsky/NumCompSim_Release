@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
+        <variable name="number" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.FractionAnswer.MixedNumber" />
+        <variable name="embedded" type="boolean" />
+        <variable name="inkColor" type="Integer" />
+    </data>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/ncs_v2_fraction_mixed_height"
+        android:paddingTop="@dimen/ncs_v2_fraction_mixed_padding"
+        android:paddingBottom="@dimen/ncs_v2_fraction_mixed_padding"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layoutDirection="ltr"
+        android:visibility="@{number == null ? View.INVISIBLE : View.VISIBLE}"
+        android:focusable="@{!embedded}"
+        android:importantForAccessibility="@{embedded ? View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS : View.IMPORTANT_FOR_ACCESSIBILITY_YES}"
+        android:contentDescription="@{@string/ncs_v2_fraction_mixed_accessibility(number.wholePart, number.fractionalPart.numerator, number.fractionalPart.denominator)}" tools:visibility="visible" tools:theme="@style/FractionsExample.MixedTwoOneThird">
+        <TextView
+            android:id="@+id/ncs_v2_fraction_whole"
+            style="@style/TextAppearance.NcsV2.Fraction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="@dimen/ncs_v2_fraction_whole_width"
+            android:minHeight="@dimen/ncs_v2_fraction_whole_height"
+            android:translationY="@dimen/ncs_v2_fraction_whole_offset"
+            android:textSize="@dimen/ncs_v2_fraction_whole_text"
+            android:text="@{String.valueOf(number.wholePart)}"
+            android:importantForAccessibility="no"
+            android:textColor="@{inkColor == null ? @color/ncs_v2_ink : inkColor}"
+            tools:text="?attr/fractions_preview_whole" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/ncs_v2_space_4"
+            android:translationY="@dimen/ncs_v2_fraction_mixed_fraction_offset">
+            <include
+                android:id="@+id/ncs_v2_fraction_mixed_part"
+                layout="@layout/ncs_v2_fraction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fraction="@{number.fractionalPart}"
+                app:numeratorColor="@{inkColor}" app:denominatorColor="@{inkColor}"
+                app:embedded="@{true}" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>

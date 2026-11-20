@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="left" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="right" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="operator" type="String"/>
+        <variable name="unary" type="boolean"/>
+        <variable name="single" type="boolean"/>
+    </data>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="114dp" android:background="@drawable/ncs_v2_fraction_parts_panel" android:gravity="center" android:orientation="horizontal" tools:theme="@style/FractionsExpressionPreview">
+        <include android:id="@+id/fractions_expression_left" layout="@layout/ncs_v2_fraction" android:layout_width="wrap_content" android:layout_height="wrap_content" app:fraction="@{left}" app:large="@{true}"/>
+        <FrameLayout android:layout_width="40dp" android:layout_height="wrap_content" android:layout_marginStart="13dp" android:visibility="@{unary || single ? View.GONE : View.VISIBLE}" tools:visibility="?attr/fractions_preview_binary_visibility">
+            <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="32sp" android:textColor="@color/ncs_v2_primary" android:layout_gravity="center" tools:text="+" android:text="@{operator}"/>
+        </FrameLayout>
+        <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="13dp" android:visibility="@{unary || single ? View.GONE : View.VISIBLE}" tools:visibility="?attr/fractions_preview_binary_visibility">
+            <include android:id="@+id/fractions_expression_right" layout="@layout/ncs_v2_fraction" android:layout_width="wrap_content" android:layout_height="wrap_content" android:theme="@style/FractionsExpressionPreview.Right" app:fraction="@{right}" app:large="@{true}"/>
+        </FrameLayout>
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_vertical" android:visibility="@{single ? View.GONE : View.VISIBLE}" tools:visibility="?attr/fractions_preview_question_visibility">
+            <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="13dp" android:minWidth="40dp" android:gravity="center" android:textSize="32sp" android:textColor="@color/ncs_v2_primary" android:text="="/>
+            <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="69dp" android:layout_height="76dp" android:layout_marginStart="13dp" android:background="@drawable/ncs_v2_fractions_question_slot" android:gravity="center" android:text="?" android:textSize="49sp" android:textColor="@color/ncs_v2_yellow"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

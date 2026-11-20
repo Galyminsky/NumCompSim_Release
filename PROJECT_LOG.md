@@ -2067,3 +2067,122 @@ FractionGameSession.kt:52–69 принимает ответ строго до �
 Пробелы тестов: нет прямых независимых assert на все длительности 30000/90000/120000/180000 (часть тестов берёт дедлайн/лимит из production); нет отдельной проверки совпадения окончания подсветки с общим дедлайном, далёкого скачка времени за оба дедлайна и восстановления QUESTION/FEEDBACK для каждого уровня с заново построенным полным графом моделей; нет точечного фильтра, принимающего только последний кандидат после циклического перехода через конец пула; NORMAL/HARD арифметические пары не перебираются исчерпывающе независимым оракулом. Производственные валидаторы/Fraction переиспользуются в части тестовых оракулов, поэтому общая ошибка теоретически может остаться незамеченной; компенсируется примерами с явно заданными ответами/НОК и независимым попарным сравнением условий сессии. Ошибочное общее предположение, приводящее к доказанному дефекту, не найдено.
 
 Не подтверждены исполнением: успешность всех 99 тестов, компиляция, производительность и Android/process-death интеграция. Педагогическая правдоподобность эвристических дистракторов не формализована; открытые вопросы FRACTIONS_SPEC.md:75–77 не трактовались как новые обязательные диапазоны/квоты или доказанные нарушения. Сборки, тесты, Lint и компиляция не запускались. Изменён только PROJECT_LOG.md; исходники/тесты/спецификация не менялись, новые файлы не создавались, commit/push не выполнялись.
+
+## 2026-11-20 — этапы 4.1–4.3: Data и переиспользуемые компоненты «Дробей»
+
+Data не требуется: domain/usecases/FractionSessionGenerator.kt:13 принимает Level и Random и синхронно возвращает полный List<FractionQuestion<out FractionAnswer>>, без Context/хранилища/сети. Будущая Fragment-scoped ViewModel может непосредственно вызывать генератор. Repository/DataSource, новый механизм хранения и зависимости не добавлены.
+
+Прочитаны FRACTIONS_SPEC.md и относящиеся к компонентам ресурсы ENOT. Через навык figma-design-to-code получены структура раздела BRMSwONxGEshJOAghaAqjz, screenshot и подробные design context со screenshot для узлов 141:65 (дробь S), 141:69 (L), 136:164 (карточка), 136:154 (TEST), 145:137 (смешанное число), 147:212/149:167 (обычная/подсвеченная карточка). Реализация опирается на детальный контекст дочерних узлов, не на разреженную структуру раздела. Figma не изменялась.
+
+Добавлены app/src/main/res/layout/ncs_v2_fraction.xml, ncs_v2_fraction_mixed.xml, ncs_v2_fraction_answer_item.xml, ncs_v2_fraction_parts.xml. Обыкновенная дробь использует исходный Fraction без вычислений/сокращения, поддерживает S/L (24/30sp, минимальная ширина 44/56dp, черта 2.5dp с отступами 4dp). Числитель и знаменатель центрированы; ширина растёт по более длинной записи, горизонтальные отступы цифр сохраняют покрытие чертой. Минимальные высоты текстовых строк заданы в sp, текст не ограничен фиксированной высотой. Смешанное число переиспользует дробь S, целая часть 31sp слева, минимальная ширина 28dp, интервал 4dp и вертикальные смещения взяты из 145:137. При нулевых ссылках на данные числовые компоненты невидимы; демонстрационные значения присутствуют только в tools:text.
+
+Добавлен presentation/FractionPartsView.kt: отображает переданные totalParts/shadedParts в виде равных прямоугольников 54×58dp, интервал 13dp, радиус 2dp, обводка 1.5dp, как 136:154/143:89. Группа центрируется; при недостатке места равномерно уменьшается целиком с сохранением пропорций всех частей/интервалов. Цвета заливки — ncs_v2_yellow/ncs_v2_surface, границ — ncs_v2_border. Нулевые неинициализированные количества не рисуются. BindingAdapter связывает только данные отображения; генерация, проверка ответов и таймер отсутствуют.
+
+Добавлены res/values/fractions_dimens.xml, fractions_styles.xml, fractions_strings.xml и res/drawable/ncs_v2_fraction_parts_panel.xml, ncs_v2_fraction_answer_highlighted.xml. Повторно используются ncs_v2_answer_card, TextAppearance.NcsV2.ExtraBold как основа, размеры текста 24/30, отступы 4/12, высота условия 114dp, палитра ENOT, радиус панели 24dp и обводка 2dp. Новая панель необходима из-за отличающейся от comparison-expression заливки; новая подсветка использует уже существующий success_soft (#DFF6EC) и тёмный ink, как 149:167. Boolean highlighted — только готовое визуальное состояние, не результат проверки. Непоказанные в проверенных макетах дополнительные состояния ошибки не выдумывались.
+
+Проверка name-таблицы существующего ncs_v2_nunito_extrabold.ttf выявила семейство Nunito, а не Nunito Sans. Для новых компонентов добавлен отдельный res/font/ncs_v2_nunito_sans_extrabold.ttf из https://raw.githubusercontent.com/googlefonts/NunitoSans/main/fonts/ttf/NunitoSans-ExtraBold.ttf. Метаданные подтверждают Nunito Sans / ExtraBold; размер 144452 байта; SHA-256 609EE0BA388B6642AC4A469429EF5E66018488F3166E858D974DD77EE0D44E28. Copyright/лицензионные метаданные сохранены; полный OFL включён в fractions_strings.xml как нетранслируемый ресурс. Прежние стили/шрифты других экранов не изменялись.
+
+Для TalkBack числовые компоненты имеют одно описание с числителем/знаменателем и, при необходимости, целой частью; вложенная дробь и отдельные цифры не создают повторных accessibility-узлов. Карточка озвучивается как один интерактивный узел; TEST сообщает число закрашенных и общее количество равных частей. Фактическое озвучивание устройством не проверялось.
+
+Статически разобраны все 9 новых XML, неразрешённых локальных ссылок на ресурсы не найдено; шрифт ненулевой и его метаданные проверены. Сборки, тесты и компиляция не запускались. Android-рендер, крупный системный шрифт и TalkBack исполнением не подтверждены; пиксельное сравнение с Figma не выполнено. У карточки сохранён существующий подход ENOT с нативной тенью elevation 6dp: точное совпадение с двумя слоями тени Figma (1/3px, 6/17px) не подтверждено. Параметры основных компонентов получены, отсутствующие визуальные состояния не подменялись догадками. Domain, старые тренажёры, спецификация, Gradle и навигация не изменены. Игровые Fragment/ViewModel и демонстрационные экраны не создавались; commit/push не выполнялись.
+
+## 2026-11-20 — исправление типа android:minWidth дроби
+
+В app/src/main/res/layout/ncs_v2_fraction.xml проверено фактическое выражение android:minWidth: выбор @dimen между S/L возвращал float, несовместимый с ожидаемым Int. В этом единственном атрибуте добавлено явное приведение результата к int. Data Binding сохранён, поскольку ширина зависит от large; постоянная ссылка потеряла бы переключение S/L. Ресурсы S=44dp и L=56dp не изменены. Другие атрибуты, XML-компоненты и Domain не менялись; BindingAdapter, классы и зависимости не добавлялись. Сборка и тесты не запускались, commit/push не выполнялись; исправление компиляцией не подтверждено.
+
+## 2026-11-20 — удаление Data Binding из android:minWidth дроби
+
+Повторная ошибка выявила отсутствие подходящего setter android:minWidth у LinearLayout: предыдущее приведение к int не устраняло эту причину. В app/src/main/res/layout/ncs_v2_fraction.xml выражение minWidth заменено прямой ссылкой @dimen/ncs_v2_fraction_s_width (44dp). Для сохранения L=56dp добавлен стандартный Space с прямой ссылкой @dimen/ncs_v2_fraction_l_width и нулевой высотой: при large он INVISIBLE и участвует только в измерении ширины, в S — GONE. Числитель/знаменатель и черта сохраняют центрирование и возможность расширения по содержимому; вертикальные размеры и оформление не менялись. Data Binding для размеров этого Space не используется, только существующий механизм visibility. Другие файлы/компоненты, ресурсы размеров и Domain не изменялись; новые классы/BindingAdapter/зависимости не добавлялись. Сборка, тесты, commit/push не запускались; результат компиляцией не подтверждён.
+
+## 2026-11-20 — исправление float в minHeight числителя и знаменателя
+
+В app/src/main/res/layout/ncs_v2_fraction.xml оба динамических android:minHeight передавали float из @dimen в TextView.setMinHeight(int). В обоих выражениях добавлен Math.round с явным импортом java.lang.Math: размер после перевода ресурсов в пиксели округляется до Int. Переключение S/L, исходные sp-ресурсы и остальные атрибуты сохранены. TextView имеет setMinHeight(int), поэтому здесь исправляется тип аргумента; ситуация отличается от прежнего android:minWidth у LinearLayout. Другие компоненты, Domain и ресурсы не изменялись; BindingAdapter, классы и зависимости не добавлялись. Сборка, тесты, commit/push не запускались; исправление компиляцией не подтверждено.
+
+## 2026-11-20 — проверка minWidth/minHeight четырёх layout «Дробей»
+
+Проверены только ncs_v2_fraction.xml, ncs_v2_fraction_mixed.xml, ncs_v2_fraction_answer_item.xml и ncs_v2_fraction_parts.xml. Найдены два динамических minHeight в ncs_v2_fraction.xml; динамических minWidth нет. На момент проверки оба minHeight уже содержали Math.round(float), возвращающий int, поэтому сообщение об исходном float не совпадает с актуальным текстом файла; успешность предыдущего исправления запуском не подтверждалась. Для однозначного получения целочисленных размеров оба выражения заменены на context.resources.getDimensionPixelSize с выбором существующего R.dimen по large; импорт Math заменён импортом R. Результат метода — int, идентификаторы ресурсов также int, float в setter minHeight не передаётся. Сохранены оба утверждённых S/L и перевод sp с учётом конфигурации Android. В остальных трёх layout minWidth/minHeight заданы прямыми @dimen либо отсутствуют; изменений они не требуют. Другие атрибуты, компоненты и бизнес-логика не менялись. Новые файлы, классы, BindingAdapter и зависимости не добавлялись. Сборка, тесты, commit/push не запускались; результат компиляцией не подтверждён.
+
+## 2026-11-20 — динамические верхние отступы дроби
+
+Проверены существующие BindingAdapter во всех Kotlin-исходниках app/src/main: подходящего адаптера для topMargin не найдено. В presentation/BindingAdapter.kt добавлен один специализированный fractionTopMargin(view, marginPx: Float). Значения @dimen поступают уже в пикселях как float; адаптер округляет их до Int без повторного применения density, изменяет только topMargin существующего MarginLayoutParams и переназначает layoutParams только при изменении. Остальные отступы, ширина/высота и тип параметров сохраняются.
+
+В layout/ncs_v2_fraction.xml два динамических android:layout_marginTop (черта и знаменатель) заменены на app:fractionTopMargin; добавлен namespace app. Существующие ссылки на @dimen и ветви S/L, включая нулевой отступ знаменателя S, сохранены. Проверены также ncs_v2_fraction_mixed.xml, ncs_v2_fraction_answer_item.xml и ncs_v2_fraction_parts.xml: аналогичных динамических отступов нет, файлы не менялись. Размеры/цвета/шрифты, Domain/ViewModel и другие экраны не изменены; новых файлов/классов/зависимостей нет. Сборка и тесты не запускались, commit/push не выполнялись; исправление компиляцией не подтверждено.
+
+## 2026-11-20 — шаг 2/4: XML-интерфейс «Дробей», 14 макетов
+
+Изучены актуальная FRACTIONS_SPEC.md, структура presentation/res, готовые компоненты дробей, относящиеся ресурсы ENOT и все 14 узлов Figma BRMSwONxGEshJOAghaAqjz/135:53. Для каждого макета получены подробный get_design_context и screenshot через figma-design-to-code; Figma не изменялась. Секция сопоставлена с четырьмя видами экранов: выбор сложности, правила, игра, результат. Добавлены четыре Fragment (Level/Rules/Game/Result), не отдельный Fragment на каждый макет.
+
+Карта покрытия (пути относительно app/src/main/res/layout):
+01 135:54 → ncs_v2_fractions_level.xml.
+02 136:53 → ncs_v2_fractions_rules_test.xml.
+03 136:76 → ncs_v2_fractions_rules_easy.xml.
+04 136:99 → ncs_v2_fractions_rules_normal.xml.
+05 136:122 → ncs_v2_fractions_rules_hard.xml.
+06 136:145 → ncs_v2_fractions_game_picture.xml.
+07 136:200 → ncs_v2_fractions_game_numerator.xml (также формат знаменателя через внешние instruction/choiceLabel).
+08 136:255 → ncs_v2_fractions_game_comparison.xml.
+09 136:295 → ncs_v2_fractions_game_arithmetic.xml (сложение/вычитание через внешние instruction/operator).
+10 147:143 → ncs_v2_fractions_game_reduction.xml.
+11 136:350 → ncs_v2_fractions_game_mixed.xml.
+12 147:198 → ncs_v2_fractions_game_feedback.xml.
+13 136:405 → ncs_v2_fractions_result_success.xml.
+14 136:451 → ncs_v2_fractions_result_failure.xml.
+
+Общие блоки: navigation, brand, expression, comparison_expression, footer_regular/footer_comparison, статический rule_fraction. Готовые fraction/mixed/answer_item расширены только по необходимости: цвета числителя/знаменателя для цветных учебных примеров и ошибки; карточка теперь отображает также числовой/знаковый и смешанный варианты, мягкую подсветку и существующее ошибочное состояние ENOT. Убраны вертикальные padding карточки, мешавшие размещению смешанного числа 74dp в карточке 88dp; размеры 88/112dp сохранены как минимумы с расширением содержимого. Высоты строк дроби закреплены в существующих sp-размерах через TextView.setHeight(int), чтобы метрики Nunito Sans не увеличивали их сверх Figma; метод и типы setHeight(int), setTextSize(float), setTextColor(int), setLineHeight(int) проверены чтением SDK через javap, без компиляции. Динамических android:minWidth/android:minHeight/android:layout_marginTop в XML дробей не осталось; существующий специализированный fractionTopMargin переиспользован. Фиксированная геометрия новых экранов задана обычными XML-атрибутами, динамическая видимость — целочисленными View.VISIBLE/GONE.
+
+Готовые PNG logo_schetenot, raccoon_levels/thinking/timer/success/failure/happy и decor_math_tools визуально сопоставлены с макетами; проверены ненулевые размеры, PNG RGBA и побайтовое совпадение drawable-nodpi с одноимёнными figma_assets. Позиции, контейнеры, fitCenter/centerCrop и отражение raccoon_happy повторяют Figma. Переиспользованы decor_sparkles, палитра ENOT, primary/secondary buttons, level card/selected outline, progress drawable, status circles и красная рамка результата. Новые фоновые ресурсы добавлены только для отличающихся мягкой рамки успеха, бумажного индикатора выбора, тёплого вопросительного поля, бейджа и компактных частей учебного примера. Общие стили старых экранов не менялись.
+
+Для Nunito Sans дополнительно добавлены официальные Regular/Bold/SemiBold из googlefonts/NunitoSans (fonts/ttf); метаданные подтверждают веса 400/700/600, ExtraBold 800 переиспользован. Общая OFL уже включена в существующий ресурс fractions_strings.xml. Nunito других разделов не заменялся.
+
+Preview: все 14 реальных layout содержат статические утверждённые тексты либо tools:text/tools:visibility/tools:background и preview-темы. Игровые числа, варианты, статистика и время в темах используются только tools-атрибутами, в рабочие binding-поля не назначаются. В FractionPartsView пример 1 из 4 установлен исключительно под isInEditMode. Статические дроби в правилах — реальный утверждённый учебный контент, не фиктивная игровая сессия. Правильный ответ показан Preview-темой EqualSelected; ошибочную карточку можно просмотреть темой FractionsExample.Wrong. Указанные состояния подготовлены, но фактическое отображение Android Studio Preview не проверялось.
+
+Приоритет спецификации над устаревшим контентом Figma: EASY исправлен с «Дроби 2–8» на 2–10, из правил EASY убрано сравнение; NORMAL явно упоминает сравнение. Количества/время/минимумы/точность соответствуют 8/30/5/60%, 15/90/10/70%, 12/120/8/75%, 10/180/6/80%. Figma при этом не менялась.
+
+Игровые Fragment только выбирают/инфлейтят визуальный XML и освобождают binding; игровая сессия/генератор/ViewModel/таймер/SavedStateHandle не подключены, ответы не принимаются и правильность не вычисляется. LevelFragment меняет только UI-выбор сложности и сохраняет эту строку в обычном instance state. Навигация, запуск игры и кнопки переходов намеренно остаются для интеграционного шага; граф главного приложения не менялся. Domain и старые тренажёры не изменены.
+
+Ограничения: Android-рендер, компиляция, TalkBack и фактическая работа Preview исполнением не подтверждены. Попиксельное сравнение реализованных экранов с Figma не выполнено, визуальное соответствие подтверждённым не объявляется. Нативная elevation 6dp переиспользована из ENOT; её точное совпадение с двухслойной тенью Figma не подтверждено. Из 14 макетов только №12 определяет подсветку верного ответа; отдельного макета неверного ответа нет, поэтому использован готовый красный стиль ENOT, точная Figma-спецификация этого состояния отсутствует. Для других размеров устройств/системного шрифта требуется последующая визуальная проверка. Сборка, тесты и Lint не запускались; выполнялись только XML-разбор, проверка ресурсов/метаданных и чтение SDK-сигнатур. Commit/push не выполнялись. Посторонние прежние изменения, включая BindingAdapter.kt и figma_assets/raccoon_fractions.png, сохранены.
+
+Созданные файлы (относительно app/src/main):
+- java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsGameFragment.kt
+- java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsLevelFragment.kt
+- java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsResultFragment.kt
+- java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsRulesFragment.kt
+- res/color/ncs_v2_fractions_check.xml
+- res/drawable/ncs_v2_fractions_badge.xml
+- res/drawable/ncs_v2_fractions_level_indicator.xml
+- res/drawable/ncs_v2_fractions_question_slot.xml
+- res/drawable/ncs_v2_fractions_result_success.xml
+- res/drawable/ncs_v2_fractions_rule_empty.xml
+- res/drawable/ncs_v2_fractions_rule_shaded.xml
+- res/font/ncs_v2_nunito_sans_bold.ttf
+- res/font/ncs_v2_nunito_sans_regular.ttf
+- res/font/ncs_v2_nunito_sans_semibold.ttf
+- res/layout/ncs_v2_fractions_brand.xml
+- res/layout/ncs_v2_fractions_comparison_expression.xml
+- res/layout/ncs_v2_fractions_expression.xml
+- res/layout/ncs_v2_fractions_footer_comparison.xml
+- res/layout/ncs_v2_fractions_footer_regular.xml
+- res/layout/ncs_v2_fractions_game_arithmetic.xml
+- res/layout/ncs_v2_fractions_game_comparison.xml
+- res/layout/ncs_v2_fractions_game_feedback.xml
+- res/layout/ncs_v2_fractions_game_mixed.xml
+- res/layout/ncs_v2_fractions_game_numerator.xml
+- res/layout/ncs_v2_fractions_game_picture.xml
+- res/layout/ncs_v2_fractions_game_reduction.xml
+- res/layout/ncs_v2_fractions_level.xml
+- res/layout/ncs_v2_fractions_navigation.xml
+- res/layout/ncs_v2_fractions_result_failure.xml
+- res/layout/ncs_v2_fractions_result_success.xml
+- res/layout/ncs_v2_fractions_rule_fraction.xml
+- res/layout/ncs_v2_fractions_rules_easy.xml
+- res/layout/ncs_v2_fractions_rules_hard.xml
+- res/layout/ncs_v2_fractions_rules_normal.xml
+- res/layout/ncs_v2_fractions_rules_test.xml
+- res/values/fractions_screens.xml
+
+Изменённые существующие файлы (относительно app/src/main):
+- res/layout/ncs_v2_fraction.xml
+- res/layout/ncs_v2_fraction_mixed.xml
+- res/layout/ncs_v2_fraction_answer_item.xml
+- java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionPartsView.kt
+- PROJECT_LOG.md (корень проекта).

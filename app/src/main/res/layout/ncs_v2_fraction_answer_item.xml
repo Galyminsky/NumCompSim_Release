@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="fraction" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="mixedNumber" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.FractionAnswer.MixedNumber"/>
+        <variable name="textValue" type="String"/>
+        <variable name="enabled" type="boolean"/>
+        <variable name="highlighted" type="boolean"/>
+        <variable name="wrong" type="boolean"/>
+        <variable name="comparison" type="boolean"/>
+    </data>
+    <FrameLayout android:id="@+id/ncs_v2_fraction_answer_root" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="@dimen/ncs_v2_fraction_answer_height" android:background="@{wrong ? @drawable/ncs_v2_answer_wrong : highlighted ? @drawable/ncs_v2_fraction_answer_highlighted : @drawable/ncs_v2_answer_card}" android:elevation="@dimen/ncs_v2_fraction_answer_elevation" android:clipChildren="false" android:clipToPadding="false" android:clickable="true" android:focusable="true" android:importantForAccessibility="yes" android:enabled="@{enabled}" android:visibility="@{fraction == null &amp;&amp; mixedNumber == null &amp;&amp; textValue == null ? View.INVISIBLE : View.VISIBLE}" android:contentDescription="@{fraction != null ? @string/ncs_v2_fraction_accessibility(fraction.numerator, fraction.denominator) : mixedNumber != null ? @string/ncs_v2_fraction_mixed_accessibility(mixedNumber.wholePart, mixedNumber.fractionalPart.numerator, mixedNumber.fractionalPart.denominator) : textValue}" tools:visibility="visible" tools:theme="@style/FractionsExample" tools:background="?attr/fractions_preview_answer_background">
+        <Space android:layout_width="0dp" android:layout_height="@dimen/fractions_sign_height" android:visibility="@{comparison ? View.INVISIBLE : View.GONE}" tools:visibility="?attr/fractions_preview_sign_spacer_visibility"/>
+        <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:visibility="@{fraction == null ? View.GONE : View.VISIBLE}" tools:visibility="?attr/fractions_preview_fraction_visibility">
+            <include android:id="@+id/ncs_v2_fraction_answer_value" layout="@layout/ncs_v2_fraction" android:layout_width="wrap_content" android:layout_height="wrap_content" app:fraction="@{fraction}" app:embedded="@{true}" app:numeratorColor="@{wrong ? @color/ncs_v2_surface : @color/ncs_v2_ink}" app:denominatorColor="@{wrong ? @color/ncs_v2_surface : @color/ncs_v2_ink}"/>
+        </FrameLayout>
+        <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:visibility="@{mixedNumber == null ? View.GONE : View.VISIBLE}" tools:visibility="?attr/fractions_preview_mixed_visibility">
+            <include android:id="@+id/fractions_answer_mixed" layout="@layout/ncs_v2_fraction_mixed" android:layout_width="wrap_content" android:layout_height="wrap_content" app:number="@{mixedNumber}" app:embedded="@{true}" app:inkColor="@{wrong ? @color/ncs_v2_surface : @color/ncs_v2_ink}"/>
+        </FrameLayout>
+        <TextView android:id="@+id/fractions_answer_text" style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:textSize="@dimen/ncs_v2_text_34" android:importantForAccessibility="no" android:text="@{textValue}" android:textColor="@{wrong ? @color/ncs_v2_surface : @color/ncs_v2_ink}" android:visibility="@{textValue == null ? View.GONE : View.VISIBLE}" tools:visibility="?attr/fractions_preview_text_visibility" tools:text="?attr/fractions_preview_text"/>
+    </FrameLayout>
+</layout>

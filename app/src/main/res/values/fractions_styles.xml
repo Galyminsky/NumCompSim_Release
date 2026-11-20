@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nunito Sans is a separate family from the existing Nunito resources. -->
+    <style name="TextAppearance.NcsV2.Fraction" parent="TextAppearance.NcsV2.ExtraBold">
+        <item name="android:fontFamily">@font/ncs_v2_nunito_sans_extrabold</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
+    </style>
+</resources>

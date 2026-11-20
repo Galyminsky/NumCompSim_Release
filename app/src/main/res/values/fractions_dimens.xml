@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Figma 141:65 / 141:69. Text rows grow with the system font scale. -->
+    <dimen name="ncs_v2_fraction_s_width">44dp</dimen>
+    <dimen name="ncs_v2_fraction_s_numerator_height">28.52sp</dimen>
+    <dimen name="ncs_v2_fraction_s_denominator_height">29.14sp</dimen>
+    <dimen name="ncs_v2_fraction_s_line_gap">1.86dp</dimen>
+    <dimen name="ncs_v2_fraction_l_width">56dp</dimen>
+    <dimen name="ncs_v2_fraction_l_numerator_height">36.8sp</dimen>
+    <dimen name="ncs_v2_fraction_l_denominator_height">37.6sp</dimen>
+    <dimen name="ncs_v2_fraction_l_line_gap">2.4dp</dimen>
+    <dimen name="ncs_v2_fraction_l_denominator_gap">0.7dp</dimen>
+    <dimen name="ncs_v2_fraction_line_height">2.5dp</dimen>
+    <!-- Figma 145:137. -->
+    <dimen name="ncs_v2_fraction_mixed_height">74dp</dimen>
+    <dimen name="ncs_v2_fraction_mixed_padding">6dp</dimen>
+    <dimen name="ncs_v2_fraction_whole_width">28dp</dimen>
+    <dimen name="ncs_v2_fraction_whole_height">51sp</dimen>
+    <dimen name="ncs_v2_fraction_whole_text">31sp</dimen>
+    <dimen name="ncs_v2_fraction_whole_offset">1.5dp</dimen>
+    <dimen name="ncs_v2_fraction_mixed_fraction_offset">-1dp</dimen>
+    <!-- Figma 136:164 and the existing ENOT answer card's native elevation. -->
+    <dimen name="ncs_v2_fraction_answer_height">88dp</dimen>
+    <dimen name="ncs_v2_fraction_answer_elevation">6dp</dimen>
+    <!-- Figma 136:154 / 143:89. All parts scale together when available width is smaller. -->
+    <dimen name="ncs_v2_fraction_part_width">54dp</dimen>
+    <dimen name="ncs_v2_fraction_part_height">58dp</dimen>
+    <dimen name="ncs_v2_fraction_part_gap">13dp</dimen>
+    <dimen name="ncs_v2_fraction_part_radius">2dp</dimen>
+    <dimen name="ncs_v2_fraction_part_stroke">1.5dp</dimen>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="totalParts" type="int" />
+        <variable name="shadedParts" type="int" />
+    </data>
+    <me.proton.jobforandroid.compositionofnumbers.presentation.FractionPartsView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ncs_v2_equation_height"
+        android:padding="@dimen/ncs_v2_stroke_regular"
+        android:background="@drawable/ncs_v2_fraction_parts_panel"
+        android:importantForAccessibility="yes"
+        app:totalParts="@{totalParts}"
+        app:shadedParts="@{shadedParts}" />
+</layout>

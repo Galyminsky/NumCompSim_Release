@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="contextLabel" type="String"/>
+        <variable name="instruction" type="String"/>
+        <variable name="operator" type="String"/>
+        <variable name="comparisonSign" type="String"/>
+        <variable name="feedback" type="String"/>
+        <variable name="statistics" type="String"/>
+        <variable name="minimum" type="String"/>
+        <variable name="time" type="String"/>
+        <variable name="support" type="String"/>
+        <variable name="left" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="right" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="totalParts" type="int"/>
+        <variable name="shadedParts" type="int"/>
+        <variable name="progress" type="int"/>
+        <variable name="enabled" type="boolean"/>
+        <variable name="feedbackVisible" type="boolean"/>
+        <variable name="feedbackCorrect" type="boolean"/>
+        <variable name="highlightedIndex" type="Integer"/>
+        <variable name="wrongIndex" type="Integer"/>
+        <variable name="fraction1" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="mixed1" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.FractionAnswer.MixedNumber"/>
+        <variable name="text1" type="String"/>
+        <variable name="fraction2" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="mixed2" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.FractionAnswer.MixedNumber"/>
+        <variable name="text2" type="String"/>
+        <variable name="fraction3" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="mixed3" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.FractionAnswer.MixedNumber"/>
+        <variable name="text3" type="String"/>
+        <variable name="fraction4" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="mixed4" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.FractionAnswer.MixedNumber"/>
+        <variable name="text4" type="String"/>
+    </data>
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/ncs_v2_paper" android:fillViewport="true" android:fitsSystemWindows="true" android:scrollbars="none" android:clipChildren="false" android:clipToPadding="false" tools:context=".presentation.FractionsGameFragment" android:theme="@style/FractionsGamePreview">
+        <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:clipChildren="false" android:clipToPadding="false">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="874dp" android:orientation="vertical" android:padding="24dp" android:clipChildren="false" android:clipToPadding="false">
+                <include android:id="@+id/fractions_navigation" layout="@layout/ncs_v2_fractions_navigation" android:layout_width="match_parent" android:layout_height="48dp" app:contextLabel="@{contextLabel}"/>
+                <TextView style="@style/TextAppearance.NcsV2.Fractions.Question" android:id="@+id/fractions_instruction" android:layout_width="match_parent" android:layout_height="wrap_content" android:height="68sp" android:lineHeight="34.5sp" android:gravity="center_vertical" android:layout_marginTop="30dp" android:text="@{instruction}" tools:text="@string/fractions_compare_title"/>
+                <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:layout_marginBottom="24dp">
+                    <include android:id="@+id/fractions_expression" layout="@layout/ncs_v2_fractions_comparison_expression" android:layout_width="match_parent" android:layout_height="150dp" android:theme="@style/FractionsComparisonPreview" app:left="@{left}" app:right="@{right}" app:sign="@{comparisonSign}"/>
+                </FrameLayout>
+                <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="17sp" android:textColor="@color/ncs_v2_ink" android:text="@string/fractions_sign_choice"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:clipChildren="false" android:clipToPadding="false">
+                    <include android:id="@+id/fractions_option_1" layout="@layout/ncs_v2_fraction_answer_item" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:theme="@style/FractionsExample.Less" app:fraction="@{fraction1}" app:mixedNumber="@{mixed1}" app:textValue="@{text1}" app:enabled="@{enabled}" app:comparison="@{true}" app:highlighted="@{highlightedIndex != null &amp;&amp; highlightedIndex == 0}" app:wrong="@{wrongIndex != null &amp;&amp; wrongIndex == 0}"/>
+                    <include android:id="@+id/fractions_option_2" layout="@layout/ncs_v2_fraction_answer_item" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:theme="@style/FractionsExample.Equal" app:fraction="@{fraction2}" app:mixedNumber="@{mixed2}" app:textValue="@{text2}" app:enabled="@{enabled}" app:comparison="@{true}" app:highlighted="@{highlightedIndex != null &amp;&amp; highlightedIndex == 1}" app:wrong="@{wrongIndex != null &amp;&amp; wrongIndex == 1}"/>
+                    <include android:id="@+id/fractions_option_3" layout="@layout/ncs_v2_fraction_answer_item" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:theme="@style/FractionsExample.Greater" app:fraction="@{fraction3}" app:mixedNumber="@{mixed3}" app:textValue="@{text3}" app:enabled="@{enabled}" app:comparison="@{true}" app:highlighted="@{highlightedIndex != null &amp;&amp; highlightedIndex == 2}" app:wrong="@{wrongIndex != null &amp;&amp; wrongIndex == 2}"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:layout_marginBottom="11dp" android:gravity="center_vertical">
+                    <TextView style="@style/TextAppearance.NcsV2.Fractions.Regular" android:layout_width="32dp" android:layout_height="32dp" android:layout_marginEnd="10dp" android:background="@{feedbackCorrect ? @drawable/ncs_v2_indicator_success : @drawable/ncs_v2_indicator_attention}" android:gravity="center" android:text="@{feedbackCorrect ? &quot;✓&quot; : &quot;!&quot;}" android:textColor="@color/ncs_v2_muted" android:textSize="20sp" android:visibility="@{feedbackVisible ? View.VISIBLE : View.GONE}" tools:visibility="gone" tools:text="✓" tools:background="@drawable/ncs_v2_indicator_success"/>
+                    <TextView style="@style/TextAppearance.NcsV2.Fractions.Bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxWidth="315dp" android:minHeight="24dp" android:textSize="15sp" android:textColor="@color/ncs_v2_primary" android:text="@{feedback}" tools:text="Проверь, равны ли дроби"/>
+                </LinearLayout>
+                <include android:id="@+id/fractions_footer" layout="@layout/ncs_v2_fractions_footer_comparison" android:layout_width="match_parent" android:layout_height="wrap_content" app:statistics="@{statistics}" app:minimum="@{minimum}" app:time="@{time}" app:support="@{support}" app:progress="@{progress}" app:feedbackVisible="@{feedbackVisible}"/>
+            </LinearLayout>
+            <ImageView android:layout_width="66dp" android:layout_height="66dp" android:src="@drawable/decor_sparkles" android:scaleType="fitCenter" android:contentDescription="@null" android:importantForAccessibility="no" android:layout_gravity="end|top" android:layout_marginEnd="27dp" android:layout_marginTop="95dp"/>
+        </FrameLayout>
+    </ScrollView>
+</layout>

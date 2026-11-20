@@ -2,12 +2,15 @@ package me.proton.jobforandroid.compositionofnumbers.presentation
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import me.proton.jobforandroid.compositionofnumbers.R
+import kotlin.math.roundToInt
 
 @BindingAdapter("requiredAnswers")
 fun bindRequiredAnswers(textView: TextView, count: Int) {
@@ -67,5 +70,16 @@ private fun getColorByState(context: Context, goodState: Boolean): Int {
 @BindingAdapter("numberAsText")
 fun bindNumberAsText(textView: TextView, number: Int) {
     textView.text = number.toString()
+}
+
+@BindingAdapter("fractionTopMargin")
+fun bindFractionTopMargin(view: View, marginPx: Float) {
+    // Data Binding resolves @dimen to pixels already; do not apply density again.
+    val params = view.layoutParams as? ViewGroup.MarginLayoutParams ?: return
+    val topMargin = marginPx.roundToInt()
+    if (params.topMargin != topMargin) {
+        params.topMargin = topMargin
+        view.layoutParams = params
+    }
 }
 
