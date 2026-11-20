@@ -7,15 +7,6 @@
         name="app_name"
     >СчётЕнот</string>
     <string
-        name="score_answers"
-    >Сенің ұпайың: %d</string>
-    <string
-        name="required_percentage"
-    >Дұрыс жауаптардың қажетті пайызы: %d</string>
-    <string
-        name="required_score"
-    >Дұрыс жауаптардың қажетті саны: %d</string>
-    <string
         name="progress_answers"
     >Дұрыс жауаптар: %1$d (кем дегенде %2$d)</string>
     <string

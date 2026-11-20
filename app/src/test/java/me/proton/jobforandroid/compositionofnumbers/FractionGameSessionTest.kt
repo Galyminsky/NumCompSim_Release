@@ -19,6 +19,23 @@ import org.junit.Test
 import kotlin.random.Random
 
 class FractionGameSessionTest {
+    @Test fun simultaneousDeadlinesAndLargeTimeJumpFinishExactlyOnce() {
+        for (jump in listOf(0L, 1_000_000L)) {
+            val session = start()
+            assertTrue(answer(session, session.deadlineMs - 500))
+            assertEquals(session.deadlineMs, session.feedbackEndMs)
+            session.advance(session.deadlineMs - 1)
+            assertEquals(State.FEEDBACK, session.state)
+            val restored = FractionGameSession.restore(session.snapshot(), session.deadlineMs + jump)
+            assertEquals(State.FINISHED, restored.state)
+            assertEquals(FractionGameSession.Result(1, 1, false), restored.result)
+            val finished = restored.snapshot()
+            restored.advance(session.deadlineMs + jump + 1)
+            assertFalse(restored.answer(finished.questions.first(), 0, session.deadlineMs + jump + 1))
+            assertEquals(finished, restored.snapshot())
+        }
+    }
+
     private fun questions(level: Level = Level.TEST) = FractionSessionGenerator.generate(level, Random(31))
     private fun start(level: Level = Level.TEST) = FractionGameSession.start(level, questions(level), 1_000)
     private fun correctIndex(question: FractionQuestion<out FractionAnswer>): Int = question.options.indexOfFirst {

@@ -89,10 +89,6 @@
         <item name="android:textSize">17sp</item>
         <item name="android:lineHeight">22.1sp</item>
     </style>
-    <style name="TextAppearance.NcsV2.Fractions.Action" parent="TextAppearance.NcsV2.Fractions.ExtraBold">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/ncs_v2_paper</item>
-    </style>
     <attr name="fractions_preview_numerator" format="string"/>
     <attr name="fractions_preview_denominator" format="string"/>
     <attr name="fractions_preview_whole" format="string"/>
@@ -254,7 +250,6 @@
     <style name="FractionsExample.Wrong" parent="FractionsExample.Less">
         <item name="fractions_preview_answer_background">@drawable/ncs_v2_answer_wrong</item>
     </style>
-    <dimen name="fractions_comparison_height">150dp</dimen>
     <dimen name="fractions_sign_height">112dp</dimen>
     <attr name="fractions_preview_binary_visibility" format="integer"/>
     <attr name="fractions_preview_question_visibility" format="integer"/>

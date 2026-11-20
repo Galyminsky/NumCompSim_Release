@@ -2502,3 +2502,65 @@ Preview: все 14 реальных layout содержат статически
 - `app/src/main/res/layout/ncs_v2_game.xml`
 - `app/src/main/res/layout/ncs_v2_main_hub.xml`
 - `PROJECT_LOG.md`
+
+## 21.11.2026 — Финальные автоматические проверки перед релизом (подготовлены, не запускались)
+
+Область: фактическое покрытие, только недостающие критические тесты. Изучены FRACTIONS_SPEC.md, существующие unit/androidTest, реализация FractionGameSession, FractionsGameViewModel и фактические XML/маршруты. Производственная логика, UI, зависимости и тестовая конфигурация не изменены.
+
+Существующее покрытие:
+- GameRepositoryTest: все четыре операции, настройки всех уровней, шесть вариантов, диапазоны, точность, ноль ответов, минимум и границы, точное деление, переполнения. ArithmeticAnswerDeadlineTest: до/на/после дедлайна, устаревшие события; ArithmeticFailureReasonTest: независимые критерии результата.
+- ComparisonBasicSessionGeneratorTest и ComparisonIndependentGenerationAuditTest: независимый расчёт выражений, квоты, диапазоны, баланс знаков, уникальность всех уровней. Отдельные тесты планировщиков, классификаторов, канонических ключей, валидатора, DataSource, сессии и полного сценария. Имеются большие выборки — новые массовые прогоны не добавлены.
+- FractionTest/MathValidator/Question и четыре теста генераторов: математические границы, сокращение, форматы, эквивалентность, недопустимые варианты. FractionSessionGeneratorTest: полные сессии всех уровней, точные квоты, уникальность, порядок, воспроизводимость, отказ при невозможности; часть математических ожиданий использует production-валидаторы.
+- FractionGameSessionTest: повторные/устаревшие события, дедлайн -1/0/+1, подсветка 499/500, истечение во время подсветки, последний ответ, все пороги результата, ноль/недостаток ответов, QUESTION/FEEDBACK/FINISHED restore, порядок вариантов, повреждённые Domain-снимки, переполнение времени.
+- CriticalFlowsInstrumentedTest и ComparisonGameLifecycleInstrumentedTest: общие/арифметические маршруты и lifecycle Сравнения. Дробей в этих тестах не было.
+
+Добавлено:
+1. FractionIndependentReleaseTest: четыре фиксированных seed на каждый уровень, независимая Long-арифметика и локальный gcd без production-валидаторов/reduce/equality. Проверяются исходные диапазоны, результат каждой операции и сравнения, НОК, строго положительные нецелые результаты, NORMAL <1, разные знаменатели HARD, несократимость, смешанные числа 1–3, ровно один верный вариант и отсутствие эквивалентных вариантов. Квоты и повторяемость целых заданий остаются в существующих тестах.
+2. FractionGameSessionTest: совпадение окончания подсветки с общим дедлайном и скачок на 1 000 000 мс за него, восстановление, единственный учёт и неизменность FINISHED при поздних событиях.
+3. FractionsSavedStateInstrumentedTest: новый ViewModel с новым SavedStateHandle из единственной сохранённой строки, точное равенство записи (включая порядок всех заданий/вариантов), QUESTION/FEEDBACK, отклонение объекта старого владельца, сохранение счётчика/выбора; истёкший снимок, FINISHED, повторная отметка resultNavigated и восстановление маркера; невалидный JSON и повреждённый checksum, отсутствие молчаливой замены сессии. Отсутствие повторной генерации проверяется сохранением полного снимка, а не счётчиком вызовов генератора.
+4. FractionsCriticalFlowInstrumentedTest: Welcome → Hub → Fractions → TEST → Rules → Game → реальный timeout → Result → levels → повторная игра; ActivityScenario.recreate в игре; экранная кнопка и системный Back. Использованы уже существующие Espresso/ActivityScenario, ожидание через UiController, без новых зависимостей и изменения таймера.
+
+Различие восстановления:
+- Unit restore проверяет Domain-снимок.
+- Android-тест нового ViewModel проверяет JSON/SavedStateHandle транспорт в том же процессе.
+- ActivityScenario.recreate проверяет пересоздание Activity, может сохранить ViewModelStore.
+- Ни один из них не является настоящим уничтожением процесса Android. Для этого нужен внешний управляющий процесс/сценарий восстановления задачи; в текущем androidTest его нет. Новый фреймворк не добавлялся.
+- Точные миллисекундные границы проверяются в чистом Domain с заданным временем; Android-тест FEEDBACK использует реальные 500 мс и может быть чувствителен к крайне медленному устройству. UI-маршрут проверяет детерминированный неуспешный результат с нулём ответов; успешные пороги и последний ответ уже проверяются Domain-тестами, успешный UI-маршрут новым тестом не заявляется.
+
+Статическая проверка: сверены вызовы и сигнатуры, реальные ID (fractions_repeat, fractions_choose_again и другие), маршруты, используемые зависимости. git diff --check без ошибок. Компиляция/выполнение не выполнялись по прямому ограничению пользователя; это подготовленные тесты, а не подтверждённое прохождение. Подтверждённых новых production-дефектов при чтении не найдено; отсутствие дефектов запуском не доказано.
+
+Изменённые файлы:
+- app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionIndependentReleaseTest.kt
+- app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionGameSessionTest.kt
+- app/src/androidTest/java/me/proton/jobforandroid/compositionofnumbers/FractionsSavedStateInstrumentedTest.kt
+- app/src/androidTest/java/me/proton/jobforandroid/compositionofnumbers/FractionsCriticalFlowInstrumentedTest.kt
+- PROJECT_LOG.md
+
+Команды для последующего запуска пользователем:
+- .\gradlew.bat :app:testDebugUnitTest
+- .\gradlew.bat :app:testDebugUnitTest --tests "*FractionIndependentReleaseTest" --tests "*FractionGameSessionTest"
+- .\gradlew.bat :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=me.proton.jobforandroid.compositionofnumbers.FractionsSavedStateInstrumentedTest,me.proton.jobforandroid.compositionofnumbers.FractionsCriticalFlowInstrumentedTest
+- .\gradlew.bat :app:connectedDebugAndroidTest
+
+Gradle, сборка, тесты, commit и push на этом этапе не запускались.
+
+## 21.11.2026 — Устранение неоднозначного pressBack в инструментальном тесте
+
+В FractionsCriticalFlowInstrumentedTest.kt wildcard-импорты Espresso.* и ViewActions.* одновременно предоставляли pressBack(), вызывая Overload resolution ambiguity. Для самостоятельного системного Back указан Espresso.pressBack(); конфликтующие wildcard-импорты заменены точечными Espresso, onView, click и scrollTo. Порядок действий и проверки возврата к выбору сложности сохранены. Другие тесты, production-код и зависимости не изменены. Выполнена статическая проверка импортов и diff; сборка, тесты, commit и push не запускались.
+
+## 21.11.2026 — Согласованная чистка только категории A
+
+Перед удалением повторно проверены ссылки во всех app/src: Kotlin, XML, Navigation, main/debug/release и тесты. app:requiredAnswers в ncs_v2_game.xml относится к include ncs_v2_progress_item.xml с объявленной переменной requiredAnswers; это не вызов TextView-адаптера.
+
+Удалены:
+- WelcomeFragment.newInstance() и опустевший companion object; действующий Fragment сохранён.
+- Из BindingAdapter.kt: bindRequiredAnswers, bindScoreAnswers, bindRequiredPercentage, bindResultEmoji, bindEnoughCount, bindEnoughPercent, getSmileResId, getColorByState и только ставшие ненужными импорты.
+- drawable/ic_smile.png и drawable/ic_sad.png.
+- score_answers, required_percentage, required_score из values/strings.xml, values-en/strings.xml, values-kk/strings.xml, values-uk/strings.xml.
+- fractions_comparison_height и TextAppearance.NcsV2.Fractions.Action из values/fractions_screens.xml.
+
+Сохранены bindNumberAsText, bindFractionTopMargin и остальные адаптеры, переменная requiredAnswers, progress_answers, все кандидаты B/C, лицензии, превью, Gradle, ProGuard и figma_assets.
+
+Самопроверка: удалённые символы и ключи в app/src отсутствуют; все XML в app/src разбираются; DataBinding include/variable повторно сверены; git diff просмотрен, git diff --check без ошибок. Снимок SHA-256 на начало задачи подтверждает изменения только двух согласованных Kotlin-файлов, пяти values XML и удаление двух PNG в app/src; новых файлов нет. Журнал обновлён отдельно. Navigation, игровые исходники, layouts, конфигурация и тесты не изменены.
+
+Проверка статическая: Gradle, сборка, генерация DataBinding, тесты, commit и push не запускались. Успешная компиляция после чистки не заявляется.
