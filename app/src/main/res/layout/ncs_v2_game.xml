@@ -172,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/ncs_v2_nunito_extrabold"
                     android:includeFontPadding="false"
-                    android:text="@string/ncs_v2_tap_correct_number"
+                    android:gravity="center" android:text="@string/ncs_v2_tap_correct_number"
                     android:textColor="@color/ncs_v2_primary"
                     android:textSize="@dimen/ncs_v2_text_16"
                 />

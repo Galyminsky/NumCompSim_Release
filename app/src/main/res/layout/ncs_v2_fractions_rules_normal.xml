@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/ncs_v2_paper" android:fillViewport="true" android:fitsSystemWindows="true" android:scrollbars="none" android:clipChildren="false" android:clipToPadding="false">
-    <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:clipChildren="false" android:clipToPadding="false">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="874dp" android:orientation="vertical" android:padding="24dp" android:clipChildren="false" android:clipToPadding="false">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/ncs_v2_paper" android:fitsSystemWindows="true" android:clipChildren="false" android:clipToPadding="false">
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent" android:clipChildren="false" android:clipToPadding="false">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:padding="24dp" android:clipChildren="false" android:clipToPadding="false">
             <include layout="@layout/ncs_v2_fractions_brand" android:layout_width="match_parent" android:layout_height="58dp"/>
+            <ScrollView android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true" android:overScrollMode="ifContentScrolls" android:scrollbars="none" android:clipToPadding="false">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingTop="@dimen/ncs_v2_space_8" android:paddingBottom="@dimen/ncs_v2_space_8">
             <Space android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1"/>
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
-                <TextView style="@style/TextAppearance.NcsV2.Fractions.Title" android:height="78sp" android:gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="start" android:text="@string/fractions_normal_title"/>
+                <TextView style="@style/TextAppearance.NcsV2.Fractions.Title" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_gravity="start" android:text="@string/fractions_normal_title" android:singleLine="true" android:maxLines="1" android:autoSizeTextType="uniform" android:autoSizeMinTextSize="@dimen/ncs_v2_text_20" android:autoSizeMaxTextSize="@dimen/ncs_v2_text_36" android:autoSizeStepGranularity="1sp"/>
                 <TextView style="@style/TextAppearance.NcsV2.Fractions.Body" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:textColor="@color/ncs_v2_primary" android:textSize="17sp" android:lineSpacingMultiplier="1.35" android:text="@string/fractions_normal_intro"/>
             </LinearLayout>
             <Space android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1"/>
@@ -28,6 +30,8 @@
                 <TextView style="@style/TextAppearance.NcsV2.Fractions.Body17" android:height="44sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:layout_marginTop="12dp" android:gravity="center" android:text="@string/fractions_normal_rule"/>
             </LinearLayout>
             <Space android:layout_width="1dp" android:layout_height="0dp" android:layout_weight="1"/>
+                </LinearLayout>
+            </ScrollView>
             <LinearLayout android:layout_width="match_parent" android:layout_height="92dp" android:orientation="vertical">
                 <TextView style="@style/TextAppearance.NcsV2.Fractions.Bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:textSize="15sp" android:textColor="@color/ncs_v2_primary" android:text="@string/fractions_normal_requirements"/>
                 <Space android:layout_width="1dp" android:layout_height="12dp"/>
@@ -41,4 +45,4 @@
         </LinearLayout>
         <ImageView android:layout_width="88dp" android:layout_height="88dp" android:src="@drawable/decor_sparkles" android:scaleType="fitCenter" android:contentDescription="@null" android:importantForAccessibility="no" android:layout_gravity="end|top" android:layout_marginEnd="20dp" android:layout_marginTop="8dp"/>
     </FrameLayout>
-</ScrollView>
+</FrameLayout>

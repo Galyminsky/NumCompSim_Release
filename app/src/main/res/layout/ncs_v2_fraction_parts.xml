@@ -7,7 +7,11 @@
     <me.proton.jobforandroid.compositionofnumbers.presentation.FractionPartsView
         android:layout_width="match_parent"
         android:layout_height="@dimen/ncs_v2_equation_height"
-        android:padding="@dimen/ncs_v2_stroke_regular"
+        android:minHeight="@dimen/ncs_v2_equation_height"
+        android:paddingStart="@dimen/ncs_v2_space_24"
+        android:paddingEnd="@dimen/ncs_v2_space_24"
+        android:paddingTop="@dimen/ncs_v2_space_16"
+        android:paddingBottom="@dimen/ncs_v2_space_16"
         android:background="@drawable/ncs_v2_fraction_parts_panel"
         android:importantForAccessibility="yes"
         app:totalParts="@{totalParts}"

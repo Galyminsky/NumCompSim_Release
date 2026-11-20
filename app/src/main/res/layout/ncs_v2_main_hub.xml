@@ -178,34 +178,73 @@
                     />
                 </LinearLayout>
             </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ncs_v2_space_8"
-                android:fontFamily="@font/ncs_v2_nunito_extrabold"
-                android:includeFontPadding="false"
-                android:text="@string/ncs_v2_hub_coming_soon"
-                android:textColor="@color/ncs_v2_ink"
-                android:textSize="@dimen/ncs_v2_text_17"
-            />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/ncs_v2_space_12"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 android:clipChildren="false"
-                android:clipToPadding="false"
-            >
-                <include
-                    layout="@layout/ncs_v2_hub_future_card"
-                />
-                <Space
-                    android:layout_width="@dimen/ncs_v2_space_12"
-                    android:layout_height="0dp"
-                />
-                <include
-                    layout="@layout/ncs_v2_hub_future_card"
-                />
+                android:clipToPadding="false">
+                <LinearLayout
+                    android:id="@+id/ncs_v2_hub_fractions_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:minHeight="182dp"
+                    android:orientation="vertical"
+                    android:padding="@dimen/ncs_v2_space_16"
+                    android:paddingTop="3dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:background="@drawable/ncs_v2_hub_fractions_card"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:contentDescription="@string/ncs_v2_hub_fractions_description"
+                    android:elevation="6dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:src="@drawable/raccoon_fractions"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="@null" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ncs_v2_nunito_extrabold"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_hub_fractions"
+                        android:textColor="@color/ncs_v2_ink"
+                        android:textSize="@dimen/ncs_v2_text_20" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ncs_v2_space_8"
+                        android:fontFamily="@font/ncs_v2_nunito_bold"
+                        android:includeFontPadding="false"
+                        android:text="@string/ncs_v2_hub_fractions_detail"
+                        android:textColor="@color/ncs_v2_primary"
+                        android:textSize="@dimen/ncs_v2_text_15" />
+                </LinearLayout>
+                <Space android:layout_width="12dp" android:layout_height="0dp" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/TextAppearance.NcsV2.Fractions.ExtraBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="@string/ncs_v2_hub_coming_soon"
+                        android:textColor="@color/ncs_v2_ink"
+                        android:textSize="17sp" />
+                    <include
+                        layout="@layout/ncs_v2_hub_future_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="128dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_weight="0" />
+                </LinearLayout>
             </LinearLayout>
             <ImageView
                 android:layout_width="125dp"

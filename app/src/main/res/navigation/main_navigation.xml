@@ -28,6 +28,45 @@
         <action
             android:id="@+id/action_mainHubFragment_to_comparisonRulesFragment"
             app:destination="@id/comparisonRulesFragment" />
+        <action
+            android:id="@+id/action_mainHubFragment_to_fractionsLevelFragment"
+            app:destination="@id/fractionsLevelFragment" />
+    </fragment>
+
+    <fragment android:id="@+id/fractionsLevelFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.FractionsLevelFragment"
+        android:label="@string/fractions_choose" tools:layout="@layout/ncs_v2_fractions_level">
+        <action android:id="@+id/action_fractionsLevelFragment_to_fractionsRulesFragment"
+            app:destination="@id/fractionsRulesFragment" app:launchSingleTop="true" />
+    </fragment>
+    <fragment android:id="@+id/fractionsRulesFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.FractionsRulesFragment"
+        android:label="@string/fractions_rules_action" tools:layout="@layout/ncs_v2_fractions_rules_test">
+        <argument android:name="level" app:argType="string" />
+        <action android:id="@+id/action_fractionsRulesFragment_to_fractionsGameFragment"
+            app:destination="@id/fractionsGameFragment" app:launchSingleTop="true"
+            app:popUpTo="@id/fractionsLevelFragment" />
+    </fragment>
+    <fragment android:id="@+id/fractionsGameFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.FractionsGameFragment"
+        android:label="@string/ncs_v2_hub_fractions" tools:layout="@layout/ncs_v2_fractions_game_picture">
+        <argument android:name="level" app:argType="string" />
+        <action android:id="@+id/action_fractionsGameFragment_to_fractionsResultFragment"
+            app:destination="@id/fractionsResultFragment" app:launchSingleTop="true"
+            app:popUpTo="@id/fractionsGameFragment" app:popUpToInclusive="true" />
+    </fragment>
+    <fragment android:id="@+id/fractionsResultFragment"
+        android:name="me.proton.jobforandroid.compositionofnumbers.presentation.FractionsResultFragment"
+        android:label="@string/fractions_result_caption" tools:layout="@layout/ncs_v2_fractions_result_success">
+        <argument android:name="level" app:argType="string" />
+        <argument android:name="success" app:argType="boolean" />
+        <argument android:name="answeredCount" app:argType="integer" />
+        <argument android:name="correctCount" app:argType="integer" />
+        <argument android:name="minimumReached" app:argType="boolean" />
+        <argument android:name="accuracyReached" app:argType="boolean" />
+        <action android:id="@+id/action_fractionsResultFragment_to_fractionsGameFragment"
+            app:destination="@id/fractionsGameFragment" app:launchSingleTop="true"
+            app:popUpTo="@id/fractionsLevelFragment" />
     </fragment>
 
     <fragment

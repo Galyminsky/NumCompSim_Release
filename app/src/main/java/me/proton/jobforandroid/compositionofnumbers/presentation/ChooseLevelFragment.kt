@@ -26,7 +26,7 @@ class ChooseLevelFragment : Fragment() {
     private val getGameSettings by lazy {
         GetGameSettingsUseCase((requireActivity() as MainActivity).gameRepository)
     }
-    private var selectedLevel = Level.TEST
+    private var selectedLevel: Level? = null
     private var sounds: UiSoundPool? = null
     private var animatedCard: View? = null
     private var colorAnimator: ValueAnimator? = null
@@ -38,7 +38,7 @@ class ChooseLevelFragment : Fragment() {
         selectionInProgress = false
         if (startPending) {
             startPending = false
-            launchGameFragment(selectedLevel)
+            selectedLevel?.let { launchGameFragment(it) }
         }
     }
 
@@ -58,7 +58,7 @@ class ChooseLevelFragment : Fragment() {
         binding.ncsV2StartGameButton.installButtonPressAnimation()
         val savedLevel: Level? = findNavController().currentBackStackEntry
             ?.savedStateHandle?.get(SELECTED_LEVEL_KEY)
-        selectedLevel = savedLevel ?: Level.TEST
+        selectedLevel = savedLevel
 
         with(binding) {
             selectedLevel = this@ChooseLevelFragment.selectedLevel
@@ -73,7 +73,9 @@ class ChooseLevelFragment : Fragment() {
             ncsV2EasyLevelItem.root.setOnClickListener { selectLevel(Level.EASY) }
             ncsV2MediumLevelItem.root.setOnClickListener { selectLevel(Level.NORMAL) }
             ncsV2HardLevelItem.root.setOnClickListener { selectLevel(Level.HARD) }
-            ncsV2StartGameButton.setOnClickListener { launchGameFragment(this@ChooseLevelFragment.selectedLevel) }
+            ncsV2StartGameButton.setOnClickListener {
+                this@ChooseLevelFragment.selectedLevel?.let { launchGameFragment(it) }
+            }
             ncsV2BackButton.setOnClickListener {
                 if (selectionInProgress || navigationStarted) return@setOnClickListener
                 val navController = findNavController()

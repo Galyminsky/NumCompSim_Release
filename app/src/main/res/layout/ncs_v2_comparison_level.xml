@@ -229,6 +229,7 @@
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/ncs_v2_comparison_level_start_button"
+                android:enabled="@{selectedLevel != null}"
                 style="@style/NcsV2.View.Action"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ncs_v2_button_height"

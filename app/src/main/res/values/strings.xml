@@ -60,4 +60,31 @@
     <string name="ncs_v2_comparison_result_count_label">Верно / отвечено</string>
     <string name="ncs_v2_comparison_result_retry">Повторить</string>
     <string name="ncs_v2_comparison_result_choose_level">Выбор сложности</string>
+    <string name="ncs_v2_hub_fractions">Дроби</string>
+    <string name="ncs_v2_hub_fractions_detail">Задания\nс дробями</string>
+    <string name="ncs_v2_hub_fractions_description">Дроби. Задания с дробями</string>
+    <string name="fractions_level_context">%1$s · Дроби</string>
+    <string name="fractions_statistics">Верно %1$d / отвечено %2$d</string>
+    <string name="fractions_minimum">Минимум %1$d ответов</string>
+    <string name="fractions_time">%1$d:%2$02d</string>
+    <string name="fractions_support">Всё получится!</string>
+    <string name="fractions_answer_hint">Выбери ответ</string>
+    <string name="fractions_answer_correct">Верно!</string>
+    <string name="fractions_answer_wrong">Пока неверно</string>
+    <string name="fractions_restore_error">Не удалось восстановить сохранённую тренировку. Выбери сложность, чтобы начать заново.</string>
+    <string name="fractions_generation_error">Не удалось подготовить тренировку. Вернись к выбору сложности и попробуй ещё раз.</string>
+    <string name="fractions_result_count">%1$d / %2$d</string>
+    <string name="fractions_percent">%1$d%%</string>
+    <string name="fractions_count_status">Минимум %1$d ответов · %2$s</string>
+    <string name="fractions_accuracy_status">Нужно %1$d%% · %2$s</string>
+    <string name="fractions_goal_reached">цель достигнута</string>
+    <string name="fractions_goal_missed">цель не достигнута</string>
+    <string name="fractions_failure_both">Нужно ответить на больше заданий\nи повысить точность.</string>
+    <string name="fractions_failure_count">Постарайся ответить\nна больше заданий.</string>
+    <string name="fractions_failure_accuracy">Постарайся решать точнее.\nПопробуй ещё раз!</string>
+    <string name="fractions_plus" translatable="false">+</string>
+    <string name="fractions_minus" translatable="false">−</string>
+    <string name="fractions_less" translatable="false">&lt;</string>
+    <string name="fractions_equal" translatable="false">=</string>
+    <string name="fractions_greater" translatable="false">&gt;</string>
 </resources>

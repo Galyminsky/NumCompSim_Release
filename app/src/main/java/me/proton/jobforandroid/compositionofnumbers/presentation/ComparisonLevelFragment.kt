@@ -13,7 +13,7 @@ import me.proton.jobforandroid.compositionofnumbers.domain.entity.ComparisonLeve
 class ComparisonLevelFragment : Fragment() {
     private var _binding: NcsV2ComparisonLevelBinding? = null
     private val binding get() = _binding!!
-    private var selectedLevel = ComparisonLevel.NORMAL
+    private var selectedLevel: ComparisonLevel? = null
     private var sounds: UiSoundPool? = null
 
     override fun onCreateView(
@@ -39,12 +39,13 @@ class ComparisonLevelFragment : Fragment() {
         binding.ncsV2ComparisonNormalLevel.root.setOnClickListener { selectLevel(ComparisonLevel.NORMAL) }
         binding.ncsV2ComparisonHardLevel.root.setOnClickListener { selectLevel(ComparisonLevel.HARD) }
         binding.ncsV2ComparisonLevelStartButton.setOnClickListener {
+            val level = selectedLevel ?: return@setOnClickListener
             val navController = findNavController()
             if (navController.currentDestination?.id == R.id.comparisonLevelFragment) {
                 sounds?.play(R.raw.key_press)
                 navController.navigate(
                     R.id.action_comparisonLevelFragment_to_comparisonGameFragment,
-                    Bundle().apply { putSerializable("level", selectedLevel) }
+                    Bundle().apply { putSerializable("level", level) }
                 )
             }
         }
@@ -64,7 +65,7 @@ class ComparisonLevelFragment : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(SELECTED_LEVEL_KEY, selectedLevel.name)
+        selectedLevel?.let { outState.putString(SELECTED_LEVEL_KEY, it.name) }
         super.onSaveInstanceState(outState)
     }
 
