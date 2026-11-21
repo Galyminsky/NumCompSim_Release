@@ -11,15 +11,6 @@
         name="game_services_project_id"
     >609404540906</string>
     <string
-        name="score_answers"
-    >Your score: %d</string>
-    <string
-        name="required_percentage"
-    >The required percentage of correct answers: %d</string>
-    <string
-        name="required_score"
-    >The required number of correct answers: %d</string>
-    <string
         name="progress_answers"
     >Correct answers %1$d (minimum %2$d)</string>
     <string

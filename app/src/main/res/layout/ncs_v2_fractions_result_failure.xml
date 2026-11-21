@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="levelLabel" type="String"/>
+        <variable name="summary" type="String"/>
+        <variable name="countText" type="String"/>
+        <variable name="countStatus" type="String"/>
+        <variable name="accuracyText" type="String"/>
+        <variable name="accuracyStatus" type="String"/>
+        <variable name="minimumReached" type="boolean"/>
+        <variable name="accuracyReached" type="boolean"/>
+    </data>
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/ncs_v2_paper" android:fitsSystemWindows="true" android:clipChildren="false" android:clipToPadding="false" tools:context=".presentation.FractionsResultFragment">
+        <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent" android:clipChildren="false" android:clipToPadding="false">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:paddingStart="@dimen/ncs_v2_space_24" android:paddingEnd="@dimen/ncs_v2_space_24" android:paddingTop="@dimen/ncs_v2_space_16" android:paddingBottom="@dimen/ncs_v2_space_16" android:orientation="vertical" android:clipChildren="false" android:clipToPadding="false">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="42dp" android:gravity="center_vertical">
+                    <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="17sp" android:text="@string/fractions_result_caption"/>
+                    <Space android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+                    <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="13sp" android:background="@drawable/ncs_v2_fractions_badge" android:paddingStart="12dp" android:paddingEnd="12dp" android:paddingTop="6dp" android:paddingBottom="6dp" android:textColor="@color/ncs_v2_primary" android:elevation="6dp" tools:text="Лёгкий" android:text="@{levelLabel}"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="3" android:orientation="vertical" android:gravity="center_horizontal" android:paddingTop="10dp" android:paddingBottom="22dp">
+                    <ImageView android:layout_width="168dp" android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/raccoon_failure" android:scaleType="fitCenter" android:contentDescription="@null" android:importantForAccessibility="no"/>
+                    <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textSize="36sp" android:height="80sp" android:lineHeight="39.6sp" android:gravity="center" android:text="@string/fractions_failure_title"/>
+                    <TextView style="@style/TextAppearance.NcsV2.Fractions.Bold" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textSize="17sp" android:lineHeight="22.1sp" android:gravity="center" android:textColor="@color/ncs_v2_primary" android:text="@{summary}" tools:text="10 ответов есть — молодец!
+Но точность пока ниже 70%."/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp" android:background="@drawable/ncs_v2_result_negative_outline" android:elevation="6dp" android:clipChildren="false" android:clipToPadding="false">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
+                        <TextView style="@style/TextAppearance.NcsV2.Fractions.Regular" android:layout_width="32dp" android:layout_height="32dp" android:background="@{minimumReached ? @drawable/ncs_v2_indicator_success : @drawable/ncs_v2_indicator_attention}" android:text="@{minimumReached ? &quot;✓&quot; : &quot;!&quot;}" android:gravity="center" android:textSize="20sp" android:textColor="@color/ncs_v2_muted" tools:background="@drawable/ncs_v2_indicator_success" tools:text="✓"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:orientation="vertical">
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="35dp" android:gravity="center_vertical" android:baselineAligned="true">
+                                <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textSize="16sp" android:text="@string/fractions_count_label"/>
+                                <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="26sp" tools:text="5 / 10" android:text="@{countText}"/>
+                            </LinearLayout>
+                            <TextView style="@style/TextAppearance.NcsV2.Fractions.Bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:textSize="14sp" android:textColor="@color/ncs_v2_muted" tools:text="Минимум 10 ответов · выполнено" android:text="@{countStatus}"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="16dp" android:background="@color/ncs_v2_border"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_marginTop="16dp">
+                        <TextView style="@style/TextAppearance.NcsV2.Fractions.Regular" android:layout_width="32dp" android:layout_height="32dp" android:background="@{accuracyReached ? @drawable/ncs_v2_indicator_success : @drawable/ncs_v2_indicator_attention}" android:text="@{accuracyReached ? &quot;✓&quot; : &quot;!&quot;}" android:gravity="center" android:textSize="20sp" android:textColor="@color/ncs_v2_muted" tools:background="@drawable/ncs_v2_indicator_attention" tools:text="!"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:orientation="vertical">
+                            <LinearLayout android:layout_width="match_parent" android:layout_height="35dp" android:gravity="center_vertical" android:baselineAligned="true">
+                                <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textSize="16sp" android:text="@string/fractions_accuracy_label"/>
+                                <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="26sp" tools:text="50%" android:text="@{accuracyText}"/>
+                            </LinearLayout>
+                            <TextView style="@style/TextAppearance.NcsV2.Fractions.Bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:textSize="14sp" android:textColor="@color/ncs_v2_muted" tools:text="Нужно 70% · пока не достигнута" android:text="@{accuracyStatus}"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+                    <ImageView android:layout_width="220dp" android:layout_height="match_parent" android:src="@drawable/raccoon_thinking" android:scaleType="fitCenter" android:contentDescription="@null" android:importantForAccessibility="no" android:layout_gravity="center"/>
+                </FrameLayout>
+                <FrameLayout android:id="@+id/fractions_repeat" android:layout_width="match_parent" android:layout_height="60dp" android:background="@drawable/ncs_v2_primary_button" android:clickable="true" android:focusable="true" android:contentDescription="@string/fractions_repeat">
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center_vertical">
+                        <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp" android:textColor="@color/ncs_v2_paper" android:importantForAccessibility="no" android:text="@string/fractions_repeat"/>
+                    </LinearLayout>
+                </FrameLayout>
+                <Space android:layout_width="1dp" android:layout_height="10dp"/>
+                <FrameLayout android:id="@+id/fractions_choose_again" android:layout_width="match_parent" android:layout_height="60dp" android:background="@drawable/ncs_v2_secondary_button" android:clickable="true" android:focusable="true" android:contentDescription="@string/fractions_choose_again">
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center_vertical">
+                        <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="20sp" android:textColor="@color/ncs_v2_primary" android:importantForAccessibility="no" android:text="@string/fractions_choose_again"/>
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+            <ImageView android:layout_width="44dp" android:layout_height="44dp" android:src="@drawable/decor_sparkles" android:scaleType="fitCenter" android:contentDescription="@null" android:importantForAccessibility="no" android:layout_gravity="top|start" android:layout_marginStart="20dp" android:layout_marginTop="102dp"/>
+            <ImageView android:layout_width="44dp" android:layout_height="44dp" android:src="@drawable/decor_sparkles" android:scaleType="fitCenter" android:contentDescription="@null" android:importantForAccessibility="no" android:layout_gravity="top|end" android:layout_marginEnd="20dp" android:layout_marginTop="102dp"/>
+        </FrameLayout>
+    </FrameLayout>
+</layout>

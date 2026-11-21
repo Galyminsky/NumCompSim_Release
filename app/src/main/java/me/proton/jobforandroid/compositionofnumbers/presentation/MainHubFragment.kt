@@ -36,6 +36,12 @@ class MainHubFragment : Fragment() {
                 navController.navigate(R.id.action_mainHubFragment_to_comparisonRulesFragment)
             }
         }
+        binding.ncsV2HubFractionsCard.setOnClickListener {
+            val navController = findNavController()
+            if (navController.currentDestination?.id == R.id.mainHubFragment) {
+                navController.navigate(MainHubFragmentDirections.actionMainHubFragmentToFractionsLevelFragment())
+            }
+        }
     }
 
     override fun onDestroyView() {

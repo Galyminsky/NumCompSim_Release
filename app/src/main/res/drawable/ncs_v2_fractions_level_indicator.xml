@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/ncs_v2_primary"/>
+            <stroke android:width="@dimen/ncs_v2_stroke_regular" android:color="@color/ncs_v2_primary"/>
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/ncs_v2_paper"/>
+            <stroke android:width="@dimen/ncs_v2_stroke_regular" android:color="@color/ncs_v2_border"/>
+        </shape>
+    </item>
+</selector>

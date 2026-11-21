@@ -254,7 +254,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="32dp"
-                android:gravity="center_vertical"
+                android:gravity="center" android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:id="@+id/ncs_v2_comparison_feedback_row"
                 android:layout_marginTop="@dimen/ncs_v2_space_8"
@@ -262,7 +262,7 @@
                 android:clipToPadding="false"
             >
                 <TextView
-                    android:id="@+id/ncs_v2_comparison_correct_indicator"
+                    android:id="@+id/ncs_v2_comparison_correct_indicator" android:layout_marginEnd="@dimen/ncs_v2_feedback_gap"
                     android:layout_width="@dimen/ncs_v2_space_32"
                     android:layout_height="@dimen/ncs_v2_space_32"
                     android:background="@drawable/ncs_v2_indicator_success"
@@ -276,9 +276,9 @@
                 />
                 <TextView
                     android:id="@+id/ncs_v2_comparison_feedback_text"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:gravity="center" android:minLines="2"
                     android:fontFamily="@font/ncs_v2_nunito_bold"
                     android:includeFontPadding="false"
                     android:text="@string/ncs_v2_comparison_game_hint"

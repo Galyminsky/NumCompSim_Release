@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="left" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="right" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction"/>
+        <variable name="sign" type="String"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="@dimen/fractions_game_comparison_panel_height" android:paddingTop="@dimen/ncs_v2_space_24" android:paddingBottom="@dimen/ncs_v2_space_24" android:paddingStart="@dimen/ncs_v2_space_8" android:paddingEnd="@dimen/ncs_v2_space_8" android:background="@drawable/ncs_v2_fraction_parts_panel" tools:theme="@style/FractionsComparisonPreview">
+        <include android:id="@+id/fractions_comparison_left" layout="@layout/ncs_v2_fraction" android:layout_width="wrap_content" android:layout_height="wrap_content" android:theme="@style/FractionsLargeExample.TwoFourths" app:fraction="@{left}" app:large="@{true}"/>
+        <FrameLayout android:id="@+id/fractions_comparison_sign_group" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingStart="@dimen/ncs_v2_space_18" android:paddingEnd="@dimen/ncs_v2_space_18">
+            <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="69dp" android:minHeight="76dp" android:background="@{sign == null ? @drawable/ncs_v2_fractions_question_slot : null}" tools:background="?attr/fractions_preview_slot_background">
+                <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:text="?" android:textSize="49sp" android:textColor="@color/ncs_v2_yellow" android:visibility="@{sign == null ? View.VISIBLE : View.GONE}" tools:visibility="?attr/fractions_preview_question_visibility"/>
+                <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:text="@{sign}" android:textSize="38sp" android:textColor="@color/ncs_v2_primary" android:visibility="@{sign == null ? View.GONE : View.VISIBLE}" tools:visibility="?attr/fractions_preview_resolved_visibility" tools:text="="/>
+            </FrameLayout>
+        </FrameLayout>
+        <include android:id="@+id/fractions_comparison_right" layout="@layout/ncs_v2_fraction" android:layout_width="wrap_content" android:layout_height="wrap_content" android:theme="@style/FractionsLargeExample.Half" app:fraction="@{right}" app:large="@{true}"/>
+        <androidx.constraintlayout.helper.widget.Flow android:layout_width="0dp" android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" app:constraint_referenced_ids="fractions_comparison_left,fractions_comparison_sign_group,fractions_comparison_right" app:flow_verticalAlign="center" app:flow_wrapMode="chain" app:flow_horizontalStyle="packed" app:flow_verticalStyle="packed" app:flow_verticalGap="@dimen/fractions_expression_gap"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

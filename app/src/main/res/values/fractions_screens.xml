@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fractions_choose">Выбери\nсложность</string>
+    <string name="fractions_begin">Начнём с дробей!</string>
+    <string name="fractions_back">Назад</string>
+    <string name="fractions_rules_action">Смотреть правила</string>
+    <string name="fractions_start">Начать игру</string>
+    <string name="fractions_level_hint">Уровень можно выбрать заново.</string>
+    <string name="fractions_test">Тестовый</string>
+    <string name="fractions_easy">Лёгкий</string>
+    <string name="fractions_normal">Средний</string>
+    <string name="fractions_hard">Тяжёлый</string>
+    <string name="fractions_test_range">Рисунки · 30 с</string>
+    <string name="fractions_easy_range">Дроби 2–10 · 90 с</string>
+    <string name="fractions_normal_range">Действия · 120 с</string>
+    <string name="fractions_hard_range">Сложные дроби · 180 с</string>
+    <string name="fractions_test_title">Дроби:\nначинаем!</string>
+    <string name="fractions_easy_title">Понимаем\nдроби</string>
+    <string name="fractions_normal_title">Действия\nс дробями</string>
+    <string name="fractions_hard_title">Мастер\nдробей!</string>
+    <string name="fractions_test_intro">Узнай дробь по рисунку.</string>
+    <string name="fractions_easy_intro">Назови числитель или знаменатель.</string>
+    <string name="fractions_normal_intro">Сравнивай и вычисляй дроби.</string>
+    <string name="fractions_hard_intro">Разные знаменатели и смешанные числа.</string>
+    <string name="fractions_test_panel">КАК УЗНАТЬ ДРОБЬ</string>
+    <string name="fractions_easy_panel">ЧИСЛИТЕЛЬ И ЗНАМЕНАТЕЛЬ</string>
+    <string name="fractions_normal_panel">ОДИНАКОВЫЙ ЗНАМЕНАТЕЛЬ</string>
+    <string name="fractions_hard_panel">ПРИВЕДИ К ОБЩЕМУ</string>
+    <string name="fractions_test_rule">Сосчитай все равные части.\nВыбери дробь по рисунку.</string>
+    <string name="fractions_easy_rule">Сверху — числитель,\nснизу — знаменатель.\nНазови нужное число.</string>
+    <string name="fractions_normal_rule">Складывай числители, а знаменатель\nоставляй прежним.</string>
+    <string name="fractions_hard_rule">Сначала общий знаменатель.\nПотом складывай или вычитай.</string>
+    <string name="fractions_test_requirements">8 заданий · 30 с · мин. 5 · 60%</string>
+    <string name="fractions_easy_requirements">15 заданий · 90 с · мин. 10 · 70%</string>
+    <string name="fractions_normal_requirements">12 заданий · 120 с · мин. 8 · 75%</string>
+    <string name="fractions_hard_requirements">10 заданий · 180 с · мин. 6 · 80%</string>
+    <string name="fractions_picture_title">Какая часть закрашена?</string>
+    <string name="fractions_numerator_title">Назови числитель</string>
+    <string name="fractions_denominator_title">Назови знаменатель</string>
+    <string name="fractions_compare_title">Сравни дроби</string>
+    <string name="fractions_add_title">Сложи дроби</string>
+    <string name="fractions_subtract_title">Вычти дроби</string>
+    <string name="fractions_reduce_title">Сократи дробь</string>
+    <string name="fractions_mixed_title">Выдели целую часть</string>
+    <string name="fractions_fraction_choice">Выбери правильную дробь</string>
+    <string name="fractions_numerator_choice">Выбери верхнее число</string>
+    <string name="fractions_denominator_choice">Выбери нижнее число</string>
+    <string name="fractions_sign_choice">Выбери правильный знак</string>
+    <string name="fractions_result_choice">Выбери результат</string>
+    <string name="fractions_reduce_choice">Выбери несократимую дробь</string>
+    <string name="fractions_mixed_choice">Выбери смешанное число</string>
+    <string name="fractions_result_caption">Результат игры</string>
+    <string name="fractions_success_title">У тебя получилось!</string>
+    <string name="fractions_failure_title">Пока не\nполучилось</string>
+    <string name="fractions_success_summary">Обе цели достигнуты.\nТы отлично решаешь дроби!</string>
+    <string name="fractions_repeat">Повторить</string>
+    <string name="fractions_choose_again">Выбор сложности</string>
+    <string name="fractions_count_label">Верно / отвечено</string>
+    <string name="fractions_accuracy_label">Точность</string>
+    <string name="fractions_parts_shaded">Закрашено</string>
+    <string name="fractions_parts_total">Всего частей</string>
+    <string name="fractions_parts_word">части</string>
+    <style name="TextAppearance.NcsV2.Fractions.Body" parent="TextAppearance.NcsV2">
+        <item name="android:fontFamily">@font/ncs_v2_nunito_sans_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="TextAppearance.NcsV2.Fractions.Bold" parent="TextAppearance.NcsV2">
+        <item name="android:fontFamily">@font/ncs_v2_nunito_sans_bold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="TextAppearance.NcsV2.Fractions.ExtraBold" parent="TextAppearance.NcsV2">
+        <item name="android:fontFamily">@font/ncs_v2_nunito_sans_extrabold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="TextAppearance.NcsV2.Fractions.Regular" parent="TextAppearance.NcsV2">
+        <item name="android:fontFamily">@font/ncs_v2_nunito_sans_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="TextAppearance.NcsV2.Fractions.Title" parent="TextAppearance.NcsV2.Fractions.ExtraBold">
+        <item name="android:textSize">36sp</item>
+        <item name="android:lineHeight">38.88sp</item>
+        <item name="android:letterSpacing">-0.022</item>
+    </style>
+    <style name="TextAppearance.NcsV2.Fractions.Question" parent="TextAppearance.NcsV2.Fractions.ExtraBold">
+        <item name="android:textSize">30sp</item>
+        <item name="android:lineHeight">34.5sp</item>
+    </style>
+    <style name="TextAppearance.NcsV2.Fractions.Body17" parent="TextAppearance.NcsV2.Fractions.Body">
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineHeight">22.1sp</item>
+    </style>
+    <attr name="fractions_preview_numerator" format="string"/>
+    <attr name="fractions_preview_denominator" format="string"/>
+    <attr name="fractions_preview_whole" format="string"/>
+    <attr name="fractions_preview_text" format="string"/>
+    <attr name="fractions_preview_answer_background" format="reference"/>
+    <attr name="fractions_preview_fraction_visibility" format="integer"/>
+    <attr name="fractions_preview_mixed_visibility" format="integer"/>
+    <attr name="fractions_preview_text_visibility" format="integer"/>
+    <style name="FractionsExample">
+        <item name="fractions_preview_answer_background">@drawable/ncs_v2_answer_card</item>
+        <item name="fractions_preview_numerator">1</item>
+        <item name="fractions_preview_denominator">4</item>
+        <item name="fractions_preview_whole">2</item>
+        <item name="fractions_preview_text">3</item>
+        <item name="fractions_preview_large_visibility">8</item>
+        <item name="fractions_preview_digit_size">24sp</item>
+        <item name="fractions_preview_numerator_height">28.52sp</item>
+        <item name="fractions_preview_denominator_height">29.14sp</item>
+        <item name="fractions_preview_line_gap">1.86dp</item>
+        <item name="fractions_preview_denominator_gap">0dp</item>
+        <item name="fractions_preview_sign_spacer_visibility">8</item>
+        <item name="fractions_preview_fraction_visibility">0</item>
+        <item name="fractions_preview_mixed_visibility">8</item>
+        <item name="fractions_preview_text_visibility">8</item>
+    </style>
+    <style name="FractionsExample.Half">
+        <item name="fractions_preview_numerator">1</item>
+        <item name="fractions_preview_denominator">2</item>
+    </style>
+    <style name="FractionsExample.Third">
+        <item name="fractions_preview_numerator">1</item>
+        <item name="fractions_preview_denominator">3</item>
+    </style>
+    <style name="FractionsExample.Quarter">
+        <item name="fractions_preview_numerator">1</item>
+        <item name="fractions_preview_denominator">4</item>
+    </style>
+    <style name="FractionsExample.ThreeQuarters">
+        <item name="fractions_preview_numerator">3</item>
+        <item name="fractions_preview_denominator">4</item>
+    </style>
+    <style name="FractionsExample.TwoFourths">
+        <item name="fractions_preview_numerator">2</item>
+        <item name="fractions_preview_denominator">4</item>
+    </style>
+    <style name="FractionsExample.ThreeSevenths">
+        <item name="fractions_preview_numerator">3</item>
+        <item name="fractions_preview_denominator">7</item>
+    </style>
+    <style name="FractionsExample.TwoSevenths">
+        <item name="fractions_preview_numerator">2</item>
+        <item name="fractions_preview_denominator">7</item>
+    </style>
+    <style name="FractionsExample.FiveSevenths">
+        <item name="fractions_preview_numerator">5</item>
+        <item name="fractions_preview_denominator">7</item>
+    </style>
+    <style name="FractionsExample.FiveFourteenths">
+        <item name="fractions_preview_numerator">5</item>
+        <item name="fractions_preview_denominator">14</item>
+    </style>
+    <style name="FractionsExample.SixSevenths">
+        <item name="fractions_preview_numerator">6</item>
+        <item name="fractions_preview_denominator">7</item>
+    </style>
+    <style name="FractionsExample.FourSevenths">
+        <item name="fractions_preview_numerator">4</item>
+        <item name="fractions_preview_denominator">7</item>
+    </style>
+    <style name="FractionsExample.SixEighths">
+        <item name="fractions_preview_numerator">6</item>
+        <item name="fractions_preview_denominator">8</item>
+    </style>
+    <style name="FractionsExample.ThreeEighths">
+        <item name="fractions_preview_numerator">3</item>
+        <item name="fractions_preview_denominator">8</item>
+    </style>
+    <style name="FractionsExample.TwoThirds">
+        <item name="fractions_preview_numerator">2</item>
+        <item name="fractions_preview_denominator">3</item>
+    </style>
+    <style name="FractionsExample.SevenThirds">
+        <item name="fractions_preview_numerator">7</item>
+        <item name="fractions_preview_denominator">3</item>
+    </style>
+    <style name="FractionsExample.FiveFourths">
+        <item name="fractions_preview_numerator">5</item>
+        <item name="fractions_preview_denominator">4</item>
+    </style>
+    <style name="FractionsExample.Three" parent="FractionsExample">
+        <item name="fractions_preview_fraction_visibility">8</item>
+        <item name="fractions_preview_text_visibility">0</item>
+        <item name="fractions_preview_text">3</item>
+    </style>
+    <style name="FractionsExample.Seven" parent="FractionsExample">
+        <item name="fractions_preview_fraction_visibility">8</item>
+        <item name="fractions_preview_text_visibility">0</item>
+        <item name="fractions_preview_text">7</item>
+    </style>
+    <style name="FractionsExample.Four" parent="FractionsExample">
+        <item name="fractions_preview_fraction_visibility">8</item>
+        <item name="fractions_preview_text_visibility">0</item>
+        <item name="fractions_preview_text">4</item>
+    </style>
+    <style name="FractionsExample.One" parent="FractionsExample">
+        <item name="fractions_preview_fraction_visibility">8</item>
+        <item name="fractions_preview_text_visibility">0</item>
+        <item name="fractions_preview_text">1</item>
+    </style>
+    <style name="FractionsExample.Less" parent="FractionsExample">
+        <item name="fractions_preview_sign_spacer_visibility">0</item>
+        <item name="fractions_preview_fraction_visibility">8</item>
+        <item name="fractions_preview_text_visibility">0</item>
+        <item name="fractions_preview_text">&lt;</item>
+    </style>
+    <style name="FractionsExample.Equal" parent="FractionsExample">
+        <item name="fractions_preview_sign_spacer_visibility">0</item>
+        <item name="fractions_preview_fraction_visibility">8</item>
+        <item name="fractions_preview_text_visibility">0</item>
+        <item name="fractions_preview_text">=</item>
+    </style>
+    <style name="FractionsExample.Greater" parent="FractionsExample">
+        <item name="fractions_preview_sign_spacer_visibility">0</item>
+        <item name="fractions_preview_fraction_visibility">8</item>
+        <item name="fractions_preview_text_visibility">0</item>
+        <item name="fractions_preview_text">&gt;</item>
+    </style>
+    <style name="FractionsExample.MixedTwoOneThird" parent="FractionsExample">
+        <item name="fractions_preview_fraction_visibility">8</item>
+        <item name="fractions_preview_mixed_visibility">0</item>
+        <item name="fractions_preview_whole">2</item>
+        <item name="fractions_preview_numerator">1</item>
+        <item name="fractions_preview_denominator">3</item>
+    </style>
+    <style name="FractionsExample.MixedOneTwoThirds" parent="FractionsExample">
+        <item name="fractions_preview_fraction_visibility">8</item>
+        <item name="fractions_preview_mixed_visibility">0</item>
+        <item name="fractions_preview_whole">1</item>
+        <item name="fractions_preview_numerator">2</item>
+        <item name="fractions_preview_denominator">3</item>
+    </style>
+    <style name="FractionsExample.MixedTwoHalf" parent="FractionsExample">
+        <item name="fractions_preview_fraction_visibility">8</item>
+        <item name="fractions_preview_mixed_visibility">0</item>
+        <item name="fractions_preview_whole">2</item>
+        <item name="fractions_preview_numerator">1</item>
+        <item name="fractions_preview_denominator">2</item>
+    </style>
+    <style name="FractionsExample.MixedThreeThird" parent="FractionsExample">
+        <item name="fractions_preview_fraction_visibility">8</item>
+        <item name="fractions_preview_mixed_visibility">0</item>
+        <item name="fractions_preview_whole">3</item>
+        <item name="fractions_preview_numerator">1</item>
+        <item name="fractions_preview_denominator">3</item>
+    </style>
+    <style name="FractionsExample.EqualSelected" parent="FractionsExample.Equal">
+        <item name="fractions_preview_answer_background">@drawable/ncs_v2_fraction_answer_highlighted</item>
+    </style>
+    <style name="FractionsExample.Wrong" parent="FractionsExample.Less">
+        <item name="fractions_preview_answer_background">@drawable/ncs_v2_answer_wrong</item>
+    </style>
+    <dimen name="fractions_sign_height">112dp</dimen>
+    <attr name="fractions_preview_binary_visibility" format="integer"/>
+    <attr name="fractions_preview_question_visibility" format="integer"/>
+    <attr name="fractions_preview_resolved_visibility" format="integer"/>
+    <attr name="fractions_preview_slot_background" format="reference"/>
+    <attr name="fractions_preview_context" format="string"/>
+    <attr name="fractions_preview_statistics" format="string"/>
+    <attr name="fractions_preview_minimum" format="string"/>
+    <attr name="fractions_preview_time" format="string"/>
+    <attr name="fractions_preview_support" format="string"/>
+    <style name="FractionsExpressionPreview" parent="FractionsExample.Large">
+        <item name="fractions_preview_numerator">2</item>
+        <item name="fractions_preview_denominator">7</item>
+        <item name="fractions_preview_binary_visibility">0</item>
+        <item name="fractions_preview_question_visibility">0</item>
+    </style>
+    <style name="FractionsExpressionPreview.Numerator" parent="FractionsExpressionPreview">
+        <item name="fractions_preview_numerator">3</item>
+        <item name="fractions_preview_denominator">7</item>
+        <item name="fractions_preview_binary_visibility">8</item>
+        <item name="fractions_preview_question_visibility">8</item>
+    </style>
+    <style name="FractionsExpressionPreview.Reduction" parent="FractionsExpressionPreview">
+        <item name="fractions_preview_numerator">6</item>
+        <item name="fractions_preview_denominator">8</item>
+        <item name="fractions_preview_binary_visibility">8</item>
+        <item name="fractions_preview_question_visibility">0</item>
+    </style>
+    <style name="FractionsExpressionPreview.Mixed" parent="FractionsExpressionPreview">
+        <item name="fractions_preview_numerator">7</item>
+        <item name="fractions_preview_denominator">3</item>
+        <item name="fractions_preview_binary_visibility">8</item>
+        <item name="fractions_preview_question_visibility">0</item>
+    </style>
+    <style name="FractionsComparisonPreview" parent="FractionsExample">
+        <item name="fractions_preview_question_visibility">0</item>
+        <item name="fractions_preview_resolved_visibility">8</item>
+        <item name="fractions_preview_slot_background">@drawable/ncs_v2_fractions_question_slot</item>
+    </style>
+    <style name="FractionsComparisonPreview.Feedback">
+        <item name="fractions_preview_question_visibility">8</item>
+        <item name="fractions_preview_resolved_visibility">0</item>
+        <item name="fractions_preview_slot_background">@android:color/transparent</item>
+    </style>
+    <style name="FractionsGamePreview" parent="FractionsExample">
+        <item name="fractions_preview_question_visibility">0</item>
+        <item name="fractions_preview_resolved_visibility">8</item>
+        <item name="fractions_preview_context">Средний · Дроби</item>
+        <item name="fractions_preview_statistics">0 ответов · 0 верных</item>
+        <item name="fractions_preview_minimum">Нужно минимум 8 ответов</item>
+        <item name="fractions_preview_time">02:00</item>
+        <item name="fractions_preview_support">У тебя получится!</item>
+    </style>
+    <style name="FractionsGamePreview.Test">
+        <item name="fractions_preview_context">Тестовый · Дроби</item>
+        <item name="fractions_preview_minimum">Нужно минимум 5 ответов</item>
+        <item name="fractions_preview_time">00:30</item>
+        <item name="fractions_preview_support">Сначала посмотри на рисунок!</item>
+    </style>
+    <style name="FractionsGamePreview.Easy">
+        <item name="fractions_preview_context">Лёгкий · Дроби</item>
+        <item name="fractions_preview_minimum">Нужно минимум 10 ответов</item>
+        <item name="fractions_preview_time">01:30</item>
+        <item name="fractions_preview_support">Посмотри на верхнее число!</item>
+    </style>
+    <style name="FractionsGamePreview.Hard">
+        <item name="fractions_preview_context">Тяжёлый · Дроби</item>
+        <item name="fractions_preview_minimum">Нужно минимум 6 ответов</item>
+        <item name="fractions_preview_time">03:00</item>
+        <item name="fractions_preview_support">Проверь целую часть!</item>
+    </style>
+    <style name="FractionsGamePreview.Feedback">
+        <item name="fractions_preview_question_visibility">8</item>
+        <item name="fractions_preview_resolved_visibility">0</item>
+        <item name="fractions_preview_statistics">1 ответ · 1 верный</item>
+        <item name="fractions_preview_time">01:58</item>
+        <item name="fractions_preview_support">Правильно! Продолжай!</item>
+    </style>
+    <attr name="fractions_preview_large_visibility" format="integer"/>
+    <attr name="fractions_preview_sign_spacer_visibility" format="integer"/>
+    <attr name="fractions_preview_digit_size" format="dimension"/>
+    <attr name="fractions_preview_numerator_height" format="dimension"/>
+    <attr name="fractions_preview_denominator_height" format="dimension"/>
+    <attr name="fractions_preview_line_gap" format="dimension"/>
+    <attr name="fractions_preview_denominator_gap" format="dimension"/>
+    <style name="FractionsExample.Large">
+        <item name="fractions_preview_large_visibility">0</item>
+        <item name="fractions_preview_digit_size">30sp</item>
+        <item name="fractions_preview_numerator_height">36.8sp</item>
+        <item name="fractions_preview_denominator_height">37.6sp</item>
+        <item name="fractions_preview_line_gap">2.4dp</item>
+        <item name="fractions_preview_denominator_gap">0.7dp</item>
+    </style>
+    <style name="FractionsExpressionPreview.Right">
+        <item name="fractions_preview_numerator">3</item>
+        <item name="fractions_preview_denominator">7</item>
+    </style>
+    <style name="FractionsLargeExample.TwoFourths" parent="FractionsExample.Large">
+        <item name="fractions_preview_numerator">2</item>
+        <item name="fractions_preview_denominator">4</item>
+    </style>
+    <style name="FractionsLargeExample.Half" parent="FractionsExample.Large">
+        <item name="fractions_preview_numerator">1</item>
+        <item name="fractions_preview_denominator">2</item>
+    </style>
+    <style name="FractionsGamePreview.Arithmetic">
+        <item name="fractions_preview_support">Сначала сложи числители!</item>
+    </style>
+    <style name="FractionsGamePreview.Reduction">
+        <item name="fractions_preview_support">Проверь оба числа!</item>
+    </style>
+</resources>

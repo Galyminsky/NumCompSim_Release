@@ -1718,3 +1718,849 @@ R04 — неподтверждённые риски, код не изменён.
 - A03 (Espresso/MIUI) отложен, не исправлен; выполненные ранее диагностические изменения не означают закрытия замечания.
 
 В этом шаге изменён только PROJECT_LOG.md добавлением итоговой записи. Исходники, ресурсы, Gradle и другие документы не изменялись. Сборка, тесты, Lint, commit и push агентом в этом шаге не запускались.
+
+## 2026-11-20 — «Дроби», этап 1/6: технический аудит без реализации
+
+Проверен рабочий проект D:/Android Project/NumCompSim_Release. `git branch --show-current`: Add-Fractions-Function; исходные `git status --short` и `git diff --stat` пусты. В доступной структуре app/src и корне AGENTS.md не найдено; инструкции в родительских D:/AGENTS.md и D:/Android Project/AGENTS.md не найдены. Исследованы только конфигурация app, два тренажёра, их общие UI-ресурсы, тесты и утверждённая секция Figma. Сборки, тесты, Lint, commit, push и переключение ветки не выполнялись. Единственная запись этого этапа — эта запись в существующем PROJECT_LOG.md.
+
+Пути ниже относительно D:/Android Project/NumCompSim_Release. Для сокращения: K = app/src/main/java/me/proton/jobforandroid/compositionofnumbers; R = app/src/main/res; T = app/src/test/java/me/proton/jobforandroid/compositionofnumbers. Номера строк относятся к исходникам на момент аудита. Предлагаемые новые файлы явно отделены от существующих; они не созданы.
+
+### Фактическая архитектура и конфигурация
+
+- settings.gradle:15–16: `rootProject.name = "Composition of Numbers"`, `include ':app'` — один подключённый модуль. domain/data/presentation — пакеты внутри app, а не Gradle-модули.
+- build.gradle:8–16: Safe Args 2.10.2, Google Services 4.5.0, AGP 9.3.1, legacy-kapt 9.3.1, объявление Kotlin Android 2.4.21. Это версии из конфигурации; разрешение зависимостей и совместимость не проверялись запуском Gradle.
+- app/build.gradle:3–8,14–21,32–44: application, parcelize, kapt, Safe Args, Google Services; compileSdk 37 / minSdk 29 / targetSdk 36, версия 2.2 (7), Java/Kotlin target 11, `dataBinding true`.
+- app/build.gradle:48–63: core-ktx 1.19.1, AppCompat 1.8.0, Material Components 1.14.0, ConstraintLayout 2.2.2, Navigation fragment/ui 2.10.2, Firebase BOM 35.1.0 + analytics, Play Games v2 22.1.0; JUnit 4.13.2, AndroidX JUnit 1.3.0, Espresso 3.7.0. Прямые зависимости Compose, Room, DataStore и DI-фреймворк не найдены.
+- app/src/main/AndroidManifest.xml:16,24–27: активная Theme.CompositionOfNumbers, MainActivity, portrait. K/presentation/MainActivity.kt:18–23,50–51: AppCompatActivity, `gameRepository = GameRepositoryImpl`, activity_main, инициализация Analytics/PlayGames. R/layout/activity_main.xml:11–13: NavHostFragment + main_navigation + defaultNavHost. Новая Activity для раздела не требуется по существующему устройству приложения.
+- R/navigation/main_navigation.xml:6,20–82,84–180: старт — NcsV2WelcomeFragment, затем MainHubFragment; все разделы используют Fragment + XML. Арифметика: занятие → intro/правила → сложность → игра → результат. Сравнение: правила → сложность → игра → результат. Текущая последовательность не совпадает с требуемой для дробей «сложность → правила → игра → результат».
+
+### Обнаруженные файлы: «Арифметика»
+
+- K/domain/entity/Question.kt:3–13,30–50: Int-операнды, List<Int> вариантов, четыре Operation, UnknownPosition.RESULT/SECOND_OPERAND; rightAnswer вычисляется по операции. Это целочисленная модель, рациональные числа не поддерживает.
+- K/domain/entity/Level.kt:7–15: Parcelable TEST/EASY/NORMAL/HARD, maxFactor 3/5/10/12. K/domain/entity/GameSettings.kt:7–12: maxSumValue, минимум правильных, минимум процентов, время. K/domain/entity/GameResult.kt:6–15: Parcelable winner/correct/questions/settings/operation.
+- K/domain/repository/GameRepository.kt:7–18: интерфейс генерации четырёх операций и настроек. K/data/GameRepositoryImpl.kt:9–17: singleton и генерация сложения; 20–39: вычитание; 42–62: умножение; 65–80: деление через divisor × quotient, только точное; 84–108: проверки диапазона и уникальные варианты, перемешивание. Источники — локальные Random и настройки, сетевое/дисковое хранение тренировки не найдено.
+- K/data/GameRepositoryImpl.kt:111–145: TEST (max 10, минимум правильных 3, 50%, 8 с), EASY (10,10,70%,60 с), NORMAL (20,20,80%,60 с), HARD (30,30,90%,90 с). maxFactor используется для ×/÷; maxSumValue — для +/−.
+- K/domain/usecases/GenerateQuestionUseCase.kt:10–24: диспетчер генерации, COUNT_OF_OPTIONS=6. K/domain/usecases/GetGameSettingsUseCase.kt:7–12: получение настроек через репозиторий.
+- K/presentation/NcsV2LessonSelectionFragment.kt:28–36,59–63: выбор четырёх занятий и переход в intro; K/presentation/WelcomeFragment.kt:31,44–48: сложение, NcsV2AdditionIntroBinding и переход к сложности. K/presentation/SubtractionIntroFragment.kt:34, MultiplicationIntroFragment.kt:34, DivisionIntroFragment.kt:34 передают `operation` строкой через Bundle.
+- K/presentation/ChooseLevelFragment.kt:23–29,59–76,96–103,146–159: navArgs operation, выбор TEST по умолчанию, сохранение выбора в backStackEntry.savedStateHandle, Safe Args level + operation. K/presentation/GameViewModelFactory.kt:10–18: ручное создание GameViewModel с Application, repository, level, operation.
+- K/presentation/GameViewModel.kt:18–66: ViewModel + LiveData, счётчики и таймер в памяти; 79–95,189–195: ответ принимается только для того же объекта Question, до монотонного дедлайна и до завершения; 111–117: правильный увеличивает correct, любой принятый увеличивает questions; 124–139: CountDownTimer и SystemClock.elapsedRealtime; 158–172: идемпотентное завершение и cancel; 181–185: целочисленный процент через Long, при 0 ответов — 0. Победа: одновременно минимум ПРАВИЛЬНЫХ и точность (107–108,162–167). Лимита количества заданий нет, завершение по времени.
+- K/presentation/GameFragment.kt:21–32,65–66: Fragment-scoped ViewModel и lifecycleOwner DataBinding; 114–138,190: блокировка повторных нажатий, принятый ответ, feedback 500 мс; 149–154: следующий вопрос удерживается в queuedQuestion. 156–159: результат снимает callback подсветки — истечение может прервать 500 мс. 143–146,179–185: повтор доставки результата на ON_RESUME, guard RESUMED / !isStateSaved / destination; 163–176: очистка callbacks, звука и binding.
+- K/presentation/GameFinishedFragment.kt:18–28,44–49,66–128: причины неудачи, отдельные success/failure binding, проценты и цели; 139–162: повтор с той же operation/level через возврат к сложности. R/navigation/main_navigation.xml:156–179: игра удаляется из back stack, передаются Parcelable GameResult и Level.
+- UI: R/layout/ncs_v2_lesson_selection.xml и ncs_v2_lesson_item.xml — занятия (потребитель NcsV2LessonSelectionFragment.kt:45,59–62); ncs_v2_addition_intro.xml / ncs_v2_subtraction_intro.xml / ncs_v2_multiplication_intro.xml / ncs_v2_division_intro.xml — правила; ncs_v2_level_selection.xml — сложность (ChooseLevelFragment.kt:49); ncs_v2_game.xml:12–16,192–270,285–328 — GameViewModel/Question, шесть integer-карточек, feedback/progress/timer; ncs_v2_equation_item.xml — арифметическое выражение; ncs_v2_result_success.xml:10–24,176–196 и ncs_v2_result_failure.xml:10–40,191–211 — результат и общие метрики.
+
+### Обнаруженные файлы: «Сравнение»
+
+- K/domain/entity/ComparisonQuestion.kt:3–18,19–37,41–62: собственные level/operation/sign, Number или Expression, значения Int, деление только целое (`first % second == 0L`), правильный знак по значениям. Рациональные числа сюда не входят.
+- K/domain/entity/ComparisonQuestionValidator.kt:4–22,25–79: TEST 0..10, EASY 0..100; NORMAL выражение/число с отдельными диапазонами операций; HARD два выражения, свои ограничения для arithmetic/tabular/mixed. K/domain/entity/ComparisonCanonicalKey.kt:5–20: ключ структурной уникальности, независимый от порядка сторон и перестановок +/×.
+- K/domain/usecases/ComparisonBasicSessionGenerator.kt:14–19,23–65,70–126: полная сессия; TEST/EASY — конечные пулы с удалением пар; NORMAL — пулы выражений, квоты, ограниченный перебор и checkNotNull при отсутствии кандидата. K/domain/usecases/ComparisonHardSessionGenerator.kt:13–21,64–70,87–125: HARD, конечный поиск кандидатов, checkNotNull и канонические ключи.
+- Планировщики K/domain/usecases/ComparisonSignPlanner.kt:8–19 — квоты знаков и shuffle; ComparisonOperationPlanner.kt:12–25,29–67 — квоты операций/групп и порядок; ComparisonDistancePlanner.kt:9–52 — квоты расстояний; ComparisonDistanceClassifier.kt:13–56 — расстояния значений; ComparisonDifficultyClassifier.kt:10–60 — перенос/заём и табличная сложность. Эти правила специфичны целочисленному сравнению, готовыми правилами дробей не являются.
+- K/data/ComparisonSessionDataSource.kt:9–13: `generateQuestions(level, random) = ComparisonBasicSessionGenerator.generate(...)`; новое множество на запрос, сохранения на диск нет.
+- K/domain/entity/ComparisonSession.kt:3–15: TEST 15 с / минимум 5 / максимум 24 / 60%; EASY 60/15/45/70%; NORMAL 90/12/36/75%; HARD 120/10/30/80%. 20–36: immutable-счётчики. 40–54: result, при 0 ответов 0%; успех по минимуму ВСЕХ ОТВЕЧЕННЫХ и `correctCount * 100 >= requiredAccuracyPercent * answeredCount`.
+- K/domain/entity/ComparisonGameSession.kt:4–32,35–56: QUESTION → FEEDBACK → QUESTION/FINISHED; только QUESTION принимает ответ; счёт обновляется сразу; следующий вопрос после finishFeedback; максимум либо expireTime завершает, при expiry в FEEDBACK ожидается его окончание.
+- K/presentation/ComparisonRulesFragment.kt:22,30–34 — правила и переход к сложности; ComparisonLevelFragment.kt:16,33–47,66–68 — NORMAL по умолчанию, сохранение уровня в Bundle, Serializable level при переходе в игру; соответствующие XML R/layout/ncs_v2_comparison_rules.xml и ncs_v2_comparison_level.xml (149–187: четыре include общего level_item).
+- K/presentation/ComparisonGameFragment.kt:31–45,65–92: состояние в Fragment без отдельного ViewModel, генерация синхронно до старта дедлайна; 138–164,183–205: приём ответа, отключение кнопок, подсветка выбранного ошибочного и верного знака, объяснение; FEEDBACK_MS=500 (470). 298–345: Handler main looper, feedback на uptimeMillis, таймер на elapsedRealtime; фон не ставит дедлайн на паузу. 95–100,353–368: доставка результата только при RESUMED и !isStateSaved, Bundle level/answeredCount/correctCount. 385–448: сохранение вопросов как IntArray, истории ответов, фазы, дедлайнов и реконструкция сессии; 451–465: cleanup callbacks/binding. R/layout/ncs_v2_comparison_game.xml — выражение, три кнопки знаков, счёт и время; не готовая игра с дробями.
+- K/presentation/ComparisonResultFragment.kt:33–54,71–83 — reconstruct ComparisonResult, correct/answered, точность и цели; 85–106 — повтор/выбор сложности. R/layout/ncs_v2_comparison_result.xml:14–48 — примитивные String/Boolean параметры, 190–209 — metric_item. R/navigation/main_navigation.xml:53–81 — аргументы и удаление завершённой игры/старого результата из стека.
+
+### Ресурсы и повторное использование
+
+- R/values/colors.xml:3–13 — старая палитра и division_soft; R/values/colors_v2.xml:6–62 — primary #0755B8, paper #F7F9FC, selected #E8F2FF, ink #292522, error #C9323A, success #21765A, success_soft #DFF6EC и др. R/values/dimens_v2.xml:6–32 — шаги 4/8/12/16/18/24/32dp, touch target 48dp, кнопка 60dp; 102–113 — радиусы. R/values-w360dp/dimens_v2.xml:4 — equation_gap 13dp. Отдельные R/values/dimens.xml, styles.xml, themes_v2.xml не найдены; действующие файлы — dimens_v2.xml/styles_v2.xml/themes.xml.
+- R/values/styles_v2.xml:35–94 — типографика, Nunito для основного текста и Inter для отдельных символов; 95–100 — touch target/action. R/values/themes.xml:3–13 — активная старая MaterialComponents.DayNight тема с purple/teal; v2 экраны явно используют свои ресурсы. Figma 135:54 использует Nunito Sans; локальные стили ссылаются на Nunito. Точное совпадение шрифтов/геометрии нельзя заявить без визуальной проверки, замена шрифтов здесь не выполнялась.
+- R/font: ncs_v2_nunito_semibold.ttf, ncs_v2_nunito_bold.ttf, ncs_v2_nunito_extrabold.ttf, ncs_v2_nunito_black.ttf, ncs_v2_inter_regular.ttf, ncs_v2_inter_bold.ttf, ncs_v2_inter_extrabold.ttf. Подтверждение потребления: styles_v2.xml:36,40,43,61,84,88,92. Новые шрифтовые зависимости для подключения раздела не обоснованы.
+- R/layout/ncs_v2_level_item.xml:13–35,41–53,79–110 — общая карточка с title/marker/description/selected/enabled, пригодна для дробей без изменения её типов. R/drawable/ncs_v2_level_card.xml:3–11 — disabled/selected/default.
+- R/layout/ncs_v2_timer_item.xml:10–16,34–45 — универсальные formattedTime/urgent; ncs_v2_metric_item.xml:13–31,77–89 — label/value/status/achieved, подходит результату дробей; ncs_v2_brand_header.xml — общий брендовый header (уже включён в ncs_v2_main_hub.xml:31–35).
+- R/drawable/ncs_v2_primary_button.xml:3–5,10–21 — disabled/pressed/focused/default; ncs_v2_secondary_button.xml — вторичная кнопка (ncs_v2_result_failure.xml:292); ncs_v2_answer_card.xml / ncs_v2_answer_correct.xml / ncs_v2_answer_wrong.xml — оформление ответов (ncs_v2_answer_item.xml:39); ncs_v2_panel.xml, ncs_v2_selected_outline.xml, ncs_v2_result_positive_outline.xml / ncs_v2_result_negative_outline.xml — панели и состояния (metric_item.xml:45, level_card.xml:10, comparison_result.xml:179). Их можно применять в новых XML без переделки существующих игр.
+- K/presentation/ButtonPressAnimation.kt:7–10,36–40 — общая анимация 0.96/60 мс и cleanup; UiSoundPool.kt:7–15,34–44 — загрузка/проигрывание/release. R/raw/key_press.ogg, answer_correct.mp3, answer_wrong.mp3, game_win.mp3, game_lose.mp3 уже используются (GameFragment.kt:63, GameFinishedFragment.kt:56–64).
+- Иллюстрации R/drawable-nodpi/raccoon_levels.png, raccoon_thinking.png, raccoon_timer.png, raccoon_success.png, raccoon_failure.png, raccoon_happy.png, decor_math_tools.png, logo_schetenot.png существуют. Потребители: comparison_level.xml:136,213; ComparisonGameFragment.kt:169,184; result_success.xml:107,226; result_failure.xml:123,241; main_hub.xml:32 через brand_header. Совпадение названий с Figma позволяет рассматривать их для повторного использования; пиксельная идентичность экспортам не проверялась.
+- Ограниченное повторное использование: ncs_v2_answer_item.xml:14–16,62 принимает только int; ncs_v2_equation_item.xml:14–22 и ncs_v2_feedback_item.xml:10–14 завязаны на Question/Operation; ncs_v2_progress_item.xml:14–19,44–56,75 — правильные ответы относительно минимума. Для дробей нужны иной контент и корректная семантика счётчика, не простое подключение этих целых экранов. Вертикальная дробь, смешанное число и динамические закрашенные части в исследованных исходниках/ресурсах не найдены.
+
+### Существующие тесты (прочитаны статически, не запускались)
+
+- T/GameRepositoryTest.kt:22,44,69,116,144,193,220,270,287,313,321,343,373,428,442,458,469 — модель, четыре генератора/usecase, диапазоны, уникальность вариантов, границы целей и переполнение. T/ArithmeticAnswerDeadlineTest.kt:14,19,27,32,39 — дедлайн, повторный ответ, завершённая игра. T/ArithmeticFailureReasonTest.kt:17,29,42,56 — причины провала. T/ExampleUnitTest.kt:20,26 — процент и 0 ответов.
+- T/ComparisonBasicSessionGeneratorTest.kt:83,99,103,154,225,229–256 — уровни/квоты/уникальность/reproducibility и 100 seed; ComparisonIndependentGenerationAuditTest.kt:28–42 — независимый аудит 1000 seed на уровень; ComparisonQuestionValidatorTest.kt:20,39,68,87,106 — границы/форматы; ComparisonCanonicalKeyTest.kt:18–69 — каноническая уникальность; ComparisonDifficultyClassifierTest.kt:25–70 — сложность; ComparisonDistanceClassifierTest.kt:34–120 — диапазоны расстояний; ComparisonSignPlannerTest.kt:19–51, ComparisonOperationPlannerTest.kt:13–61, ComparisonDistancePlannerTest.kt:21–115 — квоты/порядок/reproducibility.
+- T/ComparisonSessionTest.kt:15,23,37,79,93,107 — настройки, минимум/максимум, точность и 0; ComparisonGameSessionTest.kt:32,73,95,109,126 — немедленный учёт, блокировка повтора и expiry до/во время feedback; ComparisonSessionDataSourceTest.kt:21,40,51,61 — полнота, независимость, seed, доступность арифметики; ComparisonFullGameScenarioTest.kt:38,62,78,112,127,149,165 — полные сценарии. Наличие тестов не является результатом их выполнения.
+- Дополнительно app/src/androidTest/java/me/proton/jobforandroid/compositionofnumbers/ComparisonGameLifecycleInstrumentedTest.kt:18,29,40,51 — уход/пересоздание View, expiry, callback подсветки. Unit/instrumented-тесты дробей не найдены.
+
+### Утверждённый UX/UI и карта интеграции
+
+Источник прочитан через Figma в режиме read-only: https://www.figma.com/design/BRMSwONxGEshJOAghaAqjz/MY-APP-%E2%80%94-UX-UI-Mobile-App?node-id=135-53 . Проверены структура секции 135:53, контекст и скриншоты отдельных экранов; файлы и макеты не изменялись, ассеты не скачивались.
+
+- Figma 135:54 (подписи 135:72/78/84/91, CTA 135:98): сложность TEST/EASY/NORMAL/HARD, «Смотреть правила»; NORMAL выбран на показанном макете, это не доказательство обязательного начального выбора.
+- Figma 136:53/136:68: TEST — 8 заданий, 30 с, минимум 5, 60%; 136:76/136:91: EASY — 15,90,10,70%; 136:99/136:114: NORMAL — 12,120,8,75%; 136:122/136:137: HARD — 10,180,6,80%. Figma 136:405,136:423–424: «Верно / отвечено», 8/10, «Минимум 10 ответов · выполнено» — пример подтверждает минимум отвеченных, а не правильных. Требуются собственные настройки дробей; арифметические/сравнительные значения подставлять нельзя.
+- Figma 136:145 — определение по рисунку; 136:200 — числитель; 136:255 — сравнение; 136:295 — вычисление; 147:143 — сокращение; 136:350 — преобразование; 147:198 — после ответа; 136:405/136:451 — успех/неудача. Это варианты содержимого/состояний игры и результата, не требование 14 отдельных Fragment.
+- Figma 141:65/141:69 (внутри 152:164): компоненты вертикальных дробей S/L; 136:122/136:127,135: разные знаменатели/смешанные числа, общий знаменатель; 147:143 пример 6/8 → 3/4. Отсюда необходимы рациональная модель/вычисления, правила эквивалентности и отображение вертикальной дроби. Полная спецификация распределения типов, диапазонов всех уровней и правил генерации из просмотренных экранов не установлена; не выведена из одиночных примеров.
+
+Будущие изменения существующих файлов, обоснованные текущим кодом (на этом этапе не выполнены):
+
+1. R/layout/ncs_v2_main_hub.xml:199–208 — заменить одну из двух одинаковых анонимных future-card include отдельной активной карточкой «Дроби» с уникальным ID/описанием; пересмотреть подпись «скоро» только применительно к этой карточке. Обе заглушки используют R/layout/ncs_v2_hub_future_card.xml:11 `enabled=false`; менять общий шаблон так, чтобы активировать обе, не требуется.
+2. K/presentation/MainHubFragment.kt:25–38 — добавить обработчик новой карточки по существующему образцу destination guard + navigate. Сейчас обработчиков ровно два: arithmetic и comparison.
+3. R/navigation/main_navigation.xml:20–31 — action хаба в новый выбор сложности, четыре destinations «сложность → правила → игра → результат», аргумент уровня через правила/игру, результат с уровнем/счётчиками. Образец удаления игры из back stack: 58–62/156–160. Для повторной игры удалять старый результат, для выбора сложности возвращаться к его существующему destination; правила не должны нарушать возврат к уровню. Точные ID и классы пока отсутствуют и не объявлены.
+4. R/values/strings_v2.xml — новые строки раздела, правил/заданий/результата и доступности; существующие styles_v2/colors_v2/dimens_v2 дополнять только при доказанном отсутствии нужного токена. Основные токены уже существуют. app/build.gradle, settings.gradle, MainActivity и Manifest для такого подключения менять не требуется по найденной архитектуре.
+
+Минимальные новые ответственности и вероятные места, а не вымышленные существующие файлы:
+
+- В K/domain/entity — модель рационального числа/смешанного представления и модель задания/типа ответа; настройки уровня, счётчики/результат/фаза сессии могут быть сгруппированы. В K/domain/usecases — генерация и математические правила дробей. Основание: Question.kt:4–12, ComparisonQuestion.kt:10,27–30 несовместимы с дробями; параметры Figma отличаются. Точные имена и разбиение файлов остаются на следующий этап; искусственное число новых классов не фиксируется.
+- В K/presentation — четыре Fragment для сложности, правил, игры, результата; четыре экранных XML в R/layout. Правила варьируются по level в одном экране, игровые виды — внутри одной игры, success/failure — состояния одного результата. Основание: текущий навигационный подход и варианты Figma выше. Нужны переиспользуемая разметка дроби/смешанного числа, карточка дробного ответа и отображение равных закрашенных частей; отдельные custom View/модуль/библиотека пока не обоснованы.
+- В T — будущие unit-проверки математики/генератора/сессии дробей, аналогичные существующим проверкам границ и feedback. Новый repository/data source, ViewModel/factory и отдельный файл result не объявляются обязательными до решения о владении состоянием; в проекте уже есть два разных рабочих подхода. Диск/сеть и новые зависимости для раздела не обоснованы.
+
+### Проблемы, ограничения и открытые решения в области интеграции
+
+- Готовый раздел дробей, его маршруты, модель, генератор и тесты не найдены в app/src/main/java, res/navigation, ресурсах и app/src/test. Не следует расширять целочисленные Question/ComparisonSide «для удобства» — это затронет математику существующих игр (Question.kt:12, ComparisonQuestion.kt:19–36).
+- Семантика минимума различается: Arithmetic GameViewModel.kt:107 — correct; ComparisonSession.kt:53 — answered. Figma результата дробей 136:424 указывает минимум отвеченных. В сессии дробей это должно быть закреплено явно.
+- Поведение последних 500 мс разное: GameFragment.kt:156–159 прерывает callback при результате, ComparisonGameSession.kt:43–56 завершает feedback перед result. У дробей есть макет после ответа, но кодового контракта expiry во время feedback ещё нет. Требуется определённое правило на следующем этапе, существующие игры не меняются.
+- Arithmetic GameViewModel.kt:25–66 и GameFragment.kt:30–32 сохраняют состояние во ViewModel при configuration recreation, но SavedStateHandle/сериализация сессии для восстановления после смерти процесса не найдены. ComparisonGameFragment.kt:385–448 имеет собственную сериализацию; её формат IntArray привязан к целым операциям и ordinal, для дробей напрямую непригоден. Политика восстановления дробей пока не найдена.
+- Генерация сравнения на UI-потоке: ComparisonGameFragment.kt:81–92; потенциальное исключение при пустом поиске: ComparisonBasicSessionGenerator.kt:124 / ComparisonHardSessionGenerator.kt:64. Это ограничения образца, не доказанные новые дефекты; производительность и проблемные seed не измерялись, перенос генератора в дроби не рекомендуется как готового компонента.
+- Ресурсы v2 не составляют новую активную глобальную тему: Manifest:16 + themes.xml:3–13; новые экраны должны последовательно использовать существующие явные v2 стили. Figma Nunito Sans и локальный Nunito различаются по именам; геометрия/малые экраны/масштаб шрифта и TalkBack для числителя/знаменателя здесь не проверены визуально на устройстве. Дроби должны иметь содержательное описание, поскольку BindingAdapter.kt:67–69 поддерживает лишь number.toString().
+- PROJECT_LOG.md:1716–1718 до этой записи: исторически R04 без измерения, Lint 107 XmlEscapeNeeded/62 warnings формально не пройден, A03 Espresso/MIUI отложен. Это ранее записанный статус, не новый запуск и не повторное подтверждение дефектов. Исправления за пределами дробей не предлагаются.
+- Не найдено: исчерпывающая текстовая спецификация всех генераторных квот/диапазонов и канонизации дробных ответов в проверенном коде/просмотренном UX, готовый renderer дробей, unit-тесты дробей. Настройки из Figma и одиночные примеры не заменяют математический контракт следующего этапа.
+
+Этап 1 завершён статическим аудитом. Реализация не начата. Следующие этапы в рамках этой задачи не выполнялись.
+
+## 2026-11-20 — локальная спецификация дробей в Git-исключениях
+
+В корневой .gitignore добавлено отсутствовавшее правило /FRACTIONS_SPEC.md (строка 11), без дублирования. Файл FRACTIONS_SPEC.md не отслеживается Git; индекс и содержимое спецификации не изменялись. Проверка git check-ignore -v FRACTIONS_SPEC.md: .gitignore:11:/FRACTIONS_SPEC.md. Проверка git status --short: изменены только .gitignore и PROJECT_LOG.md (журнал уже имел изменения до этой задачи); FRACTIONS_SPEC.md больше не отображается как untracked. Проблем не обнаружено. Сборки, тесты, commit, push и переключение веток не выполнялись.
+
+## 2026-11-20 — уточнение утверждённых правил FRACTIONS_SPEC.md
+
+Прочитана и обновлена существующая локальная FRACTIONS_SPEC.md с сохранением шести разделов. Уточнены правильные исходные операнды HARD, знаменатели 2–15 и НОК ≤ 60, допустимый неправильный результат сложения и строго положительное вычитание; правдоподобные варианты без дубликатов и взаимной математической эквивалентности, единственный правильный с перемешиваемой позицией; полная генерация до таймера, конечный поиск без смягчения правил и явная ошибка при невозможности; точная квота знаков NORMAL; фоновый дедлайн; восстановление после смерти процесса без генерации и повторного учёта ответов; немедленный выход из игры к сложности без результата и с отменой отложенных действий. Технический механизм восстановления не выбран.
+
+Из открытых вопросов удалены закрытые неопределённости HARD, квот знаков, исчерпания кандидатов, фонового времени, смерти процесса и допуска ответа относительно дедлайна. Сохранены вопросы конкретных диапазонов неверных вариантов/рисунков TEST, баланса одинаковых и разных знаменателей NORMAL, деталей пересоздания UI/механизма восстановления и отображения. Дополнительные ограничения не введены. При повторном чтении спецификации нерешённых противоречий и новых дублирующих правил не обнаружено; фоновый дедлайн согласован с прежним завершением подсветки перед результатом.
+
+В этой задаче изменены только FRACTIONS_SPEC.md и эта запись PROJECT_LOG.md. Спецификация остаётся исключённой из Git; ранее изменённая .gitignore не редактировалась. Сборки, тесты, commit, push и реализация генератора не выполнялись.
+
+## 2026-11-20 — четыре точечных уточнения спецификации дробей
+
+После чтения существующего FRACTIONS_SPEC.md сохранены структура и прежние утверждённые правила. Для всех типов NORMAL закреплены положительные правильные исходные дроби со знаменателями 2–12; повтор этого ограничения в пункте сокращения убран. Для сложения/вычитания HARD закреплены строго положительные нецелые результаты и отображение несократимой дробью, с сохранением допустимости неправильного результата сложения. Для TEST явно разделены рисунок в условии и четыре дробных ответа; открытый вопрос уточнён без новых требований к фигурам. В существующий пункт восстановления добавлены фаза QUESTION/FEEDBACK и выбранный ответ; сохранён запрет повторного учёта, механизм хранения не выбран. Спецификация повторно прочитана: внутренних противоречий не обнаружено; остальные открытые вопросы сохранены.
+
+Изменены только FRACTIONS_SPEC.md и эта запись PROJECT_LOG.md. Код, ресурсы, Gradle и .gitignore не изменялись; новые файлы не создавались. Сборки, тесты, commit, push и реализация не выполнялись.
+
+## 2026-11-20 — узкий архитектурный анализ сессии «Дробей», без реализации
+
+Область: FRACTIONS_SPEC.md, presentation/ComparisonGameFragment.kt, GameViewModel.kt, GameFragment.kt, MainActivity.kt, GameViewModelFactory.kt; domain/entity/ComparisonGameSession.kt, ComparisonSession.kt; связанный navigation/main_navigation.xml, data/ComparisonSessionDataSource.kt и модель ComparisonQuestion.kt для проверки сериализации. Остальные части приложения не сканировались. Ниже K = app/src/main/java/me/proton/jobforandroid/compositionofnumbers относительно D:/Android Project/NumCompSim_Release. Факты исходников отделены от рекомендаций.
+
+### Подтверждённые исходниками факты
+
+1. FRACTIONS_SPEC.md:60 требует полной генерации до таймера; 64–71 — первого допустимого ответа до дедлайна, 500 мс feedback с завершением перед результатом, фонового отсчёта, восстановления заданий/ответов/позиции/дедлайна/фазы/выбранного ответа без генерации и повторного учёта, выхода к сложности без результата. Строка 77 оставляет механизм восстановления открытым. Спецификация в этой задаче не изменялась.
+2. Арифметика: K/presentation/GameViewModel.kt:25–66 — настройки, текущий Question в LiveData, counters, gameFinished и deadlineElapsedMs; полного списка заданий/истории выбранных ответов/фазы FEEDBACK нет. 68–89: init начинает игру, таймер запускается до первого вопроса, каждый принятый ответ немедленно генерирует следующий. Это не полная предварительно сформированная сессия.
+3. K/presentation/GameFragment.kt:30–32 — Fragment-scoped ViewModelProvider; 37–50 — showingFeedback, queuedQuestion и callback принадлежат Fragment; 77–80 — displayedQuestion/selectedOptionIndex/feedbackVisible задаются во View. 114–138,149–154: UI блокирует повтор, ответ учитывается ViewModel до показа 500 мс, новый Question временно хранится в queuedQuestion. Фаза и выбор не являются сохраняемым состоянием ViewModel.
+4. Арифметика: GameViewModel.kt:79–95,189–195 — now < deadline и тождество displayedQuestion === currentQuestion, gameFinished guard; 111–116 — инкремент счётчиков; 158–168 — finishGame идемпотентен, timer.cancel перед публикацией результата. 124–139 — CountDownTimer, deadline на elapsedRealtime; 171–172 — отмена при onCleared. GameFragment.kt:156–159 отменяет feedback callback при результате, поэтому последние 500 мс могут быть прерваны.
+5. GameFragment.kt:163–176 очищает callbacks/анимации/звук/binding, сбрасывает showingFeedback/queuedQuestion, но не обнуляет ViewModel. При пересоздании View на живом owner следующий Question и счётчики остаются, подсветка предыдущего исчезает. GameViewModelFactory.kt:10–18 создаёт обычный GameViewModel без SavedStateHandle; в этих GameViewModel/GameFragment нет сериализации игровой сессии. Новый owner после смерти процесса запускает init и новую игру; восстанавливаемые navigation args level/operation (main_navigation.xml:161–167) не восстанавливают вопросы/счётчики/дедлайн.
+6. Сравнение: K/presentation/ComparisonGameFragment.kt:31–45 — session, questions, answerHistory, selectedSign, feedbackQuestion, displayedQuestion, feedbackEndUptimeMs, deadlineElapsedMs, stoppedRemainingMs и resultNavigationStarted в полях Fragment. K/domain/entity/ComparisonGameSession.kt:7–25 — собственный список, counters, state, timeExpired, lastAnswerCorrect; позиция выводится из answeredCount: QUESTION questions[answeredCount], FEEDBACK questions[answeredCount-1]. Отдельного поля позиции нет.
+7. ComparisonGameFragment.kt:77–92 — сначала restoreSession при наличии снимка, иначе полная генерация; deadline задаётся только при 0 и после генерации. ComparisonSessionDataSource.kt:9–13 — делегирование генератору, хранилищем не является. MainActivity.kt:18–23 — gameRepository и layout; сессии, дедлайна или пользовательского механизма их сохранения в Activity нет.
+8. ComparisonGameSession.kt:35–56 — ответ допустим только QUESTION, счётчики увеличиваются сразу, переход в FEEDBACK; finishFeedback завершает при истечении либо максимуме, иначе QUESTION. expireTime идемпотентен для FINISHED, во время FEEDBACK лишь отмечает timeExpired. ComparisonSession.kt:26–30 — максимум, immutable counters; 50–54 — точность и минимум всех отвеченных. Машина сама не проверяет часы и не хранит выбранный знак — это обязанности вызывающего Fragment.
+9. ComparisonGameFragment.kt:138–164 — expireIfNeeded до ответа, phase/destination guard, history/selectedSign/feedbackEnd записываются на main thread. 183–205 — кнопки отключены на feedback. 298–345 — Handler callbacks, окончание feedback по uptimeMillis, expiry/остаток по elapsedRealtime. 306–310 — callback повторно проверяет phase перед переходом. В callback ответ заново не учитывается.
+10. ComparisonGameFragment.kt:437–446 — Bundle содержит полный список сторон вопросов как ArrayList<IntArray>, историю знаков как IntArray, phase, deadlineElapsedMs, feedbackEndUptimeMs и опциональный stoppedRemainingMs. Level приходит из nav arguments (main_navigation.xml:63–65). Отдельно не сохраняются counters, selectedSign, current index, timeExpired, lastAnswerCorrect, resultNavigationStarted: они вычисляются/восстанавливаются или остаются локальными.
+11. ComparisonGameFragment.kt:385–419 — создаётся НОВАЯ пустая ComparisonGameSession на сохранённых вопросах, каждый элемент истории проходит answer/finishFeedback; для последнего сохранённого FEEDBACK finishFeedback пропускается; selectedSign восстанавливается из последнего ответа. При QUESTION selectedSign очищается. Поэтому replay не удваивает старые счётчики: они начаты с нуля; это допустимо здесь, поскольку domain-переходы не имеют внешних побочных эффектов. 394–415,103 — дедлайн/feedbackEnd восстановлены; истечение заново вычисляется. Формат кодирования зависит от ordinal (422–434); проверки версии/целостности снимка не найдены.
+12. ComparisonGameFragment.kt:451–465 — отменяются callbacks/анимации/звук и binding, но session/questions/history/deadline сохраняются в живом экземпляре. 54–57,330 — callbacks привязаны к конкретной binding. Новый экземпляр Fragment может восстановиться только из переданного Bundle; без него 81–92 генерирует заново и ставит новый дедлайн. onDestroyView не гарантирует вызов onSaveInstanceState и не равен process death.
+13. Оба Fragment откладывают результат до RESUMED, проверяют !parentFragmentManager.isStateSaved и destination: GameFragment.kt:143–146,179–185; ComparisonGameFragment.kt:95–100,353–368. Сравнение имеет дополнительный resultNavigationStarted, выставляемый перед navigate. Он не сохраняется. main_navigation.xml:58–62,156–160 удаляет игру при переходе к результату. Это защита штатной последовательной навигации, а не транзакционная гарантия exactly-once при произвольном обрыве процесса/ошибке navigate.
+14. Кнопки Back сейчас делают popBackStack(): GameFragment.kt:82–86, ComparisonGameFragment.kt:129–133. У сравнения непосредственно под игрой сложность (main_navigation.xml:43–65); в будущей цепочке дробей между ними правила, поэтому обычный pop не обеспечивает требуемый возврат к сложности. В проверенных файлах своего перехвата системного Back не найдено.
+
+### Границы Android и выводы о восстановлении
+
+Проверены официальные источники: https://developer.android.com/topic/libraries/architecture/viewmodel/viewmodel-savedstate ; https://developer.android.com/topic/libraries/architecture/saving-states ; https://developer.android.com/reference/android/os/SystemClock . ViewModel переживает смену конфигурации у сохранённого owner, но не смерть процесса. Bundle/SavedStateHandle переживают системное уничтожение процесса только как сохранённый системой снимок существующей задачи; это не живые объекты и не запись каждого изменения на диск. Данные после последнего сохранённого снимка не гарантированы; записи SavedStateHandle в stopped-состоянии требуют следующего цикла start/stop для сохранения. Force-stop, удаление задачи и reboot нельзя приравнивать к обычному восстановлению сохранённой задачи.
+
+- Арифметика: configuration recreation с сохранённым ViewModelStore сохраняет вопрос/счёт/дедлайн/результат, но не feedback. Новая Fragment с новым owner без сохранённого ViewModelStore и process death запускают новую игру. Завершённый Parcelable GameResult может восстановиться в аргументах уже сохранённого destination результата, но это не сохранение активной сессии.
+- Сравнение: на живом Fragment всё игровое состояние переживает onDestroyView; новый Fragment при корректном saved state восстанавливает вопросы, историю, фазу и дедлайны, производные счётчики/позицию/выбор. Повторная генерация в штатном восстановлении не вызывается. При отсутствии/повреждении снимка это не гарантируется: отсутствие QUESTIONS_KEY запускает новую генерацию, некорректные поля могут вызвать исключение.
+- Задержанные callbacks не должны определять истинное время. elapsedRealtime монотонен, учитывает deep sleep и одинаков для процессов в пределах одной загрузки Android. Смерть процесса не сбрасывает этот дедлайн. Перезагрузка сбрасывает шкалу; сравнивать сохранённый deadline с новым boot без отдельной политики нельзя. Wall clock как замена зависит от перевода времени.
+- uptimeMillis не учитывает deep sleep. Поэтому сохранённые 500 мс сравнения корректны в этой шкале, но могут растянуться относительно общего elapsed-времени при сне. Кроме того, onResume сравнения проверяет expiry, но не принудительно обновляет timer text/feedback remainder (95–100): актуализация зависит от callbacks, renderTimer вызывается при создании View. Арифметика при resume проверяет expiry (143–146), но до истечения не обновляет строку времени немедленно. Мгновенно актуальный UI на возврате не доказан.
+- Двойной учёт одного ответа в штатных main-thread ветках не найден: guards/phase блокируют, replay сравнения начинает с нуля. Сравнение не передаёт идентификатор показанного вопроса в answer(sign); stale-событие после смены вопроса этим методом отдельно не различается. Реальная воспроизводимость такого UI-сценария не установлена. Арифметическое === работает только с живыми объектами, для сериализованной сессии нужен устойчивый ключ вопроса/позиция.
+
+### Сравнение вариантов — проектные выводы, не изменения кода
+
+A. Подход ComparisonGameFragment: Fragment владеет domain-сессией и Bundle. Плюсы — мало новых технических сущностей, уже есть фазовая машина, полный набор и replay. Минусы — часы/сериализация/история/навигация/UI сосредоточены в одном Fragment, часть инвариантов распределена между слоями; переходы вызываются и при restore. Риски — смешение часов, ordinal-формат, неполный/устаревший snapshot, сложность lifecycle-тестирования. Объём — новый Fragment с адаптированной дробной сессией, полным сериализатором и проверкой восстановления; повторное использование существующего Fragment/целочисленного codec напрямую невозможно. Изученные исходники: ComparisonGameFragment.kt:31–45,138–164,298–368,385–465; ComparisonGameSession.kt:35–56.
+
+B. ViewModel с сохранением: владелец сессии во ViewModel и компактный saved-state snapshot. Плюсы — состояние независимо от View, переживает config changes, переходы легче тестировать. Минусы — одной ViewModel недостаточно; нужны сериализация, корректное создание SavedStateHandle и согласованный snapshot; если всю фазовую логику поместить в Android ViewModel, чистые unit-тесты усложнятся. Риски — безусловный init→generate, несохраняемые поля, раздельная запись фазы/ответа, одноразовое событие результата. Объём — ViewModel + saved-state wiring/codec и тонкий Fragment; существующий GameViewModelFactory.kt:10–18 не передаёт SavedStateHandle и не является готовым решением.
+
+C. Минимальное объединение: чистая дробная машина сессии по принципу ComparisonGameSession + Fragment-scoped ViewModel по принципу GameFragment + один согласованный восстанавливаемый snapshot. Плюсы — чистые инварианты, единое состояние/владелец, конфигурация без replay, process restore без генерации, тестируемые часы. Минусы — надо явно описать snapshot и контракт переходов, границу навигации и уничтожения сессии. Риски — дублирование state между машиной/VM/snapshot, неверная фабрика, жизненный цикл saved state; устранять одной канонической моделью и сериализованными переходами. Объём — минимальная domain-модель/переходы, ViewModel, snapshot codec, UI; без общего session framework, новых модулей/Repository/DI и переделки старых тренажёров.
+
+Рекомендация — C: чистая машина сессии + ViewModel + единый snapshot. SavedStateHandle с Bundle-совместимым представлением — предлагаемый минимальный Android-механизм для обычного system process death с сохранённой задачей; это рекомендация анализа, не внесённое в FRACTIONS_SPEC.md решение. Если контракт означает любое внезапное убийство до снимка/восстановление после reboot или force-stop, одного saved state недостаточно: потребовалась бы отдельно утверждённая долговечная запись. Такое расширение сейчас не проектируется.
+
+### Минимальные компоненты и переходы для дробей — рекомендация
+
+1. Чистое состояние/переходы сессии: готовые задания со всеми вариантами и их порядком, level, устойчивый session key и question key либо индекс, принятые ответы, текущая позиция, QUESTION/FEEDBACK/FINISHED, выбор, общий deadlineElapsed и feedbackEndElapsed. Счёт/результат выводить из принятых ответов; если сериализуются отдельно — проверять согласованность. Snapshot/переходы допустимо разместить рядом, отдельный архитектурный слой не нужен. Не сохранять View/Handler/LiveData/Random вместо данных. Seed недостаточен для запрета повторной генерации.
+2. ViewModel, ограниченная временем жизни destination игры: создаёт полную сессию один раз при новом входе, при восстановлении сначала читает/проверяет snapshot; валидный snapshot исключает обращение к генератору. Механизм создания ViewModel должен передавать saved state, в отличие от текущей фабрики арифметики. Единственный владелец канонического state; сохранять новый согласованный снимок одним значением после принятого перехода, без мутации уже записанных коллекций. Это атомарность состояния на main thread, не дисковая транзакция SavedStateHandle.
+3. Небольшие операции кодирования/проверки snapshot рядом с state/VM, без обязательного нового Repository/DataSource. Полные задания включают исходные записи дробей, варианты и выбранный ответ. Не replay через публичный обработчик ответа: восстановить уже учтённые данные и вычислить производные значения. Отсутствующий snapshot на новом входе и некорректный snapshot восстановления — разные ситуации; некорректный нельзя незаметно заменять новой сессией.
+4. Тестируемый источник монотонного now (вплоть до переданной функции, без обязательного класса/зависимости). Для общего дедлайна и конца feedback рекомендую elapsedRealtime в одной boot-шкале. Handler/таймер — только сигнал перечитать now. При возврате/restore сначала пересчитать состояние и время, затем включать ответы/рендерить. В пределах одного boot deadline не пересоздавать как now+полная длительность.
+5. Тонкий Fragment: рендер/события, lifecycle-aware тики и навигация. onDestroyView снимает UI callbacks/анимации/наблюдателей, но не прекращает сессию автоматически. Уничтожение View при конфигурации не равно явному Back. Back-кнопка и системный Back сначала прекращают сессию и инвалидируют callbacks/снимок, затем возвращают именно к сложности, удаляя игру/промежуточные правила; результата нет. Новая игра получает новый owner/session key. Старые callbacks/события проверяют ключ сессии/вопроса.
+
+Рекомендуемая таблица переходов:
+- QUESTION + answer(key, value, now): принять только при совпадении сессии/вопроса, отсутствии ранее принятого ответа и now < deadline; однократно записать ответ/выбор, FEEDBACK, feedbackEnd=now+500. Остальные ответы отклонить.
+- QUESTION + now >= deadline: FINISHED без учёта показанного вопроса.
+- FEEDBACK: новые ответы запрещены. Пока now < feedbackEnd — сохранить текущий экран/выбор, даже если общий deadline уже истёк. Когда now >= feedbackEnd: FINISHED, если общий deadline истёк либо исчерпан набор, иначе следующий QUESTION. Не начинать новый 500-мс интервал при повторном restore.
+- Restore FEEDBACK: не учитывать ответ повторно; показать тот же вопрос/выбор, ждать только неистекший остаток feedback. Если конец feedback уже прошёл — сразу выполнить переход; при истёкшем общем дедлайне показать результат. Сохранение feedbackEnd нужно сверх перечисленных полей, чтобы не сбрасывать интервал. Использование elapsed-времени для подсветки при deep sleep — рекомендуемая интерпретация, поведение именно 500 мс видимого UI отдельно не утверждено.
+- FINISHED: счётчики неизменны, результат воспроизводим из state. UI доставляет его только при существующей View, RESUMED, !isStateSaved и текущем game destination; повторная попытка после resume допустима, второй результат в back stack — нет. Не сохранять вечный navigationStarted=true как замену согласованному состоянию back stack: после гибели процесса это может потерять переход. Back/отмена имеют терминальный эффект без результата, новую фазу ABORTED вводить необязательно — достаточно закрытия конкретной сессии владельцем.
+
+### Повторное использование без изменения существующего поведения
+
+- Принципы ComparisonGameSession.kt:20–25,35–56 (current question, немедленный учёт, фазовая блокировка, deferred finish) и ComparisonSession.kt:50–54 (минимум answered + точность); сами классы завязаны на ComparisonLevel/Question/Sign и чужие настройки, напрямую для дробей не подходят.
+- Паттерн Fragment-scoped ViewModel из GameFragment.kt:30–32, lifecycleOwner:65–66; guards результата и повтор на ON_RESUME из обоих Fragment. Арифметический ViewModel/его init, генерация и UI-only feedback не переиспользовать как готовую сессию.
+- elapsedRealtime как общий clock, отмена callbacks и привязка к конкретной View из ComparisonGameFragment.kt:54–57,330,460–465; popUpToInclusive игры из main_navigation.xml:58–62 как образец. Новый маршрут Back дробей требует своей адресной операции.
+- Конкретные существующие модели/фабрики/Fragment не модифицируются и не обобщаются. MainActivity не должна становиться владельцем дробной сессии; её gameRepository не хранит состояние и не помогает process restore.
+
+### Требуемые будущие проверки
+
+Unit (с управляемым now, без ожидания реальных 500 мс): полный набор создаётся до deadline; restore не вызывает генератор и сохраняет порядок вариантов; ответ за 1 мс до deadline / ровно / после; неверный session/question key; двойной клик; немедленный учёт и блокировка FEEDBACK; переход на 499/500 мс; expiry до ответа, внутри и на конце feedback; последний ответ/максимум; повторные tick/finish; snapshot round-trip QUESTION/FEEDBACK/FINISHED, тот же выбор/индекс/счёт, многократный restore без накопления; restore с неистёкшей подсветкой и с истёкшими feedback/deadline; согласованность/отказ повреждённого снимка без новой генерации; Back отменяет результат и stale callbacks, новая сессия независима; правильный минимум answered/точность/0 ответов. Чистые тесты могут проверить условия допуска навигации, но не поведение настоящего NavController.
+
+Отдельно Android/lifecycle проверки, не заменяемые JVM unit: onDestroyView во время QUESTION/FEEDBACK; пересоздание Fragment и Activity с сохранённым owner; настоящая системная смерть процесса в фоне и восстановление задачи (Activity.recreate не заменяет process death); блокировка/сон устройства и возврат до/после deadline; result при isStateSaved с доставкой после resume; отсутствие второго result destination; кнопка и системный Back к сложности. Измерить размер сериализованного снимка и проверить актуальность текста таймера сразу при foreground. В этой задаче ни одна проверка не запускалась.
+
+Неподтверждено: фактическое поведение на устройстве/OEM, наличие воспроизводимой двойной навигации или stale-клика, гарантии полноты последнего системного snapshot при резком убийстве, размер/совместимость будущего дробного codec и SavedStateHandle wiring, поведение после reboot/force-stop и трактовка длительности видимой подсветки при deep sleep. Спецификация не утверждает эти расширения; архитектурная рекомендация не является реализацией и не меняет её текст.
+
+В этой задаче добавлена только данная запись в существующий PROJECT_LOG.md. Исходники, XML, Gradle, FRACTIONS_SPEC.md и .gitignore не изменялись; новые файлы/классы/зависимости не создавались. Сборки, тесты, commit, push и переключение веток не выполнялись. До задачи уже были изменения .gitignore и PROJECT_LOG.md, они сохранены.
+
+## 2026-11-20 — утверждённая архитектура в FRACTIONS_SPEC.md
+
+В прочитанную существующую спецификацию добавлен раздел 7 «Утверждённая архитектура»: чистый Kotlin Domain, Fragment-scoped ViewModel как единственный владелец сессии, согласованный снимок SavedStateHandle, восстановление без генерации и повторного учёта, elapsedRealtime для обоих дедлайнов, Fragment + XML, защита ответов/завершения/навигации и границы штатного Android saved state. Согласованы пункт восстановления раздела 4, открытый вопрос о технических деталях и заключительная техническая граница; математические правила и значения не изменены. Один модуль app, без новых слоёв/зависимостей без доказанной необходимости, без изменений старых тренажёров и без заранее заданного количества классов. Проверка согласованности: противоречий не обнаружено. Остаются формат/проверка снимка, подключение SavedStateHandle и lifecycle/UI-детали реализации. Изменены только FRACTIONS_SPEC.md и эта запись PROJECT_LOG.md; реализация, сборки, тесты, commit и push не выполнялись.
+
+## 2026-11-20 — этап 3, шаг 3.1: математическая модель дробей
+
+Прочитана актуальная FRACTIONS_SPEC.md, изучены существующие domain/entity и организация JUnit-тестов; блокирующих модель противоречий не найдено. Добавлены только app/src/main/java/me/proton/jobforandroid/compositionofnumbers/domain/entity/Fraction.kt и app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionTest.kt, дополнен этот журнал. Спецификация, существующая математика Арифметики/Сравнения, Kotlin/XML/Gradle вне этих новых файлов и .gitignore не изменялись.
+
+Fraction — неизменяемая data class с исходными Int numerator/denominator без сокращения и переноса знака при создании; denominator=0 отклоняется IllegalArgumentException. reduced() явно сокращает по НОД, нормализует знак знаменателя, ноль приводит к 0/1. equals/hashCode сравнивают исходную запись; isEquivalentTo и compareTo сравнивают математическое значение, поэтому 2/4 и 1/2 эквивалентны, но различаются как записи. plus/minus возвращают сокращённую дробь с положительным знаменателем, не изменяя операнды. Модель не зависит от Android API, Float/Double, Java math или новых библиотек. Comparable — стандартный Kotlin-контракт порядка; пользовательские интерфейсы/абстракции не добавлялись.
+
+Переполнение: Int-компоненты расширяются до Long до умножения/смены знака, включая Int.MIN_VALUE. Общий знаменатель вычисляется через НОД; произведения Int-модулей не превышают 2^62 и помещаются в Long. Сложение промежуточных числителей проверяется до операции, модуль Long.MIN_VALUE явно отклоняется. Результат сокращается до проверки Int-диапазона: широкое промежуточное значение не приводит к ложному отказу, если сокращённые компоненты представимы. Непредставимый нормализованный числитель или положительный знаменатель вызывает ArithmeticException вместо усечения/оборачивания.
+
+Добавлены 12 JUnit-тестов: сохранение 6/8 и знака, 6/8 → 3/4 и неизменность исходника, эквивалентность 2/4 и 1/2, порядок дробей и знаков, сложение/вычитание с одинаковыми и разными знаменателями, неправильные и целые результаты, нулевой знаменатель, границы Int и Int.MIN_VALUE, сокращение широких промежуточных значений, переполнение числителя и знаменателя результата. Выполнены только чтение новых исходников и git diff --check; компиляция и прохождение тестов не подтверждены. Сборки и тесты НЕ запускались по ограничению пользователя.
+
+Ограничения: представление Int, не произвольная точность. Исходная запись с отрицательным знаменателем сохраняется, но её нормализованный результат может не помещаться в Int (например, 1/Int.MIN_VALUE); reduced/plus/minus в таком случае выбрасывают ArithmeticException. Сравнение исходных записей остаётся точным и не требует представимого reduced-результата. Ноль/отрицательные/целые значения математическая модель допускает; запреты конкретных уровней остаются вне этой модели. Уровни, задания, генератор, сессия, ViewModel и UI не реализовывались. Commit/push не выполнялись. Ранее существовавшие изменения .gitignore и PROJECT_LOG.md сохранены.
+
+## 2026-11-20 — шаг 3.2: математические валидаторы дробей
+
+Прочитаны актуальная FRACTIONS_SPEC.md, Fraction.kt, существующий ComparisonQuestionValidator и организация domain-тестов. Добавлены app/src/main/java/me/proton/jobforandroid/compositionofnumbers/domain/entity/FractionMathValidator.kt и app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionMathValidatorTest.kt. Fraction.kt и его тесты не изменялись; ошибок, требующих изменения математической модели, при статическом просмотре не найдено.
+
+Один чистый Kotlin object проверяет независимые математические данные без модели задания, новых enum/interface/factory/слоёв. TEST: правильность исходной дроби и знаменатель 2–7, 1..total-1 закрашенных частей, математическая эквивалентность дробного ответа. EASY: исходная правильная дробь со знаменателем 2–10, ответ на числитель/знаменатель именно исходной записи. NORMAL: правильные операнды со знаменателями 2–12, сравнение (в том числе равенство разных записей; sign -1/0/1 соответствует </=/>), сокращаемость исходника и полностью сокращённый ответ, сложение/вычитание с проверкой точного ответа и 0 < result < 1, НОК разных исходных знаменателей ≤ 24. HARD: правильные исходные операнды со знаменателями 2–15 и разными знаменателями, НОК ≤ 60, точный несократимый положительный нецелый ответ; преобразование неправильной нецелой исходной дроби в целую часть 1–3 и правильную несократимую дробную часть, точно соответствующие исходнику.
+
+Арифметика, сравнение и сокращение делегированы Fraction; отдельно вычисляется только отсутствующий в его API НОК и компоненты смешанного числа (целочисленные quotient/remainder). НОК вызывается после проверки малых положительных знаменателей, промежуточные значения помещаются в Int. Проверки входных диапазонов предшествуют арифметике; для заведомо недопустимых больших/отрицательных данных методы возвращают false. Нулевой знаменатель по-прежнему отклоняется конструктором Fraction, а проверка TEST totalParts=0 возвращает false до создания дроби. Ограничения знаменателей применяются к исходной записи, не к сокращённому ответу; НОК не ограничивает сравнение NORMAL. TEST не требует сокращённого дробного ответа, поскольку такого правила нет в спецификации. Математическая эквивалентность ответа TEST проверяется отдельно от правдоподобия/оформления будущих вариантов.
+
+Добавлены 13 JUnit-тестов: допустимые и недопустимые исходные границы всех уровней, количества частей, исходные компоненты EASY, эквивалентность/три знака сравнения NORMAL, полное/неполное сокращение, арифметика с одинаковыми и разными знаменателями, НОК ровно 24/60 и превышения 30/63, допустимые знаменатели результатов вне исходного диапазона, нулевые/отрицательные/целые и неправильные результаты, точность и несократимость ответа, целая часть 1/2/3 и отказы вне диапазона, неверные/неправильные/сократимые дробные части смешанного числа. Выполнены только статическое чтение и git diff --check. Сборки и тесты НЕ запускались; компиляция и прохождение тестов не подтверждены.
+
+Оставлено следующему шагу с моделями задания/набора: определение разрешённого типа и формата задания/ответов, три/четыре варианта и ровно один верный, взаимная неэквивалентность и правдоподобие дистракторов, перемешивание позиции ответа, квоты типов и точная тройка знаков NORMAL, уникальность заданий/исходных записей/значений внутри сессии. Валидатор может проверить количества частей, но не наличие и геометрию рисунка с равными частями — нужны данные представления/отдельная проверка UI. Непрояснённые диапазоны дистракторов и баланс подвидов NORMAL не определялись. Модели заданий, генераторы, сессия, ViewModel и UI не создавались.
+
+В этой задаче изменены только два новых файла валидатора/тестов и эта запись PROJECT_LOG.md. Существующие Арифметика/Сравнение, XML, Gradle, FRACTIONS_SPEC.md, .gitignore, Fraction.kt и FractionTest.kt сохранены. Новых зависимостей/документов нет; commit/push не выполнялись. Ранее существовавшие изменения/новые файлы шага 3.1 не затрагивались.
+
+## 2026-11-20 — этап 3, шаг 3.3: модели заданий и ответов дробей
+
+Прочитаны актуальная FRACTIONS_SPEC.md, Fraction.kt, FractionMathValidator.kt, связанные Question/ComparisonQuestion и организация domain-тестов. Добавлены domain/entity/FractionAnswer.kt, FractionExercise.kt, FractionQuestion.kt в app/src/main/java/me/proton/jobforandroid/compositionofnumbers и FractionQuestionTest.kt в app/src/test/java/me/proton/jobforandroid/compositionofnumbers. Существующие математическая модель/валидатор и их тесты не изменялись.
+
+Решения: FractionAnswer — закрытый набор текущих форматов Integer, FractionValue, MixedNumber и Sign; у Sign собственные LESS/EQUAL/GREATER, без зависимости от старого тренажёра. MixedNumber хранит целую часть и положительную правильную дробную часть отдельно; исходная дробная запись не сокращается автоматически. Диапазон целой части 1–3 и несократимость математически правильного смешанного ответа проверяются в упражнении HARD, не переносятся на все отображаемые варианты. Диапазон целых частей неверных вариантов спецификацией не установлен, дополнительных границ модель вариантов не вводит.
+
+FractionExercise<A> — реальные типы условий IdentifyFraction (TEST: totalParts/shadedParts), IdentifyNumerator/IdentifyDenominator (EASY), Compare/Reduce (NORMAL), Add/Subtract (явный FractionArithmeticLevel.NORMAL/HARD), ToMixedNumber (HARD). У фиксированных упражнений нет произвольного аргумента уровня, у арифметики enum содержит только два разрешённых уровня. Исходные Fraction сохраняются без изменения. CorrectAnswer имеет конкретный формат и вычисляется из условия; готовый правильный ответ не принимается отдельным несогласованным параметром конструктора и не дублируется как независимое бизнес-состояние. Арифметика/сравнение/сокращение используют Fraction, математическая допустимость — существующий FractionMathValidator. Целочисленное разложение mixed использует quotient/remainder; рациональная арифметика не переписана.
+
+FractionQuestion<A> связывает упражнение с List<A> того же формата инвариантным параметром типа, без unchecked cast/Any в production. Например, упражнение Compare принимает только варианты Sign, а Add — FractionValue. Проверка несовместимых форматов обеспечивается типами исходного Kotlin-кода, не искусственным runtime-тестом с unchecked cast. Список копируется через toList с сохранением порядка и защитой от последующей мутации исходного списка; проверяется число вариантов: три для сравнения, четыре для остальных. Корректный ответ доступен отдельно от отображаемых вариантов. Публичные данные — числа, enum, дроби и списки, поэтому сохраняется возможность будущего явного кодирования; Parcelable/Serializable/codec/хранилище не добавлены.
+
+Добавлены 11 JUnit-тестов: все типы условий и оба арифметических уровня, форматы typed-вариантов, равенство 2/4 и 1/2 при сравнении, смешанный ответ 14/4 → 3 + 1/2, отказ нулевой/неправильной дробной части mixed, сохранение исходных дробей, порядка и копирование списка вариантов, число вариантов, отклонение математически недопустимых условий через валидаторы (диапазоны/неправильная операция/несокращаемый исходник/целый HARD/неверная целая часть преобразования). Выполнены только чтение новых исходников и git diff --check. Сборки, компиляция и тесты НЕ запускались; успешность компиляции, включая запрет несовместимых generic-вызовов, запуском не подтверждена.
+
+Ограничения: семантическая проверка всего набора вариантов (ровно один правильный, дубликаты/математическая эквивалентность, правдоподобие), генерация дистракторов и перемешивание оставлены отдельному следующему шагу. Модель сейчас может содержать семантически некорректный набор правильного формата и размера; готовым валидатором полного задания она не объявляется. Не заданы спецификацией конкретные диапазоны дистракторов, вид фигур TEST и формат будущего снимка; они не придуманы. MixedNumber сохраняет неподтверждённые по правильности варианты, включая несокращённую дробную часть; только правильный ответ ToMixedNumber гарантированно удовлетворяет HARD. Генерики не являются будущей схемой сериализации; для heterogeneous набора потребуется явное кодирование типа упражнения/ответа, которого здесь нет. Некорректные огромные Fraction в арифметическом условии могут вызвать ArithmeticException от Fraction до проверки уровня; недопустимые данные не принимаются, единый тип исключения для всех неверных входов не обещается.
+
+В этой задаче изменены только три новых domain-файла, один новый файл тестов и эта запись PROJECT_LOG.md. Спецификация, Fraction.kt, FractionMathValidator.kt, старые тренажёры, XML, Gradle и .gitignore не изменялись; зависимости и дополнительные документы не создавались. Генераторы, квоты, канонические ключи, сессия, ViewModel и UI не реализовывались. Commit/push не выполнялись; прежние изменения других шагов сохранены.
+
+## 2026-11-20 — этап 3, шаг 3.4: валидация вариантов ответов
+
+Прочитаны актуальная FRACTIONS_SPEC.md, Fraction.kt, FractionAnswer.kt, FractionExercise.kt, FractionQuestion.kt, FractionMathValidator.kt и связанные FractionTest/FractionMathValidatorTest/FractionQuestionTest. Изменены только domain/entity/FractionQuestion.kt, test/.../FractionQuestionTest.kt и эта запись PROJECT_LOG.md. Нового класса валидатора нет; математические функции и валидаторы предыдущих шагов не изменены.
+
+В существующем конструкторе FractionQuestion сохранена единственная проверка числа вариантов (4, для Compare 3), теперь проверяется скопированный список. Добавлены: совпадение формата каждого варианта с correctAnswer; попарное отсутствие одинаковых/математически эквивалентных вариантов; ровно один вариант, математически равный вычисленному правильному ответу. Три уникальных Sign из существующего закрытого enum автоматически означают полный набор LESS/EQUAL/GREATER, отдельная дублирующая проверка множества не нужна. Generic-связь форматов сохранена; runtime guard дополнительно отклоняет списки, прошедшие небезопасную границу стирания типов, до обращения к конкретному формату.
+
+Целые и знаки сравниваются своими значениями, дроби — через Fraction.isEquivalentTo. Для mixed сравниваются целые части и математическое значение правильных дробных частей; поскольку fractionalPart уже ограничена моделью интервалом (0,1), это точная эквивалентность без пересчёта в потенциально переполняющую Int неправильную дробь. Нормальные/тяжёлые математические ограничения и вычисление correctAnswer остаются в существующих FractionExercise/FractionMathValidator. Для всех упражнений, кроме TEST, единственный математически правильный вариант должен совпадать с уже проверенной правильной записью упражнения: это обеспечивает несократимость ответа сокращения/арифметики и дробной части mixed без повторной реализации сокращения. TEST допускает эквивалентную исходной дробную запись; два эквивалентных варианта одновременно всегда отклоняются. Диапазоны неправильных вариантов не добавлены; они не обязаны быть несократимыми, если не эквивалентны правильному и другим вариантам.
+
+В FractionQuestionTest добавлены 10 JUnit-тестов к прежним 11 (всего 21): отсутствующий правильный ответ для разных форматов, дубли верных и неверных чисел, одинаковые и эквивалентные дробные варианты (включая разные знаки записи), все три математических исхода сравнения/порядок знаков/дубли знаков, полное и неполное сокращение, несократимость арифметических правильных вариантов обоих уровней, корректный/неполный mixed и эквивалентные неверные mixed, большие целые части дистракторов без переполнения и новых диапазонов, неверный runtime-формат после намеренного unchecked cast только в тесте, пустые/избыточные наборы. Прежние положительные проверки охватывают все типы упражнений, сохранение записей и порядка. Отказы — IllegalArgumentException через require в конструкторе; частично проверенное задание не создаётся.
+
+Выполнены только статическое чтение изменённых исходников и git diff --check. Сборка, компиляция и тесты НЕ запускались по ограничению пользователя; прохождение 21 теста не заявляется. Ограничения: педагогическая правдоподобность и конкретные диапазоны дистракторов не определяются этой математической проверкой, остаются открытые вопросы спецификации. Генерация, перемешивание, квоты, канонические ключи и сессии не реализованы. Fraction.kt, FractionAnswer.kt, FractionExercise.kt, FractionMathValidator.kt, FRACTIONS_SPEC.md, старые тренажёры, UI/ViewModel/навигация/XML/Gradle/.gitignore не изменялись. Зависимостей/документов не добавлено, commit/push не выполнялись; прежние изменения других шагов сохранены.
+
+## 2026-11-20 — шаг 3.5.1: генерация одного задания TEST
+
+Прочитаны актуальная FRACTIONS_SPEC.md, существующие Fraction/FractionAnswer/FractionExercise/FractionQuestion/FractionMathValidator и связанные domain-тесты. Добавлены app/src/main/java/me/proton/jobforandroid/compositionofnumbers/domain/usecases/FractionTestQuestionGenerator.kt и app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionTestQuestionGeneratorTest.kt; дополнен только этот журнал. Существующие модели/валидаторы и их тесты не изменялись.
+
+FractionTestQuestionGenerator.generate(random) возвращает одно FractionQuestion<FractionAnswer.FractionValue> с условием IdentifyFraction: totalParts 2–7, shadedParts 1..totalParts-1. Модель условия проверяет допустимость существующим математическим валидатором. Исходный правильный ответ сохраняет shadedParts/totalParts без сокращения. Все случайные выборы и перемешивания используют только переданный Random; глобальной истории/Random.Default нет.
+
+Подбор дистракторов: конечный пул всех 21 правильных дробных записей, представимых допустимыми рисунками TEST; сначала рассматриваются иные количества закрашенных частей при том же totalParts, затем варианты с тем же shadedParts, затем остальные рисунковые соотношения. Внутри приоритетов кандидаты перемешаны переданным Random. Это локальная политика выбора кандидатов для ошибок подсчёта, не новый обязательный диапазон ответов спецификации/модели. Корректность математического равенства не переписана: кандидат добавляется только при отсутствии эквивалентного через Fraction.isEquivalentTo. После набора трёх неверных ответов все четыре варианта перемешиваются; FractionQuestion выполняет ранее реализованные итоговые проверки формата, количества, уникальности и единственности правильного ответа.
+
+Конечность: создание 21 кандидата, конечные shuffle/sort и один проход максимум по 21 кандидату с максимум четырьмя сравнениями на кандидата, без случайного retry-until-success. Даже пять значений 1/2, 1/3, 1/4, 1/5, 1/6 из пула попарно различны, поэтому для любого исходного правильного значения в пуле достаточно трёх неэквивалентных неверных ответов. Если четыре варианта всё же не сформированы, check выбрасывает IllegalStateException; неполный вопрос не возвращается. Позиция правильного ответа не закреплена, равномерные квоты позиций не вводятся.
+
+Добавлены шесть JUnit-тестов: математическая корректность/четыре уникальных записи/ровно один верный/попарная неэквивалентность на 100 seed; перебор всех 21 допустимого условия с управляемыми первыми Random-вызовами; повторяемость условия и точного порядка вариантов при одинаковом seed; воспроизводимость последовательности вызовов без общего состояния; изменение позиции правильного ответа на разных seed; повторяющиеся случайные биты, включая крайний случай 1/2, без зацикливания подбора. Для проверок конечности заданы timeout. Сборки, компиляция и тесты НЕ запускались по ограничению пользователя; отсутствие исключений/зависаний при исполнении и успешность тестов не заявляются. Выполнены только статическое чтение новых файлов и git diff --check.
+
+Ограничения: точные педагогические диапазоны/метрики правдоподобия дистракторов остаются открытым вопросом спецификации; выбранная эвристика не объявлена новым утверждённым правилом и не ограничивает валидатор. Генератор не хранит межвопросную уникальность и не составляет сессию из восьми вопросов. Графика/вид фигур не реализованы. EASY/NORMAL/HARD, существующие тренажёры, UI/XML/Gradle, FRACTIONS_SPEC.md и .gitignore не изменялись. Зависимости/интерфейсы/фабрики/документы не добавлены; commit/push не выполнялись. Ранее существовавшие изменения других шагов сохранены.
+
+## 2026-11-20 — шаг 3.5.2: генерация отдельных заданий EASY
+
+Прочитаны актуальная FRACTIONS_SPEC.md, существующие Fraction/FractionAnswer/FractionExercise/FractionQuestion/FractionMathValidator, генератор одного TEST и связанные тесты. Добавлены app/src/main/java/me/proton/jobforandroid/compositionofnumbers/domain/usecases/FractionEasyQuestionGenerator.kt и app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionEasyQuestionGeneratorTest.kt; дополнен только этот журнал. Генератор TEST, существующие модели/валидаторы и их тесты не изменялись.
+
+FractionEasyQuestionGenerator.generate(type, random) принимает только два явно разрешённых ExerciseType: NUMERATOR и DENOMINATOR, возвращает одно FractionQuestion<FractionAnswer.Integer>. Исходная Fraction имеет denominator 2–10 и numerator 1..denominator-1, сохраняется без сокращения. Нужный FractionExercise.IdentifyNumerator/IdentifyDenominator проверяет исходник существующим валидатором и предоставляет правильный ответ исходной записи; числовой ответ не вычисляется повторной самостоятельной математической логикой. Сравнение EASY отсутствует в API и реализации.
+
+Политика дистракторов: другая компонента той же исходной записи (типичная путаница числителя/знаменателя) и соседние числа correct ±1/±2/±3, с предпочтением другой компоненты. В локальном пуле исключаются неположительные значения, сам правильный ответ и повторяющиеся числа; оставшиеся кандидаты перемешиваются переданным Random и выбираются три. Это эвристика подбора, не новые обязательные диапазоны ответов: спецификация и валидаторы не менялись, неверные ответы не ограничены исходным диапазоном знаменателей 2–10. Финальные четыре варианта перемешиваются тем же Random и проверяются существующим FractionQuestion (размер/формат/уникальность/единственный правильный), без повторной реализации его проверок.
+
+Конечность: два случайных выбора исходных компонентов, построение не более семи числовых кандидатов, конечные filter/distinct/shuffle/sort/take; случайных повторных попыток нет. Для correct в 1–10 всегда существуют три различные положительные upward-соседние числа correct+1/+2/+3, не равные правильному; Int-переполнение невозможно при этих исходных данных. Если три дистрактора не набраны, check выбрасывает IllegalStateException; неполное задание не возвращается. Генератор не хранит глобальное Random/историю и не навязывает равномерные квоты позиций ответа.
+
+Добавлены семь JUnit-тестов: корректность/диапазоны/четыре разных числа/ровно один правильный на 100 seed для КАЖДОГО типа; полный перебор всех 45 исходных записей для каждого типа (90 комбинаций); сохранение 6/8 и ответов 6/8 вместо сокращённых 3/4; воспроизводимость условия и порядка при одинаковом seed; воспроизводимая последовательность чередующихся типов без общего состояния; изменяемая позиция правильного ответа; минимальный знаменатель 2 и повторяющиеся случайные биты без циклов подбора. Проверки допустимости и ответа в тестах используют FractionMathValidator; в exhaustive/повторяющихся битах предусмотрен timeout.
+
+Сборки, компиляция и тесты НЕ запускались по ограничению пользователя. Отсутствие ошибок генерации/зависаний при исполнении и успешность тестов не заявляются. Выполнены только статический просмотр новых файлов и git diff --check. Ограничения: педагогическая правдоподобность реализована эвристикой чтения компонентов/соседних чисел, её точные диапазоны и метрики спецификацией пока не утверждены. Квоты 8/7, межвопросная уникальность, полная сессия из 15 заданий, NORMAL/HARD, таймер/сессия/ViewModel/UI не реализовывались. Старые тренажёры, XML/Gradle, FRACTIONS_SPEC.md и .gitignore не изменялись; зависимостей, документов и лишних абстракций не добавлено. Commit/push не выполнялись; предыдущие изменения других шагов сохранены.
+
+## 2026-11-20 — шаг 3.5.3: генератор отдельных заданий NORMAL
+
+Прочитаны актуальная FRACTIONS_SPEC.md, Fraction/FractionAnswer/FractionExercise/FractionQuestion/FractionMathValidator, генераторы TEST/EASY и связанные domain-тесты. Добавлены app/src/main/java/me/proton/jobforandroid/compositionofnumbers/domain/usecases/FractionNormalQuestionGenerator.kt и app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionNormalQuestionGeneratorTest.kt; дополнен только этот журнал. Модели, валидаторы и прежние генераторы не изменялись.
+
+FractionNormalQuestionGenerator.generate(type, random) принимает COMPARE/REDUCE/ADD/SUBTRACT и переданный Random, возвращает одно FractionQuestion<out FractionAnswer>: знаковые варианты для Compare и дробные для остальных. Исходники — конечный приватный неизменяемый список 66 положительных правильных дробных записей со знаменателями 2–12; записи не сокращаются при создании. Изменяемого общего состояния/истории и глобального Random нет.
+
+Compare выбирает две исходные записи и все три существующих Sign в перемешанном порядке. Правильный знак определяет существующая модель через математическое сравнение Fraction; одинаковые и разные эквивалентные записи разрешены. Reduce выбирает случайную стартовую позицию и проходит не более 66 исходников, используя isValidNormalReduction(source, source.reduced()); возвращается только сократимый исходник с несократимым правильным ответом. Add/Subtract обходят не более 66×66=4356 упорядоченных пар с переданной Random стартовой позиции; допустимость определяет существующий isValidNormalAddition/isValidNormalSubtraction, включая НОК ≤ 24 при разных знаменателях и 0 < result < 1. Результаты вычисляются Fraction, выбранные условия создаются существующими моделями NORMAL. Новые реализации НОД/НОК/рациональных операций или копии правил диапазонов/результатов не вводились.
+
+Подбор дробных дистракторов: конечный локальный пул соседних числителей/знаменателей правильного результата (смещения 1–3); выбираются положительные правильные кандидаты, математическая эквивалентность исключается через Fraction.isEquivalentTo. Это эвристика ошибок компонентов, не новые обязательные диапазоны модели/спецификации. Три кандидата n/(d+1), n/(d+2), n/(d+3) попарно различны и не равны положительному n/d, поэтому пул достаточен. Полные четыре варианта перемешиваются переданным Random, исходные записи вариантов сохраняются. FractionQuestion повторно используется для итоговых проверок формата/числа/единственности правильного/эквивалентных дубликатов; эти проверки не реализуются отдельным новым валидатором.
+
+Конечность: Compare выполняет фиксированное число выборов; Reduce — максимум 66 исходников; Add/Subtract — максимум 4356 пар без случайных повторных попыток; варианты — максимум 9 кандидатов и конечные shuffle/filter/сравнения. При отсутствии допустимого исходника/пары вызывается явный error (IllegalStateException), при недостатке вариантов — check; неполное задание не возвращается. Допустимые арифметические пары заведомо существуют (1/4+1/4, 3/4−1/4), как и сократимый исходник 2/4. Циклический поиск не обещает равномерного распределения по допустимым парам: такого требования и квот в этом шаге нет.
+
+Добавлены девять JUnit-тестов: 100 seed для КАЖДОГО из четырёх типов; воспроизводимость условия/правильного ответа/точного порядка вариантов; все три исхода сравнения, включая 2/4=1/2; сокращение с сохранением 2/4,6/8,10/12; арифметические одинаковые/разные знаменатели, нижняя/верхняя границы 2/12, НОК ровно 24 и результаты со знаменателем 24; пропуск стартовых кандидатов с целым, нулевым, отрицательным результатом и НОК 30; последовательность разных типов без общего состояния; переменная позиция правильного; повторяющиеся случайные биты без циклов подбора. Общие проверки тестов охватывают исходные диапазоны, 0<result<1 и несократимость, уникальность вариантов/отсутствие эквивалентности и единственный правильный через существующие валидаторы. Для проверки поиска задан timeout; тестовый Random управляет стартовой позицией, не результатом проверки.
+
+Сборки, компиляция и тесты НЕ запускались по ограничению пользователя; успешность тестов и исполнение без исключений/зависаний не заявляются. Выполнены только статическое чтение новых файлов и git diff --check. Ограничения: правдоподобие дистракторов — эвристика без новой обязательной числовой границы; равномерность подвидов/знаков, квоты 3/3/3/3 и 1/1/1, межвопросная уникальность и полная сессия NORMAL не реализованы. HARD, таймер/сессия/ViewModel/UI, старые тренажёры, XML/Gradle/навигация, FRACTIONS_SPEC.md и .gitignore не изменялись. Зависимостей/интерфейсов/документов не добавлено; commit/push не выполнялись. Прежние изменения других шагов сохранены.
+
+## 2026-11-20 — шаг 3.5.4: генератор отдельных заданий HARD
+
+Прочитаны актуальная FRACTIONS_SPEC.md, Fraction/FractionAnswer/FractionExercise/FractionQuestion/FractionMathValidator, генератор NORMAL и связанные математические/генераторные тесты. Добавлены app/src/main/java/me/proton/jobforandroid/compositionofnumbers/domain/usecases/FractionHardQuestionGenerator.kt и app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionHardQuestionGeneratorTest.kt; дополнен только этот журнал. Существующие модели, валидаторы и генераторы не изменялись.
+
+FractionHardQuestionGenerator.generate(type, random) поддерживает только ADD, SUBTRACT и TO_MIXED_NUMBER, возвращая одно FractionQuestion<out FractionAnswer> с четырьмя дробными либо смешанными вариантами. Все случайные операции используют переданный Random. Приватный неизменяемый арифметический пул — 105 положительных правильных исходных дробных записей со знаменателями 2–15. Поиск пары идёт с случайной стартовой позиции по конечному пространству 105×105=11025 пар. Правильный результат вычисляется Fraction; допустимость подтверждается существующим isValidHardAddition/isValidHardSubtraction (разные знаменатели, НОК ≤ 60, строго положительный нецелый результат, несократимый правильный ответ). Неправильный результат сложения сохраняется дробью, без преобразования в mixed. Новые реализации рациональной арифметики/НОД/НОК и копии математических проверок не добавлены.
+
+Для TO_MIXED_NUMBER имеется конечный пул 343 исходных записей: denominator 2–15, numerator от denominator+1 до 4*denominator-1 (границы выведены из утверждённой целой части 1–3). В пул входят 28 целых значений, которые исключает существующий isValidHardConversion; допустимы 315 нецелых записей. Поиск максимум по 343 кандидатам, дробная часть получается целочисленным остатком и Fraction.reduced, итоговая модель ToMixedNumber сохраняет исходную запись. Обратного преобразования нет.
+
+Дистракторы дробных ответов — конечные соседние числители/знаменатели правильной дроби с шагами 1–3; эквивалентные значения исключаются через Fraction.isEquivalentTo. Пул всегда содержит три разных неверных значения (n+1)/d,(n+2)/d,(n+3)/d. Неправильные дробные дистракторы не запрещаются. Mixed-дистракторы — ошибки выделения целой части (соседние целые с той же дробной частью) и ошибки знаменателя дробной части при той же целой. Эти группы попарно неэквивалентны: целые части различны либо при одинаковом положительном числителе различны знаменатели правильных дробных частей. Корректность смешанных данных проверяется существующей моделью, итогового набора — FractionQuestion; отдельная математическая логика сравнения mixed не написана. Пулы являются эвристикой правдоподобия, не новыми обязательными диапазонами вариантов/моделей. Неверные целые части не ограничены правильным диапазоном 1–3. Четыре варианта перемешиваются тем же Random.
+
+Конечность: максимум 11025 арифметических пар либо 343 исходника преобразования; варианты — не более 9 кандидатов для дроби и не более 8 для mixed (при целой части 1–3), без случайных повторных попыток. При отсутствии допустимой пары/исходника вызывается error, при недостатке вариантов — check (IllegalStateException); неполный вопрос не возвращается. Допустимые пары/преобразования существуют, например 1/2+1/3, 3/4−1/2, 3/2 → 1 + 1/2. Циклический поиск не обещает равномерность выбора всех допустимых исходников/пар; это не утверждено данным шагом.
+
+Добавлены десять JUnit-тестов: 100 seed для каждого из трёх типов; воспроизводимость условия/правильного ответа/точного порядка; правильные и неправильные суммы и НОК ровно 60; пропуск одинаковых знаменателей, целых/нулевых/отрицательных результатов и НОК 63; преобразования с целой частью 1/2/3, знаменателями 2/15 и сохранением 14/4; пропуск целых исходников; все 315 допустимых исходных записей преобразования; последовательность разных типов без общего состояния; переменная позиция правильного; повторяющиеся случайные биты без циклов. Общие проверки включают диапазоны исходников, единственный правильный через валидаторы, отсутствие одинаковых/эквивалентных вариантов, положительность/нецелость и несократимость правильных ответов, точное обратное математическое равенство mixed исходнику в тесте. Проверки конечности имеют timeout.
+
+Сборки, компиляция и тесты НЕ запускались по ограничению пользователя. Успешность тестов, отсутствие runtime-ошибок/зависаний и производительность исполнением не подтверждены. Выполнены только статический просмотр новых файлов и git diff --check. Ограничения: педагогическая правдоподобность дистракторов эвристическая, без новых обязательных диапазонов; равномерность выборки не гарантируется. Полная сессия HARD, квоты 3/3/4, межвопросная уникальность, таймер/сессия/ViewModel/UI не реализованы. Старые тренажёры, FRACTIONS_SPEC.md, XML/Gradle/навигация и .gitignore не изменялись; зависимостей/документов/универсальных интерфейсов не добавлено. Commit/push не выполнялись, прежние изменения других шагов сохранены.
+
+## 2026-11-20 — шаг 3.6: генератор полных наборов заданий «Дробей»
+
+Изучены актуальная FRACTIONS_SPEC.md, модели Fraction/FractionAnswer/FractionExercise/FractionQuestion, FractionMathValidator, четыре генератора отдельных вопросов и связанные unit-тесты. Блокирующих противоречий для генерации полного набора не обнаружено.
+
+Добавлены domain/entity/FractionCanonicalKey.kt, domain/usecases/FractionSessionGenerator.kt (в app/src/main/java/me/proton/jobforandroid/compositionofnumbers/) и app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionSessionGeneratorTest.kt. Изменены четыре существующих domain/usecases/FractionTestQuestionGenerator.kt, FractionEasyQuestionGenerator.kt, FractionNormalQuestionGenerator.kt, FractionHardQuestionGenerator.kt: добавлены внутренние перегрузки с предикатом допустимости условия и конечным перебором кандидатов. Необходимость: прежний публичный API не позволяет исключать уже выбранные задания и запрашивать нужный знак сравнения; повторные случайные вызовы не гарантируют нахождение доступного условия при повторяющихся значениях Random. Новые перегрузки переиспользуют существующие математические проверки и формирование вариантов. Прежние публичные методы и последовательность случайных выборов в них сохранены по статическому просмотру; это не подтверждено запуском. Математические модели/валидаторы и прежние тесты не изменялись.
+
+FractionSessionGenerator.generate(level, random) синхронно формирует только полный список FractionQuestion: TEST — 8; EASY — 8 NUMERATOR и 7 DENOMINATOR; NORMAL — по 3 COMPARE/REDUCE/ADD/SUBTRACT, причём сравнения отдельно выбираются для LESS/EQUAL/GREATER; HARD — 3 ADD, 3 SUBTRACT и 4 TO_MIXED_NUMBER. Полностью сформированный набор перемешивается переданным Random. Таймер не создаётся и не запускается; вызывающая сторона получает весь набор для последующего запуска игры. Общей изменяемой истории между вызовами нет; при ошибке частичный список не возвращается.
+
+FractionCanonicalKey определяет идентичность условий: TEST — сокращённое математическое значение; EASY — исходная запись numerator/denominator независимо от вопроса о числителе или знаменателе; NORMAL/HARD — тип упражнения и сокращённые операнды. У сложения и сравнения пара операндов неупорядоченная; у вычитания упорядоченная. Для сокращения и преобразования учитывается математическое значение исходника. Одинаковый ответ при разных математических условиях сам по себе не означает повтор. Исходные записи в моделях не меняются, порядок вариантов и представление ответа в ключ не входят.
+
+Поиск каждого следующего условия конечен и не использует лимит случайных повторных попыток: TEST — не более 21 исходника; EASY — 45; NORMAL — 66 для сокращения либо 4356 пар; HARD — 343 исходника преобразования либо 11025 пар. Предикат отбрасывает использованные ключи и неподходящий знак NORMAL без ослабления математических ограничений. При исчерпании пространства — явный IllegalStateException. Квоты/пулы достаточны для утверждённых уровней; новые диапазоны неправильных вариантов не вводились.
+
+Добавлены восемь unit-тестов: не менее 100 seed для каждого уровня на полные квоты, корректность всех вопросов/вариантов и отсутствие повторов; воспроизводимость условий и порядка вариантов на 100 seed каждого уровня; постоянный Random; отсутствие общей истории; перемешивание типов; ключи эквивалентности/перестановок/исходных записей EASY; явная ошибка при исчерпании кандидатов для каждого типа всех четырёх генераторов. Проверка повторов в сессиях дополнительно использует независимое попарное сравнение условий, а не производственный ключ. Для NORMAL проверяется ровно один каждый знак; проверки корректности переиспользуют математические валидаторы. Тесты конечности имеют timeout.
+
+Сборки, компиляция и тесты НЕ запускались по ограничению пользователя. Выполнены статический просмотр и git diff --check; успешность тестов, runtime-поведение и производительность исполнением не подтверждены. Равномерность выборки условий не гарантируется, правдоподобие дистракторов остаётся эвристикой существующих генераторов. Игровая сессия как автомат состояний, таймер, восстановление, ViewModel и UI не реализованы. FRACTIONS_SPEC.md, Fraction.kt, FractionMathValidator.kt, существующие тренажёры, XML/Gradle/навигация и .gitignore в этом шаге не изменялись; новых зависимостей и документов нет. Commit/push не выполнялись, прежние изменения сохранены.
+
+## 2026-11-20 — шаг 3.7: domain-машина игровой сессии «Дробей»
+
+Прочитаны актуальная FRACTIONS_SPEC.md, FractionQuestion, FractionSessionGenerator, ComparisonGameSession и связанные тесты. Добавлены app/src/main/java/me/proton/jobforandroid/compositionofnumbers/domain/entity/FractionGameSession.kt и app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionGameSessionTest.kt. Существующие модели, валидаторы и генераторы не изменялись. Блокирующих противоречий спецификации не обнаружено.
+
+FractionGameSession.start(level, questions, nowMs) принимает уже полностью сгенерированный набор и устанавливает единый дедлайн (TEST 30000, EASY 90000, NORMAL 120000, HARD 180000 мс). Уровень переиспользуется из FractionSessionGenerator.Level. События answer(question, optionIndex, nowMs) и advance(nowMs) работают только с переданным монотонным временем; Android API, реальные таймеры и ожидания отсутствуют. В QUESTION ответ допустим строго до дедлайна и только для того же объекта текущего вопроса и существующего индекса варианта. Принятый индекс записывается немедленно, фаза меняется на FEEDBACK с окончанием через 500 мс. Неправильный ответ учитывается наравне с правильным в количестве отвеченных. Повторные/чужие/устаревшие события не добавляют ответы; любое событие сначала актуализирует время, поэтому отклонённое нажатие также может обнаружить наступивший дедлайн.
+
+advance завершает QUESTION при nowMs >= deadlineMs без учёта показанного вопроса. FEEDBACK сохраняется, пока nowMs < feedbackEndMs: 499 мс ещё подсветка, на 500 мс переход. При окончании подсветки — FINISHED, если истёк общий дедлайн или отвечены все вопросы, иначе QUESTION. Истечение общего времени внутри FEEDBACK не обрывает подсветку. После FINISHED последующие корректные по временному контракту события не меняют снимок и результат. Навигационные события модель не создаёт; однократную навигацию и прекращение сессии при Back предстоит подключать за пределами domain, без введения дополнительной игровой фазы.
+
+Snapshot содержит уровень, полный упорядоченный набор FractionQuestion (включая порядок вариантов), последовательный список принятых индексов вариантов, фазу, дедлайн игры и момент окончания подсветки. Текущая позиция выводится из числа ответов и фазы; выбранный ответ FEEDBACK — из последнего сохранённого индекса. Отдельные копии выбранного ответа, текущей позиции, правильности, счётчиков и результата не сохраняются, что исключает их рассогласование. snapshot()/restore копируют списки; модель не генерирует задания при восстановлении и не вызывает повторно принятие ответов. restore проверяет число вопросов, индексы ответов, согласованность фазы/подсветки и границы времени, затем сразу вызывает advance(nowMs); просроченная подсветка не запускается заново. Корректность квот и межвопросной уникальности полного набора остаётся ответственностью существующего FractionSessionGenerator; машина не дублирует его проверки.
+
+Результат доступен только в FINISHED. Минимумы/точность: TEST 5/60%, EASY 10/70%, NORMAL 8/75%, HARD 6/80%; оба условия обязательны, ноль ответов неуспешен. Точность проверяется целочисленным перекрёстным умножением Long без округления. Правильность использует уже проверенный FractionQuestion: канонический correctAnswer сравнивается с выбранным вариантом; для TEST допускается математически эквивалентная запись через Fraction.isEquivalentTo. Новая рациональная арифметика не вводится. Проверки границ Long защищают вычисление обоих дедлайнов от переполнения.
+
+Добавлены 13 unit-тестов с управляемым временем без реальных задержек: ответ до/на/после дедлайна; немедленный учёт и граница 499/500; повторные/устаревшие/чужие нажатия и недопустимый индекс; истечение времени во время подсветки; окончание всех уровней после последней подсветки и идемпотентность FINISHED; нулевой/неотвеченный вопрос; минимумы и точные/дробные пороги точности всех уровней; восстановление QUESTION/FEEDBACK/FINISHED, истёкшего дедлайна/подсветки и последнего ответа; пересозданные объекты вопросов и защитные копии списков; эквивалентный правильный вариант TEST; несогласованные снимки и границы времени/переполнение. Тесты используют существующий генератор полных наборов, но не вызывают его из restore.
+
+Ограничения: машина предназначена для одного владельца с последовательной доставкой событий; общий неубывающий монотонный отсчёт обеспечивает вызывающая сторона, последний nowMs отдельно не хранится. На событиях UI необходимо передавать именно объект вопроса текущей восстановленной сессии. Это domain-снимок, не Android-сериализация или гарантированное дисковое сохранение; SavedStateHandle, жизненный цикл, планирование событий времени и навигация здесь не реализованы. Перезагрузка устройства/сброс монотонной шкалы не поддерживаются, согласно утверждённым границам восстановления. Сборка, компиляция и тесты НЕ запускались по ограничению пользователя; выполнены только статический просмотр и git diff --check, успешность исполнения не подтверждена. FRACTIONS_SPEC.md, существующие тренажёры, UI/XML/Gradle/навигация/.gitignore не менялись; новых зависимостей и дополнительных документов нет. Commit/push не выполнялись, прежние изменения сохранены.
+
+## 2026-11-20 — финальный статический аудит Domain «Дробей»
+
+Прочитаны актуальная FRACTIONS_SPEC.md, все 12 Fraction*.kt в domain/entity и domain/usecases и 9 соответствующих файлов unit-тестов (99 объявлений @Test). Доказанных нарушений BLOCKER/MAJOR/MINOR утверждённого математического и игрового контракта на корректных входных данных не обнаружено. Заключение: PASS в границах статического Domain-аудита; это не подтверждение успешной компиляции, прохождения тестов или Android-интеграции.
+
+Подтверждения: Fraction.kt:10–24 сохраняет запись и точно сравнивает через Long; :31–69 сокращает результаты и явно отклоняет непредставимые компоненты Int. FractionMathValidator.kt:5–75 соответствует диапазонам уровней, НОК 24/60, положительности/нецелости и каноническим правильным ответам; FractionExercise.kt:88–100 задаёт корректное mixed-преобразование. FractionQuestion.kt:13–32 проверяет количество/формат/математическую уникальность/единственный канонический правильный вариант. FractionCanonicalKey.kt:5–24 соответствует эквивалентности и перестановкам, отдельно сохраняет сырую запись EASY. FractionSessionGenerator.kt:23–62 задаёт точные квоты, знаки NORMAL 1/1/1 и конечное перемешивание полного набора. Фильтры всех четырёх одиночных генераторов применяются к кандидатам до возврата; обход конечен: TEST 21, EASY 45, NORMAL 66/4356, HARD 343/11025. Пулы дистракторов математически достаточны: TEST имеет 17 различных значений, EASY содержит три верхних соседа, NORMAL — три знаменателя-соседа, HARD — три числителя-соседа или три различных целых части. Недостижимого в текущих диапазонах отказа вариантов с пропуском следующего кандидата не найдено; отсутствие такого fallback само по себе здесь не доказанный дефект.
+
+FractionGameSession.kt:52–69 принимает ответ строго до дедлайна, проверяет объект вопроса/индекс, учитывает один ответ сразу, завершает подсветку на 500 мс, сохраняет её при истёкшем общем времени и идемпотентно обрабатывает FINISHED. :39–44 точно вычисляет успех; :14–47 и :100–114 восстанавливают полное состояние без генерации/повторного принятия. Позиция/выбранный ответ выводятся из последовательности принятых индексов; отдельное хранение не требуется. Модель принимает согласованный набор от существующего генератора, а не заново валидирует квоты/уникальность при restore; полная защита от искусственно испорченного снимка не подтверждена и остаётся открытой частью спецификации (строка 77), а не доказанным нарушением восстановления корректного снимка. Монотонность и последовательность событий — контракт вызывающей стороны.
+
+Пробелы тестов: нет прямых независимых assert на все длительности 30000/90000/120000/180000 (часть тестов берёт дедлайн/лимит из production); нет отдельной проверки совпадения окончания подсветки с общим дедлайном, далёкого скачка времени за оба дедлайна и восстановления QUESTION/FEEDBACK для каждого уровня с заново построенным полным графом моделей; нет точечного фильтра, принимающего только последний кандидат после циклического перехода через конец пула; NORMAL/HARD арифметические пары не перебираются исчерпывающе независимым оракулом. Производственные валидаторы/Fraction переиспользуются в части тестовых оракулов, поэтому общая ошибка теоретически может остаться незамеченной; компенсируется примерами с явно заданными ответами/НОК и независимым попарным сравнением условий сессии. Ошибочное общее предположение, приводящее к доказанному дефекту, не найдено.
+
+Не подтверждены исполнением: успешность всех 99 тестов, компиляция, производительность и Android/process-death интеграция. Педагогическая правдоподобность эвристических дистракторов не формализована; открытые вопросы FRACTIONS_SPEC.md:75–77 не трактовались как новые обязательные диапазоны/квоты или доказанные нарушения. Сборки, тесты, Lint и компиляция не запускались. Изменён только PROJECT_LOG.md; исходники/тесты/спецификация не менялись, новые файлы не создавались, commit/push не выполнялись.
+
+## 2026-11-20 — этапы 4.1–4.3: Data и переиспользуемые компоненты «Дробей»
+
+Data не требуется: domain/usecases/FractionSessionGenerator.kt:13 принимает Level и Random и синхронно возвращает полный List<FractionQuestion<out FractionAnswer>>, без Context/хранилища/сети. Будущая Fragment-scoped ViewModel может непосредственно вызывать генератор. Repository/DataSource, новый механизм хранения и зависимости не добавлены.
+
+Прочитаны FRACTIONS_SPEC.md и относящиеся к компонентам ресурсы ENOT. Через навык figma-design-to-code получены структура раздела BRMSwONxGEshJOAghaAqjz, screenshot и подробные design context со screenshot для узлов 141:65 (дробь S), 141:69 (L), 136:164 (карточка), 136:154 (TEST), 145:137 (смешанное число), 147:212/149:167 (обычная/подсвеченная карточка). Реализация опирается на детальный контекст дочерних узлов, не на разреженную структуру раздела. Figma не изменялась.
+
+Добавлены app/src/main/res/layout/ncs_v2_fraction.xml, ncs_v2_fraction_mixed.xml, ncs_v2_fraction_answer_item.xml, ncs_v2_fraction_parts.xml. Обыкновенная дробь использует исходный Fraction без вычислений/сокращения, поддерживает S/L (24/30sp, минимальная ширина 44/56dp, черта 2.5dp с отступами 4dp). Числитель и знаменатель центрированы; ширина растёт по более длинной записи, горизонтальные отступы цифр сохраняют покрытие чертой. Минимальные высоты текстовых строк заданы в sp, текст не ограничен фиксированной высотой. Смешанное число переиспользует дробь S, целая часть 31sp слева, минимальная ширина 28dp, интервал 4dp и вертикальные смещения взяты из 145:137. При нулевых ссылках на данные числовые компоненты невидимы; демонстрационные значения присутствуют только в tools:text.
+
+Добавлен presentation/FractionPartsView.kt: отображает переданные totalParts/shadedParts в виде равных прямоугольников 54×58dp, интервал 13dp, радиус 2dp, обводка 1.5dp, как 136:154/143:89. Группа центрируется; при недостатке места равномерно уменьшается целиком с сохранением пропорций всех частей/интервалов. Цвета заливки — ncs_v2_yellow/ncs_v2_surface, границ — ncs_v2_border. Нулевые неинициализированные количества не рисуются. BindingAdapter связывает только данные отображения; генерация, проверка ответов и таймер отсутствуют.
+
+Добавлены res/values/fractions_dimens.xml, fractions_styles.xml, fractions_strings.xml и res/drawable/ncs_v2_fraction_parts_panel.xml, ncs_v2_fraction_answer_highlighted.xml. Повторно используются ncs_v2_answer_card, TextAppearance.NcsV2.ExtraBold как основа, размеры текста 24/30, отступы 4/12, высота условия 114dp, палитра ENOT, радиус панели 24dp и обводка 2dp. Новая панель необходима из-за отличающейся от comparison-expression заливки; новая подсветка использует уже существующий success_soft (#DFF6EC) и тёмный ink, как 149:167. Boolean highlighted — только готовое визуальное состояние, не результат проверки. Непоказанные в проверенных макетах дополнительные состояния ошибки не выдумывались.
+
+Проверка name-таблицы существующего ncs_v2_nunito_extrabold.ttf выявила семейство Nunito, а не Nunito Sans. Для новых компонентов добавлен отдельный res/font/ncs_v2_nunito_sans_extrabold.ttf из https://raw.githubusercontent.com/googlefonts/NunitoSans/main/fonts/ttf/NunitoSans-ExtraBold.ttf. Метаданные подтверждают Nunito Sans / ExtraBold; размер 144452 байта; SHA-256 609EE0BA388B6642AC4A469429EF5E66018488F3166E858D974DD77EE0D44E28. Copyright/лицензионные метаданные сохранены; полный OFL включён в fractions_strings.xml как нетранслируемый ресурс. Прежние стили/шрифты других экранов не изменялись.
+
+Для TalkBack числовые компоненты имеют одно описание с числителем/знаменателем и, при необходимости, целой частью; вложенная дробь и отдельные цифры не создают повторных accessibility-узлов. Карточка озвучивается как один интерактивный узел; TEST сообщает число закрашенных и общее количество равных частей. Фактическое озвучивание устройством не проверялось.
+
+Статически разобраны все 9 новых XML, неразрешённых локальных ссылок на ресурсы не найдено; шрифт ненулевой и его метаданные проверены. Сборки, тесты и компиляция не запускались. Android-рендер, крупный системный шрифт и TalkBack исполнением не подтверждены; пиксельное сравнение с Figma не выполнено. У карточки сохранён существующий подход ENOT с нативной тенью elevation 6dp: точное совпадение с двумя слоями тени Figma (1/3px, 6/17px) не подтверждено. Параметры основных компонентов получены, отсутствующие визуальные состояния не подменялись догадками. Domain, старые тренажёры, спецификация, Gradle и навигация не изменены. Игровые Fragment/ViewModel и демонстрационные экраны не создавались; commit/push не выполнялись.
+
+## 2026-11-20 — исправление типа android:minWidth дроби
+
+В app/src/main/res/layout/ncs_v2_fraction.xml проверено фактическое выражение android:minWidth: выбор @dimen между S/L возвращал float, несовместимый с ожидаемым Int. В этом единственном атрибуте добавлено явное приведение результата к int. Data Binding сохранён, поскольку ширина зависит от large; постоянная ссылка потеряла бы переключение S/L. Ресурсы S=44dp и L=56dp не изменены. Другие атрибуты, XML-компоненты и Domain не менялись; BindingAdapter, классы и зависимости не добавлялись. Сборка и тесты не запускались, commit/push не выполнялись; исправление компиляцией не подтверждено.
+
+## 2026-11-20 — удаление Data Binding из android:minWidth дроби
+
+Повторная ошибка выявила отсутствие подходящего setter android:minWidth у LinearLayout: предыдущее приведение к int не устраняло эту причину. В app/src/main/res/layout/ncs_v2_fraction.xml выражение minWidth заменено прямой ссылкой @dimen/ncs_v2_fraction_s_width (44dp). Для сохранения L=56dp добавлен стандартный Space с прямой ссылкой @dimen/ncs_v2_fraction_l_width и нулевой высотой: при large он INVISIBLE и участвует только в измерении ширины, в S — GONE. Числитель/знаменатель и черта сохраняют центрирование и возможность расширения по содержимому; вертикальные размеры и оформление не менялись. Data Binding для размеров этого Space не используется, только существующий механизм visibility. Другие файлы/компоненты, ресурсы размеров и Domain не изменялись; новые классы/BindingAdapter/зависимости не добавлялись. Сборка, тесты, commit/push не запускались; результат компиляцией не подтверждён.
+
+## 2026-11-20 — исправление float в minHeight числителя и знаменателя
+
+В app/src/main/res/layout/ncs_v2_fraction.xml оба динамических android:minHeight передавали float из @dimen в TextView.setMinHeight(int). В обоих выражениях добавлен Math.round с явным импортом java.lang.Math: размер после перевода ресурсов в пиксели округляется до Int. Переключение S/L, исходные sp-ресурсы и остальные атрибуты сохранены. TextView имеет setMinHeight(int), поэтому здесь исправляется тип аргумента; ситуация отличается от прежнего android:minWidth у LinearLayout. Другие компоненты, Domain и ресурсы не изменялись; BindingAdapter, классы и зависимости не добавлялись. Сборка, тесты, commit/push не запускались; исправление компиляцией не подтверждено.
+
+## 2026-11-20 — проверка minWidth/minHeight четырёх layout «Дробей»
+
+Проверены только ncs_v2_fraction.xml, ncs_v2_fraction_mixed.xml, ncs_v2_fraction_answer_item.xml и ncs_v2_fraction_parts.xml. Найдены два динамических minHeight в ncs_v2_fraction.xml; динамических minWidth нет. На момент проверки оба minHeight уже содержали Math.round(float), возвращающий int, поэтому сообщение об исходном float не совпадает с актуальным текстом файла; успешность предыдущего исправления запуском не подтверждалась. Для однозначного получения целочисленных размеров оба выражения заменены на context.resources.getDimensionPixelSize с выбором существующего R.dimen по large; импорт Math заменён импортом R. Результат метода — int, идентификаторы ресурсов также int, float в setter minHeight не передаётся. Сохранены оба утверждённых S/L и перевод sp с учётом конфигурации Android. В остальных трёх layout minWidth/minHeight заданы прямыми @dimen либо отсутствуют; изменений они не требуют. Другие атрибуты, компоненты и бизнес-логика не менялись. Новые файлы, классы, BindingAdapter и зависимости не добавлялись. Сборка, тесты, commit/push не запускались; результат компиляцией не подтверждён.
+
+## 2026-11-20 — динамические верхние отступы дроби
+
+Проверены существующие BindingAdapter во всех Kotlin-исходниках app/src/main: подходящего адаптера для topMargin не найдено. В presentation/BindingAdapter.kt добавлен один специализированный fractionTopMargin(view, marginPx: Float). Значения @dimen поступают уже в пикселях как float; адаптер округляет их до Int без повторного применения density, изменяет только topMargin существующего MarginLayoutParams и переназначает layoutParams только при изменении. Остальные отступы, ширина/высота и тип параметров сохраняются.
+
+В layout/ncs_v2_fraction.xml два динамических android:layout_marginTop (черта и знаменатель) заменены на app:fractionTopMargin; добавлен namespace app. Существующие ссылки на @dimen и ветви S/L, включая нулевой отступ знаменателя S, сохранены. Проверены также ncs_v2_fraction_mixed.xml, ncs_v2_fraction_answer_item.xml и ncs_v2_fraction_parts.xml: аналогичных динамических отступов нет, файлы не менялись. Размеры/цвета/шрифты, Domain/ViewModel и другие экраны не изменены; новых файлов/классов/зависимостей нет. Сборка и тесты не запускались, commit/push не выполнялись; исправление компиляцией не подтверждено.
+
+## 2026-11-20 — шаг 2/4: XML-интерфейс «Дробей», 14 макетов
+
+Изучены актуальная FRACTIONS_SPEC.md, структура presentation/res, готовые компоненты дробей, относящиеся ресурсы ENOT и все 14 узлов Figma BRMSwONxGEshJOAghaAqjz/135:53. Для каждого макета получены подробный get_design_context и screenshot через figma-design-to-code; Figma не изменялась. Секция сопоставлена с четырьмя видами экранов: выбор сложности, правила, игра, результат. Добавлены четыре Fragment (Level/Rules/Game/Result), не отдельный Fragment на каждый макет.
+
+Карта покрытия (пути относительно app/src/main/res/layout):
+01 135:54 → ncs_v2_fractions_level.xml.
+02 136:53 → ncs_v2_fractions_rules_test.xml.
+03 136:76 → ncs_v2_fractions_rules_easy.xml.
+04 136:99 → ncs_v2_fractions_rules_normal.xml.
+05 136:122 → ncs_v2_fractions_rules_hard.xml.
+06 136:145 → ncs_v2_fractions_game_picture.xml.
+07 136:200 → ncs_v2_fractions_game_numerator.xml (также формат знаменателя через внешние instruction/choiceLabel).
+08 136:255 → ncs_v2_fractions_game_comparison.xml.
+09 136:295 → ncs_v2_fractions_game_arithmetic.xml (сложение/вычитание через внешние instruction/operator).
+10 147:143 → ncs_v2_fractions_game_reduction.xml.
+11 136:350 → ncs_v2_fractions_game_mixed.xml.
+12 147:198 → ncs_v2_fractions_game_feedback.xml.
+13 136:405 → ncs_v2_fractions_result_success.xml.
+14 136:451 → ncs_v2_fractions_result_failure.xml.
+
+Общие блоки: navigation, brand, expression, comparison_expression, footer_regular/footer_comparison, статический rule_fraction. Готовые fraction/mixed/answer_item расширены только по необходимости: цвета числителя/знаменателя для цветных учебных примеров и ошибки; карточка теперь отображает также числовой/знаковый и смешанный варианты, мягкую подсветку и существующее ошибочное состояние ENOT. Убраны вертикальные padding карточки, мешавшие размещению смешанного числа 74dp в карточке 88dp; размеры 88/112dp сохранены как минимумы с расширением содержимого. Высоты строк дроби закреплены в существующих sp-размерах через TextView.setHeight(int), чтобы метрики Nunito Sans не увеличивали их сверх Figma; метод и типы setHeight(int), setTextSize(float), setTextColor(int), setLineHeight(int) проверены чтением SDK через javap, без компиляции. Динамических android:minWidth/android:minHeight/android:layout_marginTop в XML дробей не осталось; существующий специализированный fractionTopMargin переиспользован. Фиксированная геометрия новых экранов задана обычными XML-атрибутами, динамическая видимость — целочисленными View.VISIBLE/GONE.
+
+Готовые PNG logo_schetenot, raccoon_levels/thinking/timer/success/failure/happy и decor_math_tools визуально сопоставлены с макетами; проверены ненулевые размеры, PNG RGBA и побайтовое совпадение drawable-nodpi с одноимёнными figma_assets. Позиции, контейнеры, fitCenter/centerCrop и отражение raccoon_happy повторяют Figma. Переиспользованы decor_sparkles, палитра ENOT, primary/secondary buttons, level card/selected outline, progress drawable, status circles и красная рамка результата. Новые фоновые ресурсы добавлены только для отличающихся мягкой рамки успеха, бумажного индикатора выбора, тёплого вопросительного поля, бейджа и компактных частей учебного примера. Общие стили старых экранов не менялись.
+
+Для Nunito Sans дополнительно добавлены официальные Regular/Bold/SemiBold из googlefonts/NunitoSans (fonts/ttf); метаданные подтверждают веса 400/700/600, ExtraBold 800 переиспользован. Общая OFL уже включена в существующий ресурс fractions_strings.xml. Nunito других разделов не заменялся.
+
+Preview: все 14 реальных layout содержат статические утверждённые тексты либо tools:text/tools:visibility/tools:background и preview-темы. Игровые числа, варианты, статистика и время в темах используются только tools-атрибутами, в рабочие binding-поля не назначаются. В FractionPartsView пример 1 из 4 установлен исключительно под isInEditMode. Статические дроби в правилах — реальный утверждённый учебный контент, не фиктивная игровая сессия. Правильный ответ показан Preview-темой EqualSelected; ошибочную карточку можно просмотреть темой FractionsExample.Wrong. Указанные состояния подготовлены, но фактическое отображение Android Studio Preview не проверялось.
+
+Приоритет спецификации над устаревшим контентом Figma: EASY исправлен с «Дроби 2–8» на 2–10, из правил EASY убрано сравнение; NORMAL явно упоминает сравнение. Количества/время/минимумы/точность соответствуют 8/30/5/60%, 15/90/10/70%, 12/120/8/75%, 10/180/6/80%. Figma при этом не менялась.
+
+Игровые Fragment только выбирают/инфлейтят визуальный XML и освобождают binding; игровая сессия/генератор/ViewModel/таймер/SavedStateHandle не подключены, ответы не принимаются и правильность не вычисляется. LevelFragment меняет только UI-выбор сложности и сохраняет эту строку в обычном instance state. Навигация, запуск игры и кнопки переходов намеренно остаются для интеграционного шага; граф главного приложения не менялся. Domain и старые тренажёры не изменены.
+
+Ограничения: Android-рендер, компиляция, TalkBack и фактическая работа Preview исполнением не подтверждены. Попиксельное сравнение реализованных экранов с Figma не выполнено, визуальное соответствие подтверждённым не объявляется. Нативная elevation 6dp переиспользована из ENOT; её точное совпадение с двухслойной тенью Figma не подтверждено. Из 14 макетов только №12 определяет подсветку верного ответа; отдельного макета неверного ответа нет, поэтому использован готовый красный стиль ENOT, точная Figma-спецификация этого состояния отсутствует. Для других размеров устройств/системного шрифта требуется последующая визуальная проверка. Сборка, тесты и Lint не запускались; выполнялись только XML-разбор, проверка ресурсов/метаданных и чтение SDK-сигнатур. Commit/push не выполнялись. Посторонние прежние изменения, включая BindingAdapter.kt и figma_assets/raccoon_fractions.png, сохранены.
+
+Созданные файлы (относительно app/src/main):
+- java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsGameFragment.kt
+- java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsLevelFragment.kt
+- java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsResultFragment.kt
+- java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsRulesFragment.kt
+- res/color/ncs_v2_fractions_check.xml
+- res/drawable/ncs_v2_fractions_badge.xml
+- res/drawable/ncs_v2_fractions_level_indicator.xml
+- res/drawable/ncs_v2_fractions_question_slot.xml
+- res/drawable/ncs_v2_fractions_result_success.xml
+- res/drawable/ncs_v2_fractions_rule_empty.xml
+- res/drawable/ncs_v2_fractions_rule_shaded.xml
+- res/font/ncs_v2_nunito_sans_bold.ttf
+- res/font/ncs_v2_nunito_sans_regular.ttf
+- res/font/ncs_v2_nunito_sans_semibold.ttf
+- res/layout/ncs_v2_fractions_brand.xml
+- res/layout/ncs_v2_fractions_comparison_expression.xml
+- res/layout/ncs_v2_fractions_expression.xml
+- res/layout/ncs_v2_fractions_footer_comparison.xml
+- res/layout/ncs_v2_fractions_footer_regular.xml
+- res/layout/ncs_v2_fractions_game_arithmetic.xml
+- res/layout/ncs_v2_fractions_game_comparison.xml
+- res/layout/ncs_v2_fractions_game_feedback.xml
+- res/layout/ncs_v2_fractions_game_mixed.xml
+- res/layout/ncs_v2_fractions_game_numerator.xml
+- res/layout/ncs_v2_fractions_game_picture.xml
+- res/layout/ncs_v2_fractions_game_reduction.xml
+- res/layout/ncs_v2_fractions_level.xml
+- res/layout/ncs_v2_fractions_navigation.xml
+- res/layout/ncs_v2_fractions_result_failure.xml
+- res/layout/ncs_v2_fractions_result_success.xml
+- res/layout/ncs_v2_fractions_rule_fraction.xml
+- res/layout/ncs_v2_fractions_rules_easy.xml
+- res/layout/ncs_v2_fractions_rules_hard.xml
+- res/layout/ncs_v2_fractions_rules_normal.xml
+- res/layout/ncs_v2_fractions_rules_test.xml
+- res/values/fractions_screens.xml
+
+Изменённые существующие файлы (относительно app/src/main):
+- res/layout/ncs_v2_fraction.xml
+- res/layout/ncs_v2_fraction_mixed.xml
+- res/layout/ncs_v2_fraction_answer_item.xml
+- java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionPartsView.kt
+- PROJECT_LOG.md (корень проекта).
+
+## 20.11.2026 — Шаг 3/4: интеграция «Дробей» в Android
+
+Подключён существующий Domain к четырём подготовленным Fractions*Fragment и семи игровым XML. Математические модели, генераторы, параметры уровней, FRACTIONS_SPEC.md, логика «Арифметики» и «Сравнения», зависимости и модули не изменялись.
+
+### Навигация и главный хаб
+
+- В существующий main_navigation.xml добавлены четыре destination и Safe Args actions: хаб → выбор сложности → правила выбранного уровня → игра → результат.
+- Выбор уровня сохраняется при пересоздании экрана; кнопка правил активна после выбора. Правила не создают игровую сессию.
+- При старте игры правила удаляются из back stack до выбора сложности. Экранная кнопка Back и системный Back/жест отменяют сессию и сразу возвращают к выбору сложности без результата. Обычный поворот экрана сессию не отменяет.
+- Переход к результату удаляет игровой Fragment. «Повторить» удаляет результат и создаёт новую игру того же уровня; «Выбор сложности» и системный Back из результата возвращают к выбору уровня.
+- Обработчики переходов проверяют текущий destination; actions внутри раздела используют launchSingleTop. Для результата дополнительно сохраняется флаг доставки, проверяются RESUMED-состояния View и back stack entry.
+- Карточка «Дроби» добавлена по get_design_context и скриншоту обновлённого хаба Figma 81:3952: фон #FFF2DC, высота 182 dp, радиус 24 dp, тень, изображение 147.903×70 dp с поворотом 7°, заголовок и описание в соответствующих слотах. Справа оставлен блок будущего тренажёра. Существующие карточки «Арифметика» и «Сравнение» побайтно не менялись после нормализации переводов строк.
+- Оригинальный figma_assets/raccoon_fractions.png скопирован в drawable-nodpi без обработки; SHA-256 исходника и копии совпадает. Геометрия слота и fitCenter сверены с контекстом Figma, изображение просмотрено. Общая Android-вёрстка хаба вне нового ряда не перерабатывалась.
+
+### Владелец игры, игровые состояния и время
+
+- Добавлена одна Fragment-scoped FractionsGameViewModel с SavedStateHandle. Она единолично хранит FractionGameSession; Repository, DataSource, фабрики, DI и новые зависимости не добавлены. В том же Kotlin-файле находится приватный кодек Android saved state, без Android-зависимостей в Domain.
+- FractionSessionGenerator.generate полностью формирует и перемешивает набор заданий до чтения стартового SystemClock.elapsedRealtime(). Настройки берутся из FractionGameSession.settingsFor.
+- ViewModel формирует UiState из Domain: вопрос, фаза, индекс выбранного ответа, правильность последнего ответа, показатели, настройки, результат и ближайшее время обновления. Fragment отображает данные и передаёт события, математические ответы не проверяет.
+- Для устаревших нажатий передаётся именно показанный объект FractionQuestion: его identity — утверждённый идентификатор в существующем контракте FractionGameSession.answer. Новый строковый ID не вводился. Повторный ответ, просроченное нажатие и переходы фаз отклоняет/обрабатывает Domain.
+- TEST показывает реальные равные части и четыре дробных варианта; EASY — реальную исходную дробь, нужную инструкцию/подпись и четыре числа; NORMAL — сравнение (три знака в сохранённом порядке), сокращение, сложение и вычитание; HARD — сложение/вычитание и неправильную дробь с вариантами смешанного числа.
+- FEEDBACK для сравнения использует отдельный подготовленный XML; остальные форматы используют собственные подготовленные feedback-переменные. Подсвечивается выбранный ответ согласно Domain.lastAnswerCorrect, варианты блокируются. Показатели и таймер обновляются из текущей сессии. Статические демонстрационные задания в рабочие экраны не добавлены.
+- Интервал подсветки 500 мс задаёт Domain; callback назначается на сохранённую абсолютную границу с вычетом времени сериализации/рендеринга. Подсветка входит в общий таймер. Истечение дедлайна во время FEEDBACK не прерывает подсветку: после её окончания Domain завершает игру. Неотвеченный вопрос не увеличивает статистику.
+- Успех/неуспех рассчитывает Domain.result. Результат передаётся Safe Args вместе с числом отвеченных/верных и флагами достижения отдельных целей, сформированными ViewModel по настройкам Domain. ResultFragment только форматирует показатели и причины неуспеха; деление для отображения целого процента не участвует в определении успеха.
+- Новые пользовательские тексты помещены в существующий strings.xml.
+
+### Lifecycle и восстановление
+
+- Все события обрабатываются последовательно на главном Looper. ViewModel проверяет поток при создании и обработке событий.
+- SavedStateHandle хранит одну согласованную String-запись: версия, уровень, полный упорядоченный набор упражнений и вариантов, префикс принятых индексов, фаза, монотонный deadline, feedbackEnd, отмена и флаг навигации. Позиция и выбранный ответ однозначно выводятся из префикса ответов и фазы по контракту Domain, не дублируются независимыми полями.
+- Запись содержит payload и его SHA-256 для обнаружения повреждений, в том числе синтаксически допустимых изменений JSON. Восстановление проверяет checksum/версию/уровень/флаги, создаёт FractionExercise/FractionQuestion через их Domain-конструкторы и вызывает FractionGameSession.restore. Математическая валидация не копируется в Android.
+- После восстановления генератор не вызывается и answer не воспроизводится. restore/advance сразу применяют текущее elapsedRealtime; сохраняется оставшаяся часть подсветки либо сразу показывается следующий вопрос/результат. Полные 500 мс заново не отсчитываются.
+- Повреждённый снимок и ошибка генерации показываются явным сообщением с возвратом к выбору сложности; сохранённая ошибка не подменяется новой сессией при пересоздании. Восстановленный флаг уже выполненного перехода не доставляет результат повторно.
+- UI-callbacks удаляются в onPause и onDestroyView. В onResume обновление ставится в очередь после перехода lifecycle View в RESUMED и сразу учитывает всё время в фоне; дедлайн не сдвигается.
+- Binding освобождается при замене формата и уничтожении View, ссылки на контейнер и диалог очищаются. ViewModel не содержит Fragment, View или Context. Смена конфигурации сохраняет владельца игры.
+- Граница гарантии — штатный Android saved state. После перезагрузки устройства, force-stop или удаления задачи восстановление не гарантируется; механизмы перевода монотонного времени между загрузками не добавлены.
+
+### Изменённые файлы
+
+Относительно корня проекта:
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsGameViewModel.kt — новый владелец сессии и приватный кодек.
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsGameFragment.kt — отображение и lifecycle/navigation events.
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsLevelFragment.kt — выбор и переход к правилам.
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsRulesFragment.kt — Safe Args и старт.
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsResultFragment.kt — реальные показатели и действия.
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/MainHubFragment.kt — обработчик новой карточки.
+- app/src/main/res/navigation/main_navigation.xml — маршруты и аргументы.
+- app/src/main/res/layout/ncs_v2_main_hub.xml — новый ряд карточек.
+- app/src/main/res/drawable/ncs_v2_hub_fractions_card.xml — новый фон карточки.
+- app/src/main/res/drawable-nodpi/raccoon_fractions.png — неизменённая копия исходного изображения.
+- app/src/main/res/values/strings.xml — тексты и форматы.
+- PROJECT_LOG.md — эта запись.
+
+### Проверки и оставшиеся ограничения
+
+Выполнены только чтение/статическая проверка: XML-разбор четырёх новых/изменённых XML, наличие всех строковых ресурсов Kotlin-раздела, существование destination для navigation actions, наличие общих переменных во всех семи игровых XML, сравнение SHA-256 изображения, неизменность двух существующих активных карточек и git diff --check. Блокирующих противоречий спецификации и готового Domain не обнаружено.
+
+По прямому ограничению задания сборка, генерация Safe Args через Gradle, тесты, Lint, commit и push НЕ запускались. Компиляция и runtime на устройстве, включая поворот, реальное уничтожение процесса Android, дедлайн на границе нажатия, Back/жест, повторные быстрые нажатия и визуальный рендер, остаются для проверки на шаге 4. Android scheduler отображает обновления на доступном главном кадре; сами сроки принятия ответа и фаз определяет монотонное время Domain.
+
+
+## 21.11.2026 — Точечная UI-полировка «Дробей» по замечаниям с телефона
+
+Область этого изменения: только 18 XML-компоновок раздела, два новых размера в существующем fractions_dimens.xml и эта запись. Kotlin/Fragment, FractionPartsView, Domain, ViewModel, генераторы, таймеры, SavedStateHandle, строки, граф навигации, главный хаб, «Арифметика» и отдельный тренажёр «Сравнение» не изменялись относительно начала этого запроса. Предыдущие незакоммиченные изменения интеграции сохранены.
+
+### 1. Общая прокрутка
+
+- Во всех семи игровых форматах, выборе сложности и обоих результатах внешние ScrollView заменены неподвижными FrameLayout; удалена принудительная минимальная высота 874dp. Внутренние контейнеры занимают доступную высоту, а не высоту условного макета.
+- В выборе сложности высота шапки определяется содержимым; строки уровней и блок персонажа распределяют доступное место через веса. Размеры/шрифты текстов и обработчики выбора сохранены.
+- В результатах две кнопки остаются внизу вертикальной компоновки. Под высоту экрана подстраиваются области иллюстраций, принудительный минимум нижней иллюстрации удалён. Данные и ветвление успешного/неуспешного результата не менялись.
+- В четырёх правилах внешний ScrollView удалён. Оставлен один внутренний ScrollView только для центрального содержимого. Бренд вверху и блок требований/кнопки старта внизу находятся вне прокрутки. Прокрутка проявляется лишь при реальном переполнении этого содержимого.
+
+### 2. Заголовки правил
+
+- Во всех TEST/EASY/NORMAL/HARD установлен singleLine/maxLines=1, убрана фиксированная высота двух строк, ширина ограничена шириной контента.
+- Сохранены стиль TextAppearance.NcsV2.Fractions.Title, семейство ENOT и исходные строковые ресурсы, включая тексты самих правил. SingleLine отображает прежний перенос строки как пробел.
+- Для длинного заголовка включена штатная подстройка размера 20–36sp с шагом 1sp; использованы существующие ресурсы размеров текста.
+
+### 3. Геометрия TEST и расстояние до статистики
+
+- В ncs_v2_fraction_parts.xml увеличены внутренние отступы: по 24dp по горизонтали и по 16dp по вертикали вместо 2dp. Исходный FractionPartsView уже рассчитывает единый масштаб по доступной области; теперь эта область учитывает безопасные отступы от скруглённой рамки.
+- Сохранены количество/порядок/закрашенность частей и соотношения размеров/промежутков. Для всех 2–7 частей применяется существующее равномерное масштабирование; код отрисовки не изменён.
+- В игре панели с дробями/рисунком занимают 96dp, сравнение дробей — 132dp; это единственные два добавленных dimen. Крупная дробь 80dp и слот 76dp помещаются внутри панелей. Новые размеры применяются только к игровым include, примеры правил не уменьшались.
+- Во всех игровых форматах убран растягиваемый Space между обратной связью и footer, отступы обратной связи сокращены до 8dp, верхние промежутки — до существующих 12dp. Статистика/таймер располагаются непосредственно после обратной связи; свободная высота достаётся нижней декоративной поддержке.
+- Оба footer используют доступную высоту, а их иллюстрации масштабируются в оставшемся месте. Сохранены все выражения Data Binding, значения статистики, времени, прогресса и FEEDBACK-видимости.
+
+### 4. «Назад»
+
+- Исправлены общий игровой ncs_v2_fractions_navigation.xml и отдельная кнопка выбора сложности.
+- Стрелка и подпись занимают одинаковую высоту строки и центрируются вертикально; includeFontPadding выключен явно. Автоматическое выравнивание разных кеглей по baseline отключено, чтобы оно не сдвигало их визуальные центры.
+- Сохранены исходные шрифты, 26sp/17sp, цвета, тексты, ID, доступность и обработчики нажатий.
+
+### Изменённые файлы этого запроса
+
+- app/src/main/res/layout/ncs_v2_fraction_parts.xml
+- app/src/main/res/layout/ncs_v2_fractions_footer_comparison.xml
+- app/src/main/res/layout/ncs_v2_fractions_footer_regular.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_arithmetic.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_comparison.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_feedback.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_mixed.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_numerator.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_picture.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_reduction.xml
+- app/src/main/res/layout/ncs_v2_fractions_level.xml
+- app/src/main/res/layout/ncs_v2_fractions_navigation.xml
+- app/src/main/res/layout/ncs_v2_fractions_result_failure.xml
+- app/src/main/res/layout/ncs_v2_fractions_result_success.xml
+- app/src/main/res/layout/ncs_v2_fractions_rules_easy.xml
+- app/src/main/res/layout/ncs_v2_fractions_rules_hard.xml
+- app/src/main/res/layout/ncs_v2_fractions_rules_normal.xml
+- app/src/main/res/layout/ncs_v2_fractions_rules_test.xml
+- app/src/main/res/values/fractions_dimens.xml
+- PROJECT_LOG.md
+
+Затронуты: выбор сложности; правила всех четырёх уровней; игровые состояния picture, numerator/denominator, comparison, arithmetic, reduction, mixed и feedback; успешный и неуспешный результаты. Упоминание comparison в именах двух XML относится к сравнению дробей внутри NORMAL, а не к самостоятельному тренажёру «Сравнение».
+
+### Проверка и ограничения
+
+Выполнены только статические проверки: разбор XML; неизменность ID, текстов, изображений, переменных и выражений Data Binding в 18 компоновках; наличие dimen; отсутствие ScrollView/874dp в игровых экранах, выборе и результатах; размещение бренда/старта вне внутренней прокрутки правил; согласованность строки «Назад»; git diff --check. Хэши Kotlin, навигации и ресурсов вне разрешённого UI-состава сопоставлены с состоянием на начало запроса — изменений нет.
+
+Сборка, тесты, Lint, commit и push не запускались. Все четыре замечания исправлены на уровне компоновки без изменения поведения игры. Точный результат на исходном телефоне, крайние размеры окна и увеличенный системный шрифт визуально не проверены: рендер обновлённого приложения не запускался. Универсальная гарантия отсутствия переполнений на любой конфигурации не заявляется; для длинных правил оставлена безопасная локальная прокрутка. Оптическое совпадение стрелки/подписи требует контрольного просмотра на телефоне.
+
+
+## 21.11.2026 — Повторные дефекты игрового UI «Дробей»: исправление причин компоновки
+
+Эта запись уточняет предыдущую UI-полировку. Проверена цепочка activity_main.xml → NavHost FragmentContainerView → FractionsGameFragment (программный FrameLayout) → один из семи игровых XML. В текущих исходниках на начало запроса в этой цепочке уже не было ScrollView: источник общей прокрутки фактически установленной на телефоне версии без её запуска не установлен. Утверждение о наличии такого родителя в текущем коде было бы неверным.
+
+### Причины дефектов
+
+1. Предыдущая замена ScrollView на FrameLayout не обеспечивала доступность содержимого при переполнении: сохранялись жёсткие высоты заголовков/карточек, строка статистики 59dp и footer с нулевой высотой/весом. Это могло приводить к тесной компоновке или обрезанию на меньшем окне/крупном шрифте. Доступность всего контента не была гарантирована.
+2. В кнопке «Назад» предыдущая правка сделала оба TextView высотой match_parent и отключила baselineAligned. Совпадение центров двух рамок не означает совпадения baseline текста разных кеглей. Явного горизонтального направления также не было. По текущим исходникам речь о проблеме типографического выравнивания; изображение конкретного дефекта на телефоне в этом запросе не предоставлено.
+3. В игровых include высоты карточек были уменьшены до 96/132dp, при штатной крупной дроби 80dp. Оставался минимальный вертикальный воздух; при росте шрифта карточка не могла расти. Жёсткая горизонтальная цепочка выражения могла не помещаться по ширине.
+4. Заголовки сохраняли принудительный перевод строки в строковом ресурсе и фиксированную высоту 68sp. Звёзды были отдельным overlay с абсолютным marginTop=95dp, не зависевшим от фактической высоты заголовка или позиции карточки.
+
+### Исправления
+
+- У всех семи игровых макетов теперь один внешний вертикальный контейнер. Навигационная строка находится вне прокрутки. Центральный ScrollView использует fillViewport=true, overScrollMode=ifContentScrolls и видимый вертикальный scrollbar при реальном переполнении. Его единственный ребёнок измеряется по содержимому без минимума 874dp. На достаточной высоте дополнительная прокрутка не нужна; на компактном окне/крупном шрифте всё содержимое доступно.
+- Footer получает естественную высоту и вес для распределения свободного места. Статистика/таймер используют wrap_content с минимумом из существующего ресурса 59dp. Нижние иллюстрации занимают оставшееся пространство; текст поддержки задаёт необходимый минимум, а высоты изображений ограничены исходными Figma 81.84/116.213dp. Размеры важного содержимого не подменяются нулевой высотой.
+- «Назад»: явно horizontal, baselineAligned=true внутри единой кликабельной области; дочерние TextView — wrap_content. Сохранены 26sp/17sp, Nunito Sans Regular/ExtraBold, цвет, промежуток 8dp, ID и действие. Минимальная высота кнопки 48dp сохранена через существующий ресурс, при необходимости строка может вырасти. Вертикальных margin/translation для подгонки нет.
+- Из восьми ресурсов игровых заголовков удалён только принудительный перевод строки: слова не изменены. Сохранён исходный стиль Question 30sp Nunito Sans и lineHeight=34.5sp, фиксированная высота удалена. Короткие заголовки помещаются в строку при достаточной ширине; при крупном шрифте/малом окне разрешён естественный перенос вместо уменьшения кегля или скрытия текста.
+- Заголовок и прежнее изображение decor_sparkles размером 66×66dp находятся в одном горизонтальном ряду с существующим интервалом 12dp. Карточка следует после ряда. Абсолютные координаты звёзд удалены, декор не удалялся и не масштабировался.
+- Общие карточки выражений имеют wrap_content, минимум 150dp из Figma сравнения (136:264) и вертикальные отступы существующего ENOT 24dp. Высота может расти с дробями и шрифтом. Вопросительные слоты используют прежние 69×76dp как минимумы, а не жёсткие ограничения.
+- Для размещения математических блоков использован штатный ConstraintLayout Flow из уже подключённой зависимости. Он сохраняет порядок компонентов и при нехватке ширины переносит целые блоки на следующую строку внутри карточки. Состав выражения, условия видимости и математические данные не менялись.
+- Для арифметического выражения используется существующий компактный интервал ENOT 8dp: стандартная строка с двумя дробями по 56dp, двумя знаками по 40dp и вопросом 69dp требует около 293dp; при ширине окна 360dp после внешних отступов 24dp и внутренних 8dp остаётся 296dp. Это статический расчёт штатной геометрии, не результат запуска Android. При росте реальной ширины цифр/шрифта доступен перенос. Сохранены исходные сравнения отступы 23/14dp, межстрочный интервал 13dp взят из Figma 136:304.
+- TEST сохраняет существующее масштабирование равных частей и безопасные отступы; его рисунку оставлен минимум 114dp из существующего ресурса. Правила уровней, выбор сложности, результаты и другие тренажёры в этом запросе не менялись.
+
+### Источники размеров и границы изменений
+
+Повторно прочитаны Figma 135:53 (структура), 136:295 (арифметика) и 136:255 (сравнение), включая get_design_context и скриншоты. Применён навык figma-design-to-code; требование однострочных коротких заголовков из этого запроса приоритетнее переносов в макете. Сохранены локальные изображения и шрифты. Новых классов, зависимостей и модулей нет. Два прежних размера 96/132dp заменены минимумами 150dp; добавлены три Figma-размера: 13dp, 81.84dp, 116.213dp.
+
+Изменённые файлы относительно корня:
+- app/src/main/res/layout/ncs_v2_fraction_parts.xml
+- app/src/main/res/layout/ncs_v2_fractions_comparison_expression.xml
+- app/src/main/res/layout/ncs_v2_fractions_expression.xml
+- app/src/main/res/layout/ncs_v2_fractions_footer_comparison.xml
+- app/src/main/res/layout/ncs_v2_fractions_footer_regular.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_arithmetic.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_comparison.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_feedback.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_mixed.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_numerator.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_picture.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_reduction.xml
+- app/src/main/res/layout/ncs_v2_fractions_navigation.xml
+- app/src/main/res/values/fractions_dimens.xml
+- app/src/main/res/values/fractions_screens.xml
+- PROJECT_LOG.md
+
+### Статическая проверка и неподтверждённое
+
+- Проверены picture (TEST), numerator/denominator (EASY), arithmetic (+/−), comparison, reduction, mixed и отдельный feedback. Число ответов сохранено: четыре или три соответственно.
+- XML-разбор и рекурсивное разрешение include/dimen/string/color выполнены для 16 задействованных layout. Проверены ссылки Flow на существующие дочерние ID, отсутствие жёсткой высоты карточек/заголовков, сохранность 66×66dp звёзд в ряду заголовка, расположение навигации вне scroll, естественная высота footer и baseline-контракт «Назад».
+- Переменные/выражения Data Binding, тексты атрибутов и набор изображений сопоставлены с состоянием на начало запроса — совпадают. Из строковых ресурсов изменены только восемь переводов строк игровых заголовков.
+- SHA-256 файлов на начало/конец запроса подтверждает отсутствие изменений Kotlin, Domain, ViewModel, генераторов, SavedStateHandle, таймеров, навигационного графа, «Арифметики» и отдельного тренажёра «Сравнение». Предыдущие незакоммиченные изменения сохранены. git diff --check пройден.
+
+Сборка, тесты, Lint, commit и push не запускались. Неподтверждёнными до запуска остаются фактический диапазон прокрутки на исходном телефоне, оптическое восприятие baseline стрелки и подписи, Android-измерение Flow/весов на конкретной версии ОС, отображение двузначных чисел и всех переходов FEEDBACK при реальном масштабе шрифта. Ошибок статической связности в изменённых XML не осталось; полное визуальное подтверждение устройства не заявляется.
+
+
+## 21.11.2026 — Семь замечаний «Дробей» и единое состояние «Начать»
+
+Внесены точечные изменения. Подтверждены причины в исходниках и статическая связность; результаты на телефоне не проверены. Предыдущие незакоммиченные изменения сохранены. Источники: текущие Fragment/XML, игровой контракт FRACTIONS_SPEC.md, существующие UiSoundPool/ENOT и Figma 135:54, 136:255, 136:295 (get_design_context со скриншотами, навык figma-design-to-code).
+
+### 1. Звук
+
+Причина: четыре Fragment «Дробей» вообще не создавали UiSoundPool и не отправляли в него события. У «Арифметики» и «Сравнения» контракт уже существует: key_press при действии, answer_correct/answer_wrong при ответе, game_win/game_lose при первом показе результата; release в onDestroyView. Использован этот же механизм и эти же ресурсы, общий UiSoundPool не менялся.
+
+Добавлены key_press при выборе уровня, переходе к правилам/старту, экранном Back, повторе и выборе сложности. В игре звук ответа отправляется только если после model.answer число принятых ответов увеличилось, а Domain предоставил lastAnswerCorrect. Сравнение счётчика до/после события не допускает звука повторного/устаревшего/просроченного ответа. Обычный render и восстановленная FEEDBACK звук не запускают. Для результата применён существующий подход resultSoundTriggered с Fragment savedInstanceState; это UI-флаг звукового события, не изменение снимка игровой сессии. Во всех четырёх владельцах release и очистка ссылки выполняются при уничтожении View.
+
+### 2. Неактивная кнопка «Начать»
+
+Причина: ChooseLevelFragment безусловно выбирал Level.TEST, ComparisonLevelFragment — ComparisonLevel.NORMAL; кнопки не связывали enabled с фактическим выбором.
+
+Начальный selectedLevel стал nullable без автоматического fallback. Явный ранее сохранённый выбор восстанавливается прежним механизмом. Обе XML-кнопки используют enabled = selectedLevel != null; их фон остаётся существующим ncs_v2_primary_button, у которого уже есть ветка state_enabled=false → ncs_v2_primary_disabled. Обработчики запуска дополнительно требуют ненулевой уровень. Анимация выбора, диапазоны, передача операции, игровые настройки и маршрут не изменены. «Дроби» уже имели требуемое отсутствие первоначального выбора.
+
+### 3. Мигание из правил в игру
+
+Подтверждённый источник в коде: onCreateView возвращал пустой FrameLayout; первая игровая разметка создавалась только из handler.post(update) после onResume. Это оставляло окно между показом контейнера и его заполнением. По коду повторная навигация защищена currentDestination/launchSingleTop; дополнительного подтверждённого источника в переходах не найдено.
+
+Добавлен первоначальный render из onViewCreated до первого кадра. Обычный resumed render переиспользует уже созданную разметку. Начальная отрисовка не открывает диалог и не переходит к результату до RESUMED; UI-callback запускается прежним onResume. Глобальные анимации и навигационный граф не менялись. Устранён именно подтверждённый пустой первый показ; исчезновение наблюдавшегося мигания требует запуска устройства.
+
+### 4. Декор выбора сложности
+
+Причина: звёзды находились в overlay с абсолютным marginTop=95dp, а расположение decor_math_tools определялось изменяемой высотой шапки. Их области пересекались.
+
+Оба прежних изображения перенесены в отдельную вертикальную колонку справа от заголовка: звёзды сверху, инструменты ниже, перед карточками оставлен существующий отступ 12dp. Сохранены размеры 66×66dp и 123×57.867dp, scaleType=fitCenter и исходные ресурсы. Колонка измеряется по содержимому, не использует координаты относительно всего экрана. Это выполняет явное требование разделить области; художественное наложение в самом Figma-примере не копируется.
+
+### 5. Тени ответов
+
+Причина: карточка и ряды ответов уже имели clipChildren=false/clipToPadding=false, но внешние LinearLayout игрового экрана и ScrollView сохраняли clipChildren=true по умолчанию. Тень elevation=6dp могла быть обрезана этими предками.
+
+Во всех семи игровых XML у этих внешних контейнеров отключено обрезание детей/по padding. Существующий внешний отступ 24dp, интервалы между рядами, drawable и elevation карточек сохранены. Проверены числовые, дробные, смешанные и знаковые ответы. Ограничение видимой области окна при прокрутке не подменяется изменением стиля теней.
+
+### 6. Нижняя группа «енот + текст»
+
+Причина: в regular footer иллюстрация была прикреплена к start родителя, а текст шириной 0dp занимал всё оставшееся место. Центрировались заполненные области, а не композиция по её естественной ширине.
+
+Иллюстрация и текст объединены взаимными ограничениями в одну горизонтальную packed-chain, привязанную к обоим краям доступной области. Текст получил wrap_content и constrainedWidth=true для переноса при нехватке ширины. Изображение, промежуток 16dp и текст не изменены. Это общий footer TEST/EASY/NORMAL/HARD. Вертикальная композиция comparison/feedback уже центрировалась ограничениями к обоим краям и сохранена без переработки.
+
+### 7. Знак сравнения
+
+Причины: контейнер знака имел неравные paddingStart=23dp/paddingEnd=14dp, что смещало визуальный центр; Fragment передавал строку «?» вместо null в вопросительной фазе. Вторая причина включала ветку синего знака 38sp и отключала жёлтый вопросительный слот 49sp.
+
+Отступы сделаны симметричными существующим ENOT 18dp. Для Flow явно задан verticalAlign=center. Крупные дроби сохраняют штатный минимум ширины 56dp, обеспечивая одинаковую геометрию одно- и двузначных записей при штатном шрифте. В QUESTION передаётся null, включающий существующий жёлтый слот; в FEEDBACK остаётся знак из Domain.correctAnswer с прежним primary-цветом Figma. Математические проверки не менялись.
+
+### Изменённые файлы этого запроса
+
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/ChooseLevelFragment.kt
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/ComparisonLevelFragment.kt
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsGameFragment.kt
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsLevelFragment.kt
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsResultFragment.kt
+- app/src/main/java/me/proton/jobforandroid/compositionofnumbers/presentation/FractionsRulesFragment.kt
+- app/src/main/res/layout/ncs_v2_comparison_level.xml
+- app/src/main/res/layout/ncs_v2_fractions_comparison_expression.xml
+- app/src/main/res/layout/ncs_v2_fractions_footer_regular.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_arithmetic.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_comparison.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_feedback.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_mixed.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_numerator.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_picture.xml
+- app/src/main/res/layout/ncs_v2_fractions_game_reduction.xml
+- app/src/main/res/layout/ncs_v2_fractions_level.xml
+- app/src/main/res/layout/ncs_v2_level_selection.xml
+- PROJECT_LOG.md
+
+### Статическая самопроверка и границы подтверждения
+
+Разобраны 12 изменённых XML; рекурсивно разрешены 16 игровых layout с include. Проверены enabled-привязки двух стартовых кнопок и ENOT background, nullable-guards обработчиков, все семь цепочек родителей теней, отдельная колонка декора, packed-chain, симметричные отступы знака, наличие пяти непустых аудиоресурсов и освобождение ресурсов четырёх UiSoundPool-владельцев. Выполнено чтение изменённых Kotlin-участков и git diff --check.
+
+Сопоставление SHA-256 с состоянием на начало запроса подтверждает отсутствие правок Domain, генераторов, валидаторов, FractionsGameViewModel, снимков SavedStateHandle, общего UiSoundPool, аудиофайлов, навигационного графа и игровых/результирующих экранов двух других тренажёров. У них изменены только два экрана выбора уровня и две соответствующие XML-кнопки. Данные результатов и правила таймеров/уровней не изменены. Новые зависимости, классы, модули и документы не добавлены.
+
+Сборка, тесты, Lint, commit и push не запускались. До запуска на устройстве остаются неподтверждёнными компиляция Data Binding/Kotlin, слышимость и однократность событий при реальном lifecycle/SoundPool.load, исчезновение мигания в переходе, disabled/enabled-внешний вид и восстановление выбора, целостность теней, центрирование групп/знака и отсутствие наложений на разных размерах/масштабах шрифта. Статическая проверка не объявляется фактическим подтверждением исправления на телефоне.
+
+## 21.11.2026 — Финальная визуальная полировка: шесть замечаний и общая статическая проверка
+
+Запрос: минимальные UI-исправления без изменения Domain, генераторов, ViewModel, SavedStateHandle, таймера, результатов и маршрутов. Предыдущие незакоммиченные изменения сохранены. В этом этапе изменены только 19 XML и данный журнал; Kotlin-файлы идентичны снимку на начало этапа.
+
+Источники: текущие XML/Fragment/BindingAdapter, FRACTIONS_SPEC.md (требования не изменены), Figma BRMSwONxGEshJOAghaAqjz — получены контекст и изображения узлов 81:3952 (хаб), 135:54 (сложность), 136:295 (вычисления). Макет Figma не редактировался. Использованы локальные оригинальные assets; новые растровые иллюстрации не создавались.
+
+### Причины и изменения
+
+1. Сложность «Дробей». Отдельная звезда 66×66 занимала вертикальное место над небольшой иллюстрацией 123×57.867. Удалена только эта звезда. Существующий decor_math_tools увеличен до ширины 140dp с wrap_content/adjustViewBounds/fitCenter, расположен справа от текста в общей горизонтальной строке. Нижний raccoon_levels сохранён. Уточнение источника: верхний asset содержит транспортир и линейку, без енота; сохранён именно оригинал, присутствующий в XML и Figma. Заголовок получил minHeight вместо фиксированной height. При общей проверке карточки уровней переведены с нулевой весовой высоты на wrap_content с тем же весом и минимумом touch target; текст ограничен отступами до маркеров. Внутренний контейнер экрана заменён на fillViewport ScrollView, чтобы увеличенный текст можно было прочитать при переполнении; прокрутка не принудительная. Для нижней иллюстрации заданы adjustViewBounds и предел высоты 164dp из Figma, исключающий измерение по исходной высоте bitmap.
+
+2. «Назад». Причины: шрифтовая стрелка 26sp и надпись 17sp имели различные метрики; в общем include было включено baselineAligned, а выбор сложности использовал собственную независимую разметку с фиксированной шириной 87dp. Теперь обе реализации используют общий vector drawable 26×26 с геометрически центрированной стрелкой, baselineAligned=false, центрирование по вертикали и wrap_content ширину. Текст Nunito Sans ExtraBold 17sp, цвет primary, интервал 8dp и минимальная область нажатия 48dp сохранены. Нет marginTop/translationY для компенсации. Проверены все 7 игровых include и отдельная кнопка выбора сложности; правила и результаты не содержат такой кнопки.
+
+3. Сообщение → статистика → таймер. Ранее у обратной связи оставалось только по 8dp сверху и снизу. Во всех 7 игровых разметках установлены существующие ncs_v2_space_18, соответствующие интервалам обратной связи Figma. В двух footer расстояния до progress/support — 18dp; между колонками статистики и таймера добавлены 16dp. Значения, размеры цифр, биндинги и таймер не менялись.
+
+4. Центрирование обратной связи. Арифметика: корень feedback центрирует полную группу, текст wrap_content вместо weight=1; инструкция над ответами также по центру. Сравнение: аналогичная группа с интервалом между индикатором и текстом. У обеих длинных обратных связей minLines=2 уменьшает изменение высоты между короткой инструкцией и пояснением, не запрещая дальнейший перенос. Дроби: центрирована группа и текст во всех 7 форматах, включая отдельный numerator и comparison/feedback. Короткие реальные статусы из Fragment имеют одинаковый минимум 32dp в вопросе и ответе; длинные tools-подсказки не приняты за runtime-тексты. Центрированы подписи выбора вариантов. Условия visibility и подсветки не изменены.
+
+5. Хаб. Карточка «Дроби» была FrameLayout с фиксированной высотой 182dp, абсолютными отступами 81/120dp и фиксированными высотами текста 40dp. Заменена последовательным LinearLayout, как у двух эталонных карточек: равный вес ширины, minHeight 182dp, внутренние отступы 16dp/верх 3dp, слот изображения 80dp, wrap_content текст, одинаковые семейства/начертания и размеры 20/15sp, интервал описания 8dp, elevation 6dp. Сохранены индивидуальная заливка, stroke, радиус drawable и оригинальный raccoon_fractions. fitCenter сохраняет пропорции; прежний поворот убран, чтобы рисунок не выходил за общий слот. Карточки Арифметики и Сравнения не изменены. Нативная тень использует тот же механизм elevation (ambient/spot), что эталоны; точное совпадение blur двух Figma-эффектов не заявляется без рендера.
+
+6. Выражение. В горизонтальной группе «= ?» действовал baselineAligned=true по умолчанию: 32sp и 49sp выравнивались по baseline, смещая плашку. Установлен baselineAligned=false, явное flow_verticalAlign=center, отключён лишний font padding у операторов/вопроса. Плашка сохраняет минимум 69×76dp, карточка — внутренние 24dp по вертикали, Flow допускает перенос при недостатке ширины. Та же причина найдена в двух строках обычной арифметической карточки: отключено baseline-выравнивание, данные и операторы не изменены.
+
+Дополнительное исправление: в ncs_v2_fraction фиксированные android:height числителя/знаменателя заменены android:minHeight с теми же выражениями размеров. Обычный размер сохраняется, крупный шрифт может увеличивать высоту; ширина wrap_content и исходные минимумы допускают одно- и двузначные числа. Общий компонент проверен также в ответах и смешанном числе.
+
+### Самостоятельная проверка
+
+- Приветствие, главный хаб, выбор занятия, 4 экрана правил арифметических операций, выбор сложности, игра и оба результата Арифметики.
+- Правила, выбор сложности, игра QUESTION/FEEDBACK и единый условный успешный/неуспешный результат Сравнения.
+- Все 14 XML экранов Дробей: сложность, 4 правил, 7 игровых разметок, 2 результата. По FractionsGameFragment проверены соответствия IdentifyFraction, IdentifyNumerator/IdentifyDenominator, Compare QUESTION/FEEDBACK, Reduce, Add/Subtract, ToMixedNumber. Уровни TEST/EASY/NORMAL/HARD и обе ветви правильности охвачены статическим просмотром.
+- Проверены структура контейнеров, include, распределение весов, ограничения размеров, отступы, изображения, клиппинг, типографические ресурсы, выбор реальных layouts из Fragment и изменения visibility/геометрии в коде. BindingAdapter задаёт только существующие данные и необходимые дробные интервалы; исправленную геометрию кнопки/сообщений код не переопределяет.
+- Все 52 layout XML разбираются XML-парсером, все include разрешаются, drawable/font ссылки в layouts существуют и непустые, ScrollView имеет одного ребёнка. Отдельно проверены центрирование/интервалы всех 7 fractions feedback. git diff --check завершился без ошибок.
+- Контроль хешей: ни один Kotlin-файл, Domain, ViewModel, навигация, строки, настройки игры или таймерные ресурсы на этом этапе не изменены.
+
+### Ограничения и проверка на телефоне
+
+Это статическая структурная проверка с чтением Figma и осмотром исходных изображений, НЕ подтверждённая визуальная приёмка Android. По local.properties SDK/adb не обнаружен; сборка и запуск не выполнялись. Gradle, тесты, commit и push не запускались.
+
+Требуется проверить на физическом устройстве: оптическое выравнивание обеих кнопок «Назад»; масштаб верхнего рисунка и трёх hub-карточек; реальную тень и отсутствие обрезания; интервалы feedback/statistics/time; переходы всех состояний без нежелательных сдвигов; выражения с одно-/двузначными числами, перенос Flow и смешанные числа; обычный/компактный экран и увеличенный fontScale; доступность всех кнопок и отсутствие лишней прокрутки при достаточной высоте. Очень длинные пояснения при большом fontScale могут потребовать более двух строк — текст не обрезается фиксированной высотой.
+
+Существующее различие шрифтов: Дроби используют Nunito Sans, старые общие экраны/Арифметика/Сравнение — ресурсы Nunito и Inter для символов. В хабе новая карточка намеренно приведена к двум существующим эталонам согласно прямому требованию. Глобальная замена шрифтов вне шести исправлений не выполнялась. Поэтому полное единообразие Nunito Sans во всём приложении не заявляется. Поведение прочих фиксированных иллюстративных/результирующих блоков на экстремальном fontScale без рендера также не подтверждено.
+
+### Файлы этого этапа
+
+- `app/src/main/res/drawable/ncs_v2_fractions_back_arrow.xml`
+- `app/src/main/res/layout/ncs_v2_comparison_game.xml`
+- `app/src/main/res/layout/ncs_v2_equation_item.xml`
+- `app/src/main/res/layout/ncs_v2_feedback_item.xml`
+- `app/src/main/res/layout/ncs_v2_fraction.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_expression.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_footer_comparison.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_footer_regular.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_game_arithmetic.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_game_comparison.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_game_feedback.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_game_mixed.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_game_numerator.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_game_picture.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_game_reduction.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_level.xml`
+- `app/src/main/res/layout/ncs_v2_fractions_navigation.xml`
+- `app/src/main/res/layout/ncs_v2_game.xml`
+- `app/src/main/res/layout/ncs_v2_main_hub.xml`
+- `PROJECT_LOG.md`
+
+## 21.11.2026 — Финальные автоматические проверки перед релизом (подготовлены, не запускались)
+
+Область: фактическое покрытие, только недостающие критические тесты. Изучены FRACTIONS_SPEC.md, существующие unit/androidTest, реализация FractionGameSession, FractionsGameViewModel и фактические XML/маршруты. Производственная логика, UI, зависимости и тестовая конфигурация не изменены.
+
+Существующее покрытие:
+- GameRepositoryTest: все четыре операции, настройки всех уровней, шесть вариантов, диапазоны, точность, ноль ответов, минимум и границы, точное деление, переполнения. ArithmeticAnswerDeadlineTest: до/на/после дедлайна, устаревшие события; ArithmeticFailureReasonTest: независимые критерии результата.
+- ComparisonBasicSessionGeneratorTest и ComparisonIndependentGenerationAuditTest: независимый расчёт выражений, квоты, диапазоны, баланс знаков, уникальность всех уровней. Отдельные тесты планировщиков, классификаторов, канонических ключей, валидатора, DataSource, сессии и полного сценария. Имеются большие выборки — новые массовые прогоны не добавлены.
+- FractionTest/MathValidator/Question и четыре теста генераторов: математические границы, сокращение, форматы, эквивалентность, недопустимые варианты. FractionSessionGeneratorTest: полные сессии всех уровней, точные квоты, уникальность, порядок, воспроизводимость, отказ при невозможности; часть математических ожиданий использует production-валидаторы.
+- FractionGameSessionTest: повторные/устаревшие события, дедлайн -1/0/+1, подсветка 499/500, истечение во время подсветки, последний ответ, все пороги результата, ноль/недостаток ответов, QUESTION/FEEDBACK/FINISHED restore, порядок вариантов, повреждённые Domain-снимки, переполнение времени.
+- CriticalFlowsInstrumentedTest и ComparisonGameLifecycleInstrumentedTest: общие/арифметические маршруты и lifecycle Сравнения. Дробей в этих тестах не было.
+
+Добавлено:
+1. FractionIndependentReleaseTest: четыре фиксированных seed на каждый уровень, независимая Long-арифметика и локальный gcd без production-валидаторов/reduce/equality. Проверяются исходные диапазоны, результат каждой операции и сравнения, НОК, строго положительные нецелые результаты, NORMAL <1, разные знаменатели HARD, несократимость, смешанные числа 1–3, ровно один верный вариант и отсутствие эквивалентных вариантов. Квоты и повторяемость целых заданий остаются в существующих тестах.
+2. FractionGameSessionTest: совпадение окончания подсветки с общим дедлайном и скачок на 1 000 000 мс за него, восстановление, единственный учёт и неизменность FINISHED при поздних событиях.
+3. FractionsSavedStateInstrumentedTest: новый ViewModel с новым SavedStateHandle из единственной сохранённой строки, точное равенство записи (включая порядок всех заданий/вариантов), QUESTION/FEEDBACK, отклонение объекта старого владельца, сохранение счётчика/выбора; истёкший снимок, FINISHED, повторная отметка resultNavigated и восстановление маркера; невалидный JSON и повреждённый checksum, отсутствие молчаливой замены сессии. Отсутствие повторной генерации проверяется сохранением полного снимка, а не счётчиком вызовов генератора.
+4. FractionsCriticalFlowInstrumentedTest: Welcome → Hub → Fractions → TEST → Rules → Game → реальный timeout → Result → levels → повторная игра; ActivityScenario.recreate в игре; экранная кнопка и системный Back. Использованы уже существующие Espresso/ActivityScenario, ожидание через UiController, без новых зависимостей и изменения таймера.
+
+Различие восстановления:
+- Unit restore проверяет Domain-снимок.
+- Android-тест нового ViewModel проверяет JSON/SavedStateHandle транспорт в том же процессе.
+- ActivityScenario.recreate проверяет пересоздание Activity, может сохранить ViewModelStore.
+- Ни один из них не является настоящим уничтожением процесса Android. Для этого нужен внешний управляющий процесс/сценарий восстановления задачи; в текущем androidTest его нет. Новый фреймворк не добавлялся.
+- Точные миллисекундные границы проверяются в чистом Domain с заданным временем; Android-тест FEEDBACK использует реальные 500 мс и может быть чувствителен к крайне медленному устройству. UI-маршрут проверяет детерминированный неуспешный результат с нулём ответов; успешные пороги и последний ответ уже проверяются Domain-тестами, успешный UI-маршрут новым тестом не заявляется.
+
+Статическая проверка: сверены вызовы и сигнатуры, реальные ID (fractions_repeat, fractions_choose_again и другие), маршруты, используемые зависимости. git diff --check без ошибок. Компиляция/выполнение не выполнялись по прямому ограничению пользователя; это подготовленные тесты, а не подтверждённое прохождение. Подтверждённых новых production-дефектов при чтении не найдено; отсутствие дефектов запуском не доказано.
+
+Изменённые файлы:
+- app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionIndependentReleaseTest.kt
+- app/src/test/java/me/proton/jobforandroid/compositionofnumbers/FractionGameSessionTest.kt
+- app/src/androidTest/java/me/proton/jobforandroid/compositionofnumbers/FractionsSavedStateInstrumentedTest.kt
+- app/src/androidTest/java/me/proton/jobforandroid/compositionofnumbers/FractionsCriticalFlowInstrumentedTest.kt
+- PROJECT_LOG.md
+
+Команды для последующего запуска пользователем:
+- .\gradlew.bat :app:testDebugUnitTest
+- .\gradlew.bat :app:testDebugUnitTest --tests "*FractionIndependentReleaseTest" --tests "*FractionGameSessionTest"
+- .\gradlew.bat :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=me.proton.jobforandroid.compositionofnumbers.FractionsSavedStateInstrumentedTest,me.proton.jobforandroid.compositionofnumbers.FractionsCriticalFlowInstrumentedTest
+- .\gradlew.bat :app:connectedDebugAndroidTest
+
+Gradle, сборка, тесты, commit и push на этом этапе не запускались.
+
+## 21.11.2026 — Устранение неоднозначного pressBack в инструментальном тесте
+
+В FractionsCriticalFlowInstrumentedTest.kt wildcard-импорты Espresso.* и ViewActions.* одновременно предоставляли pressBack(), вызывая Overload resolution ambiguity. Для самостоятельного системного Back указан Espresso.pressBack(); конфликтующие wildcard-импорты заменены точечными Espresso, onView, click и scrollTo. Порядок действий и проверки возврата к выбору сложности сохранены. Другие тесты, production-код и зависимости не изменены. Выполнена статическая проверка импортов и diff; сборка, тесты, commit и push не запускались.
+
+## 21.11.2026 — Согласованная чистка только категории A
+
+Перед удалением повторно проверены ссылки во всех app/src: Kotlin, XML, Navigation, main/debug/release и тесты. app:requiredAnswers в ncs_v2_game.xml относится к include ncs_v2_progress_item.xml с объявленной переменной requiredAnswers; это не вызов TextView-адаптера.
+
+Удалены:
+- WelcomeFragment.newInstance() и опустевший companion object; действующий Fragment сохранён.
+- Из BindingAdapter.kt: bindRequiredAnswers, bindScoreAnswers, bindRequiredPercentage, bindResultEmoji, bindEnoughCount, bindEnoughPercent, getSmileResId, getColorByState и только ставшие ненужными импорты.
+- drawable/ic_smile.png и drawable/ic_sad.png.
+- score_answers, required_percentage, required_score из values/strings.xml, values-en/strings.xml, values-kk/strings.xml, values-uk/strings.xml.
+- fractions_comparison_height и TextAppearance.NcsV2.Fractions.Action из values/fractions_screens.xml.
+
+Сохранены bindNumberAsText, bindFractionTopMargin и остальные адаптеры, переменная requiredAnswers, progress_answers, все кандидаты B/C, лицензии, превью, Gradle, ProGuard и figma_assets.
+
+Самопроверка: удалённые символы и ключи в app/src отсутствуют; все XML в app/src разбираются; DataBinding include/variable повторно сверены; git diff просмотрен, git diff --check без ошибок. Снимок SHA-256 на начало задачи подтверждает изменения только двух согласованных Kotlin-файлов, пяти values XML и удаление двух PNG в app/src; новых файлов нет. Журнал обновлён отдельно. Navigation, игровые исходники, layouts, конфигурация и тесты не изменены.
+
+Проверка статическая: Gradle, сборка, генерация DataBinding, тесты, commit и push не запускались. Успешная компиляция после чистки не заявляется.

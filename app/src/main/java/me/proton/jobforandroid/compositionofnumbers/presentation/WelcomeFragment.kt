@@ -48,11 +48,6 @@ class WelcomeFragment : Fragment() {
        navController.navigate(R.id.action_welcomeFragment_to_chooseLevelFragment2)
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = WelcomeFragment()
-    }
-
     override fun onDestroyView() {
         binding.ncsV2ReadyButton.cancelButtonPressAnimation()
         sounds?.release()

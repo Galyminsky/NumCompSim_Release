@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View" />
+        <import type="me.proton.jobforandroid.compositionofnumbers.R" />
+        <variable name="fraction" type="me.proton.jobforandroid.compositionofnumbers.domain.entity.Fraction" />
+        <variable name="large" type="boolean" />
+        <variable name="embedded" type="boolean" />
+        <variable name="numeratorColor" type="Integer" />
+        <variable name="denominatorColor" type="Integer" />
+    </data>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/ncs_v2_fraction_s_width"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:visibility="@{fraction == null ? View.INVISIBLE : View.VISIBLE}"
+        android:focusable="@{!embedded}"
+        android:importantForAccessibility="@{embedded ? View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS : View.IMPORTANT_FOR_ACCESSIBILITY_YES}"
+        android:contentDescription="@{@string/ncs_v2_fraction_accessibility(fraction.numerator, fraction.denominator)}"
+        tools:visibility="visible" tools:theme="@style/FractionsExample">
+        <Space
+            android:layout_width="@dimen/ncs_v2_fraction_l_width"
+            android:layout_height="0dp"
+            android:visibility="@{large ? View.INVISIBLE : View.GONE}" tools:visibility="?attr/fractions_preview_large_visibility"
+            android:importantForAccessibility="no" />
+        <TextView
+            android:id="@+id/ncs_v2_fraction_numerator"
+            style="@style/TextAppearance.NcsV2.Fraction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/ncs_v2_space_4"
+            android:paddingEnd="@dimen/ncs_v2_space_4"
+            android:minHeight="@{context.resources.getDimensionPixelSize(large ? R.dimen.ncs_v2_fraction_l_numerator_height : R.dimen.ncs_v2_fraction_s_numerator_height)}" tools:layout_height="?attr/fractions_preview_numerator_height"
+            android:textSize="@{large ? @dimen/ncs_v2_text_30 : @dimen/ncs_v2_text_24}" tools:textSize="?attr/fractions_preview_digit_size"
+            android:text="@{String.valueOf(fraction.numerator)}"
+            android:importantForAccessibility="no"
+            android:textColor="@{numeratorColor == null ? @color/ncs_v2_ink : numeratorColor}"
+            tools:text="?attr/fractions_preview_numerator" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ncs_v2_fraction_line_height"
+            android:layout_marginStart="@dimen/ncs_v2_space_4"
+            android:layout_marginEnd="@dimen/ncs_v2_space_4"
+            app:fractionTopMargin="@{large ? @dimen/ncs_v2_fraction_l_line_gap : @dimen/ncs_v2_fraction_s_line_gap}" tools:layout_marginTop="?attr/fractions_preview_line_gap"
+            android:background="@color/ncs_v2_ink"
+            android:importantForAccessibility="no" />
+        <TextView
+            android:id="@+id/ncs_v2_fraction_denominator"
+            style="@style/TextAppearance.NcsV2.Fraction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/ncs_v2_space_4"
+            android:paddingEnd="@dimen/ncs_v2_space_4"
+            app:fractionTopMargin="@{large ? @dimen/ncs_v2_fraction_l_denominator_gap : 0}" tools:layout_marginTop="?attr/fractions_preview_denominator_gap"
+            android:minHeight="@{context.resources.getDimensionPixelSize(large ? R.dimen.ncs_v2_fraction_l_denominator_height : R.dimen.ncs_v2_fraction_s_denominator_height)}" tools:layout_height="?attr/fractions_preview_denominator_height"
+            android:textSize="@{large ? @dimen/ncs_v2_text_30 : @dimen/ncs_v2_text_24}" tools:textSize="?attr/fractions_preview_digit_size"
+            android:text="@{String.valueOf(fraction.denominator)}"
+            android:importantForAccessibility="no"
+            android:textColor="@{denominatorColor == null ? @color/ncs_v2_ink : denominatorColor}"
+            tools:text="?attr/fractions_preview_denominator" />
+    </LinearLayout>
+</layout>

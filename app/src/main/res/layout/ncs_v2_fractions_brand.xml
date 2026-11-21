@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="58dp" android:clipChildren="false" android:clipToPadding="false">
+    <ImageView android:layout_width="72dp" android:layout_height="72dp" android:layout_marginTop="-7dp" android:src="@drawable/logo_schetenot" android:scaleType="fitCenter" android:contentDescription="@null" android:importantForAccessibility="no"/>
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="84dp" android:layout_marginTop="3dp">
+        <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="27sp" android:textColor="@color/ncs_v2_primary" android:text="@string/ncs_v2_schetenot_first"/>
+        <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="27sp" android:textColor="@color/ncs_v2_orange" android:text="@string/ncs_v2_schetenot_second"/>
+    </LinearLayout>
+    <TextView style="@style/TextAppearance.NcsV2.Fractions.Bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="84dp" android:layout_marginTop="40dp" android:textSize="11sp" android:textColor="@color/ncs_v2_brand_subtitle_ink" android:text="@string/ncs_v2_schetenot_subtitle"/>
+</FrameLayout>

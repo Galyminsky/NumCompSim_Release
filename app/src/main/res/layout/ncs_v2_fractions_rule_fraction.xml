@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="44dp" android:layout_height="62dp" android:orientation="vertical" android:gravity="center_horizontal">
+    <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:height="@dimen/ncs_v2_fraction_s_numerator_height" android:textSize="24sp" android:textColor="@color/ncs_v2_yellow" android:gravity="center" android:text="?attr/fractions_preview_numerator"/>
+    <View android:layout_width="36dp" android:layout_height="2.5dp" android:layout_marginTop="@dimen/ncs_v2_fraction_s_line_gap" android:background="@color/ncs_v2_ink"/>
+    <TextView style="@style/TextAppearance.NcsV2.Fractions.ExtraBold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:height="@dimen/ncs_v2_fraction_s_denominator_height" android:textSize="24sp" android:textColor="@color/ncs_v2_operation_add" android:gravity="center" android:text="?attr/fractions_preview_denominator"/>
+</LinearLayout>
