@@ -2564,3 +2564,101 @@ Gradle, сборка, тесты, commit и push на этом этапе не �
 Самопроверка: удалённые символы и ключи в app/src отсутствуют; все XML в app/src разбираются; DataBinding include/variable повторно сверены; git diff просмотрен, git diff --check без ошибок. Снимок SHA-256 на начало задачи подтверждает изменения только двух согласованных Kotlin-файлов, пяти values XML и удаление двух PNG в app/src; новых файлов нет. Журнал обновлён отдельно. Navigation, игровые исходники, layouts, конфигурация и тесты не изменены.
 
 Проверка статическая: Gradle, сборка, генерация DataBinding, тесты, commit и push не запускались. Успешная компиляция после чистки не заявляется.
+## 21.11.2026 — Аудит перед реализацией категории «Уравнения»
+
+Область: статическое чтение относящихся к задаче domain/data/presentation, навигации и ресурсов трёх существующих категорий; проверка четырёх локальных иллюстраций. Источник требований к «Уравнениям» — текущий запрос владельца: TEST/EASY/NORMAL/HARD, 90/120/180/300 секунд, минимумы ответов 5/4/4/3, точность ≥80%, непрерывная генерация, последовательная разблокировка. Эти требования не считаются разрешением менять правила прежних категорий. Отдельной спецификации «Уравнений» среди корневых документов не найдено. Новые слои и решения по продукту не создавались. Сборка, тесты, commit и push не выполнялись.
+
+### Карта файлов и ответственности
+
+Ниже пути Kotlin указаны относительно `app/src/main/java/me/proton/jobforandroid/compositionofnumbers/`; XML — относительно `app/src/main/res/`. Перечислены точки реализации и связанные модели/ресурсы; математические алгоритмы вне задачи подключения категории не подвергались отдельному аудиту корректности.
+
+**Арифметика**
+
+- Domain: `domain/entity/Level.kt`, `GameSettings.kt`, `Question.kt`, `GameResult.kt`; `domain/repository/GameRepository.kt`; `domain/usecases/GenerateQuestionUseCase.kt`, `GetGameSettingsUseCase.kt`.
+- Data: `data/GameRepositoryImpl.kt` — singleton, настройки всех четырёх уровней и генерация четырёх операций; шесть вариантов ответа.
+- Экраны: `presentation/NcsV2LessonSelectionFragment.kt`, `WelcomeFragment.kt` (введение сложения), `SubtractionIntroFragment.kt`, `MultiplicationIntroFragment.kt`, `DivisionIntroFragment.kt`, `ChooseLevelFragment.kt`, `GameFragment.kt`, `GameFinishedFragment.kt`.
+- Владение игрой/таймером: `presentation/GameViewModel.kt`, создание через `GameViewModelFactory.kt`; репозиторий поступает через `MainActivity.kt`. `GameViewModel` хранит счётчики, текущий вопрос, результат и дедлайн `elapsedRealtime`; `CountDownTimer` обновляет отображение. `GameFragment` показывает обратную связь 500 мс, блокирует повторный ввод и откладывает показ следующего уже сгенерированного вопроса.
+- XML: `layout/ncs_v2_lesson_selection.xml`, `ncs_v2_addition_intro.xml`, `ncs_v2_subtraction_intro.xml`, `ncs_v2_multiplication_intro.xml`, `ncs_v2_division_intro.xml`, `ncs_v2_level_selection.xml`, `ncs_v2_game.xml`, `ncs_v2_result_success.xml`, `ncs_v2_result_failure.xml`; игровые include `ncs_v2_equation_item.xml`, `ncs_v2_answer_item.xml`, `ncs_v2_feedback_item.xml`, `ncs_v2_timer_item.xml`, `ncs_v2_progress_item.xml`, `ncs_v2_metric_item.xml`, карточки `ncs_v2_level_item.xml`/`ncs_v2_lesson_item.xml`.
+- Состояние: Fragment-scoped ViewModel переживает смену конфигурации; полноценного снимка игры в SavedStateHandle нет. Выбранный уровень хранится отдельно в SavedStateHandle записи back stack (`ncs_v2_selected_level`). `GameResult` передаётся как Parcelable, уровень — отдельным аргументом. Это не долговременный прогресс прохождения.
+
+**Сравнение**
+
+- Domain: `domain/entity/ComparisonQuestion.kt` (включая собственный `ComparisonLevel`), `ComparisonQuestionValidator.kt`, `ComparisonCanonicalKey.kt`, `ComparisonSession.kt` (настройки, счётчики, результат), `ComparisonGameSession.kt` (QUESTION/FEEDBACK/FINISHED).
+- Генерация: `domain/usecases/ComparisonBasicSessionGenerator.kt`, `ComparisonHardSessionGenerator.kt`; связанные `ComparisonSignPlanner.kt`, `ComparisonOperationPlanner.kt`, `ComparisonDistancePlanner.kt`, `ComparisonDistanceClassifier.kt`, `ComparisonDifficultyClassifier.kt`. Это планирование целого набора с квотами и уникальностью, а не поток отдельных вопросов.
+- Data: `data/ComparisonSessionDataSource.kt` возвращает полный список; интерфейс `GameRepository` здесь не используется.
+- Экраны: `presentation/ComparisonRulesFragment.kt`, `ComparisonLevelFragment.kt`, `ComparisonGameFragment.kt`, `ComparisonResultFragment.kt`; XML `layout/ncs_v2_comparison_rules.xml`, `ncs_v2_comparison_level.xml`, `ncs_v2_comparison_game.xml`, `ncs_v2_comparison_result.xml`.
+- Таймер/сохранение: отдельной Comparison ViewModel в текущем коде нет. `ComparisonGameFragment` владеет сессией, Handler, дедлайном `elapsedRealtime`, окончанием подсветки по `uptimeMillis`. В `onSaveInstanceState` сохраняет вопросы в закодированном виде, историю знаков, фазу, оба дедлайна и остановленный остаток времени; восстановление воспроизводит принятые ответы. Выбранный уровень сохраняется Bundle экрана сложности. В результат передаются level/answeredCount/correctCount; успех вычисляет `ComparisonResult`. Долговременной истории прохождения нет.
+
+**Дроби**
+
+- Domain: `domain/entity/Fraction.kt`, `FractionAnswer.kt`, `FractionExercise.kt`, `FractionQuestion.kt`, `FractionMathValidator.kt`, `FractionCanonicalKey.kt`, `FractionGameSession.kt`.
+- Генерация: `domain/usecases/FractionSessionGenerator.kt` (собственный вложенный `Level`), `FractionTestQuestionGenerator.kt`, `FractionEasyQuestionGenerator.kt`, `FractionNormalQuestionGenerator.kt`, `FractionHardQuestionGenerator.kt`. Генерируется весь конечный набор до старта часов; отдельного data-репозитория дробей нет.
+- Экраны/владелец: `presentation/FractionsLevelFragment.kt`, `FractionsRulesFragment.kt`, `FractionsGameFragment.kt`, `FractionsGameViewModel.kt`, `FractionsResultFragment.kt`; отрисовка дробей также использует `FractionPartsView.kt` и `BindingAdapter.kt`.
+- XML: `layout/ncs_v2_fractions_level.xml`; четыре `ncs_v2_fractions_rules_{test,easy,normal,hard}.xml`; семь `ncs_v2_fractions_game_{picture,numerator,comparison,feedback,reduction,arithmetic,mixed}.xml`; `ncs_v2_fractions_result_{success,failure}.xml`. Общие include: `ncs_v2_fractions_{brand,navigation,expression,comparison_expression,footer_regular,footer_comparison}.xml`, `ncs_v2_fraction.xml`, `ncs_v2_fraction_parts.xml`, `ncs_v2_fraction_mixed.xml`, `ncs_v2_fraction_answer_item.xml`, `ncs_v2_fractions_rule_fraction.xml`.
+- Таймер/сохранение: Fragment-scoped `FractionsGameViewModel` владеет domain-сессией; Handler фрагмента только доставляет обновления. Дедлайн и подсветка основаны на `elapsedRealtime`, время в фоне учитывается. SavedStateHandle (`fractionsSession`) содержит версионированный JSON со всеми заданиями, индексами ответов, фазой, дедлайнами, cancelled/resultNavigated и SHA-256. Повреждение снимка приводит к явной ошибке, не к новой игре. Выбранный уровень хранится Bundle; выход отменяет сессию; повтор создаёт нового владельца. Снимок текущей игры не является хранилищем открытых уровней.
+
+**Общая навигация и результаты**
+
+- `presentation/MainHubFragment.kt` + `layout/ncs_v2_main_hub.xml`; единый граф `navigation/main_navigation.xml`.
+- Арифметика: хаб → выбор операции → введение операции → `chooseLevelFragment2` → `gameFragment` → `gameFinishedFragment`. Аргументы Safe Args: `Level`, operation string, Parcelable `GameResult`.
+- Сравнение: хаб → правила → сложность → игра → результат. Передача собственного enum через Serializable/Bundle; результат — отдельные счётчики. Дроби: хаб → сложность → правила выбранного уровня → игра → результат, Safe Args с level string и примитивами результата.
+- Во всех трёх ветках игра удаляется из back stack при переходе к результату; повтор создаёт новую игру, доступен возврат к выбору уровня. Единой модели результата и единого контракта настроек между категориями нет.
+- Для «Уравнений» нет destination/action, Fragment/ViewModel, модели сессии, генератора или самостоятельного результата. `ncs_v2_equation_item.xml` и `drawable/ncs_v2_equation_slot.xml` относятся к арифметической записи с пропуском, их название не означает наличие новой категории. Хаб содержит блок будущих занятий (`ncs_v2_hub_future_card.xml`), но его наличие не задаёт маршрут «Уравнений».
+
+### Сопоставление с требованиями к «Уравнениям»
+
+Порядок значений во всех строках — TEST / EASY / NORMAL / HARD.
+
+| Критерий | Требование «Уравнений» | Арифметика сейчас | Сравнение сейчас | Дроби сейчас |
+|---|---|---|---|---|
+| Уровни | TEST/EASY/NORMAL/HARD | Да, `Level` | Да, отдельный `ComparisonLevel` | Да, `FractionSessionGenerator.Level` |
+| Время, секунд | 90 / 120 / 180 / 300 | 8 / 60 / 60 / 90 | 15 / 60 / 90 / 120 | 30 / 90 / 120 / 180 |
+| Минимум | 5 / 4 / 4 / 3 ответа | 3 / 10 / 20 / 30 **верных** | 5 / 15 / 12 / 10 **отвеченных** | 5 / 10 / 8 / 6 **отвеченных** |
+| Точность | ≥80% на каждом уровне | 50 / 70 / 80 / 90% | 60 / 70 / 75 / 80% | 60 / 70 / 75 / 80% |
+| Генерация | Непрерывная | По одному вопросу до истечения времени, без лимита количества | Полный набор 24 / 45 / 36 / 30, остановка по лимиту или времени | Полный набор 8 / 15 / 12 / 10, остановка по исчерпанию или времени |
+| Разблокировка | Последовательная | Все четыре уровня выбираются сразу | Все четыре уровня выбираются сразу | Все четыре уровня выбираются сразу |
+
+Источники чисел: `GameRepositoryImpl.getGameSettings`, `ComparisonSessionSettings.forLevel`, `FractionGameSession.settingsFor`. В арифметике точность — целочисленный процент correct/answered; в сравнении и дробях успех проверяется умножением без округления, отображается целый процент. Ноль ответов даёт 0% и неуспех. Ни одна категория целиком не реализует требуемую конфигурацию «Уравнений»; совпадения отдельных значений не образуют общий профиль.
+
+### Архитектурные ограничения и противоречия
+
+- В проекте используются существующие пакеты `domain/entity`, `domain/usecases`, `domain/repository`, `data`, `presentation`. Слои неоднородны: арифметика использует repository/use cases/ViewModel, сравнение — DataSource и владельца во Fragment, дроби — прямой вызов domain-генератора из ViewModel. Общего движка категорий нет; аудит не предписывает его создавать.
+- Арифметические `Question.Operation`, `UnknownPosition`, `GameSettings.minCountOfRightAnswers`, `GameResult.operation` описывают четыре прежние операции и минимум верных. Они не являются готовым контрактом новой категории и не задают произвольные уравнения с x.
+- Конечные списки, квоты, проверки размера при создании/восстановлении и прогресс answered/total сравнения и дробей связаны друг с другом. Изменение одних таймеров или количества заданий не даст непрерывной генерации. Простое копирование полного списка в SavedStateHandle также не определяет хранение непрерывной сессии.
+- Во всех трёх экранах сложности обработчики выбора подключены ко всем уровням; проверки пройденного предыдущего уровня нет. Поиск в production Kotlin не выявил SharedPreferences/DataStore/Room или механизма unlock/locked. В результатах нет записи факта прохождения. Следовательно, постоянное хранение прогресса и последовательная разблокировка для «Уравнений» — отсутствующая возможность, а не готовый переиспользуемый механизм.
+- SavedStateHandle/Bundle решают восстановление текущего UI/игры в рамках Android saved state, а не хранение достижений после обычного нового запуска или переустановки. У арифметики снимка игры после уничтожения процесса нет; у сравнения и дробей восстановление устроено по-разному. Монотонные дедлайны сами по себе не задают восстановление после перезагрузки устройства.
+- Поведение подсветки на границе времени различается: арифметика сразу направляет к результату при публикации GameResult; сравнение и дроби заканчивают уже начатые 500 мс, затем переходят к результату. В сравнении основной дедлайн и подсветка используют разные монотонные часы. Для новой категории выбор такого поведения не утверждён текущим запросом.
+- `FRACTIONS_SPEC.md` и `NUMCOMPSIM_COMPARE_SPEC.md` описывают собственные конечные сессии и прежние пороги; их нельзя автоматически заменить требованиями «Уравнений». В `SCREENS.md` исторически указаны отсутствие экранов сравнения/хаба и отдельная Comparison ViewModel; по текущему коду экраны существуют, а владельцем сравнения является Fragment. Новая запись в SCREENS уточняет факты, не пересматривая продуктовые решения.
+
+### Четыре иллюстрации в корневой `figma_assets`
+
+Файлы прочитаны декодером System.Drawing без изменения. Формат PNG, декодированный pixel format `Format32bppArgb`; прозрачность проверена по альфе всех пикселей, а не только по наличию канала.
+
+| Файл | Размер, px | Размер, байт | α=0 | 0<α<255 | α=255 |
+|---|---|---|---|---|---|
+| `decor_equation_add.png` | 1254×1254 | 931819 | 924431 | 647627 | 458 |
+| `decor_equation_subtract.png` | 1254×1254 | 857570 | 1015591 | 556268 | 657 |
+| `decor_equation_solution.png` | 1536×1024 | 1021859 | 765154 | 807708 | 2 |
+| `decor_algebra_expression.png` | 1536×1024 | 1002099 | 794228 | 778633 | 3 |
+
+Все четыре имеют полностью прозрачные участки и много полупрозрачных пикселей. Отсутствие непрозрачного прямоугольного фона подтверждено альфой; читаемость/композиция на цветном фоне и экранное назначение этим не подтверждаются. Почти вся видимая область полупрозрачна — это свойство исходников, которое необходимо учитывать при последующей визуальной сверке, не исправлять автоматически. Суммарный размер исходных файлов — 3 813 347 байт. Квадратные и прямоугольные пропорции различаются, общий фиксированный размер без сохранения пропорций может искажать изображения.
+
+На начало аудита эти четыре файла были untracked; они не добавлялись в Git и не изменялись. Среди `app/src/main/res` одноимённых ресурсов нет. Исторический `04_ASSET_EXPORT_MANIFEST.md` не содержит этих четырёх новых иллюстраций и не подтверждает их связь с конкретными экранами/Figma-узлами.
+
+### Соглашения Android-ресурсов
+
+- Файлы и resource names: lowercase snake_case. Растровые оригиналы имеют смысловые префиксы `decor_`, `raccoon_`, `logo_` и находятся в `res/drawable-nodpi/*.png`; фоновые shape/selector/vector — в `res/drawable/*.xml`, преимущественно `ncs_v2_*`. SVG напрямую в drawable не используется: существующий `decor_sparkles.svg` представлен Android vector `drawable/decor_sparkles.xml`.
+- Layout: `res/layout/ncs_v2_*`; собственные категории уточняются `comparison_`/`fractions_`, повторяемые части вынесены в include. ID чаще `ncs_v2_*`, у дробей также `fractions_*`; навигационные ID — camelCase. Kotlin-классы — PascalCase, в существующей реализации есть различие Fraction* domain / Fractions* presentation.
+- Общие токены: `values/colors_v2.xml`, `dimens_v2.xml`, `styles_v2.xml`, `strings_v2.xml`; дроби дополняют их `fractions_dimens.xml`, `fractions_styles.xml`, `fractions_strings.xml`, `fractions_screens.xml`; узкий экран — `values-w360dp/dimens_v2.xml`. Не всё вынесено в токены: встречаются literal dp/sp и отдельные текстовые значения.
+- Локализованные строки находятся также в `values-en/strings.xml`, `values-kk/strings.xml`, `values-uk/strings.xml`; наличие каталогов не подтверждает полноту переводов новой категории. Шрифты `res/font/ncs_v2_*.ttf`: прежние экраны используют Nunito/Inter, дроби — Nunito Sans; единого нового шрифтового решения для «Уравнений» не задано.
+- Звуки — `res/raw/key_press.ogg`, `answer_correct.mp3`, `answer_wrong.mp3`, `game_win.mp3`, `game_lose.mp3`; общий владелец аудио — `presentation/UiSoundPool.kt`. Launcher-ресурсы отделены в mipmap. Данный аудит не переносит иллюстрации и не выбирает новый формат/сжатие.
+
+### Открытые вопросы до реализации
+
+1. «Минимум ответов» 5/4/4/3 означает все принятые ответы или только верные? Формулировка запроса сохранена; существующие категории трактуют минимум по-разному.
+2. Каковы виды уравнений, диапазоны, допустимость нуля/отрицательных/дробных решений, положение неизвестного, число и формат вариантов либо ручной ввод, правила повторов и распределения в непрерывном потоке? Текущий запрос этого не определяет.
+3. Каковы начально открытые уровни и точный переход разблокировки, область прогресса (только уравнения/подкатегории), судьба ранее пройденного уровня при неудачном повторе, поведение при новом запуске/перезагрузке/переустановке и сбросе данных? Долговременный контракт хранения пока не задан.
+4. Каковы маршрут входа, порядок правил и выбора сложности, поведение «Назад», повтора и перехода к следующему уровню; учитывать ли время в фоне и завершать ли начатую подсветку после дедлайна? Требуется зафиксировать контракт, не переносить неявно из одной из трёх разных реализаций.
+5. Чем измерять progress при отсутствии конечного total, какие состояния locked/unlocked/completed показывать, где показывать таймеры/минимумы/80%, как распределить четыре иллюстрации по экранам и какие тексты/локализации утверждены? Пробелы перечислены также в SCREENS.md без выбора вариантов.
+
+Изменения этого аудита ограничены `PROJECT_LOG.md` и `SCREENS.md`. Kotlin/XML, изображения, зависимости, архитектура и существующие правила категорий не изменялись. Выводы статические; запуск приложения, визуальная приёмка, сборка и тесты не проводились.
